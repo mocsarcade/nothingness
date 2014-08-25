@@ -1,1 +1,0 @@
-This is our gamedev project! It is going to be so much fun!
