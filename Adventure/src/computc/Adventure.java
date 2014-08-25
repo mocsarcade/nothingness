@@ -12,7 +12,7 @@ public class Adventure extends BasicGame
 {
 	public Adventure()
 	{
-		super("We don't have a name yet.");
+		super("We don't need no stinkin' title.");
 	}
 	
 	public void init(GameContainer container) throws SlickException
