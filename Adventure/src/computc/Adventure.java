@@ -35,7 +35,7 @@ public class Adventure extends BasicGame
 		try
 		{
 			AppGameContainer container = new AppGameContainer(new Adventure());
-			container.setDisplayMode(SCREEN_WIDTH * 64, SCREEN_HEIGHT * 64, false);
+			container.setDisplayMode(SCREEN_WIDTH * TILE_SIZE, SCREEN_HEIGHT * TILE_SIZE, false);
 			container.start();
 		}
 		catch(Exception error)
@@ -46,4 +46,7 @@ public class Adventure extends BasicGame
 	
 	public static final int SCREEN_WIDTH = 11;
 	public static final int SCREEN_HEIGHT = 7;
+	public static final int TILE_SIZE = 64;
 }
+
+// I made a change to the correct fork this time. Yay!
