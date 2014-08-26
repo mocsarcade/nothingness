@@ -1,5 +1,6 @@
 package computc;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -56,7 +57,7 @@ public class Hero extends Entity
 		}
 	}
 	
-	public void render()
+	public void render(Graphics g)
 	{
 		int x = (int)(this.x) - (this.getWidth() / 2);
 		int y = (int)(this.y) - (this.getHeight() / 2);

@@ -1,6 +1,7 @@
 package computc;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
@@ -145,6 +146,10 @@ public abstract class Entity {
 	facingDown = b;
 	}
 	
+	public void draw(Graphics g) 
+	{
+		image.draw(x, y);
+	}
 
 	
 	

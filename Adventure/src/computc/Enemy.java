@@ -1,5 +1,6 @@
 package computc;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
@@ -7,10 +8,10 @@ public class Enemy extends Entity
 
 	{
 
-		private int health;
-		private int maxHealth;
-		private boolean dead;
-		private int damage;
+		protected int health;
+		protected int maxHealth;
+		protected boolean dead;
+		protected int damage;
 		
 		private Image image;
 		
@@ -22,7 +23,7 @@ public class Enemy extends Entity
 		{
 			super(world,  tx, ty);
 			
-			
+			this.image = new Image("res/thug.png");
 		}
 		
 		public boolean isDead() 
@@ -52,6 +53,12 @@ public class Enemy extends Entity
 		
 		public void update() 
 		{
+			
+		}
+		
+		public void render(Graphics g) {
+			
+			image.draw(x, y);
 			
 		}
 	
