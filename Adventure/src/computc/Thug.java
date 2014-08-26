@@ -6,32 +6,24 @@ import org.newdawn.slick.SlickException;
 
 public class Thug extends Enemy	
 {
-	private Image image;
-	
-	public Thug(TiledWorld world, int tx, int ty) throws SlickException 
+	public Thug(World world, int tx, int ty) throws SlickException 
 	{
 		super(world, tx, ty);
 		
 		this.image = new Image("res/thug.png");
 		
-		collisionWidth = image.getWidth();
-		collisionHeight = image.getHeight();
+		this.health = this.maxHealth = 5;
+		this.damage = 2;
+	}
+	
+	public void update()
+	{
+		this.setX(this.x);
+		this.setY(this.y);
 		
-		health = maxHealth = 5;
-		damage = 2;
-				
+		if(this.intersects(this.world.hero))
+		{
+			System.out.println("touching the hero!"); //this still isn't working. :<
+		}
 	}
-	
-	public void update() 
-	{
-		setPosition(x, y);
-	}
-	
-	public void render(Graphics g) 
-	{
-		setMapPosition();
-		image.draw(x, y);
-	}
-	
-
 }
