@@ -1,10 +1,12 @@
 package computc;
 
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class TiledWorld extends TiledMap
 {
+	private Hero hero;
 	private Tile[][] tiles;
 	
 	public TiledWorld(String tmx) throws SlickException
@@ -23,6 +25,8 @@ public class TiledWorld extends TiledMap
 				tiles[x][y].collider = this.getTileProperty(tid, "collider", "false").equals("false");
 			}
 		}
+		
+		hero = new Hero(5.5f*64, 0.5f*64);
 	}
 	
 	public int getPixelWidth()
@@ -35,13 +39,14 @@ public class TiledWorld extends TiledMap
 		return this.getHeight() * this.getTileHeight();
 	}
 	
-	public void update()
+	public void update(Input input, int delta)
 	{
-		//code goes here.
+		hero.update(input, delta);
 	}
 	
 	public void render()
 	{
 		this.render(0, 0);
+		hero.render();
 	}
 }

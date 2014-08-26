@@ -24,7 +24,7 @@ public class Adventure extends BasicGame
 	
 	public void update(GameContainer container, int delta) throws SlickException
 	{
-		world.update();
+		world.update(container.getInput(), delta);
 	}
 	
 	public void render(GameContainer container, Graphics graphics) throws SlickException
@@ -46,7 +46,7 @@ public class Adventure extends BasicGame
 		}
 	}
 
-	public static final int TILE_SIZE = 32;
+	public static final int TILE_SIZE = 64;
 	public static final int SCREEN_WIDTH = 11;
 	public static final int SCREEN_HEIGHT = 9;
 	
