@@ -27,9 +27,9 @@ public class Adventure extends BasicGame
 		world.update(container.getInput(), delta);
 	}
 	
-	public void render(GameContainer container, Graphics graphics) throws SlickException
+	public void render(GameContainer container, Graphics g) throws SlickException
 	{
-		world.render();
+		world.render(g);
 	}
 	
 	public static void main(String[] args)

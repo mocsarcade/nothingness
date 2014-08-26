@@ -1,0 +1,37 @@
+package computc;
+
+import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
+public class Thug extends Enemy	
+{
+	private Image image;
+	
+	public Thug(TiledWorld world, int tx, int ty) throws SlickException 
+	{
+		super(world, tx, ty);
+		
+		this.image = new Image("res/thug.png");
+		
+		collisionWidth = image.getWidth();
+		collisionHeight = image.getHeight();
+		
+		health = maxHealth = 5;
+		damage = 2;
+				
+	}
+	
+	public void update() 
+	{
+		setPosition(x, y);
+	}
+	
+	public void render(Graphics g) 
+	{
+		setMapPosition();
+		image.draw(x, y);
+	}
+	
+
+}
