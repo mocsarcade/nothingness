@@ -34,7 +34,13 @@ public class TiledWorld extends TiledMap
 		}
 		
 		this.hero = new Hero(this, 5, 0);
-		this.populateEnemies();
+
+		this.enemies = new LinkedList<Enemy>();
+		
+		for(Point point : new Point[] {new Point(1, 6), new Point(5, 4), new Point(8, 5)}) 
+		{
+			this.enemies.add(new Thug(this, point.x, point.y));
+		}
 	}
 	
 	public int getPixelWidth()
@@ -49,29 +55,18 @@ public class TiledWorld extends TiledMap
 	
 	public void update(Input input, int delta)
 	{
-		hero.update(input, delta);
+		this.hero.update(input, delta);
 	}
 	
 	public void render(Graphics graphics)
 	{
 		this.render(0, 0);
-		hero.render(graphics);
 		
-		for(int i = 0; i < enemies.size(); i++ )
+		for(Enemy enemy : this.enemies)
 		{
-			enemies.get(i).render(graphics);
+			enemy.render(graphics);
 		}
-	}
-	
-	private void populateEnemies() throws SlickException
-	{
-		enemies = new LinkedList<Enemy>();
 		
-		Point[] points = {new Point(1, 6), new Point(5, 4), new Point(8, 5)};
-		
-		for(int i = 0; i < points.length; i++) 
-		{
-			enemies.add(new Thug(this, points[i].x, points[i].y));
-		}
+		this.hero.render(graphics);
 	}
 }

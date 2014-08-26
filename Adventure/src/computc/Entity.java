@@ -23,15 +23,15 @@ public abstract class Entity {
 	// rendering
 	protected Image image;
 	
-	// attributes
+	// hitbox
+	protected int hitboxWidth;
+	protected int hitboxHeight;
+	
+	// some attributes?
 	protected double maxSpeed;
 	protected double moveSpeed;
 	protected double stopSpeed;
 	protected double attackSpeed;
-	
-	// hitbox
-	protected int hitboxWidth;
-	protected int hitboxHeight;
 	
 	// more collision stuff?
 	protected int currentRow;
@@ -136,5 +136,10 @@ public abstract class Entity {
 	public void setMovement(Vector2f movement)
 	{
 		this.movement = movement;
+	}
+	
+	public Vector2f getMovement()
+	{
+		return this.movement;
 	}
 }
