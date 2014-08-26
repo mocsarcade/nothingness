@@ -34,4 +34,14 @@ public class TiledWorld extends TiledMap
 	{
 		return this.getHeight() * this.getTileHeight();
 	}
+	
+	public void update()
+	{
+		//code goes here.
+	}
+	
+	public void render()
+	{
+		this.render(0, 0);
+	}
 }

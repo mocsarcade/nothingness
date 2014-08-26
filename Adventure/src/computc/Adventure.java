@@ -12,22 +12,24 @@ public class Adventure extends BasicGame
 {
 	public Adventure()
 	{
-		super("We don't need no stinkin' title.");
+		super(GAME_TITLE);
 	}
+	
+	public TiledWorld world;
 	
 	public void init(GameContainer container) throws SlickException
 	{
-		//code goes here
+		world = new TiledWorld("res/world.tmx");
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException
 	{
-		//code goes here
+		world.update();
 	}
 	
 	public void render(GameContainer container, Graphics graphics) throws SlickException
 	{
-		//code goes here
+		world.render();
 	}
 	
 	public static void main(String[] args)
@@ -43,10 +45,10 @@ public class Adventure extends BasicGame
 			System.out.println(error.getMessage());
 		}
 	}
-	
-	public static final int SCREEN_WIDTH = 11;
-	public static final int SCREEN_HEIGHT = 7;
-	public static final int TILE_SIZE = 64;
-}
 
-// I made a change to the correct fork this time. Yay!
+	public static final int TILE_SIZE = 32;
+	public static final int SCREEN_WIDTH = 11;
+	public static final int SCREEN_HEIGHT = 9;
+	
+	public static final String GAME_TITLE = "We don't need no title.";
+}
