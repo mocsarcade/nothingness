@@ -21,6 +21,6 @@ public class Thug extends Enemy
 	
 	public void update()
 	{
-		//this.setPosition(this.x, this.y);
+		this.setPosition(this.x, this.y);
 	}
 }

@@ -48,14 +48,4 @@ public class Hero extends Entity
 			}
 		}
 	}
-	
-	public int getWidth()
-	{
-		return this.image.getWidth();
-	}
-	
-	public int getHeight()
-	{
-		return this.image.getHeight();
-	}
 }

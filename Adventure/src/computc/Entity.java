@@ -15,9 +15,6 @@ public abstract class Entity {
 	protected float x;
 	protected float y;
 	protected Vector2f movement;
-	protected int width;
-	protected int height;
-	
 	
 	// collision box
 	protected int collisionWidth;
@@ -39,10 +36,7 @@ public abstract class Entity {
 	protected Animation animation;
 	
 	// movement
-	protected boolean facingLeft;
-	protected boolean facingRight;
-	protected boolean facingUp; 
-	protected boolean facingDown;
+	protected Direction direction;
 	protected boolean attacking;
 	
 	// attributes
@@ -82,25 +76,25 @@ public abstract class Entity {
 	{
 		return (int)(this.y);
 	}
-		
-	public int getWidth() 
+	
+	public int getWidth()
 	{
-		return this.width;
+		return this.image.getWidth();
 	}
-		
+	
 	public int getHeight()
 	{
-		return this.height;
+		return this.image.getHeight();
 	}
 		
 	public int getCollisionWidth() 
 	{
-		return collisionWidth;
+		return this.getWidth();
 	}
 		
 	public int getCollisionHeight() 
 	{
-		return collisionHeight;
+		return this.getHeight();
 	}
 		
 	public void setPosition(float x, float y)
@@ -113,25 +107,15 @@ public abstract class Entity {
 	{
 		this.movement = movement;
 	}
-		
-	public void forceLeft(boolean b) 
-	{
-		facingLeft = b;
-	}
 	
-	public void forceRight(boolean b) 
+	public Direction getDirection()
 	{
-		facingRight = b;
-	}
-	
-	public void setUp(boolean b) 
-	{
-		facingUp = b;
+		return this.direction;
 	}
 		
-	public void setDown(boolean b) 
+	public void setDirection(Direction direction) 
 	{
-		facingDown = b;
+		this.direction = direction;
 	}
 	
 	public void render(Graphics graphics)
