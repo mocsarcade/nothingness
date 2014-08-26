@@ -15,7 +15,7 @@ public class Enemy extends Entity
 	protected long blinkTimer;
 	
 	
-	public Enemy(TiledWorld world, int tx, int ty) throws SlickException 
+	public Enemy(World world, int tx, int ty) throws SlickException 
 	{
 		super(world, tx, ty);
 	}

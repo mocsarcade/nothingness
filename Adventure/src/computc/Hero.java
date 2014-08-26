@@ -7,7 +7,7 @@ import org.newdawn.slick.SlickException;
 
 public class Hero extends Entity
 {
-	public Hero(TiledWorld world, int tx, int ty) throws SlickException
+	public Hero(World world, int tx, int ty) throws SlickException
 	{
 		super(world, tx, ty);
 		
@@ -27,7 +27,7 @@ public class Hero extends Entity
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
-			if(this.y + step < this.world.getPixelHeight())
+			if(this.y + step < 64*9) //this.world.getPixelHeight())
 			{
 				this.y += step;
 			}
@@ -42,7 +42,7 @@ public class Hero extends Entity
 		}
 		else if(input.isKeyDown(Input.KEY_RIGHT))
 		{
-			if(this.x + step < this.world.getPixelWidth())
+			if(this.x + step < 64*11)
 			{
 				this.x += step;
 			}

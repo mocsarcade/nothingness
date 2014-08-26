@@ -10,7 +10,7 @@ import org.newdawn.slick.geom.Vector2f;
 public abstract class Entity {
 	
 	// world
-	protected TiledWorld world;
+	protected World world;
 	
 	// position
 	protected float x;
@@ -43,12 +43,12 @@ public abstract class Entity {
 	protected boolean bottomLeft;
 	protected boolean bottomRight;
 	
-	public Entity(TiledWorld world, int tx, int ty)
+	public Entity(World world, int tx, int ty)
 	{
 		this.world = world;
 				
-		this.x = (tx + 0.5f) * this.world.getTileWidth();
-		this.y = (ty + 0.5f) * this.world.getTileWidth();
+		this.x = (tx + 0.5f) * 64; //this.world.getTileWidth();
+		this.y = (ty + 0.5f) * 64; //this.world.getTileWidth();
 	}
 	
 	public void update(Input input, int delta)

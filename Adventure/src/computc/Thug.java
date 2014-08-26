@@ -6,7 +6,7 @@ import org.newdawn.slick.SlickException;
 
 public class Thug extends Enemy	
 {
-	public Thug(TiledWorld world, int tx, int ty) throws SlickException 
+	public Thug(World world, int tx, int ty) throws SlickException 
 	{
 		super(world, tx, ty);
 		

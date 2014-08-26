@@ -18,7 +18,7 @@ public class Adventure extends BasicGame
 	
 	public void init(GameContainer container) throws SlickException
 	{
-		world = new TiledWorld("res/world.tmx");
+		world = new World();
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException
@@ -46,7 +46,7 @@ public class Adventure extends BasicGame
 		}
 	}
 	
-	public TiledWorld world;
+	public World world;
 
 	public static final int TILE_SIZE = 64;
 	public static final int SCREEN_WIDTH = 11;
