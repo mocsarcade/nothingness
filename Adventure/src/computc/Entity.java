@@ -9,10 +9,7 @@ import org.newdawn.slick.geom.Vector2f;
 public abstract class Entity {
 	
 	// tile stuff
-	protected TiledWorld tiledWorld;
-	protected int tileSize;
-	protected float mapX;
-	protected float mapY;
+	protected TiledWorld world;
 	
 	// position, movement vector, dimensions
 	protected float x;
@@ -57,45 +54,43 @@ public abstract class Entity {
 	
 	public Entity(TiledWorld world, int tx, int ty)
 	{
-		tiledWorld = world;
-		tileSize = world.getTileWidth();
-		
-		this.x = (tx + 0.5f) * world.getTileWidth();
-		this.y = (ty + 0.5f) * world.getTileWidth();
+		this.world = world;
+				
+		this.x = (tx + 0.5f) * this.world.getTileWidth();
+		this.y = (ty + 0.5f) * this.world.getTileWidth();
 	}
 	
-	public boolean intersects (Entity o) 
+	public boolean intersects(Entity that) 
 	{
-		Rectangle r1 = getRectangle();
-		
-		Rectangle r2 = o.getRectangle();
+		Rectangle r1 = this.getRectangle();
+		Rectangle r2 = that.getRectangle();
 		
 		return r1.intersects(r2);
 	}
 	
-	public Rectangle getRectangle() {
+	public Rectangle getRectangle()
+	{
 		return new Rectangle ((int)x - collisionWidth, (int)y - collisionHeight, collisionWidth, collisionHeight);
 	}
 	
-	
 	public int getX() 
 	{
-		return (int)x;
+		return (int)(this.x);
 	}
 		
 	public int getY() 
 	{
-		return (int)y;
+		return (int)(this.y);
 	}
 		
 	public int getWidth() 
 	{
-		return width;
+		return this.width;
 	}
 		
 	public int getHeight()
 	{
-		return height;
+		return this.height;
 	}
 		
 	public int getCollisionWidth() 
@@ -118,41 +113,32 @@ public abstract class Entity {
 	{
 		this.movement = movement;
 	}
-	
-	public void setMapPosition() 
-	{
-		mapX = tiledWorld.getX();
-		mapY = tiledWorld.getY();
-	}
-		
 		
 	public void forceLeft(boolean b) 
 	{
-	facingLeft = b;
+		facingLeft = b;
 	}
 	
-	public void forceRight (boolean b) 
+	public void forceRight(boolean b) 
 	{
-	facingRight = b;
+		facingRight = b;
 	}
 	
 	public void setUp(boolean b) 
 	{
-	facingUp = b;
+		facingUp = b;
 	}
 		
 	public void setDown(boolean b) 
 	{
-	facingDown = b;
+		facingDown = b;
 	}
 	
-	public void draw(Graphics g) 
+	public void render(Graphics graphics)
 	{
-		image.draw(x, y);
+		int x = this.getX() - (this.getWidth() / 2);
+		int y = this.getY() - (this.getHeight() / 2);
+		
+		this.image.draw(x, y);
 	}
-
-	
-	
-	
-
 }

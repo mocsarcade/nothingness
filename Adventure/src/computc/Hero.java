@@ -7,19 +7,11 @@ import org.newdawn.slick.SlickException;
 
 public class Hero extends Entity
 {
-	private float x, y;
-	private Image image;
 	private float speed = 0.15f;
-	
-	private TiledWorld world;
 	
 	public Hero(TiledWorld world, int tx, int ty) throws SlickException
 	{
 		super(world, tx, ty);
-		this.world = world;
-				
-		this.x = (tx + 0.5f) * this.world.getTileWidth();
-		this.y = (ty + 0.5f) * this.world.getTileWidth();
 		
 		this.image = new Image("res/hero.png");
 	}
@@ -55,14 +47,6 @@ public class Hero extends Entity
 				x += step;
 			}
 		}
-	}
-	
-	public void render(Graphics g)
-	{
-		int x = (int)(this.x) - (this.getWidth() / 2);
-		int y = (int)(this.y) - (this.getHeight() / 2);
-		
-		image.draw(x, y);
 	}
 	
 	public int getWidth()

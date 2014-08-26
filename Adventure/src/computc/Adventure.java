@@ -6,6 +6,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Adventure extends BasicGame
@@ -15,8 +16,6 @@ public class Adventure extends BasicGame
 		super(GAME_TITLE);
 	}
 	
-	public TiledWorld world;
-	
 	public void init(GameContainer container) throws SlickException
 	{
 		world = new TiledWorld("res/world.tmx");
@@ -24,12 +23,13 @@ public class Adventure extends BasicGame
 	
 	public void update(GameContainer container, int delta) throws SlickException
 	{
-		world.update(container.getInput(), delta);
+		Input input = container.getInput();
+		world.update(input, delta);
 	}
 	
-	public void render(GameContainer container, Graphics g) throws SlickException
+	public void render(GameContainer container, Graphics graphics) throws SlickException
 	{
-		world.render(g);
+		world.render(graphics);
 	}
 	
 	public static void main(String[] args)
@@ -45,6 +45,8 @@ public class Adventure extends BasicGame
 			System.out.println(error.getMessage());
 		}
 	}
+	
+	public TiledWorld world;
 
 	public static final int TILE_SIZE = 64;
 	public static final int SCREEN_WIDTH = 11;

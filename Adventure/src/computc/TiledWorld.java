@@ -1,7 +1,7 @@
 package computc;
 
 import java.awt.Point;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -16,17 +16,16 @@ public class TiledWorld extends TiledMap
 	private int y;
 	
 	
-	private ArrayList<Enemy> enemies;
 	private Hero hero;
-	private Thug thug;
+	
 	private Tile[][] tiles;
+	private LinkedList<Enemy> enemies;
 	
 	public TiledWorld(String tmx) throws SlickException
 	{
 		super(tmx);
-		populateEnemies();
 		
-		tiles = new Tile[this.getWidth()][this.getHeight()];
+		this.tiles = new Tile[this.getWidth()][this.getHeight()];
 
 		for(int tx = 0; tx < this.getWidth(); tx++)
 		{
@@ -34,14 +33,13 @@ public class TiledWorld extends TiledMap
 			{
 				int tid = this.getTileId(tx, ty, 0);
 				
-				tiles[tx][ty] = new Tile();
-				tiles[tx][ty].collider = this.getTileProperty(tid, "collider", "false").equals("false");
+				this.tiles[tx][ty] = new Tile();
+				this.tiles[tx][ty].collider = this.getTileProperty(tid, "collider", "false").equals("false");
 			}
 		}
 		
-		
-		
-		hero = new Hero(this, 5, 0);
+		this.hero = new Hero(this, 5, 0);
+		this.populateEnemies();
 	}
 	
 	public int getPixelWidth()
@@ -59,38 +57,32 @@ public class TiledWorld extends TiledMap
 		hero.update(input, delta);
 	}
 	
-	public void render(Graphics g)
+	public void render(Graphics graphics)
 	{
 		this.render(x, y);
-		hero.render(g);
+		hero.render(graphics);
 		
-		for(int i = 0; i < enemies.size(); i++ ) {
-			enemies.get(i).render(g);
+		for(int i = 0; i < enemies.size(); i++ )
+		{
+			enemies.get(i).render(graphics);
 		}
 	}
 	
 	private void populateEnemies() throws SlickException
 	{
-		enemies = new ArrayList<Enemy>();
+		enemies = new LinkedList<Enemy>();
 		
-		Thug thug;
-		Point[] points = new Point[] {new Point(1, 6), new Point(4, 4), new Point(8, 4)};
+		Point[] points = {new Point(1, 6), new Point(4, 4), new Point(8, 4)};
 		
 		for(int i = 0; i < points.length; i++) 
 		{
-			thug = new Thug(this, points[i].x, points[i].y);
-			
-			enemies.add(thug);
+			enemies.add(new Thug(this, points[i].x, points[i].y));
 		}
-		
-		thug = new Thug(this, 5, 7);
-
 	}
-	
 	
 	public int getX()
 	{
-	return x;
+		return x;
 	}
 	
 	public int getY()

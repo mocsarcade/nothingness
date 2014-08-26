@@ -6,8 +6,6 @@ import org.newdawn.slick.SlickException;
 
 public class Thug extends Enemy	
 {
-	private Image image;
-	
 	public Thug(TiledWorld world, int tx, int ty) throws SlickException 
 	{
 		super(world, tx, ty);
@@ -17,21 +15,12 @@ public class Thug extends Enemy
 		collisionWidth = image.getWidth();
 		collisionHeight = image.getHeight();
 		
-		health = maxHealth = 5;
-		damage = 2;
-				
+		this.health = this.maxHealth = 5;
+		this.damage = 2;
 	}
 	
-	public void update() 
+	public void update()
 	{
-		setPosition(x, y);
+		//this.setPosition(this.x, this.y);
 	}
-	
-	public void render(Graphics g) 
-	{
-		setMapPosition();
-		image.draw(x, y);
-	}
-	
-
 }
