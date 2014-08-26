@@ -54,6 +54,7 @@ public class TiledWorld extends TiledMap
 		hero.render();
 	}
 	
+	
 	public int getX()
 	{
 	return x;
