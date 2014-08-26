@@ -6,6 +6,10 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class TiledWorld extends TiledMap
 {
+	// position
+	private int x;
+	private int y;
+	
 	private Hero hero;
 	private Tile[][] tiles;
 	
@@ -46,7 +50,17 @@ public class TiledWorld extends TiledMap
 	
 	public void render()
 	{
-		this.render(0, 0);
+		this.render(x, y);
 		hero.render();
+	}
+	
+	public int getX()
+	{
+	return x;
+	}
+	
+	public int getY()
+	{
+		return y;
 	}
 }

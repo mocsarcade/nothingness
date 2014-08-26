@@ -4,7 +4,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-public class Hero
+public class Hero extends Entity
 {
 	private float x, y;
 	private Image image;
@@ -14,6 +14,7 @@ public class Hero
 	
 	public Hero(TiledWorld world, int tx, int ty) throws SlickException
 	{
+		super(world, tx, ty);
 		this.world = world;
 				
 		this.x = (tx + 0.5f) * this.world.getTileWidth();
