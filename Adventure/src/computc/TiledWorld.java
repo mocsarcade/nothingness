@@ -15,14 +15,14 @@ public class TiledWorld extends TiledMap
 		
 		tiles = new Tile[this.getWidth()][this.getHeight()];
 
-		for(int x = 0; x < this.getWidth(); x++)
+		for(int tx = 0; tx < this.getWidth(); tx++)
 		{
-			for(int y = 0; y < this.getHeight(); y++)
+			for(int ty = 0; ty < this.getHeight(); ty++)
 			{
-				int tid = this.getTileId(x, y, 0);
+				int tid = this.getTileId(tx, ty, 0);
 				
-				tiles[x][y] = new Tile();
-				tiles[x][y].collider = this.getTileProperty(tid, "collider", "false").equals("false");
+				tiles[tx][ty] = new Tile();
+				tiles[tx][ty].collider = this.getTileProperty(tid, "collider", "false").equals("false");
 			}
 		}
 		
