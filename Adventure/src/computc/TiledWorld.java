@@ -11,12 +11,7 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class TiledWorld extends TiledMap
 {
-	// position
-	private int x;
-	private int y;
-	
-	
-	private Hero hero;
+	public Hero hero;
 	
 	private Tile[][] tiles;
 	private LinkedList<Enemy> enemies;
@@ -59,7 +54,7 @@ public class TiledWorld extends TiledMap
 	
 	public void render(Graphics graphics)
 	{
-		this.render(x, y);
+		this.render(0, 0);
 		hero.render(graphics);
 		
 		for(int i = 0; i < enemies.size(); i++ )
@@ -72,21 +67,11 @@ public class TiledWorld extends TiledMap
 	{
 		enemies = new LinkedList<Enemy>();
 		
-		Point[] points = {new Point(1, 6), new Point(4, 4), new Point(8, 4)};
+		Point[] points = {new Point(1, 6), new Point(5, 4), new Point(8, 5)};
 		
 		for(int i = 0; i < points.length; i++) 
 		{
 			enemies.add(new Thug(this, points[i].x, points[i].y));
 		}
-	}
-	
-	public int getX()
-	{
-		return x;
-	}
-	
-	public int getY()
-	{
-		return y;
 	}
 }

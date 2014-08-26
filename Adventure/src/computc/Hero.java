@@ -7,8 +7,6 @@ import org.newdawn.slick.SlickException;
 
 public class Hero extends Entity
 {
-	private float speed = 0.15f;
-	
 	public Hero(TiledWorld world, int tx, int ty) throws SlickException
 	{
 		super(world, tx, ty);
@@ -18,34 +16,38 @@ public class Hero extends Entity
 	
 	public void update(Input input, int delta)
 	{
-		float step = speed * delta;
+		float step = this.speed * delta;
 		
 		if(input.isKeyDown(Input.KEY_UP))
 		{
-			if(y - step > 0)
+			if(this.y - step > 0)
 			{
-				y -= step;
+				this.y -= step;
 			}
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
-			if(y + step < world.getPixelHeight())
-			y += step;
+			if(this.y + step < this.world.getPixelHeight())
+			{
+				this.y += step;
+			}
 		}
 		
 		if(input.isKeyDown(Input.KEY_LEFT))
 		{
-			if(x - step > 0)
+			if(this.x - step > 0)
 			{
-				x -= step;
+				this.x -= step;
 			}
 		}
 		else if(input.isKeyDown(Input.KEY_RIGHT))
 		{
-			if(x + step < world.getPixelWidth())
+			if(this.x + step < this.world.getPixelWidth())
 			{
-				x += step;
+				this.x += step;
 			}
 		}
 	}
+	
+	private float speed = 0.15f;
 }

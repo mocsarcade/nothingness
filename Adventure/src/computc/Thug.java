@@ -12,15 +12,18 @@ public class Thug extends Enemy
 		
 		this.image = new Image("res/thug.png");
 		
-		collisionWidth = image.getWidth();
-		collisionHeight = image.getHeight();
-		
 		this.health = this.maxHealth = 5;
 		this.damage = 2;
 	}
 	
 	public void update()
 	{
-		this.setPosition(this.x, this.y);
+		this.setX(this.x);
+		this.setY(this.y);
+		
+		if(this.intersects(this.world.hero))
+		{
+			System.out.println("touching the hero!"); //this still isn't working. :<
+		}
 	}
 }

@@ -3,48 +3,45 @@ package computc;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public abstract class Entity {
 	
-	// tile stuff
+	// world
 	protected TiledWorld world;
 	
-	// position, movement vector, dimensions
+	// position
 	protected float x;
 	protected float y;
+	
+	// movement
 	protected Vector2f movement;
+	protected Direction direction;
 	
-	// collision box
-	protected int collisionWidth;
-	protected int collisionHeight;
+	// rendering
+	protected Image image;
 	
-	// more collision stuff
+	// attributes
+	protected double maxSpeed;
+	protected double moveSpeed;
+	protected double stopSpeed;
+	protected double attackSpeed;
+	
+	// hitbox
+	protected int hitboxWidth;
+	protected int hitboxHeight;
+	
+	// more collision stuff?
 	protected int currentRow;
 	protected int currentCol;
 	protected int destinationX;
 	protected int destinationY;
-	
 	protected boolean topLeft;
 	protected boolean topRight;
 	protected boolean bottomLeft;
 	protected boolean bottomRight;
-	
-	// animation
-	protected Image image;
-	protected Animation animation;
-	
-	// movement
-	protected Direction direction;
-	protected boolean attacking;
-	
-	// attributes
-	protected double moveSpeed;
-	protected double maxSpeed;
-	protected double stopSpeed;
-	protected double attackSpeed;
-	
 	
 	public Entity(TiledWorld world, int tx, int ty)
 	{
@@ -54,17 +51,36 @@ public abstract class Entity {
 		this.y = (ty + 0.5f) * this.world.getTileWidth();
 	}
 	
-	public boolean intersects(Entity that) 
+	public void update(Input input, int delta)
 	{
-		Rectangle r1 = this.getRectangle();
-		Rectangle r2 = that.getRectangle();
+		//this is to be overloaded by subclasses.
+	}
+	
+	public void render(Graphics graphics)
+	{
+		int x = this.getX() - (this.getWidth() / 2);
+		int y = this.getY() - (this.getHeight() / 2);
+		
+		this.image.draw(x, y);
+	}
+	
+	public boolean intersects(Entity that)
+	{
+		Rectangle r1 = this.getHitbox();
+		Rectangle r2 = that.getHitbox();
 		
 		return r1.intersects(r2);
 	}
 	
-	public Rectangle getRectangle()
+	public Rectangle getHitbox()
 	{
-		return new Rectangle ((int)x - collisionWidth, (int)y - collisionHeight, collisionWidth, collisionHeight);
+		int x = this.getX();
+		int y = this.getY();
+		
+		int width = this.getHitboxWidth();
+		int height = this.getHitboxHeight();
+		
+		return new Rectangle(x - (width / 2), y - (width / 2), width, height);
 	}
 	
 	public int getX() 
@@ -77,6 +93,16 @@ public abstract class Entity {
 		return (int)(this.y);
 	}
 	
+	public void setX(float x)
+	{
+		this.x = x;
+	}
+	
+	public void setY(float y)
+	{
+		this.y = y;
+	}
+	
 	public int getWidth()
 	{
 		return this.image.getWidth();
@@ -85,27 +111,6 @@ public abstract class Entity {
 	public int getHeight()
 	{
 		return this.image.getHeight();
-	}
-		
-	public int getCollisionWidth() 
-	{
-		return this.getWidth();
-	}
-		
-	public int getCollisionHeight() 
-	{
-		return this.getHeight();
-	}
-		
-	public void setPosition(float x, float y)
-	{
-		this.x = x;
-		this.y = y;
-	}
-		
-	public void setVector(Vector2f movement) 
-	{
-		this.movement = movement;
 	}
 	
 	public Direction getDirection()
@@ -118,11 +123,18 @@ public abstract class Entity {
 		this.direction = direction;
 	}
 	
-	public void render(Graphics graphics)
+	public int getHitboxWidth() 
 	{
-		int x = this.getX() - (this.getWidth() / 2);
-		int y = this.getY() - (this.getHeight() / 2);
+		return this.getWidth();
+	}
 		
-		this.image.draw(x, y);
+	public int getHitboxHeight() 
+	{
+		return this.getHeight();
+	}
+		
+	public void setMovement(Vector2f movement)
+	{
+		this.movement = movement;
 	}
 }
