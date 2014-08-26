@@ -10,10 +10,14 @@ public class Hero
 	private Image image;
 	private float speed = 0.15f;
 	
-	public Hero(float x, float y) throws SlickException
+	private TiledWorld world;
+	
+	public Hero(TiledWorld world, int tx, int ty) throws SlickException
 	{
-		this.x = x;
-		this.y = y;
+		this.world = world;
+				
+		this.x = (tx + 0.5f) * this.world.getTileWidth();
+		this.y = (ty + 0.5f) * this.world.getTileWidth();
 		
 		this.image = new Image("res/hero.png");
 	}
@@ -24,20 +28,30 @@ public class Hero
 		
 		if(input.isKeyDown(Input.KEY_UP))
 		{
-			y -= step;
+			if(y - step > 0)
+			{
+				y -= step;
+			}
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
+			if(y + step < world.getPixelHeight())
 			y += step;
 		}
 		
 		if(input.isKeyDown(Input.KEY_LEFT))
 		{
-			x -= step;
+			if(x - step > 0)
+			{
+				x -= step;
+			}
 		}
 		else if(input.isKeyDown(Input.KEY_RIGHT))
 		{
-			x += step;
+			if(x + step < world.getPixelWidth())
+			{
+				x += step;
+			}
 		}
 	}
 	

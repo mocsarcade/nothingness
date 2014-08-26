@@ -26,7 +26,7 @@ public class TiledWorld extends TiledMap
 			}
 		}
 		
-		hero = new Hero(5.5f*64, 0.5f*64);
+		hero = new Hero(this, 5, 0);
 	}
 	
 	public int getPixelWidth()
