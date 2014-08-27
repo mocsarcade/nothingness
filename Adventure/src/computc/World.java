@@ -57,7 +57,7 @@ public class World extends TiledRoom
 		
 		for(int i = 0; i < enemies.size(); i++ ) 
 		{
-			 enemies.get(i).render(graphics);
+			 enemies.get(i).render(graphics, this.x, this.y);
 		 }
 	}
 	
