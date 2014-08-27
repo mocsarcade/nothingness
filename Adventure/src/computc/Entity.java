@@ -16,6 +16,9 @@ public abstract class Entity {
 	protected float x;
 	protected float y;
 	
+	protected float xmap;
+	protected float ymap;
+	
 	// movement
 	protected Vector2f movement;
 	protected Direction direction;
@@ -43,6 +46,10 @@ public abstract class Entity {
 	protected boolean bottomLeft;
 	protected boolean bottomRight;
 	
+	// blinking collision indicator
+	protected boolean blinking;
+	protected int blinkTimer;
+	
 	public Entity(World world, int tx, int ty)
 	{
 		this.world = world;
@@ -61,7 +68,7 @@ public abstract class Entity {
 		int x = this.getX() - (this.getWidth() / 2);
 		int y = this.getY() - (this.getHeight() / 2);
 		
-		this.image.draw(x, y);
+		this.image.draw(x + xmap, y + ymap);
 	}
 	
 	public boolean intersects(Entity that)
@@ -103,6 +110,12 @@ public abstract class Entity {
 		this.y = y;
 	}
 	
+	public void setPosition(float x, float y) 
+	{
+		this.x = x;
+		this.y = y;
+	}
+	
 	public int getWidth()
 	{
 		return this.image.getWidth();
@@ -141,5 +154,11 @@ public abstract class Entity {
 	public Vector2f getMovement()
 	{
 		return this.movement;
+	}
+	
+	public void setMapPosition() 
+	{
+		xmap = world.getX();
+		ymap = world.getY();
 	}
 }

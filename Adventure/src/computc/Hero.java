@@ -7,6 +7,9 @@ import org.newdawn.slick.SlickException;
 
 public class Hero extends Entity
 {
+	
+	public static boolean nextArea;
+	
 	public Hero(World world, int tx, int ty) throws SlickException
 	{
 		super(world, tx, ty);
@@ -26,37 +29,83 @@ public class Hero extends Entity
 		
 		if(input.isKeyDown(Input.KEY_UP))
 		{
-			if(this.y - step > 0)
-			{
+			this.direction = Direction.NORTH;
+			
+			if(!world.isBlocked(this.x, this.y - getHeight()/2))
 				this.y -= step;
-			}
-//			else moveRoom();
+				
+				if(world.isAccessible(this.x, this.y))
+				{
+				 nextArea = true;
+				}
+				else nextArea = false;
+		
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
-			if(this.y + step < 64*9) //this.world.getPixelHeight())
-			{
+			this.direction = Direction.SOUTH;
+			
+			if(!world.isBlocked(this.x, this.y + getHeight()/2))
 				this.y += step;
-			}
-//			else moveRoom();
+			
+				if(world.isAccessible(this.x, this.y))
+				{
+				 nextArea = true;
+				}
+				else nextArea = false;
 		}
 		
 		if(input.isKeyDown(Input.KEY_LEFT))
 		{
-			if(this.x - step > 0)
-			{
+			this.direction = Direction.WEST;
+			
+			if(!world.isBlocked(this.x - getWidth()/2, this.y))
 				this.x -= step;
+				
+			if(world.isAccessible(this.x, this.y))
+			{
+				nextArea = true;
 			}
-//			else moveRoom();
+				else nextArea = false;
 		}
+		
 		else if(input.isKeyDown(Input.KEY_RIGHT))
 		{
-			if(this.x + step < 64*11)
-			{
+			this.direction = Direction.EAST;
+			
+			if(!world.isBlocked(this.x  + getWidth()/2, this.y))
 				this.x += step;
+				
+			if(world.isAccessible(this.x, this.y))
+			{
+			 nextArea = true;
 			}
-//			else moveRoom();
+			else nextArea = false;
 		}
 	}
+	
+	public void render(Graphics graphics) 
+	{
+		if (blinking) {
+			long elapsed = (System.nanoTime() - blinkTimer)/ 1000000;
+			if(elapsed / 100 % 2 == 0) {
+				return;
+			}
+		}
+		
+		setMapPosition();
+		super.render(graphics);
+	}
+	
+	public int getX() 
+	{
+		return (int) this.x;
+	}
+	
+	public int getY() 
+	{
+		return (int) this.y;
+	}
+	
 	private float speed = 0.15f;
 }
