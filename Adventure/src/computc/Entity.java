@@ -7,6 +7,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+
 public abstract class Entity {
 	
 	// world
@@ -20,7 +21,7 @@ public abstract class Entity {
 	protected float ymap;
 	
 	// movement
-	protected Vector2f movement;
+	protected Vector2f step;
 	protected Direction direction;
 	
 	// rendering
@@ -31,8 +32,8 @@ public abstract class Entity {
 	protected int hitboxHeight;
 	
 	// some attributes?
-	protected double maxSpeed;
-	protected double moveSpeed;
+	protected float maxSpeed;
+	protected float moveSpeed;
 	protected double stopSpeed;
 	protected double attackSpeed;
 	
@@ -49,6 +50,8 @@ public abstract class Entity {
 	// blinking collision indicator
 	protected boolean blinking;
 	protected int blinkTimer;
+	
+	protected int tileSize;
 	
 	public Entity(World world, int tx, int ty)
 	{
@@ -78,6 +81,29 @@ public abstract class Entity {
 		
 		return r1.intersects(r2);
 	}
+	
+//	public void calculateCorners(double x, double y) {
+//		   
+//		   int leftTile = (int)(x - hitboxWidth/ 2)/ tileSize;
+//		   int rightTile = (int)(x + hitboxWidth/ 2 - 1)/ tileSize;
+//		   int topTile = (int)(y - hitboxHeight/ 2) / tileSize;
+//		   int bottomTile = (int)(y + hitboxHeight/ 2 - 1)/ tileSize;
+//		   
+//		   if(topTile < 0 || bottomTile >= world.getHeight() || leftTile < 0 || rightTile >= world.getWidth()) {
+//			   topLeft = topRight = bottomLeft = bottomRight = false;
+//			   return;
+//		   }
+//		   
+//		   int tl = world.getType(topTile, leftTile);
+//		   int tr = world.getType(topTile, rightTile);
+//		   int bl = world.getType(bottomTile, leftTile);
+//		   int br = world.getType(bottomTile, rightTile);
+//		   topLeft = tl == Tile.BLOCKED;
+//		   topRight = tr ==  Tile.BLOCKED;
+//		   bottomLeft = bl == Tile.BLOCKED;
+//		   bottomRight = br == Tile.BLOCKED;
+//		   
+//	   }
 	
 	public Rectangle getHitbox()
 	{
@@ -146,14 +172,14 @@ public abstract class Entity {
 		return this.getHeight();
 	}
 		
-	public void setMovement(Vector2f movement)
+	public void setStep(Vector2f step)
 	{
-		this.movement = movement;
+		this.step = step;
 	}
 	
-	public Vector2f getMovement()
+	public Vector2f getStep()
 	{
-		return this.movement;
+		return this.step;
 	}
 	
 	public void setMapPosition() 

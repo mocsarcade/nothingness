@@ -9,6 +9,7 @@ public class Hero extends Entity
 {
 	
 	public static boolean nextArea;
+	private boolean dead = false;
 	
 	public Hero(World world, int tx, int ty) throws SlickException
 	{
@@ -21,11 +22,16 @@ public class Hero extends Entity
 		{
 			e.printStackTrace();
 		}
+		
+		moveSpeed = .15f;
+		hitboxWidth = getWidth();
+		hitboxHeight = getHeight();
+		health = 5;
 	}
 	
 	public void update(Input input, int delta)
 	{
-		float step = this.speed * delta;
+		float step = this.moveSpeed * delta;
 		
 		if(input.isKeyDown(Input.KEY_UP))
 		{
@@ -86,15 +92,33 @@ public class Hero extends Entity
 	
 	public void render(Graphics graphics) 
 	{
-		if (blinking) {
+		if (blinking) 
+		{
 			long elapsed = (System.nanoTime() - blinkTimer)/ 1000000;
-			if(elapsed / 100 % 2 == 0) {
+			if(elapsed / 100 % 2 == 0) 
+			{
 				return;
 			}
 		}
 		
 		setMapPosition();
 		super.render(graphics);
+	}
+	
+	private void hit(int damage) 
+	{
+		if(blinking) 
+			return;
+		health -= damage;
+		
+		if(health < 0)
+			health = 0;
+		
+		if(health == 0) 
+			dead = true;
+		
+		blinking = true;
+		blinkTimer = (int) System.nanoTime();
 	}
 	
 	public int getX() 
@@ -107,5 +131,7 @@ public class Hero extends Entity
 		return (int) this.y;
 	}
 	
-	private float speed = 0.15f;
+	
+	private int health;
+	private int maxHealth;
 }

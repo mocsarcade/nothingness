@@ -1,6 +1,7 @@
 package computc;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.newdawn.slick.Graphics;
@@ -18,7 +19,7 @@ public class World extends TiledRoom
 	
 	public Hero hero;
 	//private Room room;
-	//private LinkedList<Enemy> enemies;
+	private ArrayList<Enemy> enemies;
 	
 	public World(String tmx) throws SlickException
 	{
@@ -26,6 +27,7 @@ public class World extends TiledRoom
 		this.hero = new Hero(this, 0, 0);
 		hero.setPosition(100, 100);
 		
+		populateEnemies();
 		this.loadRoom();
 	}
 	
@@ -43,8 +45,6 @@ public class World extends TiledRoom
 		if(Hero.nextArea && hero.direction == Direction.WEST)
 		this.setPosition(Adventure.SCREEN_WIDTH - hero.getX() - 50, Adventure.SCREEN_HEIGHT - hero.getY() - 500);
 		
-		
-		
 		this.hero.update(input, delta);
 		
 	}
@@ -54,6 +54,11 @@ public class World extends TiledRoom
 		render(x, y);
 
 		this.hero.render(graphics);
+		
+		for(int i = 0; i < enemies.size(); i++ ) 
+		{
+			 enemies.get(i).render(graphics);
+		 }
 	}
 	
 	
@@ -63,8 +68,6 @@ public class World extends TiledRoom
 		
 		this.x += (x - this.x) * cameraTweaker;
 		this.y += (y - this.y) * cameraTweaker;
-
-		
 		
 		loadMap();
 		fixBounds();
@@ -73,8 +76,6 @@ public class World extends TiledRoom
 	
 	public void loadMap()
 	{
-		
-		
 		xmin = (Adventure.SCREEN_WIDTH) - getPixelWidth();
 		xmax = 0;
 		ymin = (Adventure.SCREEN_HEIGHT) - getPixelHeight();
@@ -88,6 +89,24 @@ public class World extends TiledRoom
 		if(y < ymin) y = ymin;
 		if (x > xmax) x= xmax;
 		if (y> ymax) y = ymax;
+	}
+	
+	private void populateEnemies() throws SlickException
+	 {
+		enemies = new ArrayList<Enemy>();
+	
+	Thug thug;
+	Point[] points = new Point[] {new Point(1, 6), new Point(4, 4), new Point(8, 4)};
+	
+	 for(int i = 0; i < points.length; i++)
+	 	{
+		 	thug = new Thug(this, points[i].x, points[i].y);
+	
+		 	enemies.add(thug);
+	 	}
+	
+	 thug = new Thug(this, 5, 7);
+	
 	}
 	
 }

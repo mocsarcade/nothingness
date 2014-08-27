@@ -41,7 +41,5 @@ public class Enemy extends Entity
 			dead = true;
 		
 		blinking = true;
-		
-		
 	}
 }

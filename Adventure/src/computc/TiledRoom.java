@@ -3,6 +3,8 @@ package computc;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
+
+
 public class TiledRoom extends TiledMap
 {
 	
@@ -16,6 +18,9 @@ public class TiledRoom extends TiledMap
 	
 	protected boolean[][] doors;
 	protected boolean[][] blocked;
+	
+	private Tile[][] tiles;
+	private int[][] map;
 	
 	
 	public TiledRoom(String tmx) throws SlickException
@@ -87,5 +92,19 @@ public class TiledRoom extends TiledMap
 			}
 		}
 	}
+	
+//	public int getType (int row, int col) 
+//	{
+//		int rc = map[row][col];
+//		for (int r = 0; r<getHeight(); r++)
+//			{
+//			for (int c = 0; c<getWidth(); row++)
+//				{
+//		
+////		int rc = map[row][col];
+////		int r = rc /numTilesAcross;
+////		int c = rc % numTilesAcross;
+//		return tiles [col][row].getType();
+//	}
 	
 }
