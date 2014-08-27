@@ -14,16 +14,13 @@ public class Thug extends Enemy
 		
 		this.health = this.maxHealth = 5;
 		this.damage = 2;
+		moveSpeed = .02f;
 	}
 	
-	public void update()
+	public void update(int delta)
 	{
 		this.setX(this.x);
 		this.setY(this.y);
-		
-		if(this.intersects(this.world.hero))
-		{
-			System.out.println("touching the hero!"); //this still isn't working. :<
-		}
 	}
+	
 }
