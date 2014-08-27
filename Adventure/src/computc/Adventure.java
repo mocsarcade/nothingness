@@ -18,7 +18,7 @@ public class Adventure extends BasicGame
 	
 	public void init(GameContainer container) throws SlickException
 	{
-		world = new World();
+		world = new World("res/world.tmx");
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException

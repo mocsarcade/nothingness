@@ -10,8 +10,14 @@ public class Hero extends Entity
 	public Hero(World world, int tx, int ty) throws SlickException
 	{
 		super(world, tx, ty);
-		
+		try 
+		{
 		this.image = new Image("res/hero.png");
+		}
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public void update(Input input, int delta)
@@ -24,6 +30,7 @@ public class Hero extends Entity
 			{
 				this.y -= step;
 			}
+//			else moveRoom();
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
@@ -31,6 +38,7 @@ public class Hero extends Entity
 			{
 				this.y += step;
 			}
+//			else moveRoom();
 		}
 		
 		if(input.isKeyDown(Input.KEY_LEFT))
@@ -39,6 +47,7 @@ public class Hero extends Entity
 			{
 				this.x -= step;
 			}
+//			else moveRoom();
 		}
 		else if(input.isKeyDown(Input.KEY_RIGHT))
 		{
@@ -46,8 +55,8 @@ public class Hero extends Entity
 			{
 				this.x += step;
 			}
+//			else moveRoom();
 		}
 	}
-	
 	private float speed = 0.15f;
 }
