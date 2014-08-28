@@ -32,6 +32,7 @@ public class World
 	
 	public void update(Input input, int delta)
 	{
+		this.camera.update(delta);
 		this.hero.update(input, delta);
 	}
 	
