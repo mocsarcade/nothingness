@@ -18,18 +18,18 @@ public class Adventure extends BasicGame
 	
 	public void init(GameContainer container) throws SlickException
 	{
-		world = new World("res/world.tmx");
+		this.world = new World();
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException
 	{
 		Input input = container.getInput();
-		world.update(input, delta);
+		this.world.update(input, delta);
 	}
 	
 	public void render(GameContainer container, Graphics graphics) throws SlickException
 	{
-		world.render(graphics);
+		this.world.render(graphics);
 	}
 	
 	public static void main(String[] args)

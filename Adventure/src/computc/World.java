@@ -1,34 +1,34 @@
 package computc;
 
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
 
-public class World extends TiledRoom
+public class World
 {
-	
-	// bounds
 	private int xmin;
 	private int ymin;
 	private int xmax;
 	private int ymax;
 	
 	public Hero hero;
-	//private Room room;
-	private ArrayList<Enemy> enemies;
+	private TiledMap map;
+	private LinkedList<Enemy> enemies;
 	
-	public World(String tmx) throws SlickException
+	public World() throws SlickException
 	{
-		super(tmx);
-		this.hero = new Hero(this, 0, 0);
-		hero.setPosition(100, 100);
+		this.hero = new Hero(this, 4, 0);
+		this.map = new TiledMap("res/world.tmx");
+		this.enemies = new LinkedList<Enemy>();
 		
-		populateEnemies();
-		this.loadRoom();
+		for(Point point : new Point[] {new Point(1, 6), new Point(4, 4), new Point(8, 4)})
+		{
+		 	this.enemies.add(new Thug(this, point.x, point.y));
+		}
 	}
 	
 	public void update(Input input, int delta)
@@ -51,18 +51,17 @@ public class World extends TiledRoom
 	
 	public void render(Graphics graphics)
 	{
-		render(x, y);
+		this.map.render(graphics, camera);
 
 		this.hero.render(graphics);
 		
-		for(int i = 0; i < enemies.size(); i++ ) 
+		for(Enemy enemy : this.enemies)
 		{
-			 enemies.get(i).render(graphics, this.x, this.y);
-		 }
+			enemy.render(graphics);
+		}
 	}
 	
-	
-	public void setPosition(double x, double y) 
+	/*public void setPosition(double x, double y) 
 	{
 		cameraTweaker = 0.005;
 		
@@ -89,24 +88,5 @@ public class World extends TiledRoom
 		if(y < ymin) y = ymin;
 		if (x > xmax) x= xmax;
 		if (y> ymax) y = ymax;
-	}
-	
-	private void populateEnemies() throws SlickException
-	 {
-		enemies = new ArrayList<Enemy>();
-	
-	Thug thug;
-	Point[] points = new Point[] {new Point(1, 6), new Point(4, 4), new Point(8, 4)};
-	
-	 for(int i = 0; i < points.length; i++)
-	 	{
-		 	thug = new Thug(this, points[i].x, points[i].y);
-	
-		 	enemies.add(thug);
-	 	}
-	
-	 thug = new Thug(this, 5, 7);
-	
-	}
-	
+	}*/
 }
