@@ -22,14 +22,6 @@ public class Hero extends Entity
 		health = 5;
 	}
 	
-	public void render(Graphics graphics, Camera camera)
-	{
-		int x = this.getX() - (this.getWidth() / 2) - camera.getX();
-		int y = this.getY() - (this.getHeight() / 2) - camera.getY();
-		
-		this.image.draw(x, y);
-	}
-	
 	public void update(Input input, int delta)
 	{
 		float step = this.moveSpeed * delta;
@@ -55,5 +47,35 @@ public class Hero extends Entity
 			this.direction = Direction.EAST;
 			this.x += step;
 		}
+	}
+	
+	public void render(Graphics graphics, Camera camera)
+	{
+		if(blinking) 
+		{
+			long elapsed = (System.nanoTime() - blinkTimer) / 1000000;
+			if(elapsed / 100 % 2 == 0) 
+			{
+				return;
+			}
+		}
+			
+		super.render(graphics, camera);
+	}
+	
+	private void hit(int damage) 
+	{
+		if(blinking)
+			return;
+		health -= damage;
+		
+		if(health < 0)
+			health = 0;
+		
+		if(health == 0) 
+			dead = true;
+		
+		blinking = true;
+		blinkTimer = (int) System.nanoTime();
 	}
 }

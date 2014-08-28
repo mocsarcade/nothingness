@@ -12,8 +12,23 @@ public class Camera
 	
 	public void update(int delta)
 	{
-		this.x = this.getTargetX();
-		this.y = this.getTargetY();
+		if(this.getX() < this.getTargetX())
+		{
+			this.increaseX(delta);
+		}
+		else if(this.getX() > this.getTargetX())
+		{
+			this.decreaseX(delta);
+		}
+		
+		if(this.getY() < this.getTargetY())
+		{
+			this.increaseY(delta);
+		}
+		else if(this.getY() > this.getTargetY())
+		{
+			this.decreaseY(delta);
+		}
 	}
 	
 	public int getX()
@@ -36,5 +51,25 @@ public class Camera
 	{
 		int height = Adventure.SCREEN_HEIGHT;
 		return (int)(Math.floor(this.target.y / height)) * height;
+	}
+	
+	public void increaseX(int delta)
+	{
+		this.x += delta;
+	}
+	
+	public void decreaseX(int delta)
+	{
+		this.x -= delta;
+	}
+	
+	public void increaseY(int delta)
+	{
+		this.y += delta;
+	}
+	
+	public void decreaseY(int delta)
+	{
+		this.y -= delta;
 	}
 }
