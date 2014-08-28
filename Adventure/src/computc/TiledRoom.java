@@ -1,5 +1,6 @@
 package computc;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -7,9 +8,9 @@ public class TiledRoom extends TiledMap
 {
 	protected Tile[][] tiles;
 	
-	public TiledRoom(String tmx) throws SlickException
+	public TiledRoom() throws SlickException
 	{
-		super(tmx);
+		super("res/world.tmx");
 		
 		this.tiles = new Tile[this.getWidth()][this.getHeight()];
 		
@@ -24,6 +25,11 @@ public class TiledRoom extends TiledMap
 				this.tiles[tx][ty].isDoor = this.getTileProperty(tid, "door", "false").equals("false");
 			}
 		}
+	}
+	
+	public void render(Graphics graphics)
+	{
+		this.render(0, 0);
 	}
 	
 	public int getPixelWidth()

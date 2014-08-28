@@ -16,13 +16,15 @@ public class World
 	private int ymax;
 	
 	public Hero hero;
-	private TiledMap map;
-	private LinkedList<Enemy> enemies;
+	public TiledRoom room;
+	public LinkedList<Enemy> enemies;
 	
 	public World() throws SlickException
 	{
 		this.hero = new Hero(this, 4, 0);
-		this.map = new TiledMap("res/world.tmx");
+		
+		this.room = new TiledRoom();
+		
 		this.enemies = new LinkedList<Enemy>();
 		
 		for(Point point : new Point[] {new Point(1, 6), new Point(4, 4), new Point(8, 4)})
@@ -33,7 +35,7 @@ public class World
 	
 	public void update(Input input, int delta)
 	{
-		if(Hero.nextArea && hero.direction == Direction.NORTH)
+		/*if(Hero.nextArea && hero.direction == Direction.NORTH)
 		this.setPosition(Adventure.SCREEN_WIDTH - hero.getX() - 500 , Adventure.SCREEN_HEIGHT - hero.getY() - 50);
 		
 		if(Hero.nextArea && hero.direction == Direction.SOUTH)
@@ -43,7 +45,7 @@ public class World
 		this.setPosition(Adventure.SCREEN_WIDTH - hero.getX() - 850 , Adventure.SCREEN_HEIGHT - hero.getY() - 500);
 		
 		if(Hero.nextArea && hero.direction == Direction.WEST)
-		this.setPosition(Adventure.SCREEN_WIDTH - hero.getX() - 50, Adventure.SCREEN_HEIGHT - hero.getY() - 500);
+		this.setPosition(Adventure.SCREEN_WIDTH - hero.getX() - 50, Adventure.SCREEN_HEIGHT - hero.getY() - 500);*/
 		
 		this.hero.update(input, delta);
 		
@@ -51,7 +53,7 @@ public class World
 	
 	public void render(Graphics graphics)
 	{
-		this.map.render(graphics, camera);
+		this.room.render(graphics);
 
 		this.hero.render(graphics);
 		

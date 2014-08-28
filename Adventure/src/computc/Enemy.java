@@ -42,13 +42,4 @@ public class Enemy extends Entity
 		
 		blinking = true;
 	}
-	
-	public void render(Graphics graphics, float cx, float cy)
-	{
-
-		int x = this.getX() - (this.getWidth() / 2) + (int)cx;
-		int y = this.getY() - (this.getHeight() / 2) + (int)cy;
-		
-		this.image.draw(x + xmap, y + ymap);
-	}
 }
