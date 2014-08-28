@@ -7,18 +7,14 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
-
-public abstract class Entity {
-	
+public abstract class Entity
+{
 	// world
 	protected World world;
 	
 	// position
 	protected float x;
 	protected float y;
-	
-	protected float xmap;
-	protected float ymap;
 	
 	// movement
 	protected Vector2f step;
@@ -27,38 +23,22 @@ public abstract class Entity {
 	// rendering
 	protected Image image;
 	
-	// hitbox
-	protected int hitboxWidth;
-	protected int hitboxHeight;
-	
 	// some attributes?
 	protected float maxSpeed;
 	protected float moveSpeed;
 	protected double stopSpeed;
 	protected double attackSpeed;
 	
-	// more collision stuff?
-	protected int currentRow;
-	protected int currentCol;
-	protected int destinationX;
-	protected int destinationY;
-	protected boolean topLeft;
-	protected boolean topRight;
-	protected boolean bottomLeft;
-	protected boolean bottomRight;
-	
 	// blinking collision indicator
 	protected boolean blinking;
 	protected int blinkTimer;
 	
-	protected int tileSize;
-	
 	public Entity(World world, int tx, int ty)
 	{
 		this.world = world;
-				
-		this.x = (tx + 0.5f) * 64; //this.world.getTileWidth();
-		this.y = (ty + 0.5f) * 64; //this.world.getTileWidth();
+		
+		this.x = (tx + 0.5f) * this.world.room.getTileWidth();
+		this.y = (ty + 0.5f) * this.world.room.getTileWidth();
 	}
 	
 	public void update(Input input, int delta)
@@ -71,7 +51,15 @@ public abstract class Entity {
 		int x = this.getX() - (this.getWidth() / 2);
 		int y = this.getY() - (this.getHeight() / 2);
 		
-		this.image.draw(x + xmap, y + ymap);
+		this.image.draw(x, y);
+	}
+	
+	public void render(Graphics graphics, Camera camera)
+	{
+		int x = this.getX() - (this.getWidth() / 2) - camera.getX();
+		int y = this.getY() - (this.getHeight() / 2) - camera.getY();
+		
+		this.image.draw(x, y);
 	}
 	
 	public boolean intersects(Entity that)
@@ -81,29 +69,6 @@ public abstract class Entity {
 		
 		return r1.intersects(r2);
 	}
-	
-//	public void calculateCorners(double x, double y) {
-//		   
-//		   int leftTile = (int)(x - hitboxWidth/ 2)/ tileSize;
-//		   int rightTile = (int)(x + hitboxWidth/ 2 - 1)/ tileSize;
-//		   int topTile = (int)(y - hitboxHeight/ 2) / tileSize;
-//		   int bottomTile = (int)(y + hitboxHeight/ 2 - 1)/ tileSize;
-//		   
-//		   if(topTile < 0 || bottomTile >= world.getHeight() || leftTile < 0 || rightTile >= world.getWidth()) {
-//			   topLeft = topRight = bottomLeft = bottomRight = false;
-//			   return;
-//		   }
-//		   
-//		   int tl = world.getType(topTile, leftTile);
-//		   int tr = world.getType(topTile, rightTile);
-//		   int bl = world.getType(bottomTile, leftTile);
-//		   int br = world.getType(bottomTile, rightTile);
-//		   topLeft = tl == Tile.BLOCKED;
-//		   topRight = tr ==  Tile.BLOCKED;
-//		   bottomLeft = bl == Tile.BLOCKED;
-//		   bottomRight = br == Tile.BLOCKED;
-//		   
-//	   }
 	
 	public Rectangle getHitbox()
 	{
@@ -116,7 +81,7 @@ public abstract class Entity {
 		return new Rectangle(x - (width / 2), y - (width / 2), width, height);
 	}
 	
-	public int getX() 
+	public int getX()
 	{
 		return (int)(this.x);
 	}
@@ -180,11 +145,5 @@ public abstract class Entity {
 	public Vector2f getStep()
 	{
 		return this.step;
-	}
-	
-	public void setMapPosition() 
-	{
-		xmap = world.getX();
-		ymap = world.getY();
 	}
 }

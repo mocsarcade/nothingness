@@ -1,31 +1,38 @@
 package computc;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
-
-
 public class TiledRoom extends TiledMap
 {
+	protected Tile[][] tiles;
 	
-	
-	protected int x;
-	protected int y;
-	protected double cameraTweaker;
-	
-	protected int fullMapWidth;
-	protected int fullMapHeight;
-	
-	protected boolean[][] doors;
-	protected boolean[][] blocked;
-	
-	private Tile[][] tiles;
-	private int[][] map;
-	
-	
-	public TiledRoom(String tmx) throws SlickException
+	public TiledRoom() throws SlickException
 	{
-		super(tmx);
+		super("res/world.tmx");
+		
+		this.tiles = new Tile[this.getWidth()][this.getHeight()];
+		
+		for(int tx = 0; tx < this.getWidth(); tx++)
+		{
+			for(int ty = 0; ty < this.getHeight(); ty++)
+			{
+				int tid = this.getTileId(tx, ty, 0);
+				
+				this.tiles[tx][ty] = new Tile();
+				this.tiles[tx][ty].isBlock = this.getTileProperty(tid, "block", "false").equals("false");
+				this.tiles[tx][ty].isDoor = this.getTileProperty(tid, "door", "false").equals("false");
+			}
+		}
+	}
+	
+	public void render(Graphics graphics, Camera camera)
+	{
+		int x = camera.getX() * -1;
+		int y = camera.getY() * -1;
+		
+		this.render(x, y);
 	}
 	
 	public int getPixelWidth()
@@ -38,73 +45,16 @@ public class TiledRoom extends TiledMap
 		return this.getHeight() * this.getTileHeight();
 	}
 	
-	public void setCameraTweaker(double d) 
+	public Tile getTile(int tx, int ty)
 	{
-		cameraTweaker = d;
+		return this.tiles[tx][ty];
 	}
 	
-	public int getX() 
+	public Tile getTile(float x, float y)
 	{
-		return x;
-	}
-	
-	public int getY()
-	{
-		return y;
-	}
-	
-	public boolean isAccessible(float x, float y)
-	{
-	int tileX = (int)x / getTileWidth();
-	int tileY = (int)y / getTileHeight();
-	return doors[tileX][tileY];
-	}
-	
-	public boolean isBlocked(float x, float y)
-	{
-	int tileX = (int)x / getTileWidth();
-	int tileY = (int)y / getTileHeight();
-	return blocked[tileX][tileY];
-	}
-	
-	public void loadRoom() 
-	{
-		blocked = new boolean [getWidth()][getHeight()];
-		doors = new boolean[getWidth()][getHeight()];
+		int tx = (int)(x) / this.getTileWidth();
+		int ty = (int)(y) / this.getTileHeight();
 		
-		
-		for (int xAxis=0;xAxis<getWidth(); xAxis++)
-		{
-			for (int yAxis=0;yAxis<getHeight(); yAxis++)
-			{
-				int tileID = getTileId(xAxis, yAxis, 0);
-				String doorValue = getTileProperty(tileID, "door", "false");
-				if ("true".equals(doorValue))
-					{
-					doors[xAxis][yAxis] = true;
-					}
-				
-				String blockedValue = getTileProperty(tileID, "stone", "false");
-				if ("true".equals(blockedValue))
-					{
-					blocked[xAxis][yAxis] = true;
-					}
-			}
-		}
+		return this.tiles[tx][ty];
 	}
-	
-//	public int getType (int row, int col) 
-//	{
-//		int rc = map[row][col];
-//		for (int r = 0; r<getHeight(); r++)
-//			{
-//			for (int c = 0; c<getWidth(); row++)
-//				{
-//		
-////		int rc = map[row][col];
-////		int r = rc /numTilesAcross;
-////		int c = rc % numTilesAcross;
-//		return tiles [col][row].getType();
-//	}
-	
 }

@@ -4,7 +4,7 @@
   <image source="tiles.png" width="192" height="64"/>
   <tile id="0">
    <properties>
-    <property name="stone" value="true"/>
+    <property name="block" value="true"/>
    </properties>
   </tile>
   <tile id="2">

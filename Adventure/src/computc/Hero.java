@@ -7,25 +7,18 @@ import org.newdawn.slick.SlickException;
 
 public class Hero extends Entity
 {
-	
 	public static boolean nextArea;
 	private boolean dead = false;
+	private int health;
+	private int maxHealth;
 	
 	public Hero(World world, int tx, int ty) throws SlickException
 	{
 		super(world, tx, ty);
-		try 
-		{
-		this.image = new Image("res/hero.png");
-		}
-		catch (Exception e) 
-		{
-			e.printStackTrace();
-		}
 		
-		moveSpeed = .15f;
-		hitboxWidth = getWidth();
-		hitboxHeight = getHeight();
+		this.image = new Image("res/hero.png");
+		
+		moveSpeed = 0.15f;
 		health = 5;
 	}
 	
@@ -36,78 +29,43 @@ public class Hero extends Entity
 		if(input.isKeyDown(Input.KEY_UP))
 		{
 			this.direction = Direction.NORTH;
-			
-			if(!world.isBlocked(this.x, this.y - getHeight()/2))
-				this.y -= step;
-				
-				if(world.isAccessible(this.x, this.y))
-				{
-				 nextArea = true;
-				}
-				else nextArea = false;
-		
+			this.y -= step;
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
 			this.direction = Direction.SOUTH;
-			
-			if(!world.isBlocked(this.x, this.y + getHeight()/2))
-				this.y += step;
-			
-				if(world.isAccessible(this.x, this.y))
-				{
-				 nextArea = true;
-				}
-				else nextArea = false;
+			this.y += step;
 		}
 		
 		if(input.isKeyDown(Input.KEY_LEFT))
 		{
 			this.direction = Direction.WEST;
-			
-			if(!world.isBlocked(this.x - getWidth()/2, this.y))
-				this.x -= step;
-				
-			if(world.isAccessible(this.x, this.y))
-			{
-				nextArea = true;
-			}
-				else nextArea = false;
+			this.x -= step;
 		}
-		
 		else if(input.isKeyDown(Input.KEY_RIGHT))
 		{
 			this.direction = Direction.EAST;
-			
-			if(!world.isBlocked(this.x  + getWidth()/2, this.y))
-				this.x += step;
-				
-			if(world.isAccessible(this.x, this.y))
-			{
-			 nextArea = true;
-			}
-			else nextArea = false;
+			this.x += step;
 		}
 	}
 	
-	public void render(Graphics graphics) 
+	public void render(Graphics graphics, Camera camera)
 	{
-		if (blinking) 
+		if(blinking) 
 		{
-			long elapsed = (System.nanoTime() - blinkTimer)/ 1000000;
+			long elapsed = (System.nanoTime() - blinkTimer) / 1000000;
 			if(elapsed / 100 % 2 == 0) 
 			{
 				return;
 			}
 		}
-		
-		setMapPosition();
-		super.render(graphics);
+			
+		super.render(graphics, camera);
 	}
 	
 	private void hit(int damage) 
 	{
-		if(blinking) 
+		if(blinking)
 			return;
 		health -= damage;
 		
@@ -120,18 +78,4 @@ public class Hero extends Entity
 		blinking = true;
 		blinkTimer = (int) System.nanoTime();
 	}
-	
-	public int getX() 
-	{
-		return (int) this.x;
-	}
-	
-	public int getY() 
-	{
-		return (int) this.y;
-	}
-	
-	
-	private int health;
-	private int maxHealth;
 }
