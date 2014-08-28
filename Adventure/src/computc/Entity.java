@@ -54,6 +54,14 @@ public abstract class Entity
 		this.image.draw(x, y);
 	}
 	
+	public void render(Graphics graphics, Camera camera)
+	{
+		int x = this.getX() - (this.getWidth() / 2) + camera.getX();
+		int y = this.getY() - (this.getHeight() / 2) + camera.getY();
+		
+		this.image.draw(x, y);
+	}
+	
 	public boolean intersects(Entity that)
 	{
 		Rectangle r1 = this.getHitbox();

@@ -27,9 +27,9 @@ public class TiledRoom extends TiledMap
 		}
 	}
 	
-	public void render(Graphics graphics)
+	public void render(Graphics graphics, Camera camera)
 	{
-		this.render(0, 0);
+		this.render(camera.getX() * -1, camera.getY() * -1);
 	}
 	
 	public int getPixelWidth()

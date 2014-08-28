@@ -19,8 +19,7 @@ public class Thug extends Enemy
 	
 	public void update(int delta)
 	{
-		this.setX(this.x);
-		this.setY(this.y);
+		//code some behaviors here!
 	}
 	
 }
