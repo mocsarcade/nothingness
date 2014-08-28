@@ -18,7 +18,7 @@ public class Hero extends Entity
 		
 		this.image = new Image("res/hero.png");
 		
-		moveSpeed = .15f;
+		moveSpeed = 0.15f;
 		health = 5;
 	}
 	

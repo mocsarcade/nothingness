@@ -10,24 +10,19 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class World
 {
-	private int xmin;
-	private int ymin;
-	private int xmax;
-	private int ymax;
-	
 	public Hero hero;
 	public TiledRoom room;
 	public LinkedList<Enemy> enemies;
 	
 	public World() throws SlickException
 	{
-		this.hero = new Hero(this, 4, 0);
-		
 		this.room = new TiledRoom();
+		
+		this.hero = new Hero(this, 5, 0);
 		
 		this.enemies = new LinkedList<Enemy>();
 		
-		for(Point point : new Point[] {new Point(1, 6), new Point(4, 4), new Point(8, 4)})
+		for(Point point : new Point[] {new Point(1, 6), new Point(5, 4), new Point(8, 5)})
 		{
 		 	this.enemies.add(new Thug(this, point.x, point.y));
 		}
@@ -62,33 +57,4 @@ public class World
 			enemy.render(graphics);
 		}
 	}
-	
-	/*public void setPosition(double x, double y) 
-	{
-		cameraTweaker = 0.005;
-		
-		this.x += (x - this.x) * cameraTweaker;
-		this.y += (y - this.y) * cameraTweaker;
-		
-		loadMap();
-		fixBounds();
-		
-	}
-	
-	public void loadMap()
-	{
-		xmin = (Adventure.SCREEN_WIDTH) - getPixelWidth();
-		xmax = 0;
-		ymin = (Adventure.SCREEN_HEIGHT) - getPixelHeight();
-		ymax = 0;
-	}
-	
-	
-	private void fixBounds() 
-	{
-		if(x < xmin) x = xmin;      
-		if(y < ymin) y = ymin;
-		if (x > xmax) x= xmax;
-		if (y> ymax) y = ymax;
-	}*/
 }

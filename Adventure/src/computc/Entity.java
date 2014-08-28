@@ -36,7 +36,7 @@ public abstract class Entity
 	public Entity(World world, int tx, int ty)
 	{
 		this.world = world;
-				
+		
 		this.x = (tx + 0.5f) * this.world.room.getTileWidth();
 		this.y = (ty + 0.5f) * this.world.room.getTileWidth();
 	}
