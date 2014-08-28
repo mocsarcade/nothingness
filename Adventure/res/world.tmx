@@ -13,9 +13,49 @@
    </properties>
   </tile>
  </tileset>
- <layer name="tiles" width="33" height="27">
+ <layer name="room9" width="33" height="27">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC9VWyw7AIAjz8f//7GWHhRSDjyIcGrNKXMdaYi2lVIEGODaaAR61ljWSXslp/O0+9A87GtB+1j5E9cPN2hN0Uu0LDV45Rs/SkzONyL/o3SdeXzmXlbddDYj7z7OMfUC+8fQDKxeWfGScJUwNlt6y/5tHrcbtnjvzmpaxmSctGtDc0b5T3rlW9UbuA9sPEXLxGgOwzC1M7A0AAA==
+   H4sIAAAAAAAAC+3TwQ0AIAhD0cL+Q7sAGC4gif8lvXCqBCUAAABsYkE8mXd28EKmO2SzqQ6muEdnh9v7Tf/sYeM9vPoX1Rwyat/S7A0AAA==
+  </data>
+ </layer>
+ <layer name="room8" width="33" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglEwCkbBKBgFtAaMJGBauoGJCDyS3IDuHnQ5WgFc9mMTpxUYDOEw2NLDQLqBFuUDAHOuDcnsDQAA
+  </data>
+ </layer>
+ <layer name="room7" width="33" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMglEwCkbBKBgF5ABGLJgJhzit3cCEB9PDDfjsR3bHqBsgeKDdMBjCYSTkC2IxrQAATUbSaewNAAA=
+  </data>
+ </layer>
+ <layer name="room6" width="33" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMgpEHGLFgJhzitHQDExLGxaeHG4ihh7MbsIX5SAyHwegGfPmDlm4Y6PJhFIyCUTAKqAEABKzHsewNAAA=
+  </data>
+ </layer>
+ <layer name="room5" width="33" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgGAWjYBSMguEBGLFgJhzitHQDExGYHm7A5RZkeVq7YTCEAza/o2N6umE0PQxcOBCLR8EoGAWjYLgAAHC7U6nsDQAA
+  </data>
+ </layer>
+ <layer name="room4" width="33" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC+3UsQoAIAgAUev/P7o9MGzocrgH7idkEZLU17iYlw2zMETDaX+yIdvfBr5h76Dfw++7yO6A+h8kqbMF5EXbdOwNAAA=
+  </data>
+ </layer>
+ <layer name="room3" width="33" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgoA1gJAHTCoDMZiICj7qBvm5Adw+6HD3cMBjCYaS7AR0z4RAfBaNgFIyCUTAKRsEoGAXkAQCrmbpP7A0AAA==
+  </data>
+ </layer>
+ <layer name="room1" width="33" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NkYGBgRMNMWMRAmFYAZichTA83EEPT2g1DIRyY6OCGoRAOIyE9EItHwSgYBaNgFIyCUTAKRsHgAgB0dDmg7A0AAA==
+  </data>
+ </layer>
+ <layer name="room2" width="33" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NgIB4wkoBpBUBmMxGBR5obkMOeXm7A5l96u2EwhMNgTA8D5QZ0jB4ntC4fRsEoGAWjYBSMglEwCkYBAgAAeBskkuwNAAA=
   </data>
  </layer>
 </map>
