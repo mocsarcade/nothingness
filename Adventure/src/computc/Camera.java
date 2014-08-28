@@ -2,7 +2,7 @@ package computc;
 
 public class Camera
 {
-	private int x, y;
+	private float x, y;
 	private Entity target;
 	
 	public Camera(Entity target)
@@ -33,12 +33,12 @@ public class Camera
 	
 	public int getX()
 	{
-		return this.x;
+		return (int)(this.x);
 	}
 	
 	public int getY()
 	{
-		return this.y;
+		return (int)(this.y);
 	}
 	
 	public int getTargetX()
@@ -53,23 +53,23 @@ public class Camera
 		return (int)(Math.floor(this.target.y / height)) * height;
 	}
 	
-	public void increaseX(int delta)
+	public void increaseX(float amount)
 	{
-		this.x += delta;
+		this.x += amount;
 	}
 	
-	public void decreaseX(int delta)
+	public void decreaseX(float amount)
 	{
-		this.x -= delta;
+		this.x -= amount;
 	}
 	
-	public void increaseY(int delta)
+	public void increaseY(float amount)
 	{
-		this.y += delta;
+		this.y += amount;
 	}
 	
-	public void decreaseY(int delta)
+	public void decreaseY(float amount)
 	{
-		this.y -= delta;
+		this.y -= amount;
 	}
 }
