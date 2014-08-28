@@ -2,21 +2,22 @@ package computc;
 
 public class Camera
 {
-	public int x, y;
+	public Entity target;
 	
-	public Camera(int x, int y)
+	public Camera(Entity target)
 	{
-		this.x = x;
-		this.y = y;
+		this.target = target;
 	}
 	
 	public int getX()
 	{
-		return this.x;
+		int rx = (int)(Math.floor(this.target.x / Adventure.SCREEN_WIDTH));
+		return rx * Adventure.SCREEN_WIDTH;
 	}
 	
 	public int getY()
 	{
-		return this.y;
+		int ry = (int)(Math.floor(this.target.y / Adventure.SCREEN_HEIGHT));
+		return ry * Adventure.SCREEN_HEIGHT;
 	}
 }

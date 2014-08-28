@@ -22,6 +22,14 @@ public class Hero extends Entity
 		health = 5;
 	}
 	
+	public void render(Graphics graphics, Camera camera)
+	{
+		int x = this.getX() - (this.getWidth() / 2) - camera.getX();
+		int y = this.getY() - (this.getHeight() / 2) - camera.getY();
+		
+		this.image.draw(x, y);
+	}
+	
 	public void update(Input input, int delta)
 	{
 		float step = this.moveSpeed * delta;

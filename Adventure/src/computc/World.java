@@ -27,7 +27,7 @@ public class World
 		 	this.enemies.add(new Thug(this, point.x, point.y));
 		}
 		
-		this.camera = new Camera(0, 0);
+		this.camera = new Camera(hero);
 	}
 	
 	public void update(Input input, int delta)
@@ -44,6 +44,6 @@ public class World
 			enemy.render(graphics, camera);
 		}
 
-		this.hero.render(graphics);
+		this.hero.render(graphics, camera);
 	}
 }

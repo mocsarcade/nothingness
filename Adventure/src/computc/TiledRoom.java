@@ -29,7 +29,10 @@ public class TiledRoom extends TiledMap
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		this.render(camera.getX() * -1, camera.getY() * -1);
+		int x = camera.getX() * -1;
+		int y = camera.getY() * -1;
+		
+		this.render(x, y);
 	}
 	
 	public int getPixelWidth()
