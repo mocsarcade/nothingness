@@ -16,6 +16,9 @@ public abstract class Entity
 	protected float x;
 	protected float y;
 	
+	protected float xtemp;
+	protected float ytemp;
+	
 	// movement
 	protected Vector2f step;
 	protected Direction direction;

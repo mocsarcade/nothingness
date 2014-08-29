@@ -22,7 +22,7 @@ public class World
 		this.hero = new Hero(this, 5, 0);
 		
 		this.enemies = new LinkedList<Enemy>();
-		for(Point point : new Point[] {new Point(1, 6), new Point(5, 4), new Point(8, 5)})
+		for(Point point : new Point[] {new Point(1, 6), new Point(5, 4), new Point(8, 5), new Point(17, 7)})
 		{
 		 	this.enemies.add(new Thug(this, point.x, point.y));
 		}

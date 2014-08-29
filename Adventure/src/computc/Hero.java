@@ -24,29 +24,8 @@ public class Hero extends Entity
 	
 	public void update(Input input, int delta)
 	{
-		float step = this.moveSpeed * delta;
-		
-		if(input.isKeyDown(Input.KEY_UP))
-		{
-			this.direction = Direction.NORTH;
-			this.y -= step;
-		}
-		else if(input.isKeyDown(Input.KEY_DOWN))
-		{
-			this.direction = Direction.SOUTH;
-			this.y += step;
-		}
-		
-		if(input.isKeyDown(Input.KEY_LEFT))
-		{
-			this.direction = Direction.WEST;
-			this.x -= step;
-		}
-		else if(input.isKeyDown(Input.KEY_RIGHT))
-		{
-			this.direction = Direction.EAST;
-			this.x += step;
-		}
+		getNextPosition(input, delta);
+		setPosition(xtemp, ytemp);
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -78,4 +57,32 @@ public class Hero extends Entity
 		blinking = true;
 		blinkTimer = (int) System.nanoTime();
 	}
+	
+	private void getNextPosition(Input input, int delta) 
+	{
+		float step = this.moveSpeed * delta;
+		
+			if(input.isKeyDown(Input.KEY_UP))
+				{
+					this.direction = Direction.NORTH;
+					this.y -= step;
+				}
+			else if(input.isKeyDown(Input.KEY_DOWN))
+				{
+				this.direction = Direction.SOUTH;
+				this.y += step;
+				}
+		
+			if(input.isKeyDown(Input.KEY_LEFT))
+				{
+				this.direction = Direction.WEST;
+				this.x -= step;
+				}
+			else if(input.isKeyDown(Input.KEY_RIGHT))
+			{
+				this.direction = Direction.EAST;
+				this.x += step;
+			}
+	}
+	
 }

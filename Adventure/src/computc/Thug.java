@@ -19,7 +19,39 @@ public class Thug extends Enemy
 	
 	public void update(int delta)
 	{
-		//code some behaviors here!
+		if(left) 
+		{
+			this.x -= moveSpeed;
+			if(this.x < -maxSpeed) 
+			{
+				this.x = -maxSpeed;
+			}
+		}
+		else if(right) 
+		{
+			this.x += moveSpeed;
+			if(this.x > maxSpeed) 
+			{
+				this.x = maxSpeed;
+			}
+		
+		}
+		else if(up) 
+		{
+			this.x += moveSpeed;
+			if(this.x > maxSpeed) 
+			{
+				this.x = maxSpeed;
+			}
+		}
+		else if(down) 
+		{
+			this.x += moveSpeed;
+			if(this.x > maxSpeed) 
+			{
+				this.x = maxSpeed;
+			}
+		}
 	}
 	
 }
