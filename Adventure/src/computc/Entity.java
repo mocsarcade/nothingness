@@ -228,7 +228,6 @@ public abstract class Entity
 		   
 		   int leftTile = (int)(x - getHitboxWidth()/ 2)/ Adventure.TILE_SIZE;
 		   int rightTile = (int)(x + getHitboxWidth()/ 2 - 1)/ Adventure.TILE_SIZE;
-		   System.out.println("rightTile: " + rightTile);
 		   int topTile = (int)(y - getHitboxHeight()/ 2) / Adventure.TILE_SIZE;
 		   int bottomTile = (int)(y + getHitboxHeight()/ 2 - 1)/ Adventure.TILE_SIZE;
 		   
@@ -242,10 +241,11 @@ public abstract class Entity
 //		   boolean bl = tileMap.getType(bottomTile, leftTile);
 //		   boolean br = tileMap.getType(bottomTile, rightTile);
 		   
-//		   topLeft = world.room.getTile(topTile, leftTile).isBlock;
-//		   topRight = world.room.getTile(topTile, rightTile).isBlock;
-//		   bottomLeft = world.room.getTile(bottomTile, leftTile).isBlock;
-//		   bottomRight = world.room.getTile(bottomTile, rightTile).isBlock;
+		   topLeft = world.room.getTile(topTile, leftTile).isBlock;
+		   System.out.println("topLeft: " + topLeft);
+		   topRight = world.room.getTile(topTile, rightTile).isBlock;
+		   bottomLeft = world.room.getTile(bottomTile, leftTile).isBlock;
+		   bottomRight = world.room.getTile(bottomTile, rightTile).isBlock;
 		   
 	   }
 }

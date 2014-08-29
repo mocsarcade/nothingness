@@ -13,7 +13,7 @@ public class TiledRoom extends TiledMap
 		super("res/world.tmx");
 		
 		this.tiles = new Tile[this.getWidth()][this.getHeight()];
-		
+		System.out.println("Does it even get here?");
 		for(int tx = 0; tx < this.getWidth(); tx++)
 		{
 			for(int ty = 0; ty < this.getHeight(); ty++)
@@ -24,6 +24,7 @@ public class TiledRoom extends TiledMap
 				
 				if(this.getTileProperty(tid, "block", "false").equals("true"))
 				this.tiles[tx][ty].isBlock = true; 
+				System.out.println("isBlock is : " + this.tiles[tx][ty].isBlock);
 				
 				if(this.getTileProperty(tid, "door", "false").equals("true"))
 				this.tiles[tx][ty].isDoor = true;

@@ -18,9 +18,9 @@ public class Hero extends Entity
 		
 		this.image = new Image("res/hero.png");
 		
-		moveSpeed = 0.035f;
-		maxSpeed = .3f;
-		stopSpeed = 0.002f;
+		moveSpeed = 0.015f;
+		maxSpeed = .2f;
+		stopSpeed = 0.001f;
 		health = 5;
 	}
 	
@@ -67,18 +67,18 @@ public class Hero extends Entity
 		
 		if(input.isKeyDown(Input.KEY_UP)) 
 		{
-			dy -= moveSpeed;
+			dy -= moveSpeed * delta;
 			if(dy < -maxSpeed)
 			{
-				dy = -maxSpeed;
+				dy = -maxSpeed * delta;
 			}
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
-			dy += moveSpeed;
+			dy += moveSpeed * delta;
 			if(dy > maxSpeed)
 			{
-				dy = maxSpeed;
+				dy = maxSpeed * delta;
 			}
 		}
 		
@@ -86,7 +86,7 @@ public class Hero extends Entity
 		{
 			if (dy > 0) 
 			{
-				dy -= stopSpeed;
+				dy -= stopSpeed * delta;
 				if(dy < 0)
 				{
 					dy = 0;
@@ -94,35 +94,35 @@ public class Hero extends Entity
 			}
 			else if (dy < 0)
 			{
-				dy += stopSpeed;
+				dy += stopSpeed * delta;
 				if(dy > 0) 
 				{
 					dy = 0;
 				}
 			}
 		}
-		
+//		System.out.println("the movement should be:" + dx + " & " + dy);
 		 if(input.isKeyDown(Input.KEY_RIGHT))
 		{
-			dx += moveSpeed;
+			dx += moveSpeed * delta;
 			if(dx > maxSpeed) 
 			{
-				dx = maxSpeed;
+				dx = maxSpeed * delta;
 			}
 		}
 		 else if(input.isKeyDown(Input.KEY_LEFT)) 
 		{
-			dx -= moveSpeed;
+			dx -= moveSpeed * delta;
 			if(dx < -maxSpeed)
 			{
-				dx = -maxSpeed;
+				dx = -maxSpeed * delta;
 			}
 		}
 		else 
 		{
 			if (dx > 0) 
 			{
-				dx -= stopSpeed;
+				dx -= stopSpeed * delta;
 				if(dx < 0)
 				{
 					dx = 0;
@@ -130,7 +130,7 @@ public class Hero extends Entity
 			}
 			else if (dx < 0)
 			{
-				dx += stopSpeed;
+				dx += stopSpeed * delta;
 				if(dx > 0) 
 				{
 					dx = 0;
@@ -148,7 +148,6 @@ public class Hero extends Entity
 				}
 			else if(input.isKeyDown(Input.KEY_DOWN))
 				{
-				System.out.println("It should be moving down, Dammit!");
 				this.direction = Direction.SOUTH;
 //				this.y += step;
 				}
