@@ -11,13 +11,13 @@ import org.newdawn.slick.tiled.TiledMap;
 public class World
 {
 	public Hero hero;
-	public TiledRoom room;
+	public Room room;
 	public LinkedList<Enemy> enemies;
 	public Camera camera;
 	
 	public World() throws SlickException
 	{
-		this.room = new TiledRoom();
+		this.room = new Room();
 		
 		this.hero = new Hero(this, 5, 0);
 		
