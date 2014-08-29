@@ -18,14 +18,18 @@ public class Hero extends Entity
 		
 		this.image = new Image("res/hero.png");
 		
-		moveSpeed = 0.15f;
+		moveSpeed = 0.035f;
+		maxSpeed = .3f;
+		stopSpeed = 0.002f;
 		health = 5;
 	}
 	
 	public void update(Input input, int delta)
 	{
 		getNextPosition(input, delta);
+		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
+		
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -60,28 +64,104 @@ public class Hero extends Entity
 	
 	private void getNextPosition(Input input, int delta) 
 	{
-		float step = this.moveSpeed * delta;
+		
+		if(input.isKeyDown(Input.KEY_UP)) 
+		{
+			dy -= moveSpeed;
+			if(dy < -maxSpeed)
+			{
+				dy = -maxSpeed;
+			}
+		}
+		else if(input.isKeyDown(Input.KEY_DOWN))
+		{
+			dy += moveSpeed;
+			if(dy > maxSpeed)
+			{
+				dy = maxSpeed;
+			}
+		}
+		
+		else 
+		{
+			if (dy > 0) 
+			{
+				dy -= stopSpeed;
+				if(dy < 0)
+				{
+					dy = 0;
+				}
+			}
+			else if (dy < 0)
+			{
+				dy += stopSpeed;
+				if(dy > 0) 
+				{
+					dy = 0;
+				}
+			}
+		}
+		
+		 if(input.isKeyDown(Input.KEY_RIGHT))
+		{
+			dx += moveSpeed;
+			if(dx > maxSpeed) 
+			{
+				dx = maxSpeed;
+			}
+		}
+		 else if(input.isKeyDown(Input.KEY_LEFT)) 
+		{
+			dx -= moveSpeed;
+			if(dx < -maxSpeed)
+			{
+				dx = -maxSpeed;
+			}
+		}
+		else 
+		{
+			if (dx > 0) 
+			{
+				dx -= stopSpeed;
+				if(dx < 0)
+				{
+					dx = 0;
+				}
+			}
+			else if (dx < 0)
+			{
+				dx += stopSpeed;
+				if(dx > 0) 
+				{
+					dx = 0;
+				}
+			}
+			
+		}
+		
+//		float step = this.moveSpeed * delta;
 		
 			if(input.isKeyDown(Input.KEY_UP))
 				{
 					this.direction = Direction.NORTH;
-					this.y -= step;
+//					this.y -= step;
 				}
 			else if(input.isKeyDown(Input.KEY_DOWN))
 				{
+				System.out.println("It should be moving down, Dammit!");
 				this.direction = Direction.SOUTH;
-				this.y += step;
+//				this.y += step;
 				}
 		
 			if(input.isKeyDown(Input.KEY_LEFT))
 				{
 				this.direction = Direction.WEST;
-				this.x -= step;
+//				this.x -= step;
 				}
 			else if(input.isKeyDown(Input.KEY_RIGHT))
 			{
 				this.direction = Direction.EAST;
-				this.x += step;
+//				this.x += step;
 			}
 	}
 	

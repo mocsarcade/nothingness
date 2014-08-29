@@ -20,6 +20,7 @@ public class World
 		this.room = new TiledRoom();
 		
 		this.hero = new Hero(this, 5, 0);
+//		hero.setPosition(350, 50);
 		
 		this.enemies = new LinkedList<Enemy>();
 		for(Point point : new Point[] {new Point(1, 6), new Point(5, 4), new Point(8, 5), new Point(17, 7)})

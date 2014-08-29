@@ -21,8 +21,12 @@ public class TiledRoom extends TiledMap
 				int tid = this.getTileId(tx, ty, 0);
 				
 				this.tiles[tx][ty] = new Tile();
-				this.tiles[tx][ty].isBlock = this.getTileProperty(tid, "block", "false").equals("false");
-				this.tiles[tx][ty].isDoor = this.getTileProperty(tid, "door", "false").equals("false");
+				
+				if(this.getTileProperty(tid, "block", "false").equals("true"))
+				this.tiles[tx][ty].isBlock = true; 
+				
+				if(this.getTileProperty(tid, "door", "false").equals("true"))
+				this.tiles[tx][ty].isDoor = true;
 			}
 		}
 	}
@@ -57,4 +61,5 @@ public class TiledRoom extends TiledMap
 		
 		return this.tiles[tx][ty];
 	}
+	
 }
