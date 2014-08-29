@@ -48,14 +48,14 @@
    H4sIAAAAAAAAC2NgoA1gJAHTCoDMZiICj7qBvm5Adw+6HD3cMBjCYaS7AR0z4RAfBaNgFIyCUTAKRsEoGAXkAQCrmbpP7A0AAA==
   </data>
  </layer>
- <layer name="room1" width="33" height="27">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NkYGBgRMNMWMRAmFYAZichTA83EEPT2g1DIRyY6OCGoRAOIyE9EItHwSgYBaNgFIyCUTAKRsHgAgB0dDmg7A0AAA==
-  </data>
- </layer>
  <layer name="room2" width="33" height="27">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC2NgIB4wkoBpBUBmMxGBR5obkMOeXm7A5l96u2EwhMNgTA8D5QZ0jB4ntC4fRsEoGAWjYBSMglEwCkYBAgAAeBskkuwNAAA=
+  </data>
+ </layer>
+ <layer name="room1" width="33" height="27">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAC2NkYGBgRMNMWMRAmFYAZichTA83EEPT2g1DIRyY6OCGoRAOIyE9EItHwSgYBaNgFIyCUTAKRsHgAgB0dDmg7A0AAA==
   </data>
  </layer>
 </map>

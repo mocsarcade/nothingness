@@ -1,5 +1,8 @@
 package computc;
 
+import java.io.File;
+import java.util.Random;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
@@ -10,7 +13,7 @@ public class TiledRoom extends TiledMap
 	
 	public TiledRoom() throws SlickException
 	{
-		super("res/world.tmx");
+		super(TiledRoom.getRandomRoom());
 		
 		this.tiles = new Tile[this.getWidth()][this.getHeight()];
 		
@@ -56,5 +59,12 @@ public class TiledRoom extends TiledMap
 		int ty = (int)(y) / this.getTileHeight();
 		
 		return this.tiles[tx][ty];
+	}
+	
+	public static String getRandomRoom()
+	{
+		Random random = new Random();
+		File[] list = new File("./res/rooms").listFiles();
+		return "./res/rooms/" + list[random.nextInt(list.length)].getName();
 	}
 }
