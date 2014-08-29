@@ -9,13 +9,17 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class Room
 {
-	protected Tile[][] tiles;
+	private Tile[][] tiles;
+	
+	private final int WIDTH_OF_TILE = 64;
+	private final int HEIGHT_OF_TILE = 64;
+	private final int WIDTH_IN_TILES = 11;
+	private final int HEIGHT_IN_TILES = 9;
 	
 	public Room() throws SlickException
 	{
-		this.tiles = new Tile[11][9];
-		
-		TiledMap tmx = new TiledMap(Room.getRandomLayout());
+		TiledMap tmx = new TiledMap(Room.getRandomLayout());		
+		this.tiles = new Tile[WIDTH_IN_TILES][HEIGHT_IN_TILES];
 		
 		for(int tx = 0; tx < tmx.getWidth(); tx++)
 		{
@@ -32,9 +36,9 @@ public class Room
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		for(int tx = 0; tx < this.getWidthInTiles(); tx++)
+		for(int tx = 0; tx < WIDTH_IN_TILES; tx++)
 		{
-			for(int ty = 0; ty < this.getHeightInTiles(); ty++)
+			for(int ty = 0; ty < HEIGHT_IN_TILES; ty++)
 			{
 				this.tiles[tx][ty].render(graphics, camera);
 			}
@@ -43,32 +47,32 @@ public class Room
 	
 	public int getWidthInTiles()
 	{
-		return 11;
+		return WIDTH_IN_TILES;
 	}
 	
 	public int getHeightInTiles()
 	{
-		return 9;
-	}
-	
-	public int getWidthInPixels()
-	{
-		return 11 * 64;
-	}
-	
-	public int getHeightInPixels()
-	{
-		return 9 * 64;
+		return HEIGHT_IN_TILES;
 	}
 	
 	public int getWidthOfTile()
 	{
-		return 64;
+		return WIDTH_OF_TILE;
 	}
 	
 	public int getHeightOfTile()
 	{
-		return 64;
+		return HEIGHT_OF_TILE;
+	}
+	
+	public int getWidthInPixels()
+	{
+		return WIDTH_IN_TILES * WIDTH_OF_TILE;
+	}
+	
+	public int getHeightInPixels()
+	{
+		return HEIGHT_IN_TILES * HEIGHT_OF_TILE;
 	}
 	
 	public Tile getTile(int tx, int ty)
