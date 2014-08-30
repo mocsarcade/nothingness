@@ -9,19 +9,19 @@ import org.newdawn.slick.tiled.TiledMap;
 
 public class Room
 {
-	private Tile[][] tiles;
-	
 	private int rx, ry;
-	
-	private final int WIDTH_OF_TILE = 64;
-	private final int HEIGHT_OF_TILE = 64;
-	private final int WIDTH_IN_TILES = 11;
-	private final int HEIGHT_IN_TILES = 9;
 	
 	public Room westernRoom;
 	public Room easternRoom;
 	public Room southernRoom;
 	public Room northernRoom;
+	
+	private Tile[][] tiles;
+	
+	private final int WIDTH_OF_TILE = 64;
+	private final int HEIGHT_OF_TILE = 64;
+	private final int WIDTH_IN_TILES = 11;
+	private final int HEIGHT_IN_TILES = 9;
 	
 	public Room(int rx, int ry) throws SlickException
 	{
@@ -118,48 +118,24 @@ public class Room
 		return this.tiles[tx][ty];
 	}
 	
-	public void connectRoom(Direction direction, Room room)
+	public Room getNorthernRoom()
 	{
-		if(direction == Direction.NORTH)
-		{
-			this.connectNorthernRoom(room);
-		}
-		else if(direction == Direction.SOUTH)
-		{
-			this.connectSouthernRoom(room);
-		}
-		else if(direction == Direction.EAST)
-		{
-			this.connectEasternRoom(room);
-		}
-		else if(direction == Direction.WEST)
-		{
-			this.connectWesternRoom(room);
-		}
+		return this.northernRoom;
 	}
 	
-	public void connectNorthernRoom(Room that)
+	public Room getSouthernRoom()
 	{
-		this.setNorthernRoom(that);
-		that.setSouthernRoom(this);
+		return this.southernRoom;
 	}
 	
-	public void connectSouthernRoom(Room that)
+	public Room getEasternRoom()
 	{
-		this.setSouthernRoom(that);
-		that.setNorthernRoom(this);
+		return this.easternRoom;
 	}
 	
-	public void connectEasternRoom(Room that)
+	public Room getWesternRoom()
 	{
-		this.setEasternRoom(that);
-		that.setWesternRoom(this);
-	}
-	
-	public void connectWesternRoom(Room that)
-	{
-		this.setWesternRoom(that);
-		that.setEasternRoom(this);
+		return this.westernRoom;
 	}
 	
 	public void setNorthernRoom(Room room)
@@ -186,24 +162,48 @@ public class Room
 		this.tiles[0][9/2] = new Tile(this, 0, 9/2, this.tiles[11/2][1].image);
 	}
 	
-	public Room getNorthernRoom()
+	public void connectNorthernRoom(Room that)
 	{
-		return this.northernRoom;
+		this.setNorthernRoom(that);
+		that.setSouthernRoom(this);
 	}
 	
-	public Room getSouthernRoom()
+	public void connectSouthernRoom(Room that)
 	{
-		return this.southernRoom;
+		this.setSouthernRoom(that);
+		that.setNorthernRoom(this);
 	}
 	
-	public Room getEasternRoom()
+	public void connectEasternRoom(Room that)
 	{
-		return this.easternRoom;
+		this.setEasternRoom(that);
+		that.setWesternRoom(this);
 	}
 	
-	public Room getWesternRoom()
+	public void connectWesternRoom(Room that)
 	{
-		return this.westernRoom;
+		this.setWesternRoom(that);
+		that.setEasternRoom(this);
+	}
+	
+	public void connectRoom(Direction direction, Room room)
+	{
+		if(direction == Direction.NORTH)
+		{
+			this.connectNorthernRoom(room);
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			this.connectSouthernRoom(room);
+		}
+		else if(direction == Direction.EAST)
+		{
+			this.connectEasternRoom(room);
+		}
+		else if(direction == Direction.WEST)
+		{
+			this.connectWesternRoom(room);
+		}
 	}
 	
 	public static String getRandomLayout()

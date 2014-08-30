@@ -22,10 +22,30 @@ public class Tile
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		int x = tx * this.getWidth() + this.room.getX() - camera.getX();
-		int y = ty * this.getHeight() + this.room.getY() - camera.getY();
+		int x = this.getX() + this.room.getX() - camera.getX();
+		int y = this.getY() + this.room.getY() - camera.getY();
 		
 		this.image.draw(x, y);
+	}
+	
+	public int getX()
+	{
+		return this.getTileX() * this.getWidth();
+	}
+	
+	public int getY()
+	{
+		return this.getTileY() * this.getHeight();
+	}
+	
+	public int getTileX()
+	{
+		return this.tx;
+	}
+	
+	public int getTileY()
+	{
+		return this.ty;
 	}
 	
 	public int getWidth()
