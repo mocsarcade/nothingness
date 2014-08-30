@@ -107,79 +107,30 @@ public class Hero extends Entity
 			}
 		}
 		
-		x += dx;
-		y += dy;
-		
 		if(input.isKeyDown(Input.KEY_UP))
 		{
 			this.direction = Direction.NORTH;
+			this.y -= this.speed * 2;
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
 			this.direction = Direction.SOUTH;
+			this.y += this.speed * 2;
 		}
 		
 		if(input.isKeyDown(Input.KEY_LEFT))
 		{
 			this.direction = Direction.WEST;
+			this.x -= this.speed * 2;
 		}
 		else if(input.isKeyDown(Input.KEY_RIGHT))
 		{
 			this.direction = Direction.EAST;
-		}
-		
-		if(this.y < 0)
-		{
-			if(this.room.hasNorthernRoom())
-			{
-				this.room = this.room.getNorthernRoom();
-				this.y = this.room.getHeightInPixels();
-			}
-			else
-			{
-				this.y = 0;
-			}
-		}
-		
-		if(this.y > this.room.getHeightInPixels())
-		{
-			if(this.room.hasSouthernRoom())
-			{
-				this.room = this.room.getSouthernRoom();
-				this.y = 0;
-			}
-			else
-			{
-				this.y = this.room.getHeightInPixels();
-			}
-		}
-		
-		if(this.x < 0)
-		{
-			if(this.room.hasWesternRoom())
-			{
-				this.room = this.room.getWesternRoom();
-				this.x = this.room.getWidthInPixels();
-			}
-			else
-			{
-				this.x = 0;
-			}
-		}
-		
-		if(this.x > this.room.getWidthInPixels())
-		{
-			if(this.room.hasEasternRoom())
-			{
-				this.room = this.room.getEasternRoom();
-				this.x = 0;
-			}
-			else
-			{
-				this.x = this.room.getWidthInPixels();
-			}
+			this.x += this.speed * 2;
 		}
 		
 		super.update(delta);
 	}
+	
+	private float speed = 1f;
 }

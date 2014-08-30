@@ -61,8 +61,8 @@ public abstract class Entity
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		int x = (int)(this.getX()) - (this.getWidth() / 2) + room.getX() - camera.getX();
-		int y = (int)(this.getY()) - (this.getHeight() / 2) + room.getY() - camera.getY();
+		int x = (int)(this.getX()) - (this.getWidth() / 2) - camera.getX();
+		int y = (int)(this.getY()) - (this.getHeight() / 2) - camera.getY();
 		
 		this.image.draw(x, y);
 	}
@@ -72,7 +72,7 @@ public abstract class Entity
 		return this.x;
 	}
 		
-	public float getY() 
+	public float getY()
 	{
 		return this.y;
 	}
@@ -87,10 +87,14 @@ public abstract class Entity
 		this.y = y;
 	}
 	
-	public void setPosition(float x, float y) 
+	public int getRoomX()
 	{
-		this.x = x;
-		this.y = y;
+		return (int)(Math.floor(this.getX() / Room.WIDTH) * Room.WIDTH);
+	}
+	
+	public int getRoomY()
+	{
+		return (int)(Math.floor(this.getY() / Room.HEIGHT) * Room.HEIGHT);
 	}
 	
 	public int getWidth()
@@ -107,7 +111,7 @@ public abstract class Entity
 	{
 		return this.direction;
 	}
-		
+	
 	public void setDirection(Direction direction) 
 	{
 		this.direction = direction;
@@ -123,17 +127,12 @@ public abstract class Entity
 		return this.justHit > 0;
 	}
 	
-	public void takeDamage(int damage)
+	public void gotHit(int damage)
 	{
 		if(!this.isDead() && !this.wasJustHit())
 		{
 			this.currentHealth -= damage;
 			this.justHit = 100;
 		}
-	}
-	
-	public int getDamage()
-	{
-		return this.damage;
 	}
 }

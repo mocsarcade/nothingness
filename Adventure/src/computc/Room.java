@@ -13,6 +13,9 @@ public class Room
 {
 	private int rx, ry;
 	
+	public final static int WIDTH = 11*64;
+	public final static int HEIGHT = 9*64;
+	
 	public Room westernRoom;
 	public Room easternRoom;
 	public Room southernRoom;

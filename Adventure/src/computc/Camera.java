@@ -15,20 +15,20 @@ public class Camera
 	{
 		if(this.getX() < this.getTargetX())
 		{
-			this.increaseX(this.speed * delta);
+			this.increaseX(this.getSpeed() * delta);
 		}
 		else if(this.getX() > this.getTargetX())
 		{
-			this.decreaseX(this.speed * delta);
+			this.decreaseX(this.getSpeed() * delta);
 		}
 		
 		if(this.getY() < this.getTargetY())
 		{
-			this.increaseY(this.speed * delta);
+			this.increaseY(this.getSpeed() * delta);
 		}
 		else if(this.getY() > this.getTargetY())
 		{
-			this.decreaseY(this.speed * delta);
+			this.decreaseY(this.getSpeed() * delta);
 		}
 	}
 	
@@ -40,16 +40,6 @@ public class Camera
 	public int getY()
 	{
 		return (int)(this.y);
-	}
-	
-	public int getTargetX()
-	{
-		return this.target.room.getX();
-	}
-	
-	public int getTargetY()
-	{
-		return this.target.room.getY();
 	}
 	
 	public void increaseX(float amount)
@@ -70,5 +60,20 @@ public class Camera
 	public void decreaseY(float amount)
 	{
 		this.y -= amount;
+	}
+	
+	public int getTargetX()
+	{
+		return this.target.getRoomX();
+	}
+	
+	public int getTargetY()
+	{
+		return this.target.getRoomY();
+	}
+	
+	public float getSpeed()
+	{
+		return this.speed;
 	}
 }
