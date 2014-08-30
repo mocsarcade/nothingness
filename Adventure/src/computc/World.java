@@ -1,12 +1,8 @@
 package computc;
 
-import java.awt.Point;
-import java.util.LinkedList;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
 
 public class World
 {

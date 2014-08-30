@@ -87,8 +87,8 @@ public class Room
 	
 	public Tile getTile(float x, float y)
 	{
-		int tx = (int)(x) / 64;
-		int ty = (int)(y) / 64;
+		int tx = (int)(x) / WIDTH_OF_TILE;
+		int ty = (int)(y) / HEIGHT_OF_TILE;
 		
 		return this.tiles[tx][ty];
 	}

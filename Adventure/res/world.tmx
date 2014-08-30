@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="33" height="27" tilewidth="64" tileheight="64">
  <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64">
-  <image source="tiles.png" width="192" height="64"/>
   <tile id="0">
    <properties>
     <property name="block" value="true"/>
    </properties>
+   <image format="png">
+    <data encoding="base64">iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAA7AAAAOwAFq1okJAAAAGnRFWHRTb2Z0d2FyZQBQYWludC5ORVQgdjMuNS4xMUfzQjcAAABjSURBVGiB7c9BDcAgAMBAwCRecIa7ieBxWdJT0M579vizpQNeNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaA1oDWgNaB9hRgCCnYTn1sAAAAASUVORK5CYII=</data>
+   </image>
+  </tile>
+  <tile id="1">
+   <image format="png">
+    <data encoding="base64">iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAIAAAAlC+aJAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAA7AAAAOwAFq1okJAAAAGnRFWHRTb2Z0d2FyZQBQYWludC5ORVQgdjMuNS4xMUfzQjcAAABkSURBVGiB7c9BDcAgAMBAwL8YRPHHwkTwuCzpKWjnPXv82dIBrxrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQGtAa0BrQPnQEAwOe1shNAAAAAElFTkSuQmCC</data>
+   </image>
   </tile>
   <tile id="2">
    <properties>
     <property name="door" value="true"/>
    </properties>
+   <image format="png">
+    <data encoding="base64"></data>
+   </image>
   </tile>
  </tileset>
  <layer name="room9" width="33" height="27">
