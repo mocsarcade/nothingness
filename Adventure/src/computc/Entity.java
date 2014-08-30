@@ -139,23 +139,20 @@ public abstract class Entity
 		   
 		xtemp = x;
 		ytemp = y;
-		
-		calculateCorners(x, ydest);
-		
 		if(dy < 0) 
 		{
-			if(topLeft || topRight)
+			if(this.canMoveNorth(x, ydest))
 			{
 				dy = 0;
 			}	
 			else
 			{
-				ytemp	 += dy;
+				ytemp += dy;
 			}
 		}
 		else if(dy > 0) 
 		{
-			if(bottomLeft || bottomRight) 
+			if(this.canMoveSouth(x, ydest)) 
 			{
 				dy = 0;
 			}
@@ -165,11 +162,9 @@ public abstract class Entity
 			}
 		}
 		
-		calculateCorners(xdest, y);
-			
 		if(dx < 0)
 		{
-			if(topLeft || bottomLeft) 
+			if(this.canMoveWest(xdest, y)) 
 			{
 				dx = 0;
 			}
@@ -180,7 +175,7 @@ public abstract class Entity
 		}
 		else if(dx > 0)
 		{
-			if(topRight || bottomRight)
+			if(this.canMoveEast(xdest, y))
 			{
 				dx = 0;
 			}
@@ -211,23 +206,96 @@ public abstract class Entity
 		return ((int)(x) - (this.getHitboxWidth() / 2)) / Adventure.TILE_SIZE;
 	}
 	
-	public void calculateCorners(float x, float y)
+	public Tile getNortheasternTile(float x, float y)
 	{
-		int northernBound = this.getNorthernBound(y);
-		int southernBound = this.getSouthernBound(y);
 		int easternBound = this.getEasternBound(x);
+		int northernBound = this.getNorthernBound(y);
+		
+		return this.world.room.getTile(northernBound, easternBound);
+	}
+	
+	public Tile getNorthwesternTile(float x, float y)
+	{
 		int westernBound = this.getWesternBound(x);
+		int southernBound = this.getSouthernBound(y);
 		
-		if(westernBound < 0 || southernBound >= world.room.getHeight() || westernBound < 0 || easternBound >= world.room.getWidth()) 
+		return this.world.room.getTile(southernBound, westernBound);
+	}
+	
+	public Tile getSoutheasternTile(float x, float y)
+	{
+		int easternBound = this.getEasternBound(x);
+		int southernBound = this.getSouthernBound(y);
+		
+		return this.world.room.getTile(southernBound, easternBound);
+	}
+	
+	public Tile getSouthwesternTile(float x, float y)
+	{
+		int westernBound = this.getWesternBound(x);
+		int northernBound = this.getNorthernBound(y);
+		
+		return this.world.room.getTile(northernBound, westernBound);
+	}
+	
+	public boolean canMoveNorth(float x, float y)
+	{
+		Tile northeasternTile = this.getNortheasternTile(x, y);
+		Tile northwesternTile = this.getNorthwesternTile(x, y);
+		
+		if(northeasternTile != null && northwesternTile != null)
 		{
-			topLeft = topRight = bottomLeft = bottomRight = false;
-			return;
+			return !northeasternTile.isBlock && !northwesternTile.isBlock;
 		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public boolean canMoveSouth(float x, float y)
+	{
+		Tile southeasternTile = this.getSoutheasternTile(x, y);
+		Tile southwesternTile = this.getSouthwesternTile(x, y);
 		
-		topLeft = world.room.getTile(northernBound, westernBound).isBlock;
-		topRight = world.room.getTile(northernBound, easternBound).isBlock;
-		bottomLeft = world.room.getTile(southernBound, westernBound).isBlock;
-		bottomRight = world.room.getTile(southernBound, easternBound).isBlock;
+		if(southeasternTile != null && southwesternTile != null)
+		{
+			return !southeasternTile.isBlock && !southwesternTile.isBlock;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public boolean canMoveEast(float x, float y)
+	{
+		Tile northeasternTile = this.getNortheasternTile(x, y);
+		Tile southeasternTile = this.getSoutheasternTile(x, y);
+
+		if(northeasternTile != null && southeasternTile != null)
+		{
+			return !northeasternTile.isBlock && !southeasternTile.isBlock;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public boolean canMoveWest(float x, float y)
+	{
+		Tile northwesternTile = this.getNorthwesternTile(x, y);
+		Tile southwesternTile = this.getSouthwesternTile(x, y);
+		
+		if(northwesternTile != null && southwesternTile != null)
+		{
+			return !northwesternTile.isBlock && !southwesternTile.isBlock;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
 	public boolean isDead() 

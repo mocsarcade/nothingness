@@ -60,7 +60,15 @@ public class TiledRoom extends TiledMap
 	
 	public Tile getTile(int tx, int ty)
 	{
-		return this.tiles[tx][ty];
+		if(tx >= 0 && tx < this.tiles.length
+		&& ty >= 0 && ty < this.tiles.length)
+		{
+			return this.tiles[tx][ty];
+		}
+		else
+		{
+			return null;
+		}
 	}
 	
 	public Tile getTile(float x, float y)
