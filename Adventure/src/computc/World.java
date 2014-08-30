@@ -20,8 +20,8 @@ public class World
 	public void update(Input input, int delta)
 	{
 		this.hero.update(input, delta);
+		this.hero.room.update(delta);
 		this.camera.update(delta);
-		this.dungeon.update(delta);
 	}
 	
 	public void render(Graphics graphics)

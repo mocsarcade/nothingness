@@ -127,5 +127,59 @@ public class Hero extends Entity
 		{
 			this.direction = Direction.EAST;
 		}
+		
+		if(this.y < 0)
+		{
+			if(this.room.hasNorthernRoom())
+			{
+				this.room = this.room.getNorthernRoom();
+				this.y = this.room.getHeightInPixels();
+			}
+			else
+			{
+				this.y = 0;
+			}
+		}
+		
+		if(this.y > this.room.getHeightInPixels())
+		{
+			if(this.room.hasSouthernRoom())
+			{
+				this.room = this.room.getSouthernRoom();
+				this.y = 0;
+			}
+			else
+			{
+				this.y = this.room.getHeightInPixels();
+			}
+		}
+		
+		if(this.x < 0)
+		{
+			if(this.room.hasWesternRoom())
+			{
+				this.room = this.room.getWesternRoom();
+				this.x = this.room.getWidthInPixels();
+			}
+			else
+			{
+				this.x = 0;
+			}
+		}
+		
+		if(this.x > this.room.getWidthInPixels())
+		{
+			if(this.room.hasEasternRoom())
+			{
+				this.room = this.room.getEasternRoom();
+				this.x = 0;
+			}
+			else
+			{
+				this.x = this.room.getWidthInPixels();
+			}
+		}
+		
+		super.update(delta);
 	}
 }

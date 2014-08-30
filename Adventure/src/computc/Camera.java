@@ -44,14 +44,12 @@ public class Camera
 	
 	public int getTargetX()
 	{
-		int width = Adventure.SCREEN_WIDTH;
-		return (int)(Math.floor(this.target.x / width)) * width;
+		return this.target.room.getX();
 	}
 	
 	public int getTargetY()
 	{
-		int height = Adventure.SCREEN_HEIGHT;
-		return (int)(Math.floor(this.target.y / height)) * height;
+		return this.target.room.getY();
 	}
 	
 	public void increaseX(float amount)

@@ -225,6 +225,26 @@ public class Room
 		}
 	}
 	
+	public boolean hasNorthernRoom()
+	{
+		return this.northernRoom != null;
+	}
+	
+	public boolean hasSouthernRoom()
+	{
+		return this.southernRoom != null;
+	}
+	
+	public boolean hasEasternRoom()
+	{
+		return this.easternRoom != null;
+	}
+	
+	public boolean hasWesternRoom()
+	{
+		return this.westernRoom != null;
+	}
+	
 	public static String getRandomLayout()
 	{
 		Random random = new Random();
