@@ -22,9 +22,9 @@ public abstract class Entity
 	protected Direction direction;
 	protected float dx;
 	protected float dy;
-	protected float maxspeed;
 	protected float acceleration;
 	protected float deacceleration;
+	protected float maxacceleration;
 	
 	// rendering
 	protected Image image;
@@ -39,14 +39,12 @@ public abstract class Entity
 	protected boolean topRight;
 	protected boolean bottomLeft;
 	protected boolean bottomRight;
-	
+
+	protected int damage = 1;
 	protected int currentHealth;
 	protected int maximumHealth;
-	protected boolean isDead;
-	protected int damage;
 	
-	protected boolean justHit;
-	protected long justHitTimer;
+	protected int justHit;
 	
 	public Entity(World world, int tx, int ty)
 	{
@@ -56,7 +54,18 @@ public abstract class Entity
 		this.y = (ty + 0.5f) * this.world.room.getTileWidth();
 	}
 	
-	public abstract void update(Input input, int delta);
+	public void update(Input input, int delta)
+	{
+		if(justHit > 0)
+		{
+			justHit -= delta;
+			
+			if(justHit < 0)
+			{
+				justHit = 0;
+			}
+		}
+	}
 	
 	public void render(Graphics graphics, Camera camera)
 	{
@@ -204,23 +213,20 @@ public abstract class Entity
 	
 	public boolean isDead() 
 	{
-		return this.isDead;
+		return this.currentHealth < 0;
+	}
+	
+	public boolean wasJustHit()
+	{
+		return this.justHit > 0;
 	}
 	
 	public void takeDamage(int damage)
 	{
-		if(!this.isDead && !this.justHit)
+		if(!this.isDead() && !this.wasJustHit())
 		{
 			this.currentHealth -= damage;
-			
-			if(currentHealth <= 0)
-			{
-				this.isDead = true;
-			}
-			else
-			{
-				this.justHit = true;
-			}
+			this.justHit = 100;
 		}
 	}
 	
