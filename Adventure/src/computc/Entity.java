@@ -232,16 +232,10 @@ public abstract class Entity
 			   topLeft = topRight = bottomLeft = bottomRight = false;
 			   return;
 		   }
-//		   boolean tl = tileMap.getType(topTile, leftTile);
-//		   boolean tr = tileMap.getType(topTile, rightTile);
-//		   boolean bl = tileMap.getType(bottomTile, leftTile);
-//		   boolean br = tileMap.getType(bottomTile, rightTile);
 		   
 		   topLeft = world.room.getTile(topRow, leftColumn).isBlock;
-//		   System.out.println("top left corner tile is:" + world.room.getTile(topRow, leftColumn).getTileX() + " , " + world.room.getTile(topRow, leftColumn).getTileY());
 		   topRight = world.room.getTile(topRow, rightColumn).isBlock;
 		   bottomLeft = world.room.getTile(bottomRow, leftColumn).isBlock;
-//		   System.out.println("bottomLeft: " + bottomLeft);
 		   bottomRight = world.room.getTile(bottomRow, rightColumn).isBlock;
 		   
 	   }

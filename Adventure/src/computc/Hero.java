@@ -101,7 +101,7 @@ public class Hero extends Entity
 				}
 			}
 		}
-//		System.out.println("the movement should be:" + dx + " & " + dy);
+
 		 if(input.isKeyDown(Input.KEY_RIGHT))
 		{
 			dx += moveSpeed * delta;
