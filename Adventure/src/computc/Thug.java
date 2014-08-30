@@ -3,6 +3,7 @@ package computc;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Point;
 
 public class Thug extends Enemy	
 {
@@ -14,7 +15,7 @@ public class Thug extends Enemy
 		
 		this.acceleration = 0.03f;
 		this.deacceleration = 0.001f;
-		this.maxacceleration = 0.03f;
+		this.maximumVelocity = 0.03f;
 		
 		this.currentHealth = this.maximumHealth = 3;
 		
@@ -24,7 +25,7 @@ public class Thug extends Enemy
 	
 	public void update(Input input, int delta)
 	{
-		this.getNextPosition();
+		this.getNextPosition(delta);
 		this.checkTileMapCollision();
 		this.setPosition(xtemp, ytemp);
 		
@@ -53,42 +54,40 @@ public class Thug extends Enemy
 		super.update(input, delta);
 	}
 	
-	private void getNextPosition()
+	private void getNextPosition(int delta)
 	{
-		if(left) 
+		if(left)
 		{
 			dx -= acceleration;
-			if(dx < -maxacceleration) 
-			{
-				dx = -maxacceleration;
-			}
+			if(dx < -maximumVelocity)
+				dx = -maximumVelocity;
+			
+			dx *= delta;
 		}
-		
 		else if(right) 
-			{
+		{
 			dx += acceleration;
-				if(dx > maxacceleration) 
-				{
-				dx = maxacceleration;
-				}
-			}
+			if(dx > maximumVelocity)
+				dx = maximumVelocity;
+			
+			dx *= delta;
+		}
 		
 		if(up) 
 		{
 			dy -= acceleration;
-			if(dy < -maxacceleration) 
-			{
-				dy = -maxacceleration;
-			}
+			if(dy < -maximumVelocity)
+				dy = -maximumVelocity;
+			
+			dy *= delta;
 		}
-		
 		else if(down) 
-			{
+		{
 			dy += acceleration;
-				if(dy > maxacceleration) 
-				{
-				dy = maxacceleration;
-				}
-			}
+			if(dy > maximumVelocity)
+				dy = maximumVelocity;
+			
+			dy *= delta;
+		}
 	}
 }

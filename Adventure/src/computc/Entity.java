@@ -4,6 +4,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
@@ -24,7 +25,7 @@ public abstract class Entity
 	protected float dy;
 	protected float acceleration;
 	protected float deacceleration;
-	protected float maxacceleration;
+	protected float maximumVelocity;
 	
 	// rendering
 	protected Image image;
@@ -69,20 +70,20 @@ public abstract class Entity
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		int x = this.getX() - (this.getWidth() / 2) - camera.getX();
-		int y = this.getY() - (this.getHeight() / 2) - camera.getY();
+		int x = (int)(this.getX()) - (this.getWidth() / 2) - camera.getX();
+		int y = (int)(this.getY()) - (this.getHeight() / 2) - camera.getY();
 		
 		this.image.draw(x, y);
 	}
 	
-	public int getX()
+	public float getX()
 	{
-		return (int)(this.x);
+		return this.x;
 	}
 		
-	public int getY() 
+	public float getY() 
 	{
-		return (int)(this.y);
+		return this.y;
 	}
 	
 	public void setX(float x)
@@ -132,83 +133,101 @@ public abstract class Entity
 	}
 	
 	public void checkTileMapCollision() 
-	{	   
-		   xdest = x + dx;
-		   ydest = y + dy;
+	{
+		xdest = x + dx;
+		ydest = y + dy;
 		   
-		   xtemp = x;
-		   ytemp = y;
-		   
-		   calculateCorners(x, ydest);
-		   
-		   if(dy < 0) 
-		   {
-			   if(topLeft || topRight) 
-			   {
-				   dy = 0;
-			   }
-			   else {
-				   ytemp += dy;
-			   }
-		   }
-			   
-			if(dy > 0) 
+		xtemp = x;
+		ytemp = y;
+		
+		calculateCorners(x, ydest);
+		
+		if(dy < 0) 
+		{
+			if(topLeft || topRight)
 			{
-				if(bottomLeft || bottomRight) 
-				{
-					dy = 0;
-				}
-				else 
-				{
-					
-					ytemp += dy;
-				}
+				dy = 0;
+			}	
+			else
+			{
+				ytemp	 += dy;
 			}
-			
-			calculateCorners(xdest, y);
-			
-			if(dx < 0) {
-				if(topLeft || bottomLeft) 
-				{
-					dx = 0;
-				}
-				else 
-				{
-					xtemp += dx;
-				}
+		}
+		else if(dy > 0) 
+		{
+			if(bottomLeft || bottomRight) 
+			{
+				dy = 0;
 			}
-				
-			if(dx > 0) {
-				if(topRight || bottomRight) 
-				{
-					dx = 0;
-				}
-				else 
-				{
-					xtemp += dx;
-				}
-				
-			
+			else 
+			{
+				ytemp += dy;
 			}
+		}
+		
+		calculateCorners(xdest, y);
+			
+		if(dx < 0)
+		{
+			if(topLeft || bottomLeft) 
+			{
+				dx = 0;
+			}
+			else 
+			{
+				xtemp += dx;
+			}
+		}
+		else if(dx > 0)
+		{
+			if(topRight || bottomRight)
+			{
+				dx = 0;
+			}
+			else 
+			{
+				xtemp += dx;
+			}
+		}
 	}
 	
-	public void calculateCorners(double x, double y) 
+	public int getNorthernBound(float y)
 	{
-		int leftColumn = (int)(x - getHitboxWidth()/ 2)/ Adventure.TILE_SIZE;
-		int rightColumn = (int)(x + getHitboxWidth()/ 2 - 1)/ Adventure.TILE_SIZE;
-		int topRow = (int)(y - getHitboxHeight()/ 2) / Adventure.TILE_SIZE;
-		int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1)/ Adventure.TILE_SIZE;
+		return ((int)(y) - (this.getHitboxHeight() / 2)) / Adventure.TILE_SIZE;
+	}
+	
+	public int getSouthernBound(float y)
+	{
+		return ((int)(y) + (this.getHitboxHeight() / 2) - 1) / Adventure.TILE_SIZE;
+	}
+	
+	public int getEasternBound(float x)
+	{
+		return ((int)(x) + (this.getHitboxWidth() / 2) - 1) / Adventure.TILE_SIZE;
+	}
+	
+	public int getWesternBound(float x)
+	{
+		return ((int)(x) - (this.getHitboxWidth() / 2)) / Adventure.TILE_SIZE;
+	}
+	
+	public void calculateCorners(float x, float y)
+	{
+		int northernBound = this.getNorthernBound(y);
+		int southernBound = this.getSouthernBound(y);
+		int easternBound = this.getEasternBound(x);
+		int westernBound = this.getWesternBound(x);
 		
-		if(leftColumn < 0 || bottomRow >= world.room.getHeight() || leftColumn < 0 || rightColumn >= world.room.getWidth()) 
+		if(westernBound < 0 || southernBound >= world.room.getHeight() || westernBound < 0 || easternBound >= world.room.getWidth()) 
 		{
 			topLeft = topRight = bottomLeft = bottomRight = false;
 			return;
 		}
 		
-		topLeft = world.room.getTile(topRow, leftColumn).isBlock;
-		topRight = world.room.getTile(topRow, rightColumn).isBlock;
-		bottomLeft = world.room.getTile(bottomRow, leftColumn).isBlock;
-		bottomRight = world.room.getTile(bottomRow, rightColumn).isBlock;
+		topLeft = world.room.getTile(northernBound, westernBound).isBlock;
+		topRight = world.room.getTile(northernBound, easternBound).isBlock;
+		bottomLeft = world.room.getTile(southernBound, westernBound).isBlock;
+		bottomRight = world.room.getTile(southernBound, easternBound).isBlock;
 	}
 	
 	public boolean isDead() 

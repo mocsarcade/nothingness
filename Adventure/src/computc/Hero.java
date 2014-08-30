@@ -15,7 +15,7 @@ public class Hero extends Entity
 		
 		this.acceleration = 0.015f;
 		this.deacceleration = 0.001f;
-		this.maxacceleration = 0.2f;
+		this.maximumVelocity = 0.2f;
 		
 		this.currentHealth = this.maximumHealth = 3;
 	}
@@ -37,16 +37,16 @@ public class Hero extends Entity
 		if(input.isKeyDown(Input.KEY_UP)) 
 		{
 			dy -= acceleration;
-			if(dy < -maxacceleration)
-				dy = -maxacceleration;
+			if(dy < -maximumVelocity)
+				dy = -maximumVelocity;
 			
 			dy *= delta;
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
 			dy += acceleration;
-			if(dy > maxacceleration)
-				dy = maxacceleration;
+			if(dy > maximumVelocity)
+				dy = maximumVelocity;
 			
 			dy *= delta;
 		}
@@ -73,16 +73,16 @@ public class Hero extends Entity
 		if(input.isKeyDown(Input.KEY_RIGHT))
 		{
 			dx += acceleration;
-			if(dx > maxacceleration)
-				dx = maxacceleration;
+			if(dx > maximumVelocity)
+				dx = maximumVelocity;
 			
 			dx *= delta;
 		}
 		else if(input.isKeyDown(Input.KEY_LEFT)) 
 		{
 			dx -= acceleration;
-			if(dx < -maxacceleration)
-				dx = -maxacceleration;
+			if(dx < -maximumVelocity)
+				dx = -maximumVelocity;
 			
 			dx *= delta;
 		}
