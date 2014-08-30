@@ -11,8 +11,7 @@ import org.newdawn.slick.geom.Vector2f;
 
 public abstract class Entity
 {
-	// world
-	protected World world;
+	Room room;
 	
 	// position
 	protected float x;
@@ -40,15 +39,15 @@ public abstract class Entity
 	protected int maximumHealth;
 	protected int justHit = 0;
 	
-	public Entity(World world, int tx, int ty)
+	public Entity(Room room, int tx, int ty)
 	{
-		this.world = world;
+		this.room = room;
 		
-		this.x = (tx + 0.5f) * this.world.dungeon.getCurrentRoom().getWidthOfTile();
-		this.y = (ty + 0.5f) * this.world.dungeon.getCurrentRoom().getHeightOfTile();
+		this.x = (tx + 0.5f) * Adventure.TILE_SIZE;
+		this.y = (ty + 0.5f) * Adventure.TILE_SIZE;
 	}
 	
-	public void update(Input input, int delta)
+	public void update(int delta)
 	{
 		if(justHit > 0)
 		{
@@ -63,8 +62,8 @@ public abstract class Entity
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		int x = (int)(this.getX()) - (this.getWidth() / 2) - camera.getX();
-		int y = (int)(this.getY()) - (this.getHeight() / 2) - camera.getY();
+		int x = (int)(this.getX()) - (this.getWidth() / 2) + room.getX() - camera.getX();
+		int y = (int)(this.getY()) - (this.getHeight() / 2) + room.getY() - camera.getY();
 		
 		this.image.draw(x, y);
 	}
@@ -113,183 +112,6 @@ public abstract class Entity
 	public void setDirection(Direction direction) 
 	{
 		this.direction = direction;
-	}
-	
-	public int getHitboxWidth()
-	{
-		return this.getWidth();
-	}
-		
-	public int getHitboxHeight() 
-	{
-		return this.getHeight();
-	}
-	
-	public void checkTileCollision()
-	{
-		xdest = x + dx;
-		ydest = y + dy;
-		   
-		xtemp = x;
-		ytemp = y;
-		
-		if(dy < 0) 
-		{
-			if(this.canMoveNorth(x, ydest))
-			{
-				ytemp += dy;
-			}	
-			else
-			{
-				dy = 0;
-			}
-		}
-		else if(dy > 0) 
-		{
-			if(this.canMoveSouth(x, ydest)) 
-			{
-				ytemp += dy;
-			}
-			else 
-			{
-				dy = 0;
-			}
-		}
-		
-		if(dx < 0)
-		{
-			if(this.canMoveWest(xdest, y)) 
-			{
-				xtemp += dx;
-			}
-			else 
-			{
-				dx = 0;
-			}
-		}
-		else if(dx > 0)
-		{
-			if(this.canMoveEast(xdest, y))
-			{
-				xtemp += dx;
-			}
-			else 
-			{
-				dx = 0;
-			}
-		}
-	}
-	
-	public int getNorthernBound(float y)
-	{
-		return ((int)(y) - (this.getHitboxHeight() / 2)) / Adventure.TILE_SIZE;
-	}
-	
-	public int getSouthernBound(float y)
-	{
-		return ((int)(y) + (this.getHitboxHeight() / 2) - 1) / Adventure.TILE_SIZE;
-	}
-	
-	public int getEasternBound(float x)
-	{
-		return ((int)(x) + (this.getHitboxWidth() / 2) - 1) / Adventure.TILE_SIZE;
-	}
-	
-	public int getWesternBound(float x)
-	{
-		return ((int)(x) - (this.getHitboxWidth() / 2)) / Adventure.TILE_SIZE;
-	}
-	
-	public Tile getNortheasternTile(float x, float y)
-	{
-		int easternBound = this.getEasternBound(x);
-		int northernBound = this.getNorthernBound(y);
-		
-		return this.world.dungeon.getCurrentRoom().getTile(easternBound, northernBound);
-	}
-	
-	public Tile getNorthwesternTile(float x, float y)
-	{
-		int westernBound = this.getWesternBound(x);
-		int northernBound = this.getNorthernBound(y);
-		
-		return this.world.dungeon.getCurrentRoom().getTile(westernBound, northernBound);
-	}
-	
-	public Tile getSoutheasternTile(float x, float y)
-	{
-		int easternBound = this.getEasternBound(x);
-		int southernBound = this.getSouthernBound(y);
-		
-		return this.world.dungeon.getCurrentRoom().getTile(easternBound, southernBound);
-	}
-	
-	public Tile getSouthwesternTile(float x, float y)
-	{
-		int westernBound = this.getWesternBound(x);
-		int southernBound = this.getSouthernBound(y);
-		
-		return this.world.dungeon.getCurrentRoom().getTile(westernBound, southernBound);
-	}
-	
-	public boolean canMoveNorth(float x, float y)
-	{
-		Tile northeasternTile = this.getNortheasternTile(x, y);
-		Tile northwesternTile = this.getNorthwesternTile(x, y);
-		
-		if(northeasternTile != null && northwesternTile != null)
-		{
-			return !northeasternTile.isBlock && !northwesternTile.isBlock;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	public boolean canMoveSouth(float x, float y)
-	{
-		Tile southeasternTile = this.getSoutheasternTile(x, y);
-		Tile southwesternTile = this.getSouthwesternTile(x, y);
-		
-		if(southeasternTile != null && southwesternTile != null)
-		{
-			return !southeasternTile.isBlock && !southwesternTile.isBlock;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	public boolean canMoveEast(float x, float y)
-	{
-		Tile northeasternTile = this.getNortheasternTile(x, y);
-		Tile southeasternTile = this.getSoutheasternTile(x, y);
-
-		if(northeasternTile != null && southeasternTile != null)
-		{
-			return !northeasternTile.isBlock && !southeasternTile.isBlock;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	
-	public boolean canMoveWest(float x, float y)
-	{
-		Tile northwesternTile = this.getNorthwesternTile(x, y);
-		Tile southwesternTile = this.getSouthwesternTile(x, y);
-		
-		if(northwesternTile != null && southwesternTile != null)
-		{
-			return !northwesternTile.isBlock && !southwesternTile.isBlock;
-		}
-		else
-		{
-			return false;
-		}
 	}
 	
 	public boolean isDead() 

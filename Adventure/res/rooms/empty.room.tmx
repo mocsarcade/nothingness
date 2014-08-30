@@ -3,6 +3,9 @@
  <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64">
   <image source="../tiles.png" width="128" height="64"/>
  </tileset>
+ <tileset firstgid="3" name="thugs" tilewidth="48" tileheight="48">
+  <image source="../thug.png" width="48" height="48"/>
+ </tileset>
  <layer name="Tile Layer 1" width="11" height="9">
   <data encoding="base64" compression="gzip">
    H4sIAAAAAAAAC2NkYGBgJAEzEYFH1aKqJRYDAKpQ7qaMAQAA

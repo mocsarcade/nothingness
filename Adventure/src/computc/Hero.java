@@ -7,17 +7,21 @@ import org.newdawn.slick.SlickException;
 
 public class Hero extends Entity
 {
-	public Hero(World world, int tx, int ty) throws SlickException
+	private Dungeon dungeon;
+	
+	public Hero(Dungeon dungeon, Room room, int tx, int ty) throws SlickException
 	{
-		super(world, tx, ty);
+		super(room, tx, ty);
 		
-		this.image = new Image("res/hero.png");
+		this.dungeon = dungeon;
 		
 		this.acceleration = 0.015f;
 		this.deacceleration = 0.0015f;
 		this.maximumVelocity = 0.2f;
 		
 		this.currentHealth = this.maximumHealth = 3;
+		
+		this.image = new Image("res/hero.png");
 	}
 	
 	public void update(Input input, int delta)
@@ -122,30 +126,6 @@ public class Hero extends Entity
 		else if(input.isKeyDown(Input.KEY_RIGHT))
 		{
 			this.direction = Direction.EAST;
-		}
-	}
-	
-	public void checkRoomMovement()
-	{
-		if(this.y < 0)
-		{
-			this.world.dungeon.move(Direction.NORTH);
-			this.y = this.world.dungeon.getCurrentRoom().getHeightInPixels();
-		}
-		if(this.y > this.world.dungeon.getCurrentRoom().getHeightInPixels())
-		{
-			this.world.dungeon.move(Direction.SOUTH);
-			this.y = 0;
-		}
-		if(this.x < 0)
-		{
-			this.world.dungeon.move(Direction.WEST);
-			this.x = this.world.dungeon.getCurrentRoom().getWidthInPixels();
-		}
-		if(this.x > this.world.dungeon.getCurrentRoom().getWidthInPixels())
-		{
-			this.world.dungeon.move(Direction.EAST);
-			this.x = 0;
 		}
 	}
 }

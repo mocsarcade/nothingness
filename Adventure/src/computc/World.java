@@ -13,14 +13,15 @@ public class World
 	public World() throws SlickException
 	{
 		this.dungeon = new Dungeon();
-		this.hero = new Hero(this, 5, 1);
+		this.hero = new Hero(dungeon, dungeon.firstRoom, 5, 1);
 		this.camera = new Camera(hero);
 	}
 	
 	public void update(Input input, int delta)
 	{
-		this.camera.update(delta);
 		this.hero.update(input, delta);
+		this.camera.update(delta);
+		this.dungeon.update(delta);
 	}
 	
 	public void render(Graphics graphics)

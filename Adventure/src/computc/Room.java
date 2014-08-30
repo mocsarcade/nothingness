@@ -47,14 +47,15 @@ public class Room
 		}
 		
 		this.thugs = new LinkedList<Thug>();
-		
-		System.out.println(tmx.getObjectCount(0));
+		this.thugs.add(new Thug(this, 1, 1));
 	}
 	
-	public void update(Input input, int delta)
+	public void update(int delta)
 	{
 		for(Thug thug : this.thugs)
-			thug.update(input, delta);
+		{
+			thug.update(delta);
+		}
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -65,6 +66,11 @@ public class Room
 			{
 				this.tiles[tx][ty].render(graphics, camera);
 			}
+		}
+		
+		for(Thug thug : this.thugs)
+		{
+			thug.render(graphics, camera);
 		}
 	}
 	

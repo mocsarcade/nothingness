@@ -7,9 +7,9 @@ import org.newdawn.slick.geom.Point;
 
 public class Thug extends Enemy	
 {
-	public Thug(World world, int tx, int ty) throws SlickException 
+	public Thug(Room room, int tx, int ty) throws SlickException 
 	{
-		super(world, tx, ty);
+		super(room, tx, ty);
 		
 		this.image = new Image("res/thug.png");
 		
@@ -19,42 +19,10 @@ public class Thug extends Enemy
 		
 		this.currentHealth = this.maximumHealth = 3;
 		
-		right = true;
-		down = true;
+		right = true; down = true;
 	}
 	
-	public void update(Input input, int delta)
-	{
-		this.getNextPosition(delta);
-		this.checkTileCollision();
-		this.setPosition(xtemp, ytemp);
-		
-		if(right && dx == 0)
-		{
-			right = false;
-			left = true;
-		}
-		else if(left && dx == 0) 
-		{
-			right = true;
-			left = false;
-		}
-		
-		if(up && dy == 0)
-		{
-			up = false;
-			down = true;
-		}
-		else if(down && dy == 0) 
-		{
-			up = true;
-			down = false;
-		}
-		
-		super.update(input, delta);
-	}
-	
-	private void getNextPosition(int delta)
+	public void update(int delta)
 	{
 		if(left)
 		{
@@ -89,5 +57,32 @@ public class Thug extends Enemy
 			
 			dy *= delta;
 		}
+		
+		x += dx;
+		y += dy;
+		
+		if(right && dx == 0)
+		{
+			right = false;
+			left = true;
+		}
+		else if(left && dx == 0) 
+		{
+			right = true;
+			left = false;
+		}
+		
+		if(up && dy == 0)
+		{
+			up = false;
+			down = true;
+		}
+		else if(down && dy == 0) 
+		{
+			up = true;
+			down = false;
+		}
+		
+		super.update(delta);
 	}
 }

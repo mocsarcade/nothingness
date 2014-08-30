@@ -44,8 +44,6 @@ public class Adventure extends BasicGame
 		{
 			System.out.println(error.getMessage());
 		}
-		
-		
 	}
 	
 	public World world;
