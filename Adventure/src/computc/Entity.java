@@ -8,7 +8,6 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
-
 public abstract class Entity
 {
 	Room room;
@@ -43,8 +42,8 @@ public abstract class Entity
 	{
 		this.room = room;
 		
-		this.x = (tx + 0.5f) * Adventure.TILE_SIZE;
-		this.y = (ty + 0.5f) * Adventure.TILE_SIZE;
+		this.x = (tx + 0.5f) * Game.screen.getSizeOfTile();
+		this.y = (ty + 0.5f) * Game.screen.getSizeOfTile();
 	}
 	
 	public void update(int delta)

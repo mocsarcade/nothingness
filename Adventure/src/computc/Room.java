@@ -21,18 +21,16 @@ public class Room
 	private Tile[][] tiles;
 	private LinkedList<Thug> thugs;
 	
-	private final int WIDTH_OF_TILE = 64;
-	private final int HEIGHT_OF_TILE = 64;
-	private final int WIDTH_IN_TILES = 11;
-	private final int HEIGHT_IN_TILES = 9;
-	
 	public Room(int rx, int ry) throws SlickException
 	{
 		this.rx = rx;
 		this.ry = ry;
 		
+		int width = Game.screen.getWidthInTiles();
+		int height = Game.screen.getHeightInTiles();
+		this.tiles = new Tile[width][height];
+		
 		TiledMap tmx = new TiledMap(Room.getRandomLayout());
-		this.tiles = new Tile[WIDTH_IN_TILES][HEIGHT_IN_TILES];
 		
 		for(int tx = 0; tx < tmx.getWidth(); tx++)
 		{
@@ -60,9 +58,9 @@ public class Room
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		for(int tx = 0; tx < WIDTH_IN_TILES; tx++)
+		for(int tx = 0; tx < this.getWidthInTiles(); tx++)
 		{
-			for(int ty = 0; ty < HEIGHT_IN_TILES; ty++)
+			for(int ty = 0; ty < this.getHeightInTiles(); ty++)
 			{
 				this.tiles[tx][ty].render(graphics, camera);
 			}
@@ -96,32 +94,22 @@ public class Room
 	
 	public int getWidthInTiles()
 	{
-		return WIDTH_IN_TILES;
+		return this.tiles.length;
 	}
 	
 	public int getHeightInTiles()
 	{
-		return HEIGHT_IN_TILES;
-	}
-	
-	public int getWidthOfTile()
-	{
-		return WIDTH_OF_TILE;
-	}
-	
-	public int getHeightOfTile()
-	{
-		return HEIGHT_OF_TILE;
+		return this.tiles[0].length;
 	}
 	
 	public int getWidthInPixels()
 	{
-		return WIDTH_IN_TILES * WIDTH_OF_TILE;
+		return this.getWidthInTiles() * this.getTile(0, 0).getWidth();
 	}
 	
 	public int getHeightInPixels()
 	{
-		return HEIGHT_IN_TILES * HEIGHT_OF_TILE;
+		return this.getHeightInTiles() * this.getTile(0, 0).getHeight();
 	}
 	
 	public Tile getTile(int tx, int ty)
@@ -131,8 +119,8 @@ public class Room
 	
 	public Tile getTile(float x, float y)
 	{
-		int tx = (int)(x) / WIDTH_OF_TILE;
-		int ty = (int)(y) / HEIGHT_OF_TILE;
+		int tx = (int)(x) / this.getTile(0, 0).getWidth();
+		int ty = (int)(y) / this.getTile(0, 0).getHeight();
 		
 		return this.tiles[tx][ty];
 	}
