@@ -10,8 +10,6 @@ import org.newdawn.slick.geom.Vector2f;
 
 public abstract class Entity
 {
-	Room room;
-	
 	// position
 	protected float x;
 	protected float y;
@@ -38,12 +36,10 @@ public abstract class Entity
 	protected int maximumHealth;
 	protected int justHit = 0;
 	
-	public Entity(Room room, int tx, int ty)
+	public Entity(int rx, int ry, int tx, int ty)
 	{
-		this.room = room;
-		
-		this.x = (tx + 0.5f) * Tile.SIZE;
-		this.y = (ty + 0.5f) * Tile.SIZE;
+		this.x = (rx * Room.WIDTH) + ((tx + 0.5f) * Tile.SIZE);
+		this.y = (ry * Room.HEIGHT) + ((ty + 0.5f) * Tile.SIZE);
 	}
 	
 	public void update(int delta)

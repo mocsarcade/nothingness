@@ -9,9 +9,9 @@ public class Hero extends Entity
 {
 	private Dungeon dungeon;
 	
-	public Hero(Dungeon dungeon, Room room, int tx, int ty) throws SlickException
+	public Hero(Dungeon dungeon, int tx, int ty) throws SlickException
 	{
-		super(room, tx, ty);
+		super(0, 0, tx, ty);
 		
 		this.dungeon = dungeon;
 		

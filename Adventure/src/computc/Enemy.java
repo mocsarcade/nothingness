@@ -9,8 +9,8 @@ public abstract class Enemy extends Entity
     protected boolean up;
     protected boolean down;
 	
-	public Enemy(Room room, int tx, int ty) throws SlickException 
+	public Enemy(int rx, int ry, int tx, int ty) throws SlickException 
 	{
-		super(room, tx, ty);
+		super(rx, ry, tx, ty);
 	}
 }

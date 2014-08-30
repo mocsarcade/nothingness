@@ -7,9 +7,9 @@ import org.newdawn.slick.geom.Point;
 
 public class Thug extends Enemy	
 {
-	public Thug(Room room, int tx, int ty) throws SlickException 
+	public Thug(int rx, int ry, int tx, int ty) throws SlickException 
 	{
-		super(room, tx, ty);
+		super(rx, ry, tx, ty);
 		
 		this.image = new Image("res/thug.png");
 		

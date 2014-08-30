@@ -24,7 +24,6 @@ public class Room
 	public Room northernRoom;
 	
 	private Tile[][] tiles;
-	private LinkedList<Thug> thugs;
 	
 	public Room(int rx, int ry) throws SlickException
 	{
@@ -46,17 +45,11 @@ public class Room
 				this.tiles[tx][ty].isDoor = tmx.getTileProperty(tid, "door", "false").equals("false");
 			}
 		}
-		
-		this.thugs = new LinkedList<Thug>();
-		this.thugs.add(new Thug(this, 1, 1));
 	}
 	
 	public void update(int delta)
 	{
-		for(Thug thug : this.thugs)
-		{
-			thug.update(delta);
-		}
+		//?!
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -67,11 +60,6 @@ public class Room
 			{
 				this.tiles[tx][ty].render(graphics, camera);
 			}
-		}
-		
-		for(Thug thug : this.thugs)
-		{
-			thug.render(graphics, camera);
 		}
 	}
 	
