@@ -12,7 +12,7 @@ public class Camera
 	
 	public void update(int delta)
 	{
-		if(this.getX() < this.getTargetX())
+		/*if(this.getX() < this.getTargetX())
 		{
 			this.increaseX(delta);
 		}
@@ -28,7 +28,7 @@ public class Camera
 		else if(this.getY() > this.getTargetY())
 		{
 			this.decreaseY(delta);
-		}
+		}*/
 	}
 	
 	public int getX()

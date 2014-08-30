@@ -16,6 +16,11 @@ public class Room
 	private final int WIDTH_IN_TILES = 11;
 	private final int HEIGHT_IN_TILES = 9;
 	
+	public Room westernRoom;
+	public Room easternRoom;
+	public Room southernRoom;
+	public Room northernRoom;
+	
 	public Room() throws SlickException
 	{
 		TiledMap tmx = new TiledMap(Room.getRandomLayout());		
@@ -86,6 +91,74 @@ public class Room
 		int ty = (int)(y) / 64;
 		
 		return this.tiles[tx][ty];
+	}
+	
+	public void connectRoom(Direction direction, Room room)
+	{
+		if(direction == Direction.NORTH)
+		{
+			connectNorthernRoom(room);
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			connectSouthernRoom(room);
+		}
+		else if(direction == Direction.EAST)
+		{
+			connectEasternRoom(room);
+		}
+		else if(direction == Direction.WEST)
+		{
+			connectWesternRoom(room);
+		}
+	}
+	
+	public void connectNorthernRoom(Room that)
+	{
+		this.setNorthernRoom(that);
+		that.setSouthernRoom(this);
+	}
+	
+	public void connectSouthernRoom(Room that)
+	{
+		this.setSouthernRoom(that);
+		that.setNorthernRoom(this);
+	}
+	
+	public void connectEasternRoom(Room that)
+	{
+		this.setEasternRoom(that);
+		that.setWesternRoom(this);
+	}
+	
+	public void connectWesternRoom(Room that)
+	{
+		this.setWesternRoom(that);
+		that.setEasternRoom(this);
+	}
+	
+	public void setNorthernRoom(Room room)
+	{
+		this.northernRoom = room;
+		this.tiles[11/2][0] = new Tile(this, 11/2, 0, this.tiles[1][9/2].image);
+	}
+	
+	public void setSouthernRoom(Room room)
+	{
+		this.southernRoom = room;
+		this.tiles[11/2][9-1] = new Tile(this, 11/2, 9-1, this.tiles[1][9/2].image);
+	}
+	
+	public void setEasternRoom(Room room)
+	{
+		this.easternRoom = room;
+		this.tiles[11-1][9/2] = new Tile(this, 11-1, 9/2, this.tiles[1][9/2].image);
+	}
+	
+	public void setWesternRoom(Room room)
+	{
+		this.westernRoom = room;
+		this.tiles[0][9/2] = new Tile(this, 0, 9/2, this.tiles[1][9/2].image);
 	}
 	
 	public static String getRandomLayout()

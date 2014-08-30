@@ -10,7 +10,7 @@ public class Tile
 	
 	private Room room;
 	private int tx, ty;
-	private Image image;
+	public Image image;
 	
 	public Tile(Room room, int tx, int ty, Image image)
 	{
