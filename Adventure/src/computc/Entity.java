@@ -37,8 +37,8 @@ public abstract class Entity
 	{
 		this.world = world;
 		
-		this.x = (tx + 0.5f) * this.world.dungeon.room.getWidthOfTile();
-		this.y = (ty + 0.5f) * this.world.dungeon.room.getHeightOfTile();
+		this.x = (tx + 0.5f) * this.world.dungeon.getCurrentRoom().getWidthOfTile();
+		this.y = (ty + 0.5f) * this.world.dungeon.getCurrentRoom().getHeightOfTile();
 	}
 	
 	public void update(Input input, int delta)

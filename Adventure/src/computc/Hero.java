@@ -30,22 +30,46 @@ public class Hero extends Entity
 		{
 			this.direction = Direction.NORTH;
 			this.y -= step;
+			
+			if(this.y < 0)
+			{
+				this.world.dungeon.move(Direction.NORTH);
+				this.y = this.world.dungeon.getCurrentRoom().getHeightInPixels();
+			}
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
 			this.direction = Direction.SOUTH;
 			this.y += step;
+			
+			if(this.y > this.world.dungeon.getCurrentRoom().getHeightInPixels())
+			{
+				this.world.dungeon.move(Direction.SOUTH);
+				this.y = 0;
+			}
 		}
 		
 		if(input.isKeyDown(Input.KEY_LEFT))
 		{
 			this.direction = Direction.WEST;
 			this.x -= step;
+
+			if(this.x < 0)
+			{
+				this.world.dungeon.move(Direction.WEST);
+				this.x = this.world.dungeon.getCurrentRoom().getWidthInPixels();
+			}
 		}
 		else if(input.isKeyDown(Input.KEY_RIGHT))
 		{
 			this.direction = Direction.EAST;
 			this.x += step;
+			
+			if(this.x > this.world.dungeon.getCurrentRoom().getWidthInPixels())
+			{
+				this.world.dungeon.move(Direction.EAST);
+				this.x = 0;
+			}
 		}
 	}
 	

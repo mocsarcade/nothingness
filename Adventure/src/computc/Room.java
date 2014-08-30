@@ -97,19 +97,19 @@ public class Room
 	{
 		if(direction == Direction.NORTH)
 		{
-			connectNorthernRoom(room);
+			this.connectNorthernRoom(room);
 		}
 		else if(direction == Direction.SOUTH)
 		{
-			connectSouthernRoom(room);
+			this.connectSouthernRoom(room);
 		}
 		else if(direction == Direction.EAST)
 		{
-			connectEasternRoom(room);
+			this.connectEasternRoom(room);
 		}
 		else if(direction == Direction.WEST)
 		{
-			connectWesternRoom(room);
+			this.connectWesternRoom(room);
 		}
 	}
 	
@@ -140,25 +140,45 @@ public class Room
 	public void setNorthernRoom(Room room)
 	{
 		this.northernRoom = room;
-		this.tiles[11/2][0] = new Tile(this, 11/2, 0, this.tiles[1][9/2].image);
+		this.tiles[11/2][0] = new Tile(this, 11/2, 0, this.tiles[11/2][1].image);
 	}
 	
 	public void setSouthernRoom(Room room)
 	{
 		this.southernRoom = room;
-		this.tiles[11/2][9-1] = new Tile(this, 11/2, 9-1, this.tiles[1][9/2].image);
+		this.tiles[11/2][9-1] = new Tile(this, 11/2, 9-1, this.tiles[11/2][1].image);
 	}
 	
 	public void setEasternRoom(Room room)
 	{
 		this.easternRoom = room;
-		this.tiles[11-1][9/2] = new Tile(this, 11-1, 9/2, this.tiles[1][9/2].image);
+		this.tiles[11-1][9/2] = new Tile(this, 11-1, 9/2, this.tiles[11/2][1].image);
 	}
 	
 	public void setWesternRoom(Room room)
 	{
 		this.westernRoom = room;
-		this.tiles[0][9/2] = new Tile(this, 0, 9/2, this.tiles[1][9/2].image);
+		this.tiles[0][9/2] = new Tile(this, 0, 9/2, this.tiles[11/2][1].image);
+	}
+	
+	public Room getNorthernRoom()
+	{
+		return this.northernRoom;
+	}
+	
+	public Room getSouthernRoom()
+	{
+		return this.southernRoom;
+	}
+	
+	public Room getEasternRoom()
+	{
+		return this.easternRoom;
+	}
+	
+	public Room getWesternRoom()
+	{
+		return this.westernRoom;
 	}
 	
 	public static String getRandomLayout()

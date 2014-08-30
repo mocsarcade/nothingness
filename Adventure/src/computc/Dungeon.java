@@ -5,17 +5,42 @@ import org.newdawn.slick.SlickException;
 
 public class Dungeon
 {
-	public Room room;
+	public Room currentRoom;
 	
 	public Dungeon() throws SlickException
 	{
-		this.room = new Room();
-		this.room.connectNorthernRoom(new Room());
-		this.room.connectSouthernRoom(new Room());
+		this.currentRoom = new Room();
+		this.currentRoom.connectNorthernRoom(new Room());
+		this.currentRoom.connectSouthernRoom(new Room());
 	}
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		this.room.render(graphics, camera);
+		this.currentRoom.render(graphics, camera);
+	}
+	
+	public Room getCurrentRoom()
+	{
+		return this.currentRoom;
+	}
+	
+	public void move(Direction direction)
+	{
+		if(direction == Direction.NORTH)
+		{
+			this.currentRoom = this.currentRoom.getNorthernRoom();
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			this.currentRoom = this.currentRoom.getSouthernRoom();
+		}
+		else if(direction == Direction.EAST)
+		{
+			this.currentRoom = this.currentRoom.getEasternRoom();
+		}
+		else if(direction == Direction.WEST)
+		{
+			this.currentRoom = this.currentRoom.getWesternRoom();
+		}
 	}
 }
