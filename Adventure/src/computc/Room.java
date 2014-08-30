@@ -11,6 +11,8 @@ public class Room
 {
 	private Tile[][] tiles;
 	
+	private int rx, ry;
+	
 	private final int WIDTH_OF_TILE = 64;
 	private final int HEIGHT_OF_TILE = 64;
 	private final int WIDTH_IN_TILES = 11;
@@ -21,8 +23,11 @@ public class Room
 	public Room southernRoom;
 	public Room northernRoom;
 	
-	public Room() throws SlickException
+	public Room(int rx, int ry) throws SlickException
 	{
+		this.rx = rx;
+		this.ry = ry;
+		
 		TiledMap tmx = new TiledMap(Room.getRandomLayout());		
 		this.tiles = new Tile[WIDTH_IN_TILES][HEIGHT_IN_TILES];
 		
@@ -48,6 +53,26 @@ public class Room
 				this.tiles[tx][ty].render(graphics, camera);
 			}
 		}
+	}
+	
+	public int getX()
+	{
+		return this.getRoomX() * this.getWidthInPixels();
+	}
+	
+	public int getY()
+	{
+		return this.getRoomY() * this.getHeightInPixels();
+	}
+	
+	public int getRoomX()
+	{
+		return this.rx;
+	}
+	
+	public int getRoomY()
+	{
+		return this.ry;
 	}
 	
 	public int getWidthInTiles()

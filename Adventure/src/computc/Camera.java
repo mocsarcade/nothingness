@@ -4,6 +4,7 @@ public class Camera
 {
 	private float x, y;
 	private Entity target;
+	private float speed = 1f;
 	
 	public Camera(Entity target)
 	{
@@ -12,23 +13,23 @@ public class Camera
 	
 	public void update(int delta)
 	{
-		/*if(this.getX() < this.getTargetX())
+		if(this.getX() < this.getTargetX())
 		{
-			this.increaseX(delta);
+			this.increaseX(this.speed * delta);
 		}
 		else if(this.getX() > this.getTargetX())
 		{
-			this.decreaseX(delta);
+			this.decreaseX(this.speed * delta);
 		}
 		
 		if(this.getY() < this.getTargetY())
 		{
-			this.increaseY(delta);
+			this.increaseY(this.speed * delta);
 		}
 		else if(this.getY() > this.getTargetY())
 		{
-			this.decreaseY(delta);
-		}*/
+			this.decreaseY(this.speed * delta);
+		}
 	}
 	
 	public int getX()

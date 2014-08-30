@@ -14,7 +14,7 @@ public class Hero extends Entity
 		this.image = new Image("res/hero.png");
 		
 		this.acceleration = 0.015f;
-		this.deacceleration = 0.001f;
+		this.deacceleration = 0.0015f;
 		this.maximumVelocity = 0.2f;
 		
 		this.currentHealth = this.maximumHealth = 3;
@@ -22,15 +22,16 @@ public class Hero extends Entity
 	
 	public void update(Input input, int delta)
 	{
-		this.getNextPosition(input, delta);
-		this.checkTileMapCollision();
-		this.setPosition(xtemp, ytemp);
-		this.checkRoomMovement();
-	}
-	
-	private void getNextPosition(Input input, int delta) 
-	{
-		if(input.isKeyDown(Input.KEY_UP)) 
+		if(input.isKeyDown(Input.KEY_Z))
+		{
+			maximumVelocity = 0.4f;
+		}
+		else
+		{
+			maximumVelocity = 0.2f;
+		}
+		
+		if(input.isKeyDown(Input.KEY_UP))
 		{
 			dy -= acceleration;
 			if(dy < -maximumVelocity)
@@ -101,6 +102,9 @@ public class Hero extends Entity
 				dx *= delta;
 			}
 		}
+
+		x += dx;
+		y += dy;
 		
 		if(input.isKeyDown(Input.KEY_UP))
 		{

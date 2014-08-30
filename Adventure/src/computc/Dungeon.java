@@ -7,21 +7,25 @@ public class Dungeon
 {
 	public Room currentRoom;
 	
+	public Room firstRoom, secondRoom, thirdRoom;
+	
 	public Dungeon() throws SlickException
 	{
-		this.currentRoom = new Room();
-		this.currentRoom.connectNorthernRoom(new Room());
-		this.currentRoom.connectSouthernRoom(new Room());
+		this.firstRoom = new Room(0, 0);
+		this.secondRoom = new Room(0, 1);
+		this.thirdRoom = new Room(0, 2);
+		
+		this.firstRoom.connectSouthernRoom(this.secondRoom);
+		this.secondRoom.connectSouthernRoom(this.thirdRoom);
+		
+		this.currentRoom = this.firstRoom;
 	}
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		this.currentRoom.render(graphics, camera);
-	}
-	
-	public Room getCurrentRoom()
-	{
-		return this.currentRoom;
+		this.firstRoom.render(graphics, camera);
+		this.secondRoom.render(graphics, camera);
+		this.thirdRoom.render(graphics, camera);
 	}
 	
 	public void move(Direction direction)
@@ -42,5 +46,10 @@ public class Dungeon
 		{
 			this.currentRoom = this.currentRoom.getWesternRoom();
 		}
+	}
+	
+	public Room getCurrentRoom()
+	{
+		return this.currentRoom;
 	}
 }

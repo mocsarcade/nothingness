@@ -7,8 +7,8 @@ import org.newdawn.slick.SlickException;
 public class World
 {
 	public Hero hero;
-	public Dungeon dungeon;
 	public Camera camera;
+	public Dungeon dungeon;
 	
 	public World() throws SlickException
 	{
