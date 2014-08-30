@@ -1,8 +1,9 @@
 package computc;
 
-import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Point;
 
 public class Thug extends Enemy	
 {
@@ -12,24 +13,22 @@ public class Thug extends Enemy
 		
 		this.image = new Image("res/thug.png");
 		
-		this.health = this.maxHealth = 5;
-		this.damage = 2;
-		moveSpeed = 0.03f;
-		maxSpeed = 0.03f;
+		this.acceleration = 0.03f;
+		this.deacceleration = 0.001f;
+		this.maximumVelocity = 0.03f;
+		
+		this.currentHealth = this.maximumHealth = 3;
 		
 		right = true;
 		down = true;
 	}
 	
-	public void update(int delta)
+	public void update(Input input, int delta)
 	{
+		this.getNextPosition(delta);
+		this.checkTileMapCollision();
+		this.setPosition(xtemp, ytemp);
 		
-		getNextPosition();
-		checkTileMapCollision();
-		setPosition(xtemp, ytemp);
-		
-		
-		// if hits wall, change direction
 		if(right && dx == 0)
 		{
 			right = false;
@@ -39,73 +38,56 @@ public class Thug extends Enemy
 		{
 			right = true;
 			left = false;
-	
 		}
 		
 		if(up && dy == 0)
-			{
-				up = false;
-				down = true;
-			}
-		else if(down && dy == 0) 
-			{
-				up = true;
-				down = false;
-			}
-		
-		// check blinking
-		if(blinking) 
 		{
-			long elapsed = (System.nanoTime() - blinkTimer) / 1000000;
-			if(elapsed > 400) 
-			{
-				blinking = false;
-			}
+			up = false;
+			down = true;
 		}
+		else if(down && dy == 0) 
+		{
+			up = true;
+			down = false;
+		}
+		
+		super.update(input, delta);
 	}
 	
-	private void getNextPosition()
+	private void getNextPosition(int delta)
 	{
-		if(left) 
+		if(left)
 		{
-			dx -= moveSpeed;
-			if(dx < -maxSpeed) 
-			{
-				dx = -maxSpeed;
-			}
+			dx -= acceleration;
+			if(dx < -maximumVelocity)
+				dx = -maximumVelocity;
+			
+			dx *= delta;
 		}
-		
 		else if(right) 
-			{
-			dx += moveSpeed;
-				if(dx > maxSpeed) 
-				{
-				dx = maxSpeed;
-				}
-			}
+		{
+			dx += acceleration;
+			if(dx > maximumVelocity)
+				dx = maximumVelocity;
+			
+			dx *= delta;
+		}
 		
 		if(up) 
 		{
-			dy -= moveSpeed;
-			if(dy < -maxSpeed) 
-			{
-				dy = -maxSpeed;
-			}
+			dy -= acceleration;
+			if(dy < -maximumVelocity)
+				dy = -maximumVelocity;
+			
+			dy *= delta;
 		}
-		
 		else if(down) 
-			{
-			dy += moveSpeed;
-				if(dy > maxSpeed) 
-				{
-				dy = maxSpeed;
-				}
-			}
+		{
+			dy += acceleration;
+			if(dy > maximumVelocity)
+				dy = maximumVelocity;
+			
+			dy *= delta;
+		}
 	}
-	
-	public void render (Graphics graphics) 
-	{
-		super.render(graphics);
-	}
-	
 }
