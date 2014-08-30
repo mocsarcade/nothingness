@@ -40,6 +40,8 @@ public abstract class Entity
 	protected float ytemp;
 	protected float xdest;
 	protected float ydest;
+	
+	// corner collision
 	protected boolean topLeft;
 	protected boolean topRight;
 	protected boolean bottomLeft;
@@ -53,7 +55,7 @@ public abstract class Entity
 		this.y = (ty + 0.5f) * this.world.room.getTileWidth();
 	}
 	
-	public void update(Input input, int delta)
+	public void update(int delta)
 	{
 		//this is to be overloaded by subclasses.
 	}
