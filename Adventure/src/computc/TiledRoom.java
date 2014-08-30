@@ -10,25 +10,33 @@ public class TiledRoom extends TiledMap
 	
 	public TiledRoom() throws SlickException
 	{
-		super("res/world.tmx");
 		
-		this.tiles = new Tile[this.getWidth()][this.getHeight()];
-		System.out.println("Does it even get here?");
-		for(int tx = 0; tx < this.getWidth(); tx++)
+		super("res/world.tmx");
+		try 
 		{
-			for(int ty = 0; ty < this.getHeight(); ty++)
+			this.tiles = new Tile[this.getHeight()][this.getWidth()];
+			System.out.println("the width apparently is: " + this.getWidth() + " and the Height apparently is: " + this.getHeight());
+			for(int ty = 0; ty < this.getWidth(); ty++)
 			{
-				int tid = this.getTileId(tx, ty, 0);
+				for(int tx = 0; tx < tiles[ty].length; tx++)
+				{
+					int tid = this.getTileId(tx, ty, 0);
 				
-				this.tiles[tx][ty] = new Tile();
+					this.tiles[ty][tx] = new Tile();
 				
-				if(this.getTileProperty(tid, "block", "false").equals("true"))
-				this.tiles[tx][ty].isBlock = true; 
-				System.out.println("isBlock is : " + this.tiles[tx][ty].isBlock);
-				
-				if(this.getTileProperty(tid, "door", "false").equals("true"))
-				this.tiles[tx][ty].isDoor = true;
+					if(this.getTileProperty(tid, "block", "false").equals("true"))
+						this.tiles[ty][tx].isBlock = true; 
+					this.tiles[ty][tx].tileX = tx;
+					this.tiles[ty][tx].tileY = ty;
+					
+					if(this.getTileProperty(tid, "door", "false").equals("true"))
+						this.tiles[ty][tx].isDoor = true;
+				}
 			}
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
 		}
 	}
 	

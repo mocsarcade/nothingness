@@ -19,7 +19,7 @@ public class World
 	{
 		this.room = new TiledRoom();
 		
-		this.hero = new Hero(this, 5, 0);
+		this.hero = new Hero(this, 5, 1);
 //		hero.setPosition(350, 50);
 		
 		this.enemies = new LinkedList<Enemy>();

@@ -174,7 +174,6 @@ public abstract class Entity
 			   if(topLeft || topRight) 
 			   {
 				   dy = 0;
-				   ytemp = world.room.getHeight() + getHitboxHeight()/ 2;
 			   }
 			   else {
 				   ytemp += dy;
@@ -186,7 +185,6 @@ public abstract class Entity
 				if(bottomLeft || bottomRight) 
 				{
 					dy = 0;
-					ytemp = (y/Adventure.TILE_SIZE + 1) * Adventure.TILE_SIZE - getHitboxHeight()/2;
 				}
 				else 
 				{
@@ -201,7 +199,6 @@ public abstract class Entity
 				if(topLeft || bottomLeft) 
 				{
 					dx = 0;
-					xtemp = world.room.getWidth() + getHitboxWidth()/2;
 				}
 				else 
 				{
@@ -213,7 +210,6 @@ public abstract class Entity
 				if(topRight || bottomRight) 
 				{
 					dx = 0;
-					xtemp = (x/Adventure.TILE_SIZE + 1) * Adventure.TILE_SIZE - getHitboxWidth()/2;
 				}
 				else 
 				{
@@ -226,12 +222,12 @@ public abstract class Entity
 	public void calculateCorners(double x, double y) 
 	{
 		   
-		   int leftTile = (int)(x - getHitboxWidth()/ 2)/ Adventure.TILE_SIZE;
-		   int rightTile = (int)(x + getHitboxWidth()/ 2 - 1)/ Adventure.TILE_SIZE;
-		   int topTile = (int)(y - getHitboxHeight()/ 2) / Adventure.TILE_SIZE;
-		   int bottomTile = (int)(y + getHitboxHeight()/ 2 - 1)/ Adventure.TILE_SIZE;
+		   int leftColumn = (int)(x - getHitboxWidth()/ 2)/ Adventure.TILE_SIZE;
+		   int rightColumn = (int)(x + getHitboxWidth()/ 2 - 1)/ Adventure.TILE_SIZE;
+		   int topRow = (int)(y - getHitboxHeight()/ 2) / Adventure.TILE_SIZE;
+		   int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1)/ Adventure.TILE_SIZE;
 		   
-		   if(topTile < 0 || bottomTile >= world.room.getHeight() || leftTile < 0 || rightTile >= world.room.getWidth()) 
+		   if(leftColumn < 0 || bottomRow >= world.room.getHeight() || leftColumn < 0 || rightColumn >= world.room.getWidth()) 
 		   {
 			   topLeft = topRight = bottomLeft = bottomRight = false;
 			   return;
@@ -241,11 +237,12 @@ public abstract class Entity
 //		   boolean bl = tileMap.getType(bottomTile, leftTile);
 //		   boolean br = tileMap.getType(bottomTile, rightTile);
 		   
-		   topLeft = world.room.getTile(topTile, leftTile).isBlock;
-		   System.out.println("topLeft: " + topLeft);
-		   topRight = world.room.getTile(topTile, rightTile).isBlock;
-		   bottomLeft = world.room.getTile(bottomTile, leftTile).isBlock;
-		   bottomRight = world.room.getTile(bottomTile, rightTile).isBlock;
+		   topLeft = world.room.getTile(topRow, leftColumn).isBlock;
+//		   System.out.println("top left corner tile is:" + world.room.getTile(topRow, leftColumn).getTileX() + " , " + world.room.getTile(topRow, leftColumn).getTileY());
+		   topRight = world.room.getTile(topRow, rightColumn).isBlock;
+		   bottomLeft = world.room.getTile(bottomRow, leftColumn).isBlock;
+//		   System.out.println("bottomLeft: " + bottomLeft);
+		   bottomRight = world.room.getTile(bottomRow, rightColumn).isBlock;
 		   
 	   }
 }
