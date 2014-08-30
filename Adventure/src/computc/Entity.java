@@ -73,6 +73,26 @@ public abstract class Entity
 		return this.y;
 	}
 	
+	public int getTileX()
+	{
+		return (int)(Math.floor(this.x / Tile.SIZE));
+	}
+	
+	public int getTileY()
+	{
+		return (int)(Math.floor(this.y / Tile.SIZE));
+	}
+	
+	public int getRoomX()
+	{
+		return (int)(Math.floor(this.x / Room.WIDTH));
+	}
+	
+	public int getRoomY()
+	{
+		return (int)(Math.floor(this.y / Room.HEIGHT));
+	}
+	
 	public void setX(float x)
 	{
 		this.x = x;
@@ -81,16 +101,6 @@ public abstract class Entity
 	public void setY(float y)
 	{
 		this.y = y;
-	}
-	
-	public int getRoomX()
-	{
-		return (int)(Math.floor(this.getX() / Room.WIDTH) * Room.WIDTH);
-	}
-	
-	public int getRoomY()
-	{
-		return (int)(Math.floor(this.getY() / Room.HEIGHT) * Room.HEIGHT);
 	}
 	
 	public int getWidth()

@@ -2,28 +2,20 @@ package computc;
 
 import java.io.File;
 import java.util.Random;
-import java.util.LinkedList;
 
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class Room
 {
 	private int rx, ry;
-	
-	public final static int TILEY_WIDTH = 11;
-	public final static int TILEY_HEIGHT = 9;
-	public final static int WIDTH = Room.TILEY_WIDTH * Tile.SIZE;
-	public final static int HEIGHT = Room.TILEY_HEIGHT * Tile.SIZE;
+	private Tile[][] tiles;
 	
 	public Room westernRoom;
 	public Room easternRoom;
 	public Room southernRoom;
 	public Room northernRoom;
-	
-	private Tile[][] tiles;
 	
 	public Room(int rx, int ry) throws SlickException
 	{
@@ -31,7 +23,6 @@ public class Room
 		this.ry = ry;
 		
 		this.tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
-		
 		TiledMap tmx = new TiledMap(Room.getRandomLayout());
 		
 		for(int tx = 0; tx < this.getTileyWidth(); tx++)
@@ -42,14 +33,8 @@ public class Room
 				
 				this.tiles[tx][ty] = new Tile(this, tx, ty, tmx.getTileImage(tx, ty, 0));
 				this.tiles[tx][ty].isBlock = tmx.getTileProperty(tid, "block", "false").equals("false");
-				this.tiles[tx][ty].isDoor = tmx.getTileProperty(tid, "door", "false").equals("false");
 			}
 		}
-	}
-	
-	public void update(int delta)
-	{
-		//?!
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -110,8 +95,8 @@ public class Room
 	
 	public Tile getTile(float x, float y)
 	{
-		int tx = (int)(x) / this.getTile(0, 0).getWidth();
-		int ty = (int)(y) / this.getTile(0, 0).getHeight();
+		int tx = (int)(x) / Tile.SIZE;
+		int ty = (int)(y) / Tile.SIZE;
 		
 		return this.tiles[tx][ty];
 	}
@@ -134,6 +119,26 @@ public class Room
 	public Room getWesternRoom()
 	{
 		return this.westernRoom;
+	}
+	
+	public boolean hasNorthernRoom()
+	{
+		return this.northernRoom != null;
+	}
+	
+	public boolean hasSouthernRoom()
+	{
+		return this.southernRoom != null;
+	}
+	
+	public boolean hasEasternRoom()
+	{
+		return this.easternRoom != null;
+	}
+	
+	public boolean hasWesternRoom()
+	{
+		return this.westernRoom != null;
 	}
 	
 	public void setNorthernRoom(Room room)
@@ -204,25 +209,10 @@ public class Room
 		}
 	}
 	
-	public boolean hasNorthernRoom()
-	{
-		return this.northernRoom != null;
-	}
-	
-	public boolean hasSouthernRoom()
-	{
-		return this.southernRoom != null;
-	}
-	
-	public boolean hasEasternRoom()
-	{
-		return this.easternRoom != null;
-	}
-	
-	public boolean hasWesternRoom()
-	{
-		return this.westernRoom != null;
-	}
+	public final static int TILEY_WIDTH = 11;
+	public final static int TILEY_HEIGHT = 9;
+	public final static int WIDTH = Room.TILEY_WIDTH * Tile.SIZE;
+	public final static int HEIGHT = Room.TILEY_HEIGHT * Tile.SIZE;
 	
 	public static String getRandomLayout()
 	{

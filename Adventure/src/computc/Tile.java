@@ -5,13 +5,11 @@ import org.newdawn.slick.Graphics;
 
 public class Tile
 {
-	public final static int SIZE = 64;
-	
 	public boolean isBlock;
-	public boolean isDoor;
 	
 	private Room room;
-	private int tx, ty;
+	private int tx;
+	private int ty;
 	public Image image;
 	
 	public Tile(Room room, int tx, int ty, Image image)
@@ -32,31 +30,23 @@ public class Tile
 	
 	public int getX()
 	{
-		return this.getTileX() * this.getWidth();
+		return this.getTileyX() * Tile.SIZE;
 	}
 	
 	public int getY()
 	{
-		return this.getTileY() * this.getHeight();
+		return this.getTileyY() * Tile.SIZE;
 	}
 	
-	public int getTileX()
+	public int getTileyX()
 	{
 		return this.tx;
 	}
 	
-	public int getTileY()
+	public int getTileyY()
 	{
 		return this.ty;
 	}
 	
-	public int getWidth()
-	{
-		return this.image.getWidth();
-	}
-	
-	public int getHeight()
-	{
-		return this.image.getHeight();
-	}
+	public final static int SIZE = 64;
 }
