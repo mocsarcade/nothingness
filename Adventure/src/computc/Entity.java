@@ -22,19 +22,12 @@ public abstract class Entity
 	protected Direction direction;
 	protected float dx;
 	protected float dy;
+	protected float maxspeed;
+	protected float acceleration;
+	protected float deacceleration;
 	
 	// rendering
 	protected Image image;
-	
-	// some attributes?
-	protected float maxSpeed;
-	protected float moveSpeed;
-	protected double stopSpeed;
-	protected double attackSpeed;
-	
-	// blinking collision indicator
-	protected boolean blinking;
-	protected int blinkTimer;
 	
 	protected float xtemp;
 	protected float ytemp;
@@ -47,6 +40,14 @@ public abstract class Entity
 	protected boolean bottomLeft;
 	protected boolean bottomRight;
 	
+	protected int currentHealth;
+	protected int maximumHealth;
+	protected boolean isDead;
+	protected int damage;
+	
+	protected boolean justHit;
+	protected long justHitTimer;
+	
 	public Entity(World world, int tx, int ty)
 	{
 		this.world = world;
@@ -55,18 +56,7 @@ public abstract class Entity
 		this.y = (ty + 0.5f) * this.world.room.getTileWidth();
 	}
 	
-	public void update(int delta)
-	{
-		//this is to be overloaded by subclasses.
-	}
-	
-	public void render(Graphics graphics)
-	{
-		int x = this.getX() - (this.getWidth() / 2);
-		int y = this.getY() - (this.getHeight() / 2);
-		
-		this.image.draw(x, y);
-	}
+	public abstract void update(Input input, int delta);
 	
 	public void render(Graphics graphics, Camera camera)
 	{
@@ -74,25 +64,6 @@ public abstract class Entity
 		int y = this.getY() - (this.getHeight() / 2) - camera.getY();
 		
 		this.image.draw(x, y);
-	}
-	
-	public boolean intersects(Entity that)
-	{
-		Rectangle r1 = this.getHitbox();
-		Rectangle r2 = that.getHitbox();
-		
-		return r1.intersects(r2);
-	}
-	
-	public Rectangle getHitbox()
-	{
-		int x = this.getX();
-		int y = this.getY();
-		
-		int width = this.getHitboxWidth();
-		int height = this.getHitboxHeight();
-		
-		return new Rectangle(x - (width / 2), y - (width / 2), width, height);
 	}
 	
 	public int getX()
@@ -141,7 +112,7 @@ public abstract class Entity
 		this.direction = direction;
 	}
 	
-	public int getHitboxWidth() 
+	public int getHitboxWidth()
 	{
 		return this.getWidth();
 	}
@@ -149,16 +120,6 @@ public abstract class Entity
 	public int getHitboxHeight() 
 	{
 		return this.getHeight();
-	}
-		
-	public void setStep(Vector2f step)
-	{
-		this.step = step;
-	}
-	
-	public Vector2f getStep()
-	{
-		return this.step;
 	}
 	
 	public void checkTileMapCollision() 
@@ -221,24 +182,50 @@ public abstract class Entity
 			
 			}
 	}
+	
 	public void calculateCorners(double x, double y) 
 	{
-		   
-		   int leftColumn = (int)(x - getHitboxWidth()/ 2)/ Adventure.TILE_SIZE;
-		   int rightColumn = (int)(x + getHitboxWidth()/ 2 - 1)/ Adventure.TILE_SIZE;
-		   int topRow = (int)(y - getHitboxHeight()/ 2) / Adventure.TILE_SIZE;
-		   int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1)/ Adventure.TILE_SIZE;
-		   
-		   if(leftColumn < 0 || bottomRow >= world.room.getHeight() || leftColumn < 0 || rightColumn >= world.room.getWidth()) 
-		   {
-			   topLeft = topRight = bottomLeft = bottomRight = false;
-			   return;
-		   }
-		   
-		   topLeft = world.room.getTile(topRow, leftColumn).isBlock;
-		   topRight = world.room.getTile(topRow, rightColumn).isBlock;
-		   bottomLeft = world.room.getTile(bottomRow, leftColumn).isBlock;
-		   bottomRight = world.room.getTile(bottomRow, rightColumn).isBlock;
-		   
-	   }
+		int leftColumn = (int)(x - getHitboxWidth()/ 2)/ Adventure.TILE_SIZE;
+		int rightColumn = (int)(x + getHitboxWidth()/ 2 - 1)/ Adventure.TILE_SIZE;
+		int topRow = (int)(y - getHitboxHeight()/ 2) / Adventure.TILE_SIZE;
+		int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1)/ Adventure.TILE_SIZE;
+		
+		if(leftColumn < 0 || bottomRow >= world.room.getHeight() || leftColumn < 0 || rightColumn >= world.room.getWidth()) 
+		{
+			topLeft = topRight = bottomLeft = bottomRight = false;
+			return;
+		}
+		
+		topLeft = world.room.getTile(topRow, leftColumn).isBlock;
+		topRight = world.room.getTile(topRow, rightColumn).isBlock;
+		bottomLeft = world.room.getTile(bottomRow, leftColumn).isBlock;
+		bottomRight = world.room.getTile(bottomRow, rightColumn).isBlock;
+	}
+	
+	public boolean isDead() 
+	{
+		return this.isDead;
+	}
+	
+	public void takeDamage(int damage)
+	{
+		if(!this.isDead && !this.justHit)
+		{
+			this.currentHealth -= damage;
+			
+			if(currentHealth <= 0)
+			{
+				this.isDead = true;
+			}
+			else
+			{
+				this.justHit = true;
+			}
+		}
+	}
+	
+	public int getDamage()
+	{
+		return this.damage;
+	}
 }

@@ -2,6 +2,7 @@ package computc;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Thug extends Enemy	
@@ -12,18 +13,17 @@ public class Thug extends Enemy
 		
 		this.image = new Image("res/thug.png");
 		
-		this.health = this.maxHealth = 5;
+		this.currentHealth = this.maximumHealth = 3;
 		this.damage = 2;
-		moveSpeed = 0.03f;
-		maxSpeed = 0.03f;
+		acceleration = 0.03f;
+		maxspeed = 0.03f;
 		
 		right = true;
 		down = true;
 	}
 	
-	public void update(int delta)
+	public void update(Input input, int delta)
 	{
-		
 		getNextPosition();
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
@@ -54,12 +54,12 @@ public class Thug extends Enemy
 			}
 		
 		// check blinking
-		if(blinking) 
+		if(justHit) 
 		{
-			long elapsed = (System.nanoTime() - blinkTimer) / 1000000;
+			long elapsed = (System.nanoTime() - justHitTimer) / 1000000;
 			if(elapsed > 400) 
 			{
-				blinking = false;
+				justHit = false;
 			}
 		}
 	}
@@ -68,44 +68,38 @@ public class Thug extends Enemy
 	{
 		if(left) 
 		{
-			dx -= moveSpeed;
-			if(dx < -maxSpeed) 
+			dx -= acceleration;
+			if(dx < -maxspeed) 
 			{
-				dx = -maxSpeed;
+				dx = -maxspeed;
 			}
 		}
 		
 		else if(right) 
 			{
-			dx += moveSpeed;
-				if(dx > maxSpeed) 
+			dx += acceleration;
+				if(dx > maxspeed) 
 				{
-				dx = maxSpeed;
+				dx = maxspeed;
 				}
 			}
 		
 		if(up) 
 		{
-			dy -= moveSpeed;
-			if(dy < -maxSpeed) 
+			dy -= acceleration;
+			if(dy < -maxspeed) 
 			{
-				dy = -maxSpeed;
+				dy = -maxspeed;
 			}
 		}
 		
 		else if(down) 
 			{
-			dy += moveSpeed;
-				if(dy > maxSpeed) 
+			dy += acceleration;
+				if(dy > maxspeed) 
 				{
-				dy = maxSpeed;
+				dy = maxspeed;
 				}
 			}
 	}
-	
-	public void render (Graphics graphics) 
-	{
-		super.render(graphics);
-	}
-	
 }

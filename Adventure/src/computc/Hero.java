@@ -8,9 +8,6 @@ import org.newdawn.slick.SlickException;
 public class Hero extends Entity
 {
 	public static boolean nextArea;
-	private boolean dead = false;
-	private int health;
-	private int maxHealth;
 	
 	public Hero(World world, int tx, int ty) throws SlickException
 	{
@@ -18,10 +15,11 @@ public class Hero extends Entity
 		
 		this.image = new Image("res/hero.png");
 		
-		moveSpeed = 0.015f;
-		maxSpeed = .2f;
-		stopSpeed = 0.001f;
-		health = 5;
+		this.currentHealth = this.maximumHealth = 3;
+		
+		this.maxspeed = 0.2f;
+		this.acceleration = 0.015f;
+		this.deacceleration = 0.001f;
 	}
 	
 	public void update(Input input, int delta)
@@ -29,14 +27,13 @@ public class Hero extends Entity
 		getNextPosition(input, delta);
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
-		
 	}
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		if(blinking) 
+		if(justHit) 
 		{
-			long elapsed = (System.nanoTime() - blinkTimer) / 1000000;
+			long elapsed = (System.nanoTime() - justHitTimer) / 1000000;
 			if(elapsed / 100 % 2 == 0) 
 			{
 				return;
@@ -46,39 +43,23 @@ public class Hero extends Entity
 		super.render(graphics, camera);
 	}
 	
-	private void hit(int damage) 
-	{
-		if(blinking)
-			return;
-		health -= damage;
-		
-		if(health < 0)
-			health = 0;
-		
-		if(health == 0) 
-			dead = true;
-		
-		blinking = true;
-		blinkTimer = (int) System.nanoTime();
-	}
-	
 	private void getNextPosition(Input input, int delta) 
 	{
 		
 		if(input.isKeyDown(Input.KEY_UP)) 
 		{
-			dy -= moveSpeed * delta;
-			if(dy < -maxSpeed)
+			dy -= acceleration * delta;
+			if(dy < -maxspeed)
 			{
-				dy = -maxSpeed * delta;
+				dy = -maxspeed * delta;
 			}
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
-			dy += moveSpeed * delta;
-			if(dy > maxSpeed)
+			dy += acceleration * delta;
+			if(dy > maxspeed)
 			{
-				dy = maxSpeed * delta;
+				dy = maxspeed * delta;
 			}
 		}
 		
@@ -86,7 +67,7 @@ public class Hero extends Entity
 		{
 			if (dy > 0) 
 			{
-				dy -= stopSpeed * delta;
+				dy -= deacceleration * delta;
 				if(dy < 0)
 				{
 					dy = 0;
@@ -94,7 +75,7 @@ public class Hero extends Entity
 			}
 			else if (dy < 0)
 			{
-				dy += stopSpeed * delta;
+				dy += deacceleration * delta;
 				if(dy > 0) 
 				{
 					dy = 0;
@@ -104,25 +85,25 @@ public class Hero extends Entity
 
 		 if(input.isKeyDown(Input.KEY_RIGHT))
 		{
-			dx += moveSpeed * delta;
-			if(dx > maxSpeed) 
+			dx += acceleration * delta;
+			if(dx > maxspeed) 
 			{
-				dx = maxSpeed * delta;
+				dx = maxspeed * delta;
 			}
 		}
 		 else if(input.isKeyDown(Input.KEY_LEFT)) 
 		{
-			dx -= moveSpeed * delta;
-			if(dx < -maxSpeed)
+			dx -= acceleration * delta;
+			if(dx < -maxspeed)
 			{
-				dx = -maxSpeed * delta;
+				dx = -maxspeed * delta;
 			}
 		}
 		else 
 		{
 			if (dx > 0) 
 			{
-				dx -= stopSpeed * delta;
+				dx -= deacceleration * delta;
 				if(dx < 0)
 				{
 					dx = 0;
@@ -130,7 +111,7 @@ public class Hero extends Entity
 			}
 			else if (dx < 0)
 			{
-				dx += stopSpeed * delta;
+				dx += deacceleration * delta;
 				if(dx > 0) 
 				{
 					dx = 0;
@@ -139,7 +120,7 @@ public class Hero extends Entity
 			
 		}
 		
-//		float step = this.moveSpeed * delta;
+//		float step = this.acceleration * delta;
 		
 			if(input.isKeyDown(Input.KEY_UP))
 				{
@@ -163,5 +144,4 @@ public class Hero extends Entity
 //				this.x += step;
 			}
 	}
-	
 }

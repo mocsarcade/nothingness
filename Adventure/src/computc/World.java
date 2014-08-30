@@ -42,7 +42,7 @@ public class World
 		for(int i = 0; i < enemies.size(); i++) 
 		{
 			Enemy e = enemies.get(i);
-			e.update(delta);
+			e.update(input, delta);
 					if(e.isDead())
 					{
 						enemies.remove(i);
