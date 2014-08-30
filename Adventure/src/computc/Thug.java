@@ -26,7 +26,7 @@ public class Thug extends Enemy
 	public void update(Input input, int delta)
 	{
 		this.getNextPosition(delta);
-		this.checkTileMapCollision();
+		this.checkTileCollision();
 		this.setPosition(xtemp, ytemp);
 		
 		if(right && dx == 0)

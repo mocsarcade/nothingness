@@ -125,7 +125,7 @@ public abstract class Entity
 		return this.getHeight();
 	}
 	
-	public void checkTileMapCollision() 
+	public void checkTileCollision()
 	{
 		xdest = x + dx;
 		ydest = y + dy;

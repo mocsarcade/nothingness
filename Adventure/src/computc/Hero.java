@@ -102,7 +102,7 @@ public class Hero extends Entity
 				dx *= delta;
 			}
 		}
-
+		
 		x += dx;
 		y += dy;
 		

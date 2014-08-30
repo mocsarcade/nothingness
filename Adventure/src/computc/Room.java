@@ -2,8 +2,10 @@ package computc;
 
 import java.io.File;
 import java.util.Random;
+import java.util.LinkedList;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
@@ -17,6 +19,7 @@ public class Room
 	public Room northernRoom;
 	
 	private Tile[][] tiles;
+	private LinkedList<Thug> thugs;
 	
 	private final int WIDTH_OF_TILE = 64;
 	private final int HEIGHT_OF_TILE = 64;
@@ -28,7 +31,7 @@ public class Room
 		this.rx = rx;
 		this.ry = ry;
 		
-		TiledMap tmx = new TiledMap(Room.getRandomLayout());		
+		TiledMap tmx = new TiledMap(Room.getRandomLayout());
 		this.tiles = new Tile[WIDTH_IN_TILES][HEIGHT_IN_TILES];
 		
 		for(int tx = 0; tx < tmx.getWidth(); tx++)
@@ -42,6 +45,16 @@ public class Room
 				this.tiles[tx][ty].isDoor = tmx.getTileProperty(tid, "door", "false").equals("false");
 			}
 		}
+		
+		this.thugs = new LinkedList<Thug>();
+		
+		System.out.println(tmx.getObjectCount(0));
+	}
+	
+	public void update(Input input, int delta)
+	{
+		for(Thug thug : this.thugs)
+			thug.update(input, delta);
 	}
 	
 	public void render(Graphics graphics, Camera camera)

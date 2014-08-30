@@ -13,7 +13,7 @@ public class World
 	public World() throws SlickException
 	{
 		this.dungeon = new Dungeon();
-		this.hero = new Hero(this, 5, 0);
+		this.hero = new Hero(this, 5, 1);
 		this.camera = new Camera(hero);
 	}
 	
