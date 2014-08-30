@@ -24,8 +24,6 @@ public class Game extends BasicGame
 	{
 		this.dungeon = new Dungeon();
 		this.hero = new Hero(dungeon, dungeon.firstRoom, 5, 1);
-		
-		this.screen = new Screen();
 		this.camera = new Camera(hero);
 	}
 	
@@ -49,7 +47,7 @@ public class Game extends BasicGame
 		try
 		{
 			AppGameContainer container = new AppGameContainer(new Game());
-			container.setDisplayMode(screen.getWidth(), screen.getHeight(), false);
+			container.setDisplayMode(Room.WIDTH, Room.HEIGHT, false);
 			container.start();
 		}
 		catch(Exception error)
@@ -58,6 +56,5 @@ public class Game extends BasicGame
 		}
 	}
 	
-	public static Screen screen = new Screen();
 	public static final String GAME_TITLE = "We don't need no title.";
 }

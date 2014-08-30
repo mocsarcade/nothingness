@@ -42,8 +42,8 @@ public abstract class Entity
 	{
 		this.room = room;
 		
-		this.x = (tx + 0.5f) * Game.screen.getSizeOfTile();
-		this.y = (ty + 0.5f) * Game.screen.getSizeOfTile();
+		this.x = (tx + 0.5f) * Tile.SIZE;
+		this.y = (ty + 0.5f) * Tile.SIZE;
 	}
 	
 	public void update(int delta)

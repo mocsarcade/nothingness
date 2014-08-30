@@ -5,6 +5,8 @@ import org.newdawn.slick.Graphics;
 
 public class Tile
 {
+	public final static int SIZE = 64;
+	
 	public boolean isBlock;
 	public boolean isDoor;
 	

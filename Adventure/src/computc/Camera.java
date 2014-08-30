@@ -13,20 +13,20 @@ public class Camera
 	
 	public void update(int delta)
 	{
-		if(this.getX() < this.getTargetX())
+		if(this.getX() < this.getTarget().getRoomX())
 		{
 			this.increaseX(this.getSpeed() * delta);
 		}
-		else if(this.getX() > this.getTargetX())
+		else if(this.getX() > this.getTarget().getRoomX())
 		{
 			this.decreaseX(this.getSpeed() * delta);
 		}
 		
-		if(this.getY() < this.getTargetY())
+		if(this.getY() < this.getTarget().getRoomY())
 		{
 			this.increaseY(this.getSpeed() * delta);
 		}
-		else if(this.getY() > this.getTargetY())
+		else if(this.getY() > this.getTarget().getRoomY())
 		{
 			this.decreaseY(this.getSpeed() * delta);
 		}
@@ -62,14 +62,9 @@ public class Camera
 		this.y -= amount;
 	}
 	
-	public int getTargetX()
+	public Entity getTarget()
 	{
-		return this.target.getRoomX();
-	}
-	
-	public int getTargetY()
-	{
-		return this.target.getRoomY();
+		return this.target;
 	}
 	
 	public float getSpeed()

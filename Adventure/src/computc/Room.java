@@ -13,8 +13,10 @@ public class Room
 {
 	private int rx, ry;
 	
-	public final static int WIDTH = 11*64;
-	public final static int HEIGHT = 9*64;
+	public final static int TILEY_WIDTH = 11;
+	public final static int TILEY_HEIGHT = 9;
+	public final static int WIDTH = Room.TILEY_WIDTH * Tile.SIZE;
+	public final static int HEIGHT = Room.TILEY_HEIGHT * Tile.SIZE;
 	
 	public Room westernRoom;
 	public Room easternRoom;
@@ -29,15 +31,13 @@ public class Room
 		this.rx = rx;
 		this.ry = ry;
 		
-		int width = Game.screen.getWidthInTiles();
-		int height = Game.screen.getHeightInTiles();
-		this.tiles = new Tile[width][height];
+		this.tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
 		
 		TiledMap tmx = new TiledMap(Room.getRandomLayout());
 		
-		for(int tx = 0; tx < tmx.getWidth(); tx++)
+		for(int tx = 0; tx < this.getTileyWidth(); tx++)
 		{
-			for(int ty = 0; ty < tmx.getHeight(); ty++)
+			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
 				int tid = tmx.getTileId(tx, ty, 0);
 				
@@ -61,9 +61,9 @@ public class Room
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		for(int tx = 0; tx < this.getWidthInTiles(); tx++)
+		for(int tx = 0; tx < this.getTileyWidth(); tx++)
 		{
-			for(int ty = 0; ty < this.getHeightInTiles(); ty++)
+			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
 				this.tiles[tx][ty].render(graphics, camera);
 			}
@@ -77,12 +77,12 @@ public class Room
 	
 	public int getX()
 	{
-		return this.getRoomX() * this.getWidthInPixels();
+		return this.getRoomX() * Room.WIDTH;
 	}
 	
 	public int getY()
 	{
-		return this.getRoomY() * this.getHeightInPixels();
+		return this.getRoomY() * Room.HEIGHT;
 	}
 	
 	public int getRoomX()
@@ -95,24 +95,24 @@ public class Room
 		return this.ry;
 	}
 	
-	public int getWidthInTiles()
+	public int getTileyWidth()
 	{
-		return this.tiles.length;
+		return Room.TILEY_WIDTH;
 	}
 	
-	public int getHeightInTiles()
+	public int getTileyHeight()
 	{
-		return this.tiles[0].length;
+		return Room.TILEY_HEIGHT;
 	}
 	
-	public int getWidthInPixels()
+	public int getWidth()
 	{
-		return this.getWidthInTiles() * this.getTile(0, 0).getWidth();
+		return this.getTileyWidth() * Tile.SIZE;
 	}
 	
-	public int getHeightInPixels()
+	public int getHeight()
 	{
-		return this.getHeightInTiles() * this.getTile(0, 0).getHeight();
+		return this.getTileyHeight() * Tile.SIZE;
 	}
 	
 	public Tile getTile(int tx, int ty)
