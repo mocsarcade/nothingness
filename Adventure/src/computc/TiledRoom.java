@@ -58,7 +58,7 @@ public class TiledRoom extends TiledMap
 		return this.getHeight() * this.getTileHeight();
 	}
 	
-	public Tile getTile(int tx, int ty)
+	public Tile getTile(int ty, int tx)
 	{
 		if(tx >= 0 && tx < this.tiles.length
 		&& ty >= 0 && ty < this.tiles.length)
@@ -71,12 +71,11 @@ public class TiledRoom extends TiledMap
 		}
 	}
 	
-	public Tile getTile(float x, float y)
+	public Tile getTile(float y, float x)
 	{
 		int tx = (int)(x) / this.getTileWidth();
 		int ty = (int)(y) / this.getTileHeight();
 		
 		return this.tiles[tx][ty];
 	}
-	
 }

@@ -23,6 +23,10 @@ public abstract class Entity
 	protected Direction direction;
 	protected float dx;
 	protected float dy;
+	protected float xtemp;
+	protected float ytemp;
+	protected float xdest;
+	protected float ydest;
 	protected float acceleration;
 	protected float deacceleration;
 	protected float maximumVelocity;
@@ -30,22 +34,11 @@ public abstract class Entity
 	// rendering
 	protected Image image;
 	
-	protected float xtemp;
-	protected float ytemp;
-	protected float xdest;
-	protected float ydest;
-	
-	// corner collision
-	protected boolean topLeft;
-	protected boolean topRight;
-	protected boolean bottomLeft;
-	protected boolean bottomRight;
-
+	// status
 	protected int damage = 1;
 	protected int currentHealth;
 	protected int maximumHealth;
-	
-	protected int justHit;
+	protected int justHit = 0;
 	
 	public Entity(World world, int tx, int ty)
 	{
@@ -139,26 +132,27 @@ public abstract class Entity
 		   
 		xtemp = x;
 		ytemp = y;
+		
 		if(dy < 0) 
 		{
 			if(this.canMoveNorth(x, ydest))
 			{
-				dy = 0;
+				ytemp += dy;
 			}	
 			else
 			{
-				ytemp += dy;
+				dy = 0;
 			}
 		}
 		else if(dy > 0) 
 		{
 			if(this.canMoveSouth(x, ydest)) 
 			{
-				dy = 0;
+				ytemp += dy;
 			}
 			else 
 			{
-				ytemp += dy;
+				dy = 0;
 			}
 		}
 		
@@ -166,22 +160,22 @@ public abstract class Entity
 		{
 			if(this.canMoveWest(xdest, y)) 
 			{
-				dx = 0;
+				xtemp += dx;
 			}
 			else 
 			{
-				xtemp += dx;
+				dx = 0;
 			}
 		}
 		else if(dx > 0)
 		{
 			if(this.canMoveEast(xdest, y))
 			{
-				dx = 0;
+				xtemp += dx;
 			}
 			else 
 			{
-				xtemp += dx;
+				dx = 0;
 			}
 		}
 	}
@@ -211,15 +205,15 @@ public abstract class Entity
 		int easternBound = this.getEasternBound(x);
 		int northernBound = this.getNorthernBound(y);
 		
-		return this.world.room.getTile(northernBound, easternBound);
+		return this.world.room.getTile(easternBound, northernBound);
 	}
 	
 	public Tile getNorthwesternTile(float x, float y)
 	{
 		int westernBound = this.getWesternBound(x);
-		int southernBound = this.getSouthernBound(y);
+		int northernBound = this.getNorthernBound(y);
 		
-		return this.world.room.getTile(southernBound, westernBound);
+		return this.world.room.getTile(westernBound, northernBound);
 	}
 	
 	public Tile getSoutheasternTile(float x, float y)
@@ -227,15 +221,15 @@ public abstract class Entity
 		int easternBound = this.getEasternBound(x);
 		int southernBound = this.getSouthernBound(y);
 		
-		return this.world.room.getTile(southernBound, easternBound);
+		return this.world.room.getTile(easternBound, southernBound);
 	}
 	
 	public Tile getSouthwesternTile(float x, float y)
 	{
 		int westernBound = this.getWesternBound(x);
-		int northernBound = this.getNorthernBound(y);
+		int southernBound = this.getSouthernBound(y);
 		
-		return this.world.room.getTile(northernBound, westernBound);
+		return this.world.room.getTile(westernBound, southernBound);
 	}
 	
 	public boolean canMoveNorth(float x, float y)
