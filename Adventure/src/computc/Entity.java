@@ -7,6 +7,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
+
 public abstract class Entity
 {
 	// world
@@ -19,6 +20,8 @@ public abstract class Entity
 	// movement
 	protected Vector2f step;
 	protected Direction direction;
+	protected float dx;
+	protected float dy;
 	
 	// rendering
 	protected Image image;
@@ -33,6 +36,17 @@ public abstract class Entity
 	protected boolean blinking;
 	protected int blinkTimer;
 	
+	protected float xtemp;
+	protected float ytemp;
+	protected float xdest;
+	protected float ydest;
+	
+	// corner collision
+	protected boolean topLeft;
+	protected boolean topRight;
+	protected boolean bottomLeft;
+	protected boolean bottomRight;
+	
 	public Entity(World world, int tx, int ty)
 	{
 		this.world = world;
@@ -41,7 +55,7 @@ public abstract class Entity
 		this.y = (ty + 0.5f) * this.world.room.getTileWidth();
 	}
 	
-	public void update(Input input, int delta)
+	public void update(int delta)
 	{
 		//this is to be overloaded by subclasses.
 	}
@@ -146,4 +160,85 @@ public abstract class Entity
 	{
 		return this.step;
 	}
+	
+	public void checkTileMapCollision() 
+	{	   
+		   xdest = x + dx;
+		   ydest = y + dy;
+		   
+		   xtemp = x;
+		   ytemp = y;
+		   
+		   calculateCorners(x, ydest);
+		   
+		   if(dy < 0) 
+		   {
+			   if(topLeft || topRight) 
+			   {
+				   dy = 0;
+			   }
+			   else {
+				   ytemp += dy;
+			   }
+		   }
+			   
+			if(dy > 0) 
+			{
+				if(bottomLeft || bottomRight) 
+				{
+					dy = 0;
+				}
+				else 
+				{
+					
+					ytemp += dy;
+				}
+			}
+			
+			calculateCorners(xdest, y);
+			
+			if(dx < 0) {
+				if(topLeft || bottomLeft) 
+				{
+					dx = 0;
+				}
+				else 
+				{
+					xtemp += dx;
+				}
+			}
+				
+			if(dx > 0) {
+				if(topRight || bottomRight) 
+				{
+					dx = 0;
+				}
+				else 
+				{
+					xtemp += dx;
+				}
+				
+			
+			}
+	}
+	public void calculateCorners(double x, double y) 
+	{
+		   
+		   int leftColumn = (int)(x - getHitboxWidth()/ 2)/ Adventure.TILE_SIZE;
+		   int rightColumn = (int)(x + getHitboxWidth()/ 2 - 1)/ Adventure.TILE_SIZE;
+		   int topRow = (int)(y - getHitboxHeight()/ 2) / Adventure.TILE_SIZE;
+		   int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1)/ Adventure.TILE_SIZE;
+		   
+		   if(leftColumn < 0 || bottomRow >= world.room.getHeight() || leftColumn < 0 || rightColumn >= world.room.getWidth()) 
+		   {
+			   topLeft = topRight = bottomLeft = bottomRight = false;
+			   return;
+		   }
+		   
+		   topLeft = world.room.getTile(topRow, leftColumn).isBlock;
+		   topRight = world.room.getTile(topRow, rightColumn).isBlock;
+		   bottomLeft = world.room.getTile(bottomRow, leftColumn).isBlock;
+		   bottomRight = world.room.getTile(bottomRow, rightColumn).isBlock;
+		   
+	   }
 }

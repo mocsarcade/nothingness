@@ -14,6 +14,12 @@ public class Enemy extends Entity
 	protected boolean blinking;
 	protected long blinkTimer;
 	
+	protected boolean left;
+    protected boolean right;
+    protected boolean up;
+    protected boolean down;
+    
+    protected boolean attacking;
 	
 	public Enemy(World world, int tx, int ty) throws SlickException 
 	{

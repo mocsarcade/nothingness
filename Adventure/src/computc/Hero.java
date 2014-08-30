@@ -18,35 +18,18 @@ public class Hero extends Entity
 		
 		this.image = new Image("res/hero.png");
 		
-		moveSpeed = 0.15f;
+		moveSpeed = 0.015f;
+		maxSpeed = .2f;
+		stopSpeed = 0.001f;
 		health = 5;
 	}
 	
 	public void update(Input input, int delta)
 	{
-		float step = this.moveSpeed * delta;
+		getNextPosition(input, delta);
+		checkTileMapCollision();
+		setPosition(xtemp, ytemp);
 		
-		if(input.isKeyDown(Input.KEY_UP))
-		{
-			this.direction = Direction.NORTH;
-			this.y -= step;
-		}
-		else if(input.isKeyDown(Input.KEY_DOWN))
-		{
-			this.direction = Direction.SOUTH;
-			this.y += step;
-		}
-		
-		if(input.isKeyDown(Input.KEY_LEFT))
-		{
-			this.direction = Direction.WEST;
-			this.x -= step;
-		}
-		else if(input.isKeyDown(Input.KEY_RIGHT))
-		{
-			this.direction = Direction.EAST;
-			this.x += step;
-		}
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -78,4 +61,107 @@ public class Hero extends Entity
 		blinking = true;
 		blinkTimer = (int) System.nanoTime();
 	}
+	
+	private void getNextPosition(Input input, int delta) 
+	{
+		
+		if(input.isKeyDown(Input.KEY_UP)) 
+		{
+			dy -= moveSpeed * delta;
+			if(dy < -maxSpeed)
+			{
+				dy = -maxSpeed * delta;
+			}
+		}
+		else if(input.isKeyDown(Input.KEY_DOWN))
+		{
+			dy += moveSpeed * delta;
+			if(dy > maxSpeed)
+			{
+				dy = maxSpeed * delta;
+			}
+		}
+		
+		else 
+		{
+			if (dy > 0) 
+			{
+				dy -= stopSpeed * delta;
+				if(dy < 0)
+				{
+					dy = 0;
+				}
+			}
+			else if (dy < 0)
+			{
+				dy += stopSpeed * delta;
+				if(dy > 0) 
+				{
+					dy = 0;
+				}
+			}
+		}
+
+		 if(input.isKeyDown(Input.KEY_RIGHT))
+		{
+			dx += moveSpeed * delta;
+			if(dx > maxSpeed) 
+			{
+				dx = maxSpeed * delta;
+			}
+		}
+		 else if(input.isKeyDown(Input.KEY_LEFT)) 
+		{
+			dx -= moveSpeed * delta;
+			if(dx < -maxSpeed)
+			{
+				dx = -maxSpeed * delta;
+			}
+		}
+		else 
+		{
+			if (dx > 0) 
+			{
+				dx -= stopSpeed * delta;
+				if(dx < 0)
+				{
+					dx = 0;
+				}
+			}
+			else if (dx < 0)
+			{
+				dx += stopSpeed * delta;
+				if(dx > 0) 
+				{
+					dx = 0;
+				}
+			}
+			
+		}
+		
+//		float step = this.moveSpeed * delta;
+		
+			if(input.isKeyDown(Input.KEY_UP))
+				{
+					this.direction = Direction.NORTH;
+//					this.y -= step;
+				}
+			else if(input.isKeyDown(Input.KEY_DOWN))
+				{
+				this.direction = Direction.SOUTH;
+//				this.y += step;
+				}
+		
+			if(input.isKeyDown(Input.KEY_LEFT))
+				{
+				this.direction = Direction.WEST;
+//				this.x -= step;
+				}
+			else if(input.isKeyDown(Input.KEY_RIGHT))
+			{
+				this.direction = Direction.EAST;
+//				this.x += step;
+			}
+	}
+	
 }
