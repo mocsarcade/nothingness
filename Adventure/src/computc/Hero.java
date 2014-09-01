@@ -110,27 +110,27 @@ public class Hero extends Entity
 		if(input.isKeyDown(Input.KEY_UP))
 		{
 			this.direction = Direction.NORTH;
-			this.y -= this.speed * 2;
+			this.y -= this.speed * delta;
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
 			this.direction = Direction.SOUTH;
-			this.y += this.speed * 2;
+			this.y += this.speed * delta;
 		}
 		
 		if(input.isKeyDown(Input.KEY_LEFT))
 		{
 			this.direction = Direction.WEST;
-			this.x -= this.speed * 2;
+			this.x -= this.speed * delta;
 		}
 		else if(input.isKeyDown(Input.KEY_RIGHT))
 		{
 			this.direction = Direction.EAST;
-			this.x += this.speed * 2;
+			this.x += this.speed * delta;
 		}
 		
 		super.update(delta);
 	}
 	
-	private float speed = 1f;
+	private float speed = 0.5f;
 }
