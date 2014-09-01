@@ -30,12 +30,12 @@ public class Tile
 	
 	public int getX()
 	{
-		return this.getTileyX() * Tile.SIZE;
+		return this.getTileyX() * this.getWidth();
 	}
 	
 	public int getY()
 	{
-		return this.getTileyY() * Tile.SIZE;
+		return this.getTileyY() * this.getHeight();
 	}
 	
 	public int getTileyX()
@@ -46,6 +46,16 @@ public class Tile
 	public int getTileyY()
 	{
 		return this.ty;
+	}
+	
+	public int getWidth()
+	{
+		return Tile.SIZE;
+	}
+	
+	public int getHeight()
+	{
+		return Tile.SIZE;
 	}
 	
 	public Image getImage()

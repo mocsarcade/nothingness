@@ -55,20 +55,20 @@ public class Room
 	
 	public int getX()
 	{
-		return this.getRoomX() * Room.WIDTH;
+		return this.getRoomyX() * Room.WIDTH;
 	}
 	
 	public int getY()
 	{
-		return this.getRoomY() * Room.HEIGHT;
+		return this.getRoomyY() * Room.HEIGHT;
 	}
 	
-	public int getRoomX()
+	public int getRoomyX()
 	{
 		return this.rx;
 	}
 	
-	public int getRoomY()
+	public int getRoomyY()
 	{
 		return this.ry;
 	}

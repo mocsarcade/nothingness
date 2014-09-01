@@ -72,22 +72,22 @@ public abstract class Entity
 		return this.y;
 	}
 	
-	public int getTileX()
+	public int getTileyX()
 	{
 		return (int)(Math.floor(this.x / Tile.SIZE));
 	}
 	
-	public int getTileY()
+	public int getTileyY()
 	{
 		return (int)(Math.floor(this.y / Tile.SIZE));
 	}
 	
-	public int getRoomX()
+	public int getRoomyX()
 	{
 		return (int)(Math.floor(this.x / Room.WIDTH));
 	}
 	
-	public int getRoomY()
+	public int getRoomyY()
 	{
 		return (int)(Math.floor(this.y / Room.HEIGHT));
 	}

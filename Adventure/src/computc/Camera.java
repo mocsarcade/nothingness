@@ -9,6 +9,8 @@ public class Camera
 	public Camera(Entity target)
 	{
 		this.target = target;
+		this.x = target.getRoomyX() * Room.WIDTH;
+		this.y = target.getRoomyY() * Room.HEIGHT;
 	}
 	
 	public void update(int delta)
@@ -69,12 +71,12 @@ public class Camera
 	
 	public int getTargetX()
 	{
-		return this.getTarget().getRoomX() * Room.WIDTH;
+		return this.getTarget().getRoomyX() * Room.WIDTH;
 	}
 	
 	public int getTargetY()
 	{
-		return this.getTarget().getRoomY() * Room.HEIGHT;
+		return this.getTarget().getRoomyY() * Room.HEIGHT;
 	}
 	
 	public float getSpeed()

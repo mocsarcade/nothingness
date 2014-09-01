@@ -10,23 +10,21 @@ import org.newdawn.slick.SlickException;
 public class Game extends BasicGame
 {
 	public Hero hero;
-	public Camera camera;
 	public Dungeon dungeon;
-	public Thug firstThug;
-	public Thug secondThug;
+	public Camera camera;
+	public Menu menu;
 	
 	public Game()
 	{
-		super(GAME_TITLE);
+		super(Game.TITLE);
 	}
 	
 	public void init(GameContainer container) throws SlickException
 	{
 		this.dungeon = new Dungeon();
-		this.hero = new Hero(dungeon, 5, 1);
+		this.hero = new Hero(dungeon, dungeon.firstRoom, 5, 1);
 		this.camera = new Camera(hero);
-		this.firstThug = new Thug(0, 0, 1, 1);
-		this.secondThug = new Thug(0, 1, 1, 1);
+		this.menu = new Menu(dungeon, hero);
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException
@@ -35,8 +33,6 @@ public class Game extends BasicGame
 		
 		this.hero.update(input, delta);
 		this.dungeon.update(delta);
-		this.firstThug.update(delta);
-		this.secondThug.update(delta);
 		this.camera.update(delta);
 	}
 	
@@ -44,8 +40,7 @@ public class Game extends BasicGame
 	{
 		this.dungeon.render(graphics, camera);
 		this.hero.render(graphics, camera);
-		this.firstThug.render(graphics, camera);
-		this.secondThug.render(graphics, camera);
+		this.menu.render(graphics, camera);
 	}
 	
 	public static void main(String[] args)
@@ -53,7 +48,7 @@ public class Game extends BasicGame
 		try
 		{
 			AppGameContainer container = new AppGameContainer(new Game());
-			container.setDisplayMode(Room.WIDTH, Room.HEIGHT, false);
+			container.setDisplayMode(Room.WIDTH, Room.HEIGHT + Menu.HEIGHT, false);
 			container.start();
 		}
 		catch(Exception error)
@@ -62,5 +57,5 @@ public class Game extends BasicGame
 		}
 	}
 	
-	public static final String GAME_TITLE = "We don't need no title.";
+	public static final String TITLE = "We don't need no title.";
 }
