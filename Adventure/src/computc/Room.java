@@ -13,6 +13,8 @@ public class Room
 	private Tile[][] tiles;
 	private Dungeon dungeon;
 	
+	public boolean visited;
+	
 	public Room westernRoom;
 	public Room easternRoom;
 	public Room southernRoom;

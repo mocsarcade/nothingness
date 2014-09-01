@@ -9,8 +9,9 @@ public class Camera
 	public Camera(Entity target)
 	{
 		this.target = target;
-		this.x = target.getRoomyX() * Room.WIDTH;
-		this.y = target.getRoomyY() * Room.HEIGHT;
+		
+		this.x = this.getTargetX();
+		this.y = this.getTargetY();
 	}
 	
 	public void update(int delta)
