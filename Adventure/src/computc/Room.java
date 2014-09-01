@@ -35,7 +35,7 @@ public class Room
 				int tid = tmx.getTileId(tx, ty, 0);
 				
 				this.tiles[tx][ty] = new Tile(this, tx, ty, tmx.getTileImage(tx, ty, 0));
-				this.tiles[tx][ty].isBlock = tmx.getTileProperty(tid, "block", "false").equals("false");
+				this.tiles[tx][ty].isBlocked = tid == 1;
 			}
 		}
 		

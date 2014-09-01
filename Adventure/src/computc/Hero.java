@@ -107,30 +107,48 @@ public class Hero extends Entity
 			}
 		}
 		
+		float step = this.speed * delta;
+		
 		if(input.isKeyDown(Input.KEY_UP))
 		{
 			this.direction = Direction.NORTH;
-			this.y -= this.speed * delta;
+			
+			if(!this.dungeon.getTile(this.x, this.y - step).isBlocked)
+			{
+				this.y -= step;
+			}
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
 			this.direction = Direction.SOUTH;
-			this.y += this.speed * delta;
+			
+			if(!this.dungeon.getTile(this.x, this.y + step).isBlocked)
+			{
+				this.y += step;
+			}
 		}
 		
-		if(input.isKeyDown(Input.KEY_LEFT))
-		{
-			this.direction = Direction.WEST;
-			this.x -= this.speed * delta;
-		}
-		else if(input.isKeyDown(Input.KEY_RIGHT))
+		if(input.isKeyDown(Input.KEY_RIGHT))
 		{
 			this.direction = Direction.EAST;
-			this.x += this.speed * delta;
+			
+			if(!this.dungeon.getTile(this.x + step, this.y).isBlocked)
+			{
+				this.x += step;
+			}
+		}
+		else if(input.isKeyDown(Input.KEY_LEFT))
+		{
+			this.direction = Direction.WEST;
+			
+			if(!this.dungeon.getTile(this.x - step, this.y).isBlocked)
+			{
+				this.x -= step;
+			}
 		}
 		
 		super.update(delta);
 	}
 	
-	private float speed = 0.5f;
+	private float speed = 0.25f;
 }

@@ -5,7 +5,7 @@ import org.newdawn.slick.Graphics;
 
 public class Tile
 {
-	public boolean isBlock;
+	public boolean isBlocked;
 	
 	private Room room;
 	private int tx;

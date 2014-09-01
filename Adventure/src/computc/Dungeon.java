@@ -37,4 +37,15 @@ public class Dungeon
 			room.render(graphics, camera);
 		}
 	}
+	
+	public Tile getTile(float x, float y)
+	{
+		int rx = (int)(Math.floor(x / Room.WIDTH));
+		int ry = (int)(Math.floor(y / Room.HEIGHT));
+		
+		int tx = (int)(Math.floor((x - (rx * Room.WIDTH)) / Tile.SIZE));
+		int ty = (int)(Math.floor((y - (ry * Room.HEIGHT)) / Tile.SIZE));
+		
+		return this.rooms.get(rx, ry).getTile(tx, ty);
+	}
 }
