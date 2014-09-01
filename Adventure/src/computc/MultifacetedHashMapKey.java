@@ -1,11 +1,11 @@
 package computc;
 
-public class DoubleKey
+public class MultifacetedHashMapKey
 {
 	private final int i;
 	private final int j;
 	
-	public DoubleKey(int i, int j)
+	public MultifacetedHashMapKey(int i, int j)
 	{
 		this.i = i;
 		this.j = j;
@@ -18,9 +18,9 @@ public class DoubleKey
 			return true;
 		}
 		
-		if(object instanceof DoubleKey)
+		if(object instanceof MultifacetedHashMapKey)
 		{
-			DoubleKey that = (DoubleKey)(object);
+			MultifacetedHashMapKey that = (MultifacetedHashMapKey)(object);
 			return this.i == that.i && this.j == that.j;
 		}
 		

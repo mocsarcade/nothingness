@@ -5,28 +5,28 @@ import java.util.Map;
 import java.util.Set;
 import java.util.HashMap;
 
-public class DoubleKeyHashMap<O>
+public class MultifacetedHashMap<O>
 {
 	public void add(int i, int j, O o)
 	{
 		if(this.has(i, j))
 		{
-			throw new DoubleKeyHashMapException();
+			throw new MultifacetedHashMapException();
 		}
 		else
 		{
-			this.map.put(new DoubleKey(i, j), o);
+			this.map.put(new MultifacetedHashMapKey(i, j), o);
 		}
 	}
 	
 	public O get(int i, int j)
 	{
-		return this.map.get(new DoubleKey(i, j));
+		return this.map.get(new MultifacetedHashMapKey(i, j));
 	}
 	
 	public boolean has(int i, int j)
 	{
-		return this.map.containsKey(new DoubleKey(i, j));
+		return this.map.containsKey(new MultifacetedHashMapKey(i, j));
 	}
 	
 	public LinkedList<O> getAll()
@@ -34,5 +34,5 @@ public class DoubleKeyHashMap<O>
 		return new LinkedList<O>(this.map.values());
 	}
 	
-	private HashMap<DoubleKey, O> map = new HashMap<DoubleKey, O>();
+	private HashMap<MultifacetedHashMapKey, O> map = new HashMap<MultifacetedHashMapKey, O>();
 }
