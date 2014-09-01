@@ -1,8 +1,5 @@
 package computc;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
-
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 

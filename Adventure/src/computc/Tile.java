@@ -5,12 +5,12 @@ import org.newdawn.slick.Graphics;
 
 public class Tile
 {
-	public boolean isBlocked;
-	
 	private Room room;
 	private int tx;
 	private int ty;
-	public Image image;
+	private Image image;
+	
+	public boolean isBlocked;
 	
 	public Tile(Room room, int tx, int ty, Image image)
 	{
@@ -46,6 +46,11 @@ public class Tile
 	public int getTileyY()
 	{
 		return this.ty;
+	}
+	
+	public Image getImage()
+	{
+		return this.image;
 	}
 	
 	public final static int SIZE = 64;

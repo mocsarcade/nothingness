@@ -149,25 +149,25 @@ public class Room
 	public void setNorthernRoom(Room room)
 	{
 		this.northernRoom = room;
-		this.tiles[11/2][0] = new Tile(this, 11/2, 0, this.tiles[11/2][1].image);
+		this.tiles[11/2][0] = new Tile(this, 11/2, 0, this.tiles[11/2][1].getImage());
 	}
 	
 	public void setSouthernRoom(Room room)
 	{
 		this.southernRoom = room;
-		this.tiles[11/2][9-1] = new Tile(this, 11/2, 9-1, this.tiles[11/2][1].image);
+		this.tiles[11/2][9-1] = new Tile(this, 11/2, 9-1, this.tiles[11/2][1].getImage());
 	}
 	
 	public void setEasternRoom(Room room)
 	{
 		this.easternRoom = room;
-		this.tiles[11-1][9/2] = new Tile(this, 11-1, 9/2, this.tiles[11/2][1].image);
+		this.tiles[11-1][9/2] = new Tile(this, 11-1, 9/2, this.tiles[11/2][1].getImage());
 	}
 	
 	public void setWesternRoom(Room room)
 	{
 		this.westernRoom = room;
-		this.tiles[0][9/2] = new Tile(this, 0, 9/2, this.tiles[11/2][1].image);
+		this.tiles[0][9/2] = new Tile(this, 0, 9/2, this.tiles[11/2][1].getImage());
 	}
 	
 	public void connectNorthernRoom(Room that)
