@@ -9,7 +9,7 @@ import org.newdawn.slick.SlickException;
 public class Dungeon
 {
 	public Room firstRoom, secondRoom, thirdRoom, fourthRoom, fifthRoom;
-	public RoomHashMap rooms = new RoomHashMap();
+	public DoubleKeyHashMap<Room> rooms = new DoubleKeyHashMap<Room>();
 	
 	public Dungeon() throws SlickException
 	{

@@ -39,7 +39,7 @@ public class Room
 			}
 		}
 		
-		this.dungeon.rooms.add(this);
+		this.dungeon.rooms.add(this.rx, this.ry, this);
 	}
 	
 	public void render(Graphics graphics, Camera camera)
