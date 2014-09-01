@@ -1,11 +1,17 @@
 package computc;
 
-public class RoomKey
+public class RoomHashMapKey
 {
 	private final int x;
 	private final int y;
 	
-	public RoomKey(int x, int y)
+	public RoomHashMapKey(Room room)
+	{
+		this.x = room.getRoomX();
+		this.y = room.getRoomY();
+	}
+	
+	public RoomHashMapKey(int x, int y)
 	{
 		this.x = x;
 		this.y = y;
@@ -18,12 +24,12 @@ public class RoomKey
 			return true;
 		}
 		
-		if(!(object instanceof RoomKey))
+		if(!(object instanceof RoomHashMapKey))
 		{
 			return false;
 		}
 		
-		RoomKey key = (RoomKey)(object);
+		RoomHashMapKey key = (RoomHashMapKey)(object);
 		return x == key.x && y == key.y;
 	}
 	

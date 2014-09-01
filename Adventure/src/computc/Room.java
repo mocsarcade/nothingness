@@ -11,14 +11,17 @@ public class Room
 {
 	private int rx, ry;
 	private Tile[][] tiles;
+	private Dungeon dungeon;
 	
 	public Room westernRoom;
 	public Room easternRoom;
 	public Room southernRoom;
 	public Room northernRoom;
 	
-	public Room(int rx, int ry) throws SlickException
+	public Room(Dungeon dungeon, int rx, int ry) throws SlickException
 	{
+		this.dungeon = dungeon;
+		
 		this.rx = rx;
 		this.ry = ry;
 		
@@ -35,6 +38,8 @@ public class Room
 				this.tiles[tx][ty].isBlock = tmx.getTileProperty(tid, "block", "false").equals("false");
 			}
 		}
+		
+		this.dungeon.rooms.add(this);
 	}
 	
 	public void render(Graphics graphics, Camera camera)
