@@ -23,11 +23,6 @@ public class Dungeon
 		//this.secondRoom.connectSouthernRoom(this.thirdRoom);
 		//this.secondRoom.connectEasternRoom(this.fourthRoom);
 		//this.secondRoom.connectWesternRoom(this.fifthRoom);
-		
-		for(Room room : this.rooms.getAll())
-		{
-			System.out.println(room);
-		}
 	}
 	
 	public void update(int delta)

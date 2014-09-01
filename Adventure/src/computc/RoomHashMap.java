@@ -11,12 +11,22 @@ public class RoomHashMap
 	
 	public void add(Room room)
 	{
+		if(this.has(room))
+		{
+			throw new RoomHashMapException();
+		}
+		
 		this.map.put(new RoomHashMapKey(room), room);
 	}
 	
 	public Room get(int rx, int ry)
 	{
 		return this.map.get(new RoomHashMapKey(rx, ry));
+	}
+	
+	public boolean has(Room room)
+	{
+		return this.map.containsKey(new RoomHashMapKey(room));
 	}
 	
 	public LinkedList<Room> getAll()
