@@ -4,6 +4,7 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
@@ -22,9 +23,12 @@ public class Game extends BasicGame
 	public void init(GameContainer container) throws SlickException
 	{
 		this.dungeon = new Dungeon();
-		this.hero = new Hero(dungeon, dungeon.firstRoom, 5, 1);
+		this.hero = new Hero(dungeon, dungeon.getRoom(3, 0), 5, 1);
 		this.camera = new Camera(hero);
 		this.menu = new Menu(dungeon, hero);
+
+		Tile.WALL_IMAGE = new Image("./res/wall.png");
+		Tile.FLOOR_IMAGE = new Image("./res/floor.png");
 	}
 	
 	public void update(GameContainer container, int delta) throws SlickException

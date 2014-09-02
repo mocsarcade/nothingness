@@ -28,6 +28,10 @@ public class Room
 		this.ry = ry;
 		
 		this.tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
+	}
+	
+	public void loadRandomLayout() throws SlickException
+	{
 		TiledMap tmx = new TiledMap(Room.getRandomLayout());
 		
 		for(int tx = 0; tx < this.getTileyWidth(); tx++)
@@ -35,18 +39,19 @@ public class Room
 			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
 				int tid = tmx.getTileId(tx, ty, 0);
+				Tile tile = new Tile(this, tx, ty);
+				tile.isBlocked = (tid == 1);
 				
-				this.tiles[tx][ty] = new Tile(this, tx, ty, tmx.getTileImage(tx, ty, 0));
-				this.tiles[tx][ty].isBlocked = tid == 1;
+				this.setTile(tx, ty, tile);
 			}
 		}
 	}
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		for(int tx = 0; tx < this.getTileyWidth(); tx++)
+		for(int ty = 0; ty < this.getTileyHeight(); ty++)
 		{
-			for(int ty = 0; ty < this.getTileyHeight(); ty++)
+			for(int tx = 0; tx < this.getTileyWidth(); tx++)
 			{
 				this.tiles[tx][ty].render(graphics, camera);
 			}
@@ -98,12 +103,9 @@ public class Room
 		return this.tiles[tx][ty];
 	}
 	
-	public Tile getTile(float x, float y)
+	public void setTile(int tx, int ty, Tile tile)
 	{
-		int tx = (int)(x) / Tile.SIZE;
-		int ty = (int)(y) / Tile.SIZE;
-		
-		return this.tiles[tx][ty];
+		this.tiles[tx][ty] = tile;
 	}
 	
 	public Room getNorthernRoom()
@@ -149,25 +151,25 @@ public class Room
 	public void setNorthernRoom(Room room)
 	{
 		this.northernRoom = room;
-		this.tiles[11/2][0] = new Tile(this, 11/2, 0, this.tiles[11/2][1].getImage());
+		this.tiles[11/2][0] = new Tile(this, 11/2, 0);
 	}
 	
 	public void setSouthernRoom(Room room)
 	{
 		this.southernRoom = room;
-		this.tiles[11/2][9-1] = new Tile(this, 11/2, 9-1, this.tiles[11/2][1].getImage());
+		this.tiles[11/2][9-1] = new Tile(this, 11/2, 9-1);
 	}
 	
 	public void setEasternRoom(Room room)
 	{
 		this.easternRoom = room;
-		this.tiles[11-1][9/2] = new Tile(this, 11-1, 9/2, this.tiles[11/2][1].getImage());
+		this.tiles[11-1][9/2] = new Tile(this, 11-1, 9/2);
 	}
 	
 	public void setWesternRoom(Room room)
 	{
 		this.westernRoom = room;
-		this.tiles[0][9/2] = new Tile(this, 0, 9/2, this.tiles[11/2][1].getImage());
+		this.tiles[0][9/2] = new Tile(this, 0, 9/2);
 	}
 	
 	public void connectNorthernRoom(Room that)

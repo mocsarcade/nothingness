@@ -6,30 +6,40 @@ import java.util.LinkedList;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
 
 public class Dungeon
 {
-	public Room firstRoom, secondRoom, thirdRoom, fourthRoom, fifthRoom;
 	private HashMap<String, Room> rooms = new HashMap<String, Room>();
 	
 	public Dungeon() throws SlickException
 	{
-		this.firstRoom = new Room(this, 4, 1);
-		this.secondRoom = new Room(this, 4, 2);
-		this.thirdRoom = new Room(this, 4, 3);
-		this.fourthRoom = new Room(this, 5, 2);
-		this.fifthRoom = new Room(this, 3, 2);
+		TiledMap tiled = new TiledMap("./res/dungeons/prototype.dungeon.tmx");
 		
-		this.secondRoom.connectNorthernRoom(this.firstRoom);
-		this.secondRoom.connectSouthernRoom(this.thirdRoom);
-		this.secondRoom.connectEasternRoom(this.fourthRoom);
-		this.secondRoom.connectWesternRoom(this.fifthRoom);
-
-		this.addRoom(this.firstRoom);
-		this.addRoom(this.secondRoom);
-		this.addRoom(this.thirdRoom);
-		this.addRoom(this.fourthRoom);
-		this.addRoom(this.fifthRoom);
+		for(int rx = 0; rx < 9; rx++)
+		{
+			for(int ry = 0; ry < 5; ry++)
+			{
+				Room room = new Room(this, rx, ry);
+				
+				for(int tx = 0; tx < Room.TILEY_WIDTH; tx++)
+				{
+					for(int ty = 0; ty < Room.TILEY_HEIGHT; ty++)
+					{
+						int rxtx = (rx * Room.TILEY_WIDTH) + tx;
+						int ryty = (ry * Room.TILEY_HEIGHT) + ty;
+						
+						Tile tile = new Tile(room, tx, ty);
+						
+						tile.isBlocked = (tiled.getTileId(rxtx, ryty, 0) == 1);
+						
+						room.setTile(tx, ty, tile);
+					}
+				}
+				
+				this.addRoom(room);
+			}
+		}
 	}
 	
 	public void update(int delta)

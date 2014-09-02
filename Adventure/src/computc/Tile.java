@@ -8,16 +8,14 @@ public class Tile
 	private Room room;
 	private int tx;
 	private int ty;
-	private Image image;
 	
 	public boolean isBlocked;
 	
-	public Tile(Room room, int tx, int ty, Image image)
+	public Tile(Room room, int tx, int ty)
 	{
 		this.room = room;
 		this.tx = tx;
 		this.ty = ty;
-		this.image = image;
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -25,7 +23,14 @@ public class Tile
 		int x = this.getX() + this.room.getX() - camera.getX();
 		int y = this.getY() + this.room.getY() - camera.getY();
 		
-		this.image.draw(x, y);
+		if(this.isBlocked)
+		{
+			Tile.WALL_IMAGE.draw(x, y);
+		}
+		else
+		{
+			Tile.FLOOR_IMAGE.draw(x, y);
+		}
 	}
 	
 	public int getX()
@@ -58,10 +63,8 @@ public class Tile
 		return Tile.SIZE;
 	}
 	
-	public Image getImage()
-	{
-		return this.image;
-	}
-	
 	public final static int SIZE = 64;
+	
+	public static Image WALL_IMAGE;
+	public static Image FLOOR_IMAGE;
 }
