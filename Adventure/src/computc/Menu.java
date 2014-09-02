@@ -19,9 +19,9 @@ public class Menu
 		graphics.setColor(Color.black);
 		graphics.fillRect(0, Room.HEIGHT, Room.WIDTH, Menu.HEIGHT);
 
-		for(int rx = 0; rx < 9; rx++)
+		for(int rx = 0; rx < Dungeon.ROOMY_WIDTH; rx++)
 		{
-			for(int ry = 0; ry < 5; ry++)
+			for(int ry = 0; ry < Dungeon.ROOMY_HEIGHT; ry++)
 			{
 				int UNIT = 22, MARGIN = 3;
 				int x = MARGIN + (rx * (UNIT + MARGIN));

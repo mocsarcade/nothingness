@@ -49,9 +49,9 @@ public class Room
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		for(int ty = 0; ty < this.getTileyHeight(); ty++)
+		for(int tx = 0; tx < this.getTileyWidth(); tx++)
 		{
-			for(int tx = 0; tx < this.getTileyWidth(); tx++)
+			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
 				this.tiles[tx][ty].render(graphics, camera);
 			}

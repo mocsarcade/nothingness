@@ -26,18 +26,44 @@ public class Dungeon
 				{
 					for(int ty = 0; ty < Room.TILEY_HEIGHT; ty++)
 					{
+						Tile tile = new Tile(room, tx, ty);
+
 						int rxtx = (rx * Room.TILEY_WIDTH) + tx;
 						int ryty = (ry * Room.TILEY_HEIGHT) + ty;
+						int tid = tiled.getTileId(rxtx, ryty, 0);
 						
-						Tile tile = new Tile(room, tx, ty);
-						
-						tile.isBlocked = (tiled.getTileId(rxtx, ryty, 0) == 1);
+						tile.isBlocked = (tid == 1);
 						
 						room.setTile(tx, ty, tile);
 					}
 				}
 				
 				this.addRoom(room);
+			}
+		}
+		
+		for(int rx = 0; rx < Dungeon.ROOMY_WIDTH; rx++)
+		{
+			for(int ry = 0; ry < Dungeon.ROOMY_HEIGHT; ry++)
+			{
+				Room room = this.getRoom(rx, ry);
+				
+				if(!room.getTile(Room.TILEY_WIDTH / 2, 0).isBlocked)
+				{
+					room.connectNorthernRoom(this.getRoom(rx, ry - 1));
+				}
+				if(!room.getTile(Room.TILEY_WIDTH / 2, Room.TILEY_HEIGHT - 1).isBlocked)
+				{
+					room.connectSouthernRoom(this.getRoom(rx, ry + 1));
+				}
+				if(!room.getTile(Room.TILEY_WIDTH - 1, Room.TILEY_HEIGHT / 2).isBlocked)
+				{
+					room.connectEasternRoom(this.getRoom(rx + 1, ry));
+				}
+				if(!room.getTile(0, Room.TILEY_HEIGHT / 2).isBlocked)
+				{
+					room.connectWesternRoom(this.getRoom(rx - 1, ry));
+				}
 			}
 		}
 	}
@@ -95,4 +121,7 @@ public class Dungeon
 		
 		return this.getRoom(rx, ry).getTile(tx, ty);
 	}
+	
+	public final static int ROOMY_WIDTH = 9;
+	public final static int ROOMY_HEIGHT = 5;
 }

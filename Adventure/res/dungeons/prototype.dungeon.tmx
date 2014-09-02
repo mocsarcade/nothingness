@@ -10,7 +10,7 @@
  </tileset>
  <layer name="rooms" width="99" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2X2xLDIAhETf//o/vcjCB30e7DTqYNMSsH0XzGGJ/Neiai/s+S12/EuB0k9ayZnzbWwiLq/Z30KK5dWGSM20Ge/FL9ACx8LFZXjs+Kxew+WPjmhnVRwwL7xX7hHNVHEd8G3liv34hxu+a3mkWlB26MLBYaZhWx1O+MfGjyXMVCWkvUPCjPlPfZuJJrRi60tVPBQpqzWfz7nmVdgIWNBTcPLlbjpYqFJV8dWVDP7FgX1n2247pY9X1pre/YL7j9LnJPrmARXTuedUF5W/VJK48MZlYWM8/S+WWJ82BlYV1Tlr4HFnYWWfm1spCw0oxZGXsTCw8vbkxp7Uvys/Jg7S2dWEQxi4p9hs7bv7GwPu/tFxZ/2r56GosT1kV2Dip83LJf3MLipHNUZO6y+HpZZKv6fRoPuzlUM67OQwcPHaTpO9ksvDGna1WD7+ut9dBBknoEi1oW3PkMLHqwqMgDWMxZrPYNsLg7DzhH/c5R+v11qwcIgiAIgiAIgiDoDH0B5jMWiZxFAAA=
+   H4sIAAAAAAAAC+2VSxLDIAxDk97/0N12UvwH5CRaaJhCBiw9Q8/jOE6K+tHHodXfzqwZnWeVhWfswmIlY7Sy+Up7kEWNhTVafjUWo3WyqHvjvVjPwjNWuJHFfG8dWFh7o/NEclzx7aoaniyy8NWHfneuc6Pf0Zoz7x76PbPO0TLT5ke5Svle56RxJoed/1lRFt7MtN6t3AuyyLHQfGjfWj4RLDLcOrKY1WczWEje7ngvtP6O9HqWcYWFx+NdWKzq9cy9kDhr/VDxGWW2U6hzvTVUMuqSMVnch4Wnzi7v2cx3Cp17JOMKC2/vj/aIcst6RGffudfPy+jVW1hoPrL5ePbL1Bf1h87/ifei0k+d5K01mq91prSvNLeCDzp7L4+Od2gmD3TmSNasoYc65NChBpTvDm8E+vwOkrx+jPUn9gNaln+y2MtCyoMs+rDYlQNZ/LPQ1sniPTmgz6coiqIoiqIoiqIoyq8vTfYy1pxFAAA=
   </data>
  </layer>
 </map>
