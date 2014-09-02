@@ -1,15 +1,51 @@
 package computc;
 
-import java.io.InputStream;
-
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class TiledRoom extends TiledMap
 {
-	public TiledRoom(String tmx) throws SlickException
+	protected Tile[][] tiles;
+	
+	public TiledRoom() throws SlickException
 	{
-		super(tmx);
+		
+		super("res/world.tmx");
+		try 
+		{
+			this.tiles = new Tile[this.getHeight()][this.getWidth()];
+			System.out.println("the width apparently is: " + this.getWidth() + " and the Height apparently is: " + this.getHeight());
+			for(int ty = 0; ty < this.getWidth(); ty++)
+			{
+				for(int tx = 0; tx < tiles[ty].length; tx++)
+				{
+					int tid = this.getTileId(tx, ty, 0);
+				
+					this.tiles[ty][tx] = new Tile();
+				
+					if(this.getTileProperty(tid, "block", "false").equals("true"))
+						this.tiles[ty][tx].isBlock = true; 
+					this.tiles[ty][tx].tileX = tx;
+					this.tiles[ty][tx].tileY = ty;
+					
+					if(this.getTileProperty(tid, "door", "false").equals("true"))
+						this.tiles[ty][tx].isDoor = true;
+				}
+			}
+		} 
+		catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void render(Graphics graphics, Camera camera)
+	{
+		int x = camera.getX() * -1;
+		int y = camera.getY() * -1;
+		
+		this.render(x, y);
 	}
 	
 	public int getPixelWidth()
@@ -21,4 +57,18 @@ public class TiledRoom extends TiledMap
 	{
 		return this.getHeight() * this.getTileHeight();
 	}
+	
+	public Tile getTile(int tx, int ty)
+	{
+		return this.tiles[tx][ty];
+	}
+	
+	public Tile getTile(float x, float y)
+	{
+		int tx = (int)(x) / this.getTileWidth();
+		int ty = (int)(y) / this.getTileHeight();
+		
+		return this.tiles[tx][ty];
+	}
+	
 }

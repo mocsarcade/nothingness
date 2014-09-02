@@ -7,47 +7,161 @@ import org.newdawn.slick.SlickException;
 
 public class Hero extends Entity
 {
+	public static boolean nextArea;
+	private boolean dead = false;
+	private int health;
+	private int maxHealth;
+	
 	public Hero(World world, int tx, int ty) throws SlickException
 	{
 		super(world, tx, ty);
 		
 		this.image = new Image("res/hero.png");
+		
+		moveSpeed = 0.015f;
+		maxSpeed = .2f;
+		stopSpeed = 0.001f;
+		health = 5;
 	}
 	
 	public void update(Input input, int delta)
 	{
-		float step = this.speed * delta;
+		getNextPosition(input, delta);
+		checkTileMapCollision();
+		setPosition(xtemp, ytemp);
 		
-		if(input.isKeyDown(Input.KEY_UP))
+	}
+	
+	public void render(Graphics graphics, Camera camera)
+	{
+		if(blinking) 
 		{
-			if(this.y - step > 0)
+			long elapsed = (System.nanoTime() - blinkTimer) / 1000000;
+			if(elapsed / 100 % 2 == 0) 
 			{
-				this.y -= step;
+				return;
+			}
+		}
+			
+		super.render(graphics, camera);
+	}
+	
+	private void hit(int damage) 
+	{
+		if(blinking)
+			return;
+		health -= damage;
+		
+		if(health < 0)
+			health = 0;
+		
+		if(health == 0) 
+			dead = true;
+		
+		blinking = true;
+		blinkTimer = (int) System.nanoTime();
+	}
+	
+	private void getNextPosition(Input input, int delta) 
+	{
+		
+		if(input.isKeyDown(Input.KEY_UP)) 
+		{
+			dy -= moveSpeed * delta;
+			if(dy < -maxSpeed)
+			{
+				dy = -maxSpeed * delta;
 			}
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
-			if(this.y + step < 64*9) //this.world.getPixelHeight())
+			dy += moveSpeed * delta;
+			if(dy > maxSpeed)
 			{
-				this.y += step;
+				dy = maxSpeed * delta;
 			}
 		}
 		
-		if(input.isKeyDown(Input.KEY_LEFT))
+		else 
 		{
-			if(this.x - step > 0)
+			if (dy > 0) 
 			{
-				this.x -= step;
+				dy -= stopSpeed * delta;
+				if(dy < 0)
+				{
+					dy = 0;
+				}
+			}
+			else if (dy < 0)
+			{
+				dy += stopSpeed * delta;
+				if(dy > 0) 
+				{
+					dy = 0;
+				}
 			}
 		}
-		else if(input.isKeyDown(Input.KEY_RIGHT))
+
+		 if(input.isKeyDown(Input.KEY_RIGHT))
 		{
-			if(this.x + step < 64*11)
+			dx += moveSpeed * delta;
+			if(dx > maxSpeed) 
 			{
-				this.x += step;
+				dx = maxSpeed * delta;
 			}
 		}
+		 else if(input.isKeyDown(Input.KEY_LEFT)) 
+		{
+			dx -= moveSpeed * delta;
+			if(dx < -maxSpeed)
+			{
+				dx = -maxSpeed * delta;
+			}
+		}
+		else 
+		{
+			if (dx > 0) 
+			{
+				dx -= stopSpeed * delta;
+				if(dx < 0)
+				{
+					dx = 0;
+				}
+			}
+			else if (dx < 0)
+			{
+				dx += stopSpeed * delta;
+				if(dx > 0) 
+				{
+					dx = 0;
+				}
+			}
+			
+		}
+		
+//		float step = this.moveSpeed * delta;
+		
+			if(input.isKeyDown(Input.KEY_UP))
+				{
+					this.direction = Direction.NORTH;
+//					this.y -= step;
+				}
+			else if(input.isKeyDown(Input.KEY_DOWN))
+				{
+				this.direction = Direction.SOUTH;
+//				this.y += step;
+				}
+		
+			if(input.isKeyDown(Input.KEY_LEFT))
+				{
+				this.direction = Direction.WEST;
+//				this.x -= step;
+				}
+			else if(input.isKeyDown(Input.KEY_RIGHT))
+			{
+				this.direction = Direction.EAST;
+//				this.x += step;
+			}
 	}
 	
-	private float speed = 0.15f;
 }
