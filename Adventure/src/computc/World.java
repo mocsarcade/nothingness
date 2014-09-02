@@ -53,6 +53,9 @@ public class World
 	
 	public void render(Graphics graphics)
 	{
+		
+		graphics.setWorldClip((int)this.room.getTile(0,0).getTileX(), (int) this.room.getTile(0,0).getTileY(), (int) this.room.getPixelWidth(), (int) this.room.getPixelHeight());
+
 		this.room.render(graphics, camera);
 		
 		for(Enemy enemy : this.enemies)
