@@ -1,5 +1,8 @@
 package computc;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -7,7 +10,7 @@ import org.newdawn.slick.SlickException;
 public class Dungeon
 {
 	public Room firstRoom, secondRoom, thirdRoom, fourthRoom, fifthRoom;
-	public RoomGrid rooms = new RoomGrid();
+	private HashMap<String, Room> rooms = new HashMap<String, Room>();
 	
 	public Dungeon() throws SlickException
 	{
@@ -21,6 +24,12 @@ public class Dungeon
 		this.secondRoom.connectSouthernRoom(this.thirdRoom);
 		this.secondRoom.connectEasternRoom(this.fourthRoom);
 		this.secondRoom.connectWesternRoom(this.fifthRoom);
+
+		this.addRoom(this.firstRoom);
+		this.addRoom(this.secondRoom);
+		this.addRoom(this.thirdRoom);
+		this.addRoom(this.fourthRoom);
+		this.addRoom(this.fifthRoom);
 	}
 	
 	public void update(int delta)
@@ -30,10 +39,40 @@ public class Dungeon
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		for(Room room : this.rooms.getAll())
+		for(Room room : this.getAllRooms())
 		{
 			room.render(graphics, camera);
 		}
+	}
+	
+	public void addRoom(Room room)
+	{
+		int rx = room.getRoomyX();
+		int ry = room.getRoomyY();
+		
+		if(this.hasRoom(rx, ry))
+		{
+			throw new DungeonException();
+		}
+		else
+		{
+			this.rooms.put(rx + ":" + ry, room);
+		}
+	}
+	
+	public Room getRoom(int rx, int ry)
+	{
+		return this.rooms.get(rx + ":" + ry);
+	}
+	
+	public boolean hasRoom(int rx, int ry)
+	{
+		return this.rooms.containsKey(rx + ":" + ry);
+	}
+	
+	public LinkedList<Room> getAllRooms()
+	{
+		return new LinkedList<Room>(this.rooms.values());
 	}
 	
 	public Tile getTile(float x, float y)
@@ -44,6 +83,6 @@ public class Dungeon
 		int tx = (int)(Math.floor((x - (rx * Room.WIDTH)) / Tile.SIZE));
 		int ty = (int)(Math.floor((y - (ry * Room.HEIGHT)) / Tile.SIZE));
 		
-		return this.rooms.get(rx, ry).getTile(tx, ty);
+		return this.getRoom(rx, ry).getTile(tx, ty);
 	}
 }

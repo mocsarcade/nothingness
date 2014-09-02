@@ -146,7 +146,7 @@ public class Hero extends Entity
 			}
 		}
 		
-		this.dungeon.rooms.get(this.getRoomyX(), this.getRoomyY()).visited = true;
+		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).visited = true;
 		
 		super.update(delta);
 	}

@@ -27,17 +27,17 @@ public class Menu
 				int x = MARGIN + (rx * (UNIT + MARGIN));
 				int y = (Room.HEIGHT + MARGIN) + (ry * (UNIT + MARGIN));
 				
-				Room room = this.dungeon.rooms.get(rx, ry);
+				Room room = this.dungeon.getRoom(rx, ry);
 				
 				if(room != null	&& room.visited)
 				{
 					graphics.setColor(Color.lightGray);
 					graphics.fillRect(x, y, UNIT, UNIT);
 
-					if(room.hasNorthernRoom()) {graphics.fillRect(x + (UNIT / 2), y - MARGIN, MARGIN, MARGIN);}
-					if(room.hasSouthernRoom()) {graphics.fillRect(x + (UNIT / 2), y + UNIT, MARGIN, MARGIN);}
-					if(room.hasEasternRoom()) {graphics.fillRect(x + UNIT, y + (UNIT / 2), MARGIN, MARGIN);}
-					if(room.hasWesternRoom()) {graphics.fillRect(x - MARGIN, y + (UNIT / 2), MARGIN, MARGIN);}
+					if(room.hasNorthernRoom()) {graphics.fillRect(x + (UNIT / 2) - 1, y - MARGIN, MARGIN, MARGIN);}
+					if(room.hasSouthernRoom()) {graphics.fillRect(x + (UNIT / 2) - 1, y + UNIT, MARGIN, MARGIN);}
+					if(room.hasEasternRoom()) {graphics.fillRect(x + UNIT, y + (UNIT / 2) - 1, MARGIN, MARGIN);}
+					if(room.hasWesternRoom()) {graphics.fillRect(x - MARGIN, y + (UNIT / 2) - 1, MARGIN, MARGIN);}
 					
 					if(rx == this.hero.getRoomyX()
 					&& ry == this.hero.getRoomyY())

@@ -40,8 +40,6 @@ public class Room
 				this.tiles[tx][ty].isBlocked = tid == 1;
 			}
 		}
-		
-		this.dungeon.rooms.add(this.rx, this.ry, this);
 	}
 	
 	public void render(Graphics graphics, Camera camera)
