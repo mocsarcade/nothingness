@@ -2,74 +2,86 @@ package computc;
 
 public class Camera
 {
-	private int x, y;
+	private float x, y;
 	private Entity target;
+	private float speed = 1f;
 	
 	public Camera(Entity target)
 	{
 		this.target = target;
+		
+		this.x = this.getTargetX();
+		this.y = this.getTargetY();
 	}
 	
 	public void update(int delta)
 	{
 		if(this.getX() < this.getTargetX())
 		{
-			this.increaseX(delta);
+			this.increaseX(this.getSpeed() * delta);
 		}
 		else if(this.getX() > this.getTargetX())
 		{
-			this.decreaseX(delta);
+			this.decreaseX(this.getSpeed() * delta);
 		}
 		
 		if(this.getY() < this.getTargetY())
 		{
-			this.increaseY(delta);
+			this.increaseY(this.getSpeed() * delta);
 		}
 		else if(this.getY() > this.getTargetY())
 		{
-			this.decreaseY(delta);
+			this.decreaseY(this.getSpeed() * delta);
 		}
 	}
 	
 	public int getX()
 	{
-		return this.x;
+		return (int)(this.x);
 	}
 	
 	public int getY()
 	{
-		return this.y;
+		return (int)(this.y);
+	}
+	
+	public void increaseX(float amount)
+	{
+		this.x += amount;
+	}
+	
+	public void decreaseX(float amount)
+	{
+		this.x -= amount;
+	}
+	
+	public void increaseY(float amount)
+	{
+		this.y += amount;
+	}
+	
+	public void decreaseY(float amount)
+	{
+		this.y -= amount;
+	}
+	
+	public Entity getTarget()
+	{
+		return this.target;
 	}
 	
 	public int getTargetX()
 	{
-		int width = Adventure.SCREEN_WIDTH;
-		return (int)(Math.floor(this.target.x / width)) * width;
+		return this.getTarget().getRoomyX() * Room.WIDTH;
 	}
 	
 	public int getTargetY()
 	{
-		int height = Adventure.SCREEN_HEIGHT;
-		return (int)(Math.floor(this.target.y / height)) * height;
+		return this.getTarget().getRoomyY() * Room.HEIGHT;
 	}
 	
-	public void increaseX(int delta)
+	public float getSpeed()
 	{
-		this.x += delta;
-	}
-	
-	public void decreaseX(int delta)
-	{
-		this.x -= delta;
-	}
-	
-	public void increaseY(int delta)
-	{
-		this.y += delta;
-	}
-	
-	public void decreaseY(int delta)
-	{
-		this.y -= delta;
+		return this.speed;
 	}
 }
