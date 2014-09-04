@@ -1,154 +1,160 @@
 package computc;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 public class Hero extends Entity
 {
-	private Dungeon dungeon;
 	
 	public Hero(Dungeon dungeon, Room room, int tx, int ty) throws SlickException
 	{
-		super(room.getRoomyX(), room.getRoomyY(), tx, ty);
+		super(dungeon, room.getRoomyX(), room.getRoomyY(), tx, ty);
 		
 		this.dungeon = dungeon;
-		
-		this.acceleration = 0.015f;
-		this.deacceleration = 0.0015f;
-		this.maximumVelocity = 0.2f;
+		this.acceleration = 0.25f;
+		this.deacceleration = 0.05f;
+		this.maximumVelocity = 4f;
 		
 		this.currentHealth = this.maximumHealth = 3;
 		
 		this.image = new Image("res/hero.png");
 	}
 	
+	public void render(Graphics graphics, Camera camera)
+	{
+		if(blinking) 
+		{
+			if(blinkTimer % 4 == 0) 
+			{
+				return;
+			}
+		}
+			
+		super.render(graphics, camera);
+	}
+	
 	public void update(Input input, int delta)
 	{
+		getNextPosition(input, delta);
+		checkTileMapCollision();
+		setPosition(xtemp, ytemp);
+		
 		if(input.isKeyDown(Input.KEY_Z))
 		{
-			maximumVelocity = 0.4f;
+			maximumVelocity = 8f;
 		}
 		else
 		{
-			maximumVelocity = 0.2f;
+			maximumVelocity = 4f;
 		}
-		
-		if(input.isKeyDown(Input.KEY_UP))
-		{
-			dy -= acceleration;
-			if(dy < -maximumVelocity)
-				dy = -maximumVelocity;
-			
-			dy *= delta;
-		}
-		else if(input.isKeyDown(Input.KEY_DOWN))
-		{
-			dy += acceleration;
-			if(dy > maximumVelocity)
-				dy = maximumVelocity;
-			
-			dy *= delta;
-		}
-		else //if neither KEY_UP nor KEY_DOWN
-		{
-			if(dy > 0)
-			{
-				dy -= deacceleration;
-				if(dy < 0)
-					dy = 0;
-				
-				dy *= delta;
-			}
-			else if(dy < 0)
-			{
-				dy += deacceleration;
-				if(dy > 0)
-					dy = 0;
-				
-				dy *= delta;
-			}
-		}
-		
-		if(input.isKeyDown(Input.KEY_RIGHT))
-		{
-			dx += acceleration;
-			if(dx > maximumVelocity)
-				dx = maximumVelocity;
-			
-			dx *= delta;
-		}
-		else if(input.isKeyDown(Input.KEY_LEFT)) 
-		{
-			dx -= acceleration;
-			if(dx < -maximumVelocity)
-				dx = -maximumVelocity;
-			
-			dx *= delta;
-		}
-		else  //if neither KEY_RIGHT nor KEY_LEFT
-		{
-			if (dx > 0) 
-			{
-				dx -= deacceleration;
-				if(dx < 0)
-					dx = 0;
-				
-				dx *= delta;
-			}
-			else if (dx < 0)
-			{
-				dx += deacceleration;
-				if(dx > 0)
-					dx = 0;
-				
-				dx *= delta;
-			}
-		}
-		
-		float step = this.speed * delta;
-		
-		if(input.isKeyDown(Input.KEY_UP))
-		{
-			this.direction = Direction.NORTH;
-			
-			if(!this.dungeon.getTile(this.x, this.y - step).isBlocked)
-			{
-				this.y -= step;
-			}
-		}
-		else if(input.isKeyDown(Input.KEY_DOWN))
-		{
-			this.direction = Direction.SOUTH;
-			
-			if(!this.dungeon.getTile(this.x, this.y + step).isBlocked)
-			{
-				this.y += step;
-			}
-		}
-		
-		if(input.isKeyDown(Input.KEY_RIGHT))
-		{
-			this.direction = Direction.EAST;
-			
-			if(!this.dungeon.getTile(this.x + step, this.y).isBlocked)
-			{
-				this.x += step;
-			}
-		}
-		else if(input.isKeyDown(Input.KEY_LEFT))
-		{
-			this.direction = Direction.WEST;
-			
-			if(!this.dungeon.getTile(this.x - step, this.y).isBlocked)
-			{
-				this.x -= step;
-			}
-		}
-		
+	
 		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).visited = true;
 		
 		super.update(delta);
+	}
+	
+	// movement method
+	private void getNextPosition(Input input, int delta) 
+	{
+		if(input.isKeyDown(Input.KEY_UP)) 
+		{
+			dy -= acceleration * delta;
+			if(dy < -maximumVelocity)
+			{
+				dy = -maximumVelocity;
+			}
+		}
+		else if(input.isKeyDown(Input.KEY_DOWN))
+		{
+			dy += acceleration * delta;
+			
+			if(dy > maximumVelocity)
+			{
+				dy = maximumVelocity;
+			}
+		}
+		
+		else //if neither KEY_UP nor KEY_DOWN
+		{
+			if (dy > 0) 
+			{
+				dy -= deacceleration * delta;
+				if(dy < 0)
+				{
+					dy = 0;
+				}
+			}
+			else if (dy < 0)
+			{
+				dy += deacceleration * delta;
+				if(dy > 0) 
+				{
+					dy = 0;
+				}
+			}
+		}
+
+		 if(input.isKeyDown(Input.KEY_RIGHT))
+		{
+			dx += acceleration * delta;
+			if(dx > maximumVelocity) 
+			{
+				dx = maximumVelocity;
+			}
+		}
+		 else if(input.isKeyDown(Input.KEY_LEFT)) 
+		{
+			dx -= acceleration * delta;
+			if(dx < -maximumVelocity)
+			{
+				dx = -maximumVelocity;
+			}
+		}
+		else //if neither KEY_RIGHT nor KEY_LEFT
+		{
+			if (dx > 0) 
+			{
+				dx -= deacceleration * delta;
+				if(dx < 0)
+				{
+					dx = 0;
+				}
+			}
+			else if (dx < 0)
+			{
+				dx += deacceleration * delta;
+				if(dx > 0) 
+				{
+					dx = 0;
+				}
+			}
+		}
+		
+//		float step = this.moveSpeed * delta;
+		
+			if(input.isKeyDown(Input.KEY_UP))
+				{
+					this.direction = Direction.NORTH;
+//					this.y -= step;
+				}
+			else if(input.isKeyDown(Input.KEY_DOWN))
+				{
+				this.direction = Direction.SOUTH;
+//				this.y += step;
+				}
+		
+			if(input.isKeyDown(Input.KEY_LEFT))
+				{
+				this.direction = Direction.WEST;
+//				this.x -= step;
+				}
+			else if(input.isKeyDown(Input.KEY_RIGHT))
+			{
+				this.direction = Direction.EAST;
+//				this.x += step;
+			}
 	}
 	
 	private float speed = 0.25f;
