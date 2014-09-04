@@ -18,21 +18,21 @@ public class Menu
 	{
 		graphics.setColor(Color.black);
 		graphics.fillRect(0, Room.HEIGHT, Room.WIDTH, Menu.HEIGHT);
-
+		
 		for(int rx = 0; rx < Dungeon.ROOMY_WIDTH; rx++)
 		{
 			for(int ry = 0; ry < Dungeon.ROOMY_HEIGHT; ry++)
 			{
-				int UNIT = 22, MARGIN = 3;
-				int x = MARGIN + (rx * (UNIT + MARGIN));
-				int y = (Room.HEIGHT + MARGIN) + (ry * (UNIT + MARGIN));
+				int UNIT = 11, MARGIN = 2, OFFSET = 24;
+				int x = OFFSET + MARGIN + (rx * (UNIT + MARGIN));
+				int y = OFFSET + MARGIN + (ry * (UNIT + MARGIN));
 				
 				Room room = this.dungeon.getRoom(rx, ry);
 				
 				if(room != null	&& room.visited)
 				{
 					graphics.setColor(Color.lightGray);
-					graphics.fillRect(x, y, UNIT, UNIT);
+					graphics.fillRoundRect(x, y, UNIT, UNIT, 3);
 
 					if(room.hasNorthernRoom()) {graphics.fillRect(x + (UNIT / 2) - 1, y - MARGIN, MARGIN, MARGIN);}
 					if(room.hasSouthernRoom()) {graphics.fillRect(x + (UNIT / 2) - 1, y + UNIT, MARGIN, MARGIN);}
@@ -43,13 +43,13 @@ public class Menu
 					&& ry == this.hero.getRoomyY())
 					{
 						graphics.setColor(Color.white);
-						graphics.fillOval(x + 3, y + 3, 16, 16);
+						graphics.fillOval(x + 3, y + 3, 5, 5);
 					}
 				}
 				else
 				{
 					graphics.setColor(Color.darkGray);
-					graphics.fillRect(x, y, UNIT, UNIT);
+					graphics.fillRoundRect(x, y, UNIT, UNIT, 3);
 				}
 			}
 		}
