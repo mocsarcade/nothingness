@@ -21,6 +21,20 @@ public class Thug extends Enemy
 		
 		right = true; down = true;
 	}
+	public Thug(Dungeon dungeon, int tx, int ty) throws SlickException 
+	{
+		super(dungeon, (int)(Math.floor(tx / Room.WIDTH)), (int)(Math.floor(ty / Room.HEIGHT)), tx - ((int)(Math.floor(tx / Room.WIDTH)) * Room.TILEY_WIDTH), ty - ((int)(Math.floor(ty / Room.HEIGHT)) * Room.TILEY_HEIGHT));
+		
+		this.image = new Image("res/thug.png");
+		
+		this.acceleration = 0.03f;
+		this.deacceleration = 0.001f;
+		this.maximumVelocity = 0.03f;
+		
+		this.currentHealth = this.maximumHealth = 3;
+		
+		right = true; down = true;
+	}
 	
 	public void update(int delta)
 	{
