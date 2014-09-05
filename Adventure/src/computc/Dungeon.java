@@ -16,9 +16,12 @@ public class Dungeon
 	{
 		TiledMap tiled = new TiledMap("./res/dungeons/prototype.dungeon.tmx");
 		
-		for(int rx = 0; rx < 9; rx++)
+		int ROOMY_WIDTH = 9;
+		int ROOMY_HEIGHT = 5;
+		
+		for(int rx = 0; rx < ROOMY_WIDTH; rx++)
 		{
-			for(int ry = 0; ry < 5; ry++)
+			for(int ry = 0; ry < ROOMY_HEIGHT; ry++)
 			{
 				Room room = new Room(this, rx, ry);
 				
@@ -42,9 +45,9 @@ public class Dungeon
 			}
 		}
 		
-		for(int rx = 0; rx < Dungeon.ROOMY_WIDTH; rx++)
+		/*for(int rx = 0; rx < ROOMY_WIDTH; rx++)
 		{
-			for(int ry = 0; ry < Dungeon.ROOMY_HEIGHT; ry++)
+			for(int ry = 0; ry < ROOMY_HEIGHT; ry++)
 			{
 				Room room = this.getRoom(rx, ry);
 				
@@ -65,7 +68,7 @@ public class Dungeon
 					room.connectWesternRoom(this.getRoom(rx - 1, ry));
 				}
 			}
-		}
+		}*/
 	}
 	
 	public void update(int delta)
@@ -126,7 +129,4 @@ public class Dungeon
 		
 		return this.getRoom(rx, ry).getTile(tx, ty);
 	}
-	
-	public final static int ROOMY_WIDTH = 9;
-	public final static int ROOMY_HEIGHT = 5;
 }

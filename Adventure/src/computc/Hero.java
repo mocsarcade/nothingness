@@ -56,7 +56,7 @@ public class Hero extends Entity
 	}
 	
 	// movement method
-	private void getNextPosition(Input input, int delta) 
+	private void getNextPosition(Input input, int delta)
 	{
 		if(input.isKeyDown(Input.KEY_UP)) 
 		{

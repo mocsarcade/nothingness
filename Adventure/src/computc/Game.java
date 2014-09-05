@@ -83,7 +83,7 @@ public class Game extends BasicGame
 		try
 		{
 			AppGameContainer container = new AppGameContainer(new Game());
-			container.setDisplayMode(Room.WIDTH, Room.HEIGHT + Menu.HEIGHT, false);
+			container.setDisplayMode(Room.WIDTH, Room.HEIGHT, false);
 			container.start();
 		}
 		catch(Exception error)
