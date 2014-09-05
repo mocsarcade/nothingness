@@ -98,6 +98,8 @@ public class Dungeon
 		{
 			thugs.add(new Thug(this, point.x, point.y));
 		}
+		
+		thugs.add(new BigThug(this, 36, 23));
 	}
 	
 	public void update(int delta) throws SlickException
