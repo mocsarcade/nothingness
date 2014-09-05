@@ -36,7 +36,7 @@ public abstract class Entity
 	
 	// blinking collision indicator
 	protected boolean blinking;
-	protected int blinkTimer;
+	protected int blinkCooldown;
 	
 	// rendering
 	protected Image image;
@@ -258,4 +258,16 @@ public abstract class Entity
 				}
 			}
 	}
+	
+	public boolean isOnScreen(Camera camera)
+	 {
+		if((this.getX() >= camera.getX()) &&
+			(this.getY() >= camera.getY()) &&
+			(this.getX() <= camera.getX() + Room.WIDTH) &&
+			(this.getY() <= camera.getY() + Room.HEIGHT))
+		{
+			return true;
+		}
+		else return false;
+	 	}
 }

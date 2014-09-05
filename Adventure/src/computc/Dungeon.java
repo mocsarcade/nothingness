@@ -1,5 +1,6 @@
 package computc;
 
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -11,6 +12,8 @@ import org.newdawn.slick.tiled.TiledMap;
 public class Dungeon
 {
 	private HashMap<String, Room> rooms = new HashMap<String, Room>();
+	public LinkedList<Enemy> thugs; 
+	public Point[] thug_positions_in_tiley_coordinates;
 	
 	public Dungeon() throws SlickException
 	{
@@ -36,6 +39,7 @@ public class Dungeon
 						int tid = tiled.getTileId(rxtx, ryty, 0);
 						
 						tile.isBlocked = (tid == 1);
+						tile.isStairs = (tid == 3);
 						
 						room.setTile(tx, ty, tile);
 					}
@@ -69,13 +73,71 @@ public class Dungeon
 				}
 			}
 		}
+		
+		this.thugs = new LinkedList<Enemy>();
+		
+		thug_positions_in_tiley_coordinates = new Point[] {
+				new Point(34, 5),
+				new Point(42, 2),
+				new Point(39, 5),
+				new Point(46, 2),
+				new Point(52, 6),
+				new Point(48, 1),
+				new Point(47, 13),
+				new Point(50, 15),
+				new Point(59, 12),
+				new Point(60, 14),
+				new Point(61, 12),
+				new Point(57, 20),
+				new Point(63, 24),
+				new Point(57, 24),
+				new Point(49, 21),
+				new Point(49, 25)
+			};
+		
+		for(Point point : thug_positions_in_tiley_coordinates)
+		{
+			thugs.add(new Thug(this, point.x, point.y));
+		}
+		
+		thugs.add(new BigThug(this, 36, 23));
 	}
 	
+	public void update(int delta) throws SlickException
+	{
+		for(int i = 0; i < thugs.size(); i++)
+		{
+			Enemy e = thugs.get(i);
+			e.update(delta);
+				if(e.isDead())
+				{
+					thugs.remove(i);
+					i--;
+				}
+		}
+		
+		if (Game.reset)
+		{
+			thugs.clear();
+			
+			for(Point point : thug_positions_in_tiley_coordinates)
+			{
+				thugs.add(new Thug(this, point.x, point.y));
+			}
+			Game.reset = false;
+		}
+	}
+
 	public void render(Graphics graphics, Camera camera)
 	{
 		for(Room room : this.getAllRooms())
 		{
 			room.render(graphics, camera);
+		}
+		
+		for(Enemy thug : this.thugs)
+		{
+			thug.render(graphics, camera);
 		}
 	}
 	
