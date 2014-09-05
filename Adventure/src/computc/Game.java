@@ -66,6 +66,7 @@ public class Game extends BasicGame
 	
 	public void render(GameContainer container, Graphics graphics) throws SlickException
 	{
+		graphics.setWorldClip(0,0,Room.WIDTH,Room.HEIGHT);
 		this.dungeon.render(graphics, camera);
 		
 		for(Thug thug : this.thugs)
