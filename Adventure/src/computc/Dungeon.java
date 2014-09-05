@@ -1,5 +1,6 @@
 package computc;
 
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -11,6 +12,7 @@ import org.newdawn.slick.tiled.TiledMap;
 public class Dungeon
 {
 	private HashMap<String, Room> rooms = new HashMap<String, Room>();
+	public LinkedList<Enemy> thugs; 
 	
 	public Dungeon() throws SlickException
 	{
@@ -69,11 +71,31 @@ public class Dungeon
 				}
 			}
 		}
+		
+		this.thugs = new LinkedList<Enemy>();
+		
+		Point[] thug_positions_in_tiley_coordinates = new Point[] {
+				new Point(34, 5),
+				new Point(42, 2),
+				new Point(39, 5),
+				new Point(46, 2),
+				new Point(52, 6),
+				new Point(47, 13),
+				new Point(50, 15)
+			};
+		
+		for(Point point : thug_positions_in_tiley_coordinates)
+		{
+			thugs.add(new Thug(this, point.x, point.y));
+		}
 	}
 	
 	public void update(int delta)
 	{
-		//code goes here.
+		for(Enemy thug : thugs)
+		{
+			thug.update(delta);
+		}
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -81,6 +103,11 @@ public class Dungeon
 		for(Room room : this.getAllRooms())
 		{
 			room.render(graphics, camera);
+		}
+		
+		for(Enemy thug : this.thugs)
+		{
+			thug.render(graphics, camera);
 		}
 	}
 	

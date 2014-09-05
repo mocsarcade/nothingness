@@ -17,7 +17,6 @@ public class Game extends BasicGame
 	public Dungeon dungeon;
 	public Camera camera;
 	public Menu menu;
-	public LinkedList<Thug> thugs = new LinkedList<Thug>();
 	
 	public Game()
 	{
@@ -30,21 +29,6 @@ public class Game extends BasicGame
 		this.hero = new Hero(dungeon, dungeon.getRoom(3, 0), 5, 1);
 		this.camera = new Camera(hero);
 		this.menu = new Menu(dungeon, hero);
-		
-		Point[] thug_positions_in_tiley_coordinates = new Point[] {
-			new Point(34, 5),
-			new Point(42, 2),
-			new Point(39, 5),
-			new Point(46, 2),
-			new Point(52, 6),
-			new Point(47, 13),
-			new Point(50, 15)
-		};
-		
-		for(Point point : thug_positions_in_tiley_coordinates)
-		{
-			thugs.add(new Thug(this.dungeon, point.x, point.y));
-		}
 
 		Tile.WALL_IMAGE = new Image("./res/wall.png");
 		Tile.FLOOR_IMAGE = new Image("./res/floor.png");
@@ -56,11 +40,6 @@ public class Game extends BasicGame
 		
 		this.hero.update(input, delta);
 		
-		for(Thug thug : this.thugs)
-		{
-			thug.update(delta);
-		}
-		
 		this.dungeon.update(delta);
 		this.camera.update(delta);
 	}
@@ -68,11 +47,6 @@ public class Game extends BasicGame
 	public void render(GameContainer container, Graphics graphics) throws SlickException
 	{
 		this.dungeon.render(graphics, camera);
-		
-		for(Thug thug : this.thugs)
-		{
-			thug.render(graphics, camera);
-		}
 		
 		this.hero.render(graphics, camera);
 		this.menu.render(graphics, camera);
