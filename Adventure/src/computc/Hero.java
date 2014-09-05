@@ -63,7 +63,6 @@ public class Hero extends Entity
 		{
 			blinking = false;
 		}
-		System.out.println("blinkCooldown is: " + blinkCooldown);
 	
 		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).visited = true;
 		

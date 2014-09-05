@@ -39,6 +39,7 @@ public class Dungeon
 						int tid = tiled.getTileId(rxtx, ryty, 0);
 						
 						tile.isBlocked = (tid == 1);
+						tile.isStairs = (tid == 3);
 						
 						room.setTile(tx, ty, tile);
 					}
