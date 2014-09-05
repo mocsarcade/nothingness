@@ -111,6 +111,11 @@ public class Dungeon
 		return new LinkedList<Room>(this.rooms.values());
 	}
 	
+	public Tile getTile(int rx, int ry, int tx, int ty)
+	{
+		return this.getRoom(rx, ry).getTile(tx, ty);
+	}
+	
 	public Tile getTile(float x, float y)
 	{
 		int rx = (int)(Math.floor(x / Room.WIDTH));
