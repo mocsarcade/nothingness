@@ -59,7 +59,7 @@ public class Room
 	}
 	
 	/*
-	 * Returns the horizontal coordinate
+	 * Returns the horizontal position
 	 * of this room in units of pixels
 	 * and relative to the dungeon.
 	 * 
@@ -68,11 +68,11 @@ public class Room
 	 */
 	public int getX()
 	{
-		return this.getRoomyX() * this.getWidth();
+		return this.getRoomyX() * Room.WIDTH;
 	}
 
 	/*
-	 * Returns the vertical coordinate
+	 * Returns the vertical position
 	 * of this room in units of pixels
 	 * and relative to the dungeon.
 	 * 
@@ -81,11 +81,11 @@ public class Room
 	 */
 	public int getY()
 	{
-		return this.getRoomyY() * this.getHeight();
+		return this.getRoomyY() * Room.HEIGHT;
 	}
 
 	/*
-	 * Returns the horizontal coordinate
+	 * Returns the horizontal position
 	 * of this room in units of rooms
 	 * and relative to the dungeon.
 	 * 
@@ -98,7 +98,7 @@ public class Room
 	}
 
 	/*
-	 * Returns the vertical coordinate
+	 * Returns the vertical position
 	 * of this room in units of rooms
 	 * and relative to the dungeon.
 	 * 
@@ -156,7 +156,7 @@ public class Room
 	
 	/*
 	 * Returns the tile at the specified
-	 * coordinate in units of tiles and
+	 * position in units of tiles and
 	 * relative to the room.
 	 * 
 	 * @units_of		tiles
@@ -169,7 +169,7 @@ public class Room
 	
 	/*
 	 * Returns the tile at the specified
-	 * coordinate in units of pixels and
+	 * position in units of pixels and
 	 * relative to the room.
 	 * 
 	 * @units_of		pixels
@@ -185,7 +185,7 @@ public class Room
 	
 	/*
 	 * Sets a tile at the specified
-	 * coordinate in units of tiles
+	 * position in units of tiles
 	 * and relative to the room.
 	 * 
 	 * @units_of		tiles
