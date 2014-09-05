@@ -32,7 +32,7 @@ public class Menu
 				int rx = i + this.hero.getRoomyX() - (MAP_WIDTH / 2);
 				int ry = j + this.hero.getRoomyY() - (MAP_HEIGHT / 2);
 				
-				int UNIT = 11, MARGIN = 2, OFFSET = 24;
+				int UNIT = 11, MARGIN = 2, OFFSET = 29;
 				int x = OFFSET + MARGIN + (i * (UNIT + MARGIN));
 				int y = OFFSET + MARGIN + (j * (UNIT + MARGIN));
 				

@@ -195,12 +195,6 @@ public abstract class Entity
 		   int topRow = (int)(y - getHitboxHeight()/ 2);
 		   int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1);
 		   
-		   if(leftColumn < 0 || bottomRow >= Dungeon.ROOMY_HEIGHT * Room.HEIGHT || leftColumn < 0 || rightColumn >= Dungeon.ROOMY_WIDTH * Room.WIDTH) 
-		   {
-			   topLeft = topRight = bottomLeft = bottomRight = false;
-			   return;
-		   }
-		   
 		   topLeft = dungeon.getTile(leftColumn, topRow).isBlocked;
 		   topRight = dungeon.getTile(rightColumn, topRow).isBlocked;
 		   bottomLeft = dungeon.getTile(leftColumn, bottomRow).isBlocked;
