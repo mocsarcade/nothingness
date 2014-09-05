@@ -2,12 +2,16 @@ package computc;
 
 public class Camera
 {
-	private int x, y;
+	private float x, y;
 	private Entity target;
+	private float speed = 1f;
 	
 	public Camera(Entity target)
 	{
 		this.target = target;
+		
+		this.x = this.getTargetX();
+		this.y = this.getTargetY();
 	}
 	
 	public void update(int delta)
@@ -15,61 +19,99 @@ public class Camera
 		if(this.getX() < this.getTargetX())
 		{
 			this.increaseX(delta);
+			
+			if(this.getX() > this.getTargetX())
+			{
+				this.synchronizeX();
+			}
 		}
 		else if(this.getX() > this.getTargetX())
 		{
 			this.decreaseX(delta);
+			
+			if(this.getX() < this.getTargetX())
+			{
+				this.synchronizeX();
+			}
 		}
 		
 		if(this.getY() < this.getTargetY())
 		{
 			this.increaseY(delta);
+			
+			if(this.getY() > this.getTargetY())
+			{
+				this.synchronizeY();
+			}
 		}
 		else if(this.getY() > this.getTargetY())
 		{
 			this.decreaseY(delta);
+			
+			if(this.getY() < this.getTargetY())
+			{
+				this.synchronizeY();
+			}
 		}
 	}
 	
 	public int getX()
 	{
-		return this.x;
+		return (int)(this.x);
 	}
 	
 	public int getY()
 	{
-		return this.y;
+		return (int)(this.y);
+	}
+	
+	public void increaseX(int amount)
+	{
+		this.x += amount;
+	}
+	
+	public void decreaseX(int amount)
+	{
+		this.x -= amount;
+	}
+	
+	public void increaseY(int amount)
+	{
+		this.y += amount;
+	}
+	
+	public void decreaseY(int amount)
+	{
+		this.y -= amount;
+	}
+	
+	public void synchronizeX()
+	{
+		this.x = this.getTargetX(); 
+	}
+	
+	public void synchronizeY()
+	{
+		this.y = this.getTargetY();
+	}
+	
+	public Entity getTarget()
+	{
+		return this.target;
 	}
 	
 	public int getTargetX()
 	{
-		int width = Adventure.SCREEN_WIDTH;
-		return (int)(Math.floor(this.target.x / width)) * width;
+		return this.getTarget().getRoomyX() * Room.WIDTH;
 	}
 	
 	public int getTargetY()
 	{
-		int height = Adventure.SCREEN_HEIGHT;
-		return (int)(Math.floor(this.target.y / height)) * height;
+		return this.getTarget().getRoomyY() * Room.HEIGHT;
 	}
 	
-	public void increaseX(int delta)
+	public float getSpeed()
 	{
-		this.x += delta;
-	}
-	
-	public void decreaseX(int delta)
-	{
-		this.x -= delta;
-	}
-	
-	public void increaseY(int delta)
-	{
-		this.y += delta;
-	}
-	
-	public void decreaseY(int delta)
-	{
-		this.y -= delta;
+		return this.speed;
 	}
 }

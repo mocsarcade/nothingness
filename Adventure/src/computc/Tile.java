@@ -1,19 +1,116 @@
 package computc;
 
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Graphics;
+
 public class Tile
 {
-	public int tileX;
-	public int tileY;
-	public boolean isBlock;
-	public boolean isDoor;
+	private Room room;
 	
-	public int getTileX ()
+	private int tx;
+	private int ty;
+	
+	public boolean isBlocked;
+	
+	public Tile(Room room, int tx, int ty)
 	{
-		return tileX;
+		this.room = room;
+		
+		this.tx = tx;
+		this.ty = ty;
 	}
 	
-	public int getTileY ()
+	public void render(Graphics graphics, Camera camera)
 	{
-		return tileY;
+		int x = this.getX() - camera.getX();
+		int y = this.getY() - camera.getY();
+		
+		if(this.isBlocked)
+		{
+			Tile.WALL_IMAGE.draw(x, y);
+		}
+		else
+		{
+			Tile.FLOOR_IMAGE.draw(x, y);
+		}
 	}
+	
+	/*
+	 * Returns the horizontal position
+	 * of this tile in units of pixels
+	 * and relative to the dungeon.
+	 * 
+	 * @units_of		pixels
+	 * @relative_to		dungeon
+	 */
+	public int getX()
+	{
+		return this.getTileyX() * Tile.SIZE + this.room.getX();
+	}
+	
+	/*
+	 * Returns the vertical position
+	 * of this tile in units of pixels
+	 * and relative to the dungeon.
+	 * 
+	 * @units_of		pixels
+	 * @relative_to		dungeon
+	 */
+	public int getY()
+	{
+		return this.getTileyY() * Tile.SIZE + this.room.getY();
+	}
+	
+	/*
+	 * Returns the horizontal position
+	 * of this tile in units of tiles
+	 * and relative to the room.
+	 * 
+	 * @units_of		tiles
+	 * @relative_to		room
+	 */
+	public int getTileyX()
+	{
+		return this.tx;
+	}
+	
+	/*
+	 * Returns the vertical position
+	 * of this tile in units of tiles
+	 * and relative to the room.
+	 * 
+	 * @units_of		tiles
+	 * @relative_to		room
+	 */
+	public int getTileyY()
+	{
+		return this.ty;
+	}
+
+	/*
+	 * Returns the horizontal dimension
+	 * of this tile in units of pixels.
+	 * 
+	 * @units_of		pixels
+	 */
+	public int getWidth()
+	{
+		return Tile.SIZE;
+	}
+	
+	/*
+	 * Returns the vertical dimension
+	 * of this tile in units of pixels.
+	 * 
+	 * @units_of		pixels
+	 */
+	public int getHeight()
+	{
+		return Tile.SIZE;
+	}
+	
+	public static Image WALL_IMAGE;
+	public static Image FLOOR_IMAGE;
+	
+	public final static int SIZE = 64;
 }
