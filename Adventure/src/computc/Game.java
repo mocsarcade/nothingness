@@ -61,7 +61,6 @@ public class Game extends BasicGame
 			thug.update(delta);
 		}
 		
-		this.dungeon.update(delta);
 		this.camera.update(delta);
 	}
 	

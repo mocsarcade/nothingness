@@ -28,11 +28,13 @@ public class Room
 		this.ry = ry;
 		
 		this.tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
+		
+		//this.loadLayout(Room.getRandomLayout());
 	}
 	
-	public void loadRandomLayout() throws SlickException
+	public void loadLayout(String layout) throws SlickException
 	{
-		TiledMap tmx = new TiledMap(Room.getRandomLayout());
+		TiledMap tmx = new TiledMap(layout);
 		
 		for(int tx = 0; tx < this.getTileyWidth(); tx++)
 		{

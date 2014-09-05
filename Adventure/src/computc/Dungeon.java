@@ -71,11 +71,6 @@ public class Dungeon
 		}
 	}
 	
-	public void update(int delta)
-	{
-		//code goes here.
-	}
-	
 	public void render(Graphics graphics, Camera camera)
 	{
 		for(Room room : this.getAllRooms())
@@ -112,11 +107,6 @@ public class Dungeon
 	public LinkedList<Room> getAllRooms()
 	{
 		return new LinkedList<Room>(this.rooms.values());
-	}
-	
-	public Tile getTile(int rx, int ry, int tx, int ty)
-	{
-		return this.getRoom(rx, ry).getTile(tx, ty);
 	}
 	
 	public Tile getTile(float x, float y)

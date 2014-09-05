@@ -32,7 +32,7 @@ public class Menu
 				int rx = i + 4 - (MAP_WIDTH / 2);
 				int ry = j + 1 - (MAP_HEIGHT / 2);
 				
-				int UNIT = 11, MARGIN = 2, OFFSET = 29;
+				int UNIT = 16, MARGIN = 3, OFFSET = 29;
 				int x = OFFSET + MARGIN + (i * (UNIT + MARGIN));
 				int y = OFFSET + MARGIN + (j * (UNIT + MARGIN));
 				
