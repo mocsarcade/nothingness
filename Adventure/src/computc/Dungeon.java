@@ -16,9 +16,9 @@ public class Dungeon
 	{
 		TiledMap tiled = new TiledMap("./res/dungeons/prototype.dungeon.tmx");
 		
-		for(int rx = 0; rx < 9; rx++)
+		for(int rx = 0; rx < Dungeon.ROOMY_WIDTH; rx++)
 		{
-			for(int ry = 0; ry < 5; ry++)
+			for(int ry = 0; ry < Dungeon.ROOMY_HEIGHT; ry++)
 			{
 				Room room = new Room(this, rx, ry);
 				

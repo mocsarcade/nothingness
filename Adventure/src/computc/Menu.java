@@ -19,13 +19,22 @@ public class Menu
 		graphics.setColor(Color.black);
 		graphics.fillRect(0, Room.HEIGHT, Room.WIDTH, Menu.HEIGHT);
 		
-		for(int rx = 0; rx < Dungeon.ROOMY_WIDTH; rx++)
+		int hrx = this.hero.getRoomyX();
+		int hry = this.hero.getRoomyY();
+		
+		int MAP_WIDTH = 5;
+		int MAP_HEIGHT = 5;
+		
+		for(int i = 0; i < MAP_WIDTH; i++)
 		{
-			for(int ry = 0; ry < Dungeon.ROOMY_HEIGHT; ry++)
+			for(int j = 0; j < MAP_HEIGHT; j++)
 			{
+				int rx = i + this.hero.getRoomyX() - (MAP_WIDTH / 2);
+				int ry = j + this.hero.getRoomyY() - (MAP_HEIGHT / 2);
+				
 				int UNIT = 11, MARGIN = 2, OFFSET = 24;
-				int x = OFFSET + MARGIN + (rx * (UNIT + MARGIN));
-				int y = OFFSET + MARGIN + (ry * (UNIT + MARGIN));
+				int x = OFFSET + MARGIN + (i * (UNIT + MARGIN));
+				int y = OFFSET + MARGIN + (j * (UNIT + MARGIN));
 				
 				Room room = this.dungeon.getRoom(rx, ry);
 				
