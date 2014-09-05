@@ -36,7 +36,7 @@ public abstract class Entity
 	
 	// blinking collision indicator
 	protected boolean blinking;
-	protected int blinkTimer;
+	protected int blinkCooldown;
 	
 	// rendering
 	protected Image image;

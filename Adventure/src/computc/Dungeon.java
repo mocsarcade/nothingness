@@ -92,9 +92,15 @@ public class Dungeon
 	
 	public void update(int delta)
 	{
-		for(Enemy thug : thugs)
+		for(int i = 0; i < thugs.size(); i++)
 		{
-			thug.update(delta);
+			Enemy e = thugs.get(i);
+			e.update(delta);
+				if(e.isDead())
+				{
+					thugs.remove(i);
+					i--;
+				}
 		}
 	}
 	

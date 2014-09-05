@@ -28,14 +28,16 @@ public class Thug extends Enemy
 	{
 		super(dungeon, (int)(Math.floor(tx / Room.WIDTH)), (int)(Math.floor(ty / Room.HEIGHT)), tx - ((int)(Math.floor(tx / Room.WIDTH)) * Room.TILEY_WIDTH), ty - ((int)(Math.floor(ty / Room.HEIGHT)) * Room.TILEY_HEIGHT));
 		
+		this.dungeon = dungeon;
+		
 		this.image = new Image("res/thug.png");
 		
-		this.dungeon = dungeon;
-		this.acceleration = 0.02f;
+		this.damage = 2;
+		this.acceleration = 0.03f;
 		this.deacceleration = 0.001f;
-		this.maximumVelocity = 0.02f;
+		this.maximumVelocity = 0.03f;
 		
-		this.currentHealth = this.maximumHealth = 3;
+		this.currentHealth = this.maximumHealth = 5;
 		
 		right = true; down = true;
 	}
@@ -72,14 +74,12 @@ public class Thug extends Enemy
 		// check blinking
 		if(blinking)
 		{
-			long elapsed = (System.nanoTime() - blinkTimer) / 1000000;
+			long elapsed = (System.nanoTime() - blinkCooldown) / 1000000;
 			if(elapsed > 400)
 		{
 				blinking = false;
 		}
 	}
-		
-		super.update(delta);
 	}
 	
 	private void getNextPosition(int delta) 
@@ -93,6 +93,7 @@ public class Thug extends Enemy
 			}
 			dx *= delta;
 		}
+		
 		else if(right) 
 		{
 			dx += acceleration;
@@ -121,11 +122,7 @@ public class Thug extends Enemy
 				dy = maximumVelocity;
 			}
 			dy *= delta;
-		}
-		
-		x += dx;
-		y += dy;
-		
+		}	
 	}
 
 }
