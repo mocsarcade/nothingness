@@ -13,6 +13,7 @@ public class Dungeon
 {
 	private HashMap<String, Room> rooms = new HashMap<String, Room>();
 	public LinkedList<Enemy> thugs; 
+	public Point[] thug_positions_in_tiley_coordinates;
 	
 	public Dungeon() throws SlickException
 	{
@@ -74,7 +75,7 @@ public class Dungeon
 		
 		this.thugs = new LinkedList<Enemy>();
 		
-		Point[] thug_positions_in_tiley_coordinates = new Point[] {
+		thug_positions_in_tiley_coordinates = new Point[] {
 				new Point(34, 5),
 				new Point(42, 2),
 				new Point(39, 5),
@@ -90,7 +91,7 @@ public class Dungeon
 		}
 	}
 	
-	public void update(int delta)
+	public void update(int delta) throws SlickException
 	{
 		for(int i = 0; i < thugs.size(); i++)
 		{
@@ -101,6 +102,17 @@ public class Dungeon
 					thugs.remove(i);
 					i--;
 				}
+		}
+		
+		if (Game.reset)
+		{
+			thugs.clear();
+			
+			for(Point point : thug_positions_in_tiley_coordinates)
+			{
+				thugs.add(new Thug(this, point.x, point.y));
+			}
+			Game.reset = false;
 		}
 	}
 	

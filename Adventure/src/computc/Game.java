@@ -24,6 +24,8 @@ public class Game extends BasicGame
 	
 	public Color textColor = Color.white;
 	
+	public static boolean reset;
+	
 	public Game()
 	{
 		super(Game.TITLE);
@@ -61,6 +63,7 @@ public class Game extends BasicGame
 			{
 				if(input.isKeyDown(Input.KEY_R))
 				{
+					reset = true;
 					this.hero = new Hero(dungeon, dungeon.getRoom(3, 0), 5, 1);
 					this.camera = new Camera(hero);
 					this.hero.setAlive();

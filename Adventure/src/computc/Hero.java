@@ -203,6 +203,7 @@ public class Hero extends Entity
 			if(intersects(e))
 			{
 				hit(e.getDamage());
+				e.maximumVelocity = .3f;
 			}
 		}
 	}
