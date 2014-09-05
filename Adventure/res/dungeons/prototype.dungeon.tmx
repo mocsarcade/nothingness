@@ -10,7 +10,7 @@
  </tileset>
  <layer name="rooms" width="99" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+2VSxLDIAxDk97/0N12UvwH5CRaaJhCBiw9Q8/jOE6K+tHHodXfzqwZnWeVhWfswmIlY7Sy+Up7kEWNhTVafjUWo3WyqHvjvVjPwjNWuJHFfG8dWFh7o/NEclzx7aoaniyy8NWHfneuc6Pf0Zoz7x76PbPO0TLT5ke5Svle56RxJoed/1lRFt7MtN6t3AuyyLHQfGjfWj4RLDLcOrKY1WczWEje7ngvtP6O9HqWcYWFx+NdWKzq9cy9kDhr/VDxGWW2U6hzvTVUMuqSMVnch4Wnzi7v2cx3Cp17JOMKC2/vj/aIcst6RGffudfPy+jVW1hoPrL5ePbL1Bf1h87/ifei0k+d5K01mq91prSvNLeCDzp7L4+Od2gmD3TmSNasoYc65NChBpTvDm8E+vwOkrx+jPUn9gNaln+y2MtCyoMs+rDYlQNZ/LPQ1sniPTmgz6coiqIoiqIoiqIoyq8vTfYy1pxFAAA=
+   H4sIAAAAAAAAC+3W0Q6CMBAEwOL/f7SPGuzRQyk9k3mYEKWBdDct3VprG7x5JMweyyuzzFUX93TxTb7RM3TxWxej6yjHoy5693URd2Fd1OB7UcesfHVxf48zxqKL1exRdYwy2ecb5RyNjZ6ni+NsMvlesS50cX0X2cx1Mb+L0brIdMVnZvvcovtnetv/F72XOFfnqBpmZST7Opnp4lxWoz3EHrWmh15eo/zOnn9Xz7uaO77dW+v3sXru1WTyzeZ3dNbt/V4992qsi1p8L2rJ7Eez1hAAAAAAAAAA/+MJ70JYZJxFAAA=
   </data>
  </layer>
 </map>

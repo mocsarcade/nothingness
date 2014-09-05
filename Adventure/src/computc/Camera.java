@@ -18,20 +18,40 @@ public class Camera
 	{
 		if(this.getX() < this.getTargetX())
 		{
-			this.increaseX(this.getSpeed() * delta);
+			this.increaseX(delta);
+			
+			if(this.getX() > this.getTargetX())
+			{
+				this.synchronizeX();
+			}
 		}
 		else if(this.getX() > this.getTargetX())
 		{
-			this.decreaseX(this.getSpeed() * delta);
+			this.decreaseX(delta);
+			
+			if(this.getX() < this.getTargetX())
+			{
+				this.synchronizeX();
+			}
 		}
 		
 		if(this.getY() < this.getTargetY())
 		{
-			this.increaseY(this.getSpeed() * delta);
+			this.increaseY(delta);
+			
+			if(this.getY() > this.getTargetY())
+			{
+				this.synchronizeY();
+			}
 		}
 		else if(this.getY() > this.getTargetY())
 		{
-			this.decreaseY(this.getSpeed() * delta);
+			this.decreaseY(delta);
+			
+			if(this.getY() < this.getTargetY())
+			{
+				this.synchronizeY();
+			}
 		}
 	}
 	
@@ -45,24 +65,34 @@ public class Camera
 		return (int)(this.y);
 	}
 	
-	public void increaseX(float amount)
+	public void increaseX(int amount)
 	{
 		this.x += amount;
 	}
 	
-	public void decreaseX(float amount)
+	public void decreaseX(int amount)
 	{
 		this.x -= amount;
 	}
 	
-	public void increaseY(float amount)
+	public void increaseY(int amount)
 	{
 		this.y += amount;
 	}
 	
-	public void decreaseY(float amount)
+	public void decreaseY(int amount)
 	{
 		this.y -= amount;
+	}
+	
+	public void synchronizeX()
+	{
+		this.x = this.getTargetX(); 
+	}
+	
+	public void synchronizeY()
+	{
+		this.y = this.getTargetY();
 	}
 	
 	public Entity getTarget()
