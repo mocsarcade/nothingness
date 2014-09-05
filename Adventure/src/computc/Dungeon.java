@@ -45,7 +45,7 @@ public class Dungeon
 			}
 		}
 		
-		/*for(int rx = 0; rx < ROOMY_WIDTH; rx++)
+		for(int rx = 0; rx < ROOMY_WIDTH; rx++)
 		{
 			for(int ry = 0; ry < ROOMY_HEIGHT; ry++)
 			{
@@ -68,7 +68,7 @@ public class Dungeon
 					room.connectWesternRoom(this.getRoom(rx - 1, ry));
 				}
 			}
-		}*/
+		}
 	}
 	
 	public void update(int delta)
