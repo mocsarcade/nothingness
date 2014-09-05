@@ -10,6 +10,7 @@ public class Tile
 	private int ty;
 	
 	public boolean isBlocked;
+	public boolean isStairs;
 	
 	public Tile(Room room, int tx, int ty)
 	{
@@ -26,6 +27,10 @@ public class Tile
 		if(this.isBlocked)
 		{
 			Tile.WALL_IMAGE.draw(x, y);
+		}
+		else if(this.isStairs)
+		{
+			Tile.STAIR_IMAGE.draw(x,y);
 		}
 		else
 		{
@@ -67,4 +72,5 @@ public class Tile
 	
 	public static Image WALL_IMAGE;
 	public static Image FLOOR_IMAGE;
+	public static Image STAIR_IMAGE;
 }
