@@ -3,19 +3,32 @@ package computc.worlds;
 import java.awt.Point;
 import java.util.LinkedList;
 
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
 
 import computc.Camera;
 import computc.entities.BigThug;
 import computc.entities.Enemy;
+import computc.entities.OldMan;
 import computc.entities.Thug;
 
 public class PredesignedDungeon extends Dungeon
 {
 	public Point[] thug_positions_in_tiley_coordinates;
 	public LinkedList<Enemy> thugs;
+	public OldMan oldman;
+	
+	private Image menuBox;
+	private Image largeTextBox;
+	private int counter, counter2;
+	Animation textBox;
+	public Color textColor = Color.white;
+	private boolean nextLevel = false;
 	
 	public PredesignedDungeon() throws SlickException
 	{
@@ -103,6 +116,11 @@ public class PredesignedDungeon extends Dungeon
 		}
 		
 		thugs.add(new BigThug(this, 36, 23));
+		this.oldman = new OldMan(this, 38, 12);
+		
+		this.menuBox = new Image("res/textBox.png");
+		this.largeTextBox = new Image("res/largeTextBox.png");
+		this.textBox = new Animation(new SpriteSheet(largeTextBox, 585, 100), 100);
 	}
 	
 	public void update(int delta)
@@ -117,6 +135,15 @@ public class PredesignedDungeon extends Dungeon
 					i--;
 				}
 		}
+		
+		this.oldman.update(delta);
+		
+		//hero.checkAttack(dungeon.thugs);
+		
+		/*if(dungeon.getTile(hero.getX(), hero.getY()).isStairs)
+		{
+			nextLevel = true;
+		}*/
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -127,5 +154,7 @@ public class PredesignedDungeon extends Dungeon
 		{
 			thug.render(graphics, camera);
 		}
+		
+		this.oldman.render(graphics, camera);
 	}
 }
