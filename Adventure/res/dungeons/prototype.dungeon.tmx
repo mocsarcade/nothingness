@@ -15,7 +15,7 @@
  </tileset>
  <layer name="rooms" width="99" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3Wyw6CMBAFUND//2eXGuy0g1I7JmdxQnhE0ntt6b5t2w4vbgmzn+WZWeaoi9908Um+0W/o4rsuRsdRjr0uWvd1EXdhXtTge1HHrHx1cU03q59FF6tZo+po7Ymi894+N3o2ep8u4mzuyXyvmBe66HeR/a+37o8y18X8LkbzItMV75kdc4vun+nteC16L3Gu9lE1zMpI9nUy08W5rEZriDVqTQ+tvEb5nd3/rh53Nb/4du9bu4/VY68mk282v95et3W+euzVmBe1+F7UklmPZs0hAAAAAAAAAP7HA9An9NGcRQAA
+   H4sIAAAAAAAAC+3Wyw6CMBAF0KL//88uNdihg1o6JmdxQpQGw732sbXWNnhxS5g9lmdmmasurunik3yjZ+jiuy5G11GOR1307usi7sK8qMF+UcesfHVxfY8zxqKL1axRdYwy2ecb5RyNjZ6nizibezLfX8wLXRx3kf2v9+6PMtfF/C5G8yLTFe+Z7XOL7p/pbf9d9LvEuTpH1TArI9nXyUwX57IarSHWqDU99PIa5Xf2/Lv6vau5Yu/eWr+P1e9eTSbfbH5HZ93e59XvXo15UYv9opbMejRrDgEAAAAAAADwPx4STyannEUAAA==
   </data>
  </layer>
 </map>
