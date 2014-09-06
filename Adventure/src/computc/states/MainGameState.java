@@ -17,34 +17,22 @@ import computc.Menu;
 import computc.entities.Hero;
 import computc.entities.OldMan;
 import computc.worlds.Dungeon;
+import computc.worlds.PredesignedDungeon;
 import computc.worlds.Tile;
 
 public class MainGameState extends BasicGameState
 {
 	public Hero hero;
 	public Dungeon dungeon;
-	public OldMan oldman;
 	public Camera camera;
 	public Menu menu;
 	
-	private Image menuBox;
-	private Image largeTextBox;
-	private int counter, counter2;
-	Animation textBox;
-	public Color textColor = Color.white;
-	private boolean nextLevel = false;
-	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		this.dungeon = new Dungeon();
+		this.dungeon = new PredesignedDungeon();
 		this.hero = new Hero(dungeon, dungeon.getRoom(3, 0), 5, 1);
-		this.oldman = new OldMan(dungeon, hero, 38, 12);
-		this.camera = new Camera(hero);
 		this.menu = new Menu(dungeon, hero);
-		
-		this.menuBox = new Image("res/textBox.png");
-		this.largeTextBox = new Image("res/largeTextBox.png");
-		this.textBox = new Animation(new SpriteSheet(largeTextBox, 585, 100), 100);
+		this.camera = new Camera(hero);
 		
 		Tile.WALL_IMAGE = new Image("./res/wall.png");
 		Tile.FLOOR_IMAGE = new Image("./res/floor.png");
@@ -55,61 +43,16 @@ public class MainGameState extends BasicGameState
 	{
 		Input input = container.getInput();
 		
-		if(!hero.isDead())
-		{
-			this.hero.update(input, delta);
-			this.oldman.update(delta);
-			this.dungeon.update(delta);
-			this.camera.update(delta);
-			
-			hero.checkAttack(dungeon.thugs);
-			
-			if(dungeon.getTile(hero.getX(), hero.getY()).isStairs)
-			{
-				nextLevel = true;
-			}
-		}
-		else
-		{
-			if(input.isKeyDown(Input.KEY_R))
-			{
-				Game.reset = true;
-				this.hero = new Hero(dungeon, dungeon.getRoom(3, 0), 5, 1);
-				this.camera = new Camera(hero);
-				this.hero.setAlive();
-			}
-			if(input.isKeyDown(Input.KEY_Q))
-			{
-				System.exit(0);
-			}
-		}
+		this.hero.update(input, delta);
+		this.dungeon.update(delta);
+		this.camera.update(delta);
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
 		this.dungeon.render(graphics, camera);
 		this.hero.render(graphics, camera);
-		this.oldman.render(graphics, camera);
 		this.menu.render(graphics, camera);
-		
-		/*if(hero.isDead() == true)
-		{
-			graphics.setColor(textColor);
-			menuBox.draw(Room.WIDTH/5, Room.HEIGHT/3);
-			graphics.drawString("Restart (R)", Room.WIDTH/3, Room.HEIGHT/3 + 10);
-			graphics.drawString("Main Menu (M)", Room.WIDTH/3, Room.HEIGHT/3 + 30);
-			graphics.drawString("Quit Game (Q)", Room.WIDTH/3, Room.HEIGHT/3 + 50);
-		}
-		
-		if(nextLevel)
-		{
-			graphics.setColor(textColor);
-			menuBox.draw(Room.WIDTH/5, Room.HEIGHT/3);
-			graphics.drawString("Congrats! 1st floor complete!", Room.WIDTH/3, Room.HEIGHT/3 + 5);
-			graphics.drawString("Restart (R)", Room.WIDTH/3, Room.HEIGHT/3 + 20);
-			graphics.drawString("Main Menu (M)", Room.WIDTH/3, Room.HEIGHT/3 + 35);
-			graphics.drawString("Quit Game (Q)", Room.WIDTH/3, Room.HEIGHT/3 + 50);
-		}*/
 	}
 	
 	public int getID()
