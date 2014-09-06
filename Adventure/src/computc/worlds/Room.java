@@ -13,41 +13,42 @@ import computc.Direction;
 public class Room
 {
 	private int rx, ry;
-	private Tile[][] tiles;
 	private Dungeon dungeon;
 	
-	public boolean visited;
+	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
 	
 	public Room westernRoom;
 	public Room easternRoom;
 	public Room southernRoom;
 	public Room northernRoom;
 	
-	public Room(Dungeon dungeon, int rx, int ry) throws SlickException
+	public boolean visited;
+
+	public Room(Dungeon dungeon, int rx, int ry, String layout) throws SlickException
 	{
 		this.dungeon = dungeon;
 		
 		this.rx = rx;
 		this.ry = ry;
 		
-		this.tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
+		if(layout == null)
+		{
+			layout = Room.getRandomLayout();
+		}
+		else
+		{
+			layout = "./res/rooms/" + layout + ".room.tmx";
+		}
 		
-		//this.loadLayout(Room.getRandomLayout());
-	}
-	
-	public void loadLayout(String layout) throws SlickException
-	{
 		TiledMap tmx = new TiledMap(layout);
 		
 		for(int tx = 0; tx < this.getTileyWidth(); tx++)
 		{
 			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
-				int tid = tmx.getTileId(tx, ty, 0);
 				Tile tile = new Tile(this, tx, ty);
-				tile.isBlocked = (tid == 1);
-				
-				this.setTile(tx, ty, tile);
+				tile.isBlocked = (tmx.getTileId(tx, ty, 0) == 1);
+				this.tiles[tx][ty] = tile;
 			}
 		}
 	}
@@ -404,7 +405,7 @@ public class Room
 	public static String getRandomLayout()
 	{
 		Random random = new Random();
-		File[] list = new File("./res/rooms").listFiles();
+		File[] list = new File("./res/rooms/").listFiles();
 		return "./res/rooms/" + list[random.nextInt(list.length)].getName();
 	}
 	

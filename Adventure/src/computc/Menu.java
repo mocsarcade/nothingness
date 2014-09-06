@@ -30,14 +30,14 @@ public class Menu
 		graphics.fillRect(0, Room.HEIGHT, Room.WIDTH, Menu.HEIGHT);
 		
 		int MAP_WIDTH = 5, MAP_HEIGHT = 5;
-		int UNIT = 16, MARGIN = 3, OFFSET = 29;
+		int UNIT = 12, MARGIN = 3, OFFSET = 29, MARKER = 6;
 		
 		for(int i = 0; i < MAP_WIDTH; i++)
 		{
 			for(int j = 0; j < MAP_HEIGHT; j++)
 			{
-				int rx = i + 4 - (MAP_WIDTH / 2);
-				int ry = j + 1 - (MAP_HEIGHT / 2);
+				int rx = i - (MAP_WIDTH / 2);
+				int ry = j - (MAP_HEIGHT / 2);
 				
 				int x = OFFSET + MARGIN + (i * (UNIT + MARGIN));
 				int y = OFFSET + MARGIN + (j * (UNIT + MARGIN));
@@ -58,7 +58,7 @@ public class Menu
 					&& ry == this.hero.getRoomyY())
 					{
 						graphics.setColor(Color.white);
-						graphics.fillOval(x + 3, y + 3, 5, 5);
+						graphics.fillOval(x + (UNIT / 2) - (MARKER / 2), y + (UNIT / 2) - (MARKER / 2), MARKER, MARKER);
 					}
 				}
 				else

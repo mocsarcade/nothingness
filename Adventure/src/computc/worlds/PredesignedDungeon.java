@@ -41,7 +41,7 @@ public class PredesignedDungeon extends Dungeon
 		{
 			for(int ry = 0; ry < ROOMY_HEIGHT; ry++)
 			{
-				Room room = new Room(this, rx, ry);
+				Room room = new Room(this, rx, ry, null);
 				
 				for(int tx = 0; tx < Room.TILEY_WIDTH; tx++)
 				{

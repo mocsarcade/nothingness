@@ -1,9 +1,11 @@
 package computc.worlds;
 
+import org.newdawn.slick.SlickException;
+
 public class RandomizedDungeon extends Dungeon
 {
-	public void update(int delta)
+	public RandomizedDungeon() throws SlickException
 	{
-		//code goes here.
+		this.addRoom(new Room(this, 0, 0, "empty"));
 	}
 }

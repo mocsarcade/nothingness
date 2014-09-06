@@ -26,7 +26,7 @@ public class Game extends StateBasedGame
 	{
 		super(Game.TITLE + " " + Game.VERSION);
 	}
-
+	
 	public void initStatesList(GameContainer arg0) throws SlickException
 	{
         this.addState(new MainGameState());
@@ -36,6 +36,7 @@ public class Game extends StateBasedGame
 	{
 		AppGameContainer container = new AppGameContainer(new Game());
 		container.setDisplayMode(Room.WIDTH, Room.HEIGHT, false);
+		container.setTargetFrameRate(60);
 		container.start();
 	}
 	

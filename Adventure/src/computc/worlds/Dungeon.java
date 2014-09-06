@@ -11,8 +11,6 @@ import computc.Camera;
 public abstract class Dungeon
 {
 	private HashMap<String, Room> rooms = new HashMap<String, Room>();
-	
-	public abstract void update(int delta);
 
 	public void render(Graphics graphics, Camera camera)
 	{
