@@ -7,8 +7,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import computc.Camera;
-import computc.underworlds.Dungeon;
-import computc.underworlds.Tile;
+import computc.worlds.Dungeon;
+import computc.worlds.Tile;
 
 public class OldMan extends Entity
 {

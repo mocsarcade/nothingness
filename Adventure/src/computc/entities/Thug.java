@@ -6,8 +6,8 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
-import computc.underworlds.Dungeon;
-import computc.underworlds.Room;
+import computc.worlds.Dungeon;
+import computc.worlds.Room;
 
 public class Thug extends Enemy	
 {

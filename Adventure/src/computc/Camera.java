@@ -1,7 +1,7 @@
 package computc;
 
 import computc.entities.Entity;
-import computc.underworlds.Room;
+import computc.worlds.Room;
 
 public class Camera
 {

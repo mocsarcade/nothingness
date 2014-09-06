@@ -9,9 +9,9 @@ import org.newdawn.slick.geom.Rectangle;
 
 import computc.Camera;
 import computc.Direction;
-import computc.underworlds.Dungeon;
-import computc.underworlds.Room;
-import computc.underworlds.Tile;
+import computc.worlds.Dungeon;
+import computc.worlds.Room;
+import computc.worlds.Tile;
 
 public abstract class Entity
 {

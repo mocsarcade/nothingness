@@ -6,8 +6,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import computc.entities.Hero;
-import computc.underworlds.Dungeon;
-import computc.underworlds.Room;
+import computc.worlds.Dungeon;
+import computc.worlds.Room;
 
 public class Menu
 {

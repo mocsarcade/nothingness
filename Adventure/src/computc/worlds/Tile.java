@@ -1,4 +1,4 @@
-package computc.underworlds;
+package computc.worlds;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Graphics;

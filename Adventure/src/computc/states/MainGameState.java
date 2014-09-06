@@ -1,4 +1,4 @@
-package computc.gamestates;
+package computc.states;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -16,8 +16,8 @@ import computc.Game;
 import computc.Menu;
 import computc.entities.Hero;
 import computc.entities.OldMan;
-import computc.underworlds.Dungeon;
-import computc.underworlds.Tile;
+import computc.worlds.Dungeon;
+import computc.worlds.Tile;
 
 public class MainGameState extends BasicGameState
 {

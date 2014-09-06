@@ -1,4 +1,4 @@
-package computc.underworlds;
+package computc.worlds;
 
 import java.awt.Point;
 import java.util.HashMap;
