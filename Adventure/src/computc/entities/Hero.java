@@ -1,4 +1,4 @@
-package computc;
+package computc.entities;
 
 import java.util.LinkedList;
 
@@ -6,6 +6,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+
+import computc.Camera;
+import computc.Direction;
+import computc.underworlds.Dungeon;
+import computc.underworlds.Room;
 
 public class Hero extends Entity
 {

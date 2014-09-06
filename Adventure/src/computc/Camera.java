@@ -1,5 +1,8 @@
 package computc;
 
+import computc.entities.Entity;
+import computc.underworlds.Room;
+
 public class Camera
 {
 	private float x, y;

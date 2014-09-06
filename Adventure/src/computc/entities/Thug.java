@@ -1,10 +1,13 @@
-package computc;
+package computc.entities;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
+
+import computc.underworlds.Dungeon;
+import computc.underworlds.Room;
 
 public class Thug extends Enemy	
 {

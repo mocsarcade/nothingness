@@ -5,6 +5,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import computc.entities.Hero;
+import computc.underworlds.Dungeon;
+import computc.underworlds.Room;
+
 public class Menu
 {
 	private Hero hero;

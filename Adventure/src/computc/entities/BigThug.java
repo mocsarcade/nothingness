@@ -1,7 +1,9 @@
-package computc;
+package computc.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+
+import computc.underworlds.Dungeon;
 
 public class BigThug extends Thug
 {

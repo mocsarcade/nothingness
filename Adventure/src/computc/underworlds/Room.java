@@ -1,4 +1,4 @@
-package computc;
+package computc.underworlds;
 
 import java.io.File;
 import java.util.Random;
@@ -6,6 +6,9 @@ import java.util.Random;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
+
+import computc.Camera;
+import computc.Direction;
 
 public class Room
 {

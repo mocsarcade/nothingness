@@ -1,7 +1,9 @@
-package computc;
+package computc.underworlds;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Graphics;
+
+import computc.Camera;
 
 public class Tile
 {

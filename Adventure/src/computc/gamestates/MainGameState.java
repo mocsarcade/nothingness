@@ -1,4 +1,4 @@
-package computc;
+package computc.gamestates;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -10,6 +10,14 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+
+import computc.Camera;
+import computc.Game;
+import computc.Menu;
+import computc.entities.Hero;
+import computc.entities.OldMan;
+import computc.underworlds.Dungeon;
+import computc.underworlds.Tile;
 
 public class MainGameState extends BasicGameState
 {
@@ -56,7 +64,7 @@ public class MainGameState extends BasicGameState
 			
 			hero.checkAttack(dungeon.thugs);
 			
-			if(dungeon.getTile(hero.x, hero.y).isStairs)
+			if(dungeon.getTile(hero.getX(), hero.getY()).isStairs)
 			{
 				nextLevel = true;
 			}

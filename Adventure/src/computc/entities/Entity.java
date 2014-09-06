@@ -1,4 +1,4 @@
-package computc;
+package computc.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -6,6 +6,12 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.geom.Rectangle;
+
+import computc.Camera;
+import computc.Direction;
+import computc.underworlds.Dungeon;
+import computc.underworlds.Room;
+import computc.underworlds.Tile;
 
 public abstract class Entity
 {

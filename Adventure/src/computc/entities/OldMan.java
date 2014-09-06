@@ -1,10 +1,14 @@
-package computc;
+package computc.entities;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+
+import computc.Camera;
+import computc.underworlds.Dungeon;
+import computc.underworlds.Tile;
 
 public class OldMan extends Entity
 {

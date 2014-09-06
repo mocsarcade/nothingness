@@ -1,6 +1,8 @@
-package computc;
+package computc.entities;
 
 import org.newdawn.slick.SlickException;
+
+import computc.underworlds.Dungeon;
 
 public abstract class Enemy extends Entity
 {
