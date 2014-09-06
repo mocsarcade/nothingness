@@ -29,18 +29,11 @@ public class Game extends StateBasedGame
         this.addState(new MainGameState());
 	}
 	
-	public static void main(String[] args)
+	public static void main(String[] args) throws SlickException
 	{
-		try
-		{
-			AppGameContainer container = new AppGameContainer(new Game());
-			container.setDisplayMode(Room.WIDTH, Room.HEIGHT, false);
-			container.start();
-		}
-		catch(Exception error)
-		{
-			System.out.println(error.getMessage());
-		}
+		AppGameContainer container = new AppGameContainer(new Game());
+		container.setDisplayMode(Room.WIDTH, Room.HEIGHT, false);
+		container.start();
 	}
 	
 	public static final String TITLE = "Game";

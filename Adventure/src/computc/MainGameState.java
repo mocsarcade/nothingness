@@ -30,13 +30,13 @@ public class MainGameState extends BasicGameState
 	{
 		this.dungeon = new Dungeon();
 		this.hero = new Hero(dungeon, dungeon.getRoom(3, 0), 5, 1);
+		this.oldman = new OldMan(dungeon, hero, 38, 12);
 		this.camera = new Camera(hero);
 		this.menu = new Menu(dungeon, hero);
 		
 		this.menuBox = new Image("res/textBox.png");
 		this.largeTextBox = new Image("res/largeTextBox.png");
 		this.textBox = new Animation(new SpriteSheet(largeTextBox, 585, 100), 100);
-		this.oldman = new OldMan(dungeon, 38, 12);
 		
 		Tile.WALL_IMAGE = new Image("./res/wall.png");
 		Tile.FLOOR_IMAGE = new Image("./res/floor.png");
@@ -47,38 +47,33 @@ public class MainGameState extends BasicGameState
 	{
 		Input input = container.getInput();
 		
-		if(!hero.isDead() == true)
+		if(!hero.isDead())
 		{
 			this.hero.update(input, delta);
-		
+			this.oldman.update(delta);
 			this.dungeon.update(delta);
 			this.camera.update(delta);
-			this.oldman.update(delta);
-		
+			
 			hero.checkAttack(dungeon.thugs);
+			
+			if(dungeon.getTile(hero.x, hero.y).isStairs)
+			{
+				nextLevel = true;
+			}
 		}
 		else
-			if(hero.isDead() == true)
+		{
+			if(input.isKeyDown(Input.KEY_R))
 			{
-				if(input.isKeyDown(Input.KEY_R))
-				{
-					Game.reset = true;
-					this.hero = new Hero(dungeon, dungeon.getRoom(3, 0), 5, 1);
-					this.camera = new Camera(hero);
-					this.hero.setAlive();
-				}
-				if(input.isKeyDown(Input.KEY_Q))
-					System.exit(0);
+				Game.reset = true;
+				this.hero = new Hero(dungeon, dungeon.getRoom(3, 0), 5, 1);
+				this.camera = new Camera(hero);
+				this.hero.setAlive();
 			}
-		
-		if(hero.getRoomyX() == 3 && hero.getRoomyY() == 1 && oldman.y < Tile.SIZE * 14.5)
-		{
-			oldman.y += .005 * delta;
-		}
-		
-		if(dungeon.getTile(hero.x, hero.y).isStairs)
-		{
-			nextLevel = true;
+			if(input.isKeyDown(Input.KEY_Q))
+			{
+				System.exit(0);
+			}
 		}
 	}
 	
@@ -89,7 +84,7 @@ public class MainGameState extends BasicGameState
 		this.oldman.render(graphics, camera);
 		this.menu.render(graphics, camera);
 		
-		if(hero.isDead() == true)
+		/*if(hero.isDead() == true)
 		{
 			graphics.setColor(textColor);
 			menuBox.draw(Room.WIDTH/5, Room.HEIGHT/3);
@@ -106,7 +101,7 @@ public class MainGameState extends BasicGameState
 			graphics.drawString("Restart (R)", Room.WIDTH/3, Room.HEIGHT/3 + 20);
 			graphics.drawString("Main Menu (M)", Room.WIDTH/3, Room.HEIGHT/3 + 35);
 			graphics.drawString("Quit Game (Q)", Room.WIDTH/3, Room.HEIGHT/3 + 50);
-		}
+		}*/
 	}
 	
 	public int getID()
