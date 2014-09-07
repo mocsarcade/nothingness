@@ -1,4 +1,4 @@
-package computc;
+package computc.worlds;
 
 import java.awt.Point;
 import java.util.HashMap;
@@ -8,6 +8,12 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
+
+import computc.Camera;
+import computc.Game;
+import computc.entities.BigThug;
+import computc.entities.Enemy;
+import computc.entities.Thug;
 
 public class Dungeon
 {

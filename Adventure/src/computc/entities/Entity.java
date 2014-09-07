@@ -1,4 +1,4 @@
-package computc;
+package computc.entities;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -6,6 +6,12 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.geom.Rectangle;
+
+import computc.Camera;
+import computc.Direction;
+import computc.worlds.Dungeon;
+import computc.worlds.Room;
+import computc.worlds.Tile;
 
 public abstract class Entity
 {
@@ -53,6 +59,18 @@ public abstract class Entity
 		this.y = (ry * Room.HEIGHT) + ((ty + 0.5f) * Tile.SIZE);
 	}
 	
+	public Entity(Dungeon dungeon, int tx, int ty)
+	{
+		int rx = (int)(Math.floor(tx / Room.WIDTH));
+		int ry = (int)(Math.floor(ty / Room.HEIGHT));
+		
+		tx -= (int)(Math.floor(tx / Room.WIDTH)) * Room.TILEY_WIDTH;
+		ty -= (int)(Math.floor(ty / Room.HEIGHT)) * Room.TILEY_HEIGHT;
+		
+		this.x = (rx * Room.WIDTH) + ((tx + 0.5f) * Tile.SIZE);
+		this.y = (ry * Room.HEIGHT) + ((ty + 0.5f) * Tile.SIZE);
+	}
+	
 	public void update(int delta)
 	{
 		if(justHit > 0)
@@ -68,8 +86,8 @@ public abstract class Entity
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		int x = (int)(this.getX()) - (this.getWidth() / 2) - camera.getX();
-		int y = (int)(this.getY()) - (this.getHeight() / 2) - camera.getY();
+		int x = (int)this.getX() - this.getHalfWidth() - camera.getX();
+		int y = (int)this.getY() - this.getHalfHeight() - camera.getY();
 		
 		this.image.draw(x, y);
 	}
@@ -157,6 +175,16 @@ public abstract class Entity
 	public int getHeight()
 	{
 		return this.image.getHeight();
+	}
+	
+	public int getHalfWidth()
+	{
+		return this.getWidth() / 2;
+	}
+	
+	public int getHalfHeight()
+	{
+		return this.getHeight() / 2;
 	}
 	
 	public Direction getDirection()

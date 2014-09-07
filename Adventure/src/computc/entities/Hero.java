@@ -1,4 +1,4 @@
-package computc;
+package computc.entities;
 
 import java.util.LinkedList;
 
@@ -6,6 +6,11 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+
+import computc.Camera;
+import computc.Direction;
+import computc.worlds.Dungeon;
+import computc.worlds.Room;
 
 public class Hero extends Entity
 {
@@ -20,7 +25,7 @@ public class Hero extends Entity
 		this.deacceleration = 0.02f;
 		this.maximumVelocity = 3f;
 		
-		this.currentHealth = this.maximumHealth = 5;
+		this.currentHealth = this.maximumHealth = 3;
 		
 		this.image = new Image("res/hero.png");
 	}
