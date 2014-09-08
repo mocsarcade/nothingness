@@ -18,7 +18,7 @@ import computc.entities.Hero;
 import computc.entities.OldMan;
 import computc.worlds.Dungeon;
 import computc.worlds.PredesignedDungeon;
-import computc.worlds.RandomizedDungeon;
+import computc.worlds.LinearRandomDungeon;
 import computc.worlds.Tile;
 
 public class MainGameState extends BasicGameState
@@ -30,7 +30,7 @@ public class MainGameState extends BasicGameState
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		this.dungeon = new RandomizedDungeon();
+		this.dungeon = new LinearRandomDungeon();
 		this.hero = new Hero(dungeon, dungeon.getRoom(0, 0), 5, 1);
 		this.menu = new Menu(dungeon, hero);
 		this.camera = new Camera(hero);

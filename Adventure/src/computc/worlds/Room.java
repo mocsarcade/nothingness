@@ -51,6 +51,8 @@ public class Room
 				this.tiles[tx][ty] = tile;
 			}
 		}
+		
+		this.dungeon.addRoom(this);
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -396,6 +398,15 @@ public class Room
 		{
 			this.connectWesternRoom(room);
 		}
+	}
+	
+	public Room addNorthernRoom(String layout) throws SlickException
+	{
+		Room room = new Room(this.dungeon, this.rx, this.ry - 1, layout);
+		
+		this.connectNorthernRoom(room);
+		
+		return room;
 	}
 
 	/*

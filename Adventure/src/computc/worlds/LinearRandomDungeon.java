@@ -6,12 +6,15 @@ import org.newdawn.slick.SlickException;
 
 import computc.Direction;
 
-public class RandomizedDungeon extends Dungeon
+public class LinearRandomDungeon extends Dungeon
 {
-	public RandomizedDungeon() throws SlickException
+	public LinearRandomDungeon() throws SlickException
 	{
 		Room room = new Room(this, 0, 0, "empty");
 		
-		this.addRoom(room);
+		for(int i = 0; i < 3; i++)
+		{
+			room = room.addNorthernRoom(null);
+		}
 	}
 }
