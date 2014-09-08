@@ -13,6 +13,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import computc.Camera;
 import computc.Game;
+import computc.GameData;
 import computc.Menu;
 import computc.entities.Hero;
 import computc.entities.OldMan;
@@ -23,17 +24,16 @@ import computc.worlds.Tile;
 
 public class MainGameState extends BasicGameState
 {
-	public Hero hero;
-	public Dungeon dungeon;
+	public GameData gamedata;
 	public Camera camera;
 	public Menu menu;
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		this.dungeon = new LinearRandomDungeon();
-		this.hero = new Hero(dungeon, dungeon.getRoom(2, 2), 5, 1);
-		this.menu = new Menu(dungeon, hero);
-		this.camera = new Camera(hero);
+		this.gamedata = new GameData();
+		
+		this.menu = new Menu(this.gamedata.dungeon, this.gamedata.hero);
+		this.camera = new Camera(this.gamedata.hero);
 		
 		Tile.WALL_IMAGE = new Image("./res/wall.png");
 		Tile.FLOOR_IMAGE = new Image("./res/floor.png");
@@ -44,16 +44,16 @@ public class MainGameState extends BasicGameState
 	{
 		Input input = container.getInput();
 		
-		this.hero.update(input, delta);
+		this.gamedata.hero.update(input, delta);
 		this.menu.update(input, game);
 		this.camera.update(delta);
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
-		this.dungeon.render(graphics, camera);
-		this.hero.render(graphics, camera);
-		this.menu.render(graphics, camera);
+		this.gamedata.dungeon.render(graphics, this.camera);
+		this.gamedata.hero.render(graphics, this.camera);
+		this.menu.render(graphics, this.camera);
 	}
 	
 	public int getID()
