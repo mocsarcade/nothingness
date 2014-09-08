@@ -45,6 +45,7 @@ public class DungeonMapGameState extends BasicGameState
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
 		this.gamedata.dungeon.renderOnMap(graphics, this.camera);
+		this.gamedata.hero.renderOnMap(graphics, this.camera);
 	}
 	
 	public int getID()

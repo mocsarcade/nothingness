@@ -10,8 +10,6 @@ public abstract class Camera
 	protected float x, y;
 	protected float speed = 1f;
 	
-	public abstract void update(Input input, int delta);
-	
 	public int getX()
 	{
 		return (int)(this.x);
@@ -51,4 +49,6 @@ public abstract class Camera
 	{
 		this.speed = speed;
 	}
+	
+	public abstract void update(Input input, int delta);
 }

@@ -2,6 +2,7 @@ package computc.entities;
 
 import java.util.LinkedList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -41,6 +42,17 @@ public class Hero extends Entity
 		}
 			
 		super.render(graphics, camera);
+	}
+	
+	public void renderOnMap(Graphics graphics, Camera camera)
+	{
+		int x = (int)((this.getX() - this.getHalfWidth()) / 8) - camera.getX();
+		int y = (int)((this.getY()  - this.getHalfHeight()) / 8) - camera.getY();
+		int w = this.getWidth() / 8;
+		int h = this.getHeight() / 8;
+		
+		graphics.setColor(Color.white);
+		graphics.fillRoundRect(x, y, w, h, 2);
 	}
 	
 	public void update(Input input, int delta)
