@@ -2,6 +2,7 @@ package computc.worlds;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Random;
 
 import org.newdawn.slick.SlickException;
@@ -12,22 +13,26 @@ public class LinearRandomDungeon extends Dungeon
 {
 	public LinearRandomDungeon() throws SlickException
 	{
-		Room room = new Room(this, 2, 2, "empty");
+		LinkedList<Room> rooms = new LinkedList<Room>();
+		rooms.add(new Room(this, 2, 2, "empty"));
 		
-		for(int i = 0; i < 10; i++)
+		for(int i = 0; i < 5; i++)
 		{
-			ArrayList<Direction> directions = room.getExpandableDirections();
-			
-			if(directions.size() > 0)
+			int size = rooms.size();
+			for(int index = 0; index < size; index++)
 			{
-				Collections.shuffle(directions);
-				Direction direction = directions.get(0);
+				Room room = rooms.get(index);
+				ArrayList<Direction> directions = room.getExpandableDirections();
 				
-				room = room.addRoom(direction, "empty");
-			}
-			else
-			{
-				System.out.println("dead end");
+				if(directions.size() > 0)
+				{
+					Collections.shuffle(directions);
+					rooms.add(room.addRoom(directions.get(0), null));
+				}
+				else
+				{
+					rooms.remove(room); //is a dead end.
+				}
 			}
 		}
 	}
