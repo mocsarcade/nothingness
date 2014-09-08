@@ -43,10 +43,10 @@ public class Tile
 		}
 	}
 	
-	public void renderOnMap(Graphics graphics)
+	public void renderOnMap(Graphics graphics, Camera camera)
 	{
-		int x = (this.getX() / 8);// - camera.getX();
-		int y = (this.getY() / 8);// - camera.getY();
+		int x = (this.getX() / 8) - camera.getX();
+		int y = (this.getY() / 8) - camera.getY();
 		
 		if(this.isBlocked)
 		{

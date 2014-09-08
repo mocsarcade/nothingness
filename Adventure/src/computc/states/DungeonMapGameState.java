@@ -7,17 +7,22 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import computc.Camera;
 import computc.GameData;
+import computc.InputPollingCamera;
+import computc.RoomFollowingCamera;
 import computc.entities.Hero;
 import computc.worlds.Dungeon;
 
 public class DungeonMapGameState extends BasicGameState
 {
 	public GameData gamedata;
+	public Camera camera;
 	
 	public DungeonMapGameState(GameData gamedata)
 	{
 		this.gamedata = gamedata;
+		this.camera = new InputPollingCamera();
 	}
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
@@ -28,6 +33,8 @@ public class DungeonMapGameState extends BasicGameState
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
 		Input input = container.getInput();
+		
+		this.camera.update(input, delta);
 
 		if(input.isKeyDown(Input.KEY_ESCAPE))
 		{
@@ -37,7 +44,7 @@ public class DungeonMapGameState extends BasicGameState
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
-		this.gamedata.dungeon.renderOnMap(graphics);
+		this.gamedata.dungeon.renderOnMap(graphics, this.camera);
 	}
 	
 	public int getID()

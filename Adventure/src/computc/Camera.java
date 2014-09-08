@@ -1,62 +1,16 @@
 package computc;
 
+import org.newdawn.slick.Input;
+
 import computc.entities.Entity;
 import computc.worlds.Room;
 
-public class Camera
+public abstract class Camera
 {
-	private float x, y;
-	private Entity target;
-	private float speed = 1f;
+	protected float x, y;
+	protected float speed = 1f;
 	
-	public Camera(Entity target)
-	{
-		this.target = target;
-		
-		this.x = this.getTargetX();
-		this.y = this.getTargetY();
-	}
-	
-	public void update(int delta)
-	{
-		if(this.getX() < this.getTargetX())
-		{
-			this.increaseX(delta);
-			
-			if(this.getX() > this.getTargetX())
-			{
-				this.setToTargetX();
-			}
-		}
-		else if(this.getX() > this.getTargetX())
-		{
-			this.decreaseX(delta);
-			
-			if(this.getX() < this.getTargetX())
-			{
-				this.setToTargetX();
-			}
-		}
-		
-		if(this.getY() < this.getTargetY())
-		{
-			this.increaseY(delta);
-			
-			if(this.getY() > this.getTargetY())
-			{
-				this.setToTargetY();
-			}
-		}
-		else if(this.getY() > this.getTargetY())
-		{
-			this.decreaseY(delta);
-			
-			if(this.getY() < this.getTargetY())
-			{
-				this.setToTargetY();
-			}
-		}
-	}
+	public abstract void update(Input input, int delta);
 	
 	public int getX()
 	{
@@ -68,53 +22,33 @@ public class Camera
 		return (int)(this.y);
 	}
 	
-	public void increaseX(int amount)
+	public void increaseX(float amount)
 	{
 		this.x += amount;
 	}
 	
-	public void decreaseX(int amount)
+	public void decreaseX(float amount)
 	{
 		this.x -= amount;
 	}
 	
-	public void increaseY(int amount)
+	public void increaseY(float amount)
 	{
 		this.y += amount;
 	}
 	
-	public void decreaseY(int amount)
+	public void decreaseY(float amount)
 	{
 		this.y -= amount;
-	}
-	
-	public void setToTargetX()
-	{
-		this.x = this.getTargetX(); 
-	}
-	
-	public void setToTargetY()
-	{
-		this.y = this.getTargetY();
-	}
-	
-	public Entity getTarget()
-	{
-		return this.target;
-	}
-	
-	public int getTargetX()
-	{
-		return this.getTarget().getRoomyX() * Room.WIDTH;
-	}
-	
-	public int getTargetY()
-	{
-		return this.getTarget().getRoomyY() * Room.HEIGHT;
 	}
 	
 	public float getSpeed()
 	{
 		return this.speed;
+	}
+	
+	public void setSpeed(float speed)
+	{
+		this.speed = speed;
 	}
 }

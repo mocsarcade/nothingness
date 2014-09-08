@@ -20,11 +20,11 @@ public abstract class Dungeon
 		}
 	}
 	
-	public void renderOnMap(Graphics graphics)
+	public void renderOnMap(Graphics graphics, Camera camera)
 	{
 		for(Room room : this.getAllRooms())
 		{
-			room.renderOnMap(graphics);
+			room.renderOnMap(graphics, camera);
 		}
 	}
 	

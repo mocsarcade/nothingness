@@ -15,6 +15,7 @@ import computc.Camera;
 import computc.Game;
 import computc.GameData;
 import computc.Menu;
+import computc.RoomFollowingCamera;
 import computc.entities.Hero;
 import computc.entities.OldMan;
 import computc.worlds.Dungeon;
@@ -38,7 +39,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.instantiate();
 		
 		this.menu = new Menu(this.gamedata.dungeon, this.gamedata.hero);
-		this.camera = new Camera(this.gamedata.hero);
+		this.camera = new RoomFollowingCamera(this.gamedata.hero);
 		
 		Tile.WALL_IMAGE = new Image("./res/wall.png");
 		Tile.FLOOR_IMAGE = new Image("./res/floor.png");
@@ -51,7 +52,7 @@ public class MainGameState extends BasicGameState
 		
 		this.gamedata.hero.update(input, delta);
 		this.menu.update(input, game);
-		this.camera.update(delta);
+		this.camera.update(input, delta);
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException

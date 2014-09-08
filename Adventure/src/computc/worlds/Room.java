@@ -68,13 +68,13 @@ public class Room
 		}
 	}
 	
-	public void renderOnMap(Graphics graphics)
+	public void renderOnMap(Graphics graphics, Camera camera)
 	{
 		for(int tx = 0; tx < this.getTileyWidth(); tx++)
 		{
 			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
-				this.tiles[tx][ty].renderOnMap(graphics);
+				this.tiles[tx][ty].renderOnMap(graphics, camera);
 			}
 		}
 	}
