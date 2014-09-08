@@ -14,7 +14,7 @@ public class LinearRandomDungeon extends Dungeon
 		
 		for(int i = 0; i < 3; i++)
 		{
-			room = room.addNorthernRoom(null);
+			room = room.addSouthernRoom(null);
 		}
 	}
 }

@@ -400,13 +400,76 @@ public class Room
 		}
 	}
 	
+	/*
+	 * Executes the relevant subroutines to
+	 * instantiate a new room to the north.
+	 */
 	public Room addNorthernRoom(String layout) throws SlickException
 	{
 		Room room = new Room(this.dungeon, this.rx, this.ry - 1, layout);
-		
 		this.connectNorthernRoom(room);
-		
 		return room;
+	}
+
+	/*
+	 * Executes the relevant subroutines to
+	 * instantiate a new room to the south.
+	 */
+	public Room addSouthernRoom(String layout) throws SlickException
+	{
+		Room room = new Room(this.dungeon, this.rx, this.ry + 1, layout);
+		this.connectSouthernRoom(room);
+		return room;
+	}
+
+	/*
+	 * Executes the relevant subroutines to
+	 * instantiate a new room to the east.
+	 */
+	public Room addEasternRoom(String layout) throws SlickException
+	{
+		Room room = new Room(this.dungeon, this.rx + 1, this.ry, layout);
+		this.connectEasternRoom(room);
+		return room;
+	}
+
+	/*
+	 * Executes the relevant subroutines to
+	 * instantiate a new room to the west.
+	 */
+	public Room addWesternRoom(String layout) throws SlickException
+	{
+		Room room = new Room(this.dungeon, this.rx - 1, this.ry, layout);
+		this.connectWesternRoom(room);
+		return room;
+	}
+
+	/*
+	 * Executes the relevant subroutines to
+	 * instantiate a new room in any direction.
+	 */
+	public Room addRoom(Direction direction, String layout) throws SlickException
+	{
+		if(direction == Direction.NORTH)
+		{
+			return this.addNorthernRoom(layout);
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			return this.addSouthernRoom(layout);
+		}
+		else if(direction == Direction.EAST)
+		{
+			return this.addEasternRoom(layout);
+		}
+		else if(direction == Direction.WEST)
+		{
+			return this.addWesternRoom(layout);
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	/*
