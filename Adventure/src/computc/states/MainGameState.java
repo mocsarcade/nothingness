@@ -28,9 +28,14 @@ public class MainGameState extends BasicGameState
 	public Camera camera;
 	public Menu menu;
 	
+	public MainGameState(GameData gamedata)
+	{
+		this.gamedata = gamedata;
+	}
+	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		this.gamedata = new GameData();
+		this.gamedata.instantiate();
 		
 		this.menu = new Menu(this.gamedata.dungeon, this.gamedata.hero);
 		this.camera = new Camera(this.gamedata.hero);

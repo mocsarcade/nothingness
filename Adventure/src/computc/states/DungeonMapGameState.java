@@ -7,17 +7,22 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import computc.GameData;
 import computc.entities.Hero;
 import computc.worlds.Dungeon;
 
 public class DungeonMapGameState extends BasicGameState
 {
-	public Hero hero;
-	public Dungeon dungeon;
+	public GameData gamedata;
+	
+	public DungeonMapGameState(GameData gamedata)
+	{
+		this.gamedata = gamedata;
+	}
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		//?!
+		//code goes here.
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
@@ -32,7 +37,7 @@ public class DungeonMapGameState extends BasicGameState
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
-		
+		this.gamedata.dungeon.renderOnMap(graphics);
 	}
 	
 	public int getID()

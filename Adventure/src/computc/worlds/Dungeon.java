@@ -20,6 +20,14 @@ public abstract class Dungeon
 		}
 	}
 	
+	public void renderOnMap(Graphics graphics)
+	{
+		for(Room room : this.getAllRooms())
+		{
+			room.renderOnMap(graphics);
+		}
+	}
+	
 	public void addRoom(Room room)
 	{
 		int rx = room.getRoomyX();

@@ -1,5 +1,6 @@
 package computc.worlds;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Graphics;
 
@@ -40,6 +41,28 @@ public class Tile
 		{
 			Tile.FLOOR_IMAGE.draw(x, y);
 		}
+	}
+	
+	public void renderOnMap(Graphics graphics)
+	{
+		int x = (this.getX() / 8);// - camera.getX();
+		int y = (this.getY() / 8);// - camera.getY();
+		
+		if(this.isBlocked)
+		{
+			graphics.setColor(Color.lightGray);
+		}
+		else if(this.isStairs)
+		{
+			graphics.setColor(Color.cyan);
+		}
+		else
+		{
+			graphics.setColor(Color.gray);
+		}
+		
+		final int UNIT = Tile.SIZE / 8;
+		graphics.fillRect(x, y, UNIT, UNIT);
 	}
 	
 	/*

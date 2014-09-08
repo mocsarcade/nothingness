@@ -11,7 +11,7 @@ public class GameData
 	public Hero hero;
 	public Dungeon dungeon;
 	
-	public GameData() throws SlickException
+	public void instantiate() throws SlickException
 	{
 		this.dungeon = new LinearRandomDungeon();
 		this.hero = new Hero(dungeon, dungeon.getRoom(2, 2), 5, 1);

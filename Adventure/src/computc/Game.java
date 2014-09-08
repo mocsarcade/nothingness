@@ -30,8 +30,10 @@ public class Game extends StateBasedGame
 	
 	public void initStatesList(GameContainer arg0) throws SlickException
 	{
-        this.addState(new MainGameState());
-        this.addState(new DungeonMapGameState());
+		GameData gamedata = new GameData();
+		
+        this.addState(new MainGameState(gamedata));
+        this.addState(new DungeonMapGameState(gamedata));
 	}
 	
 	public static void main(String[] args) throws SlickException

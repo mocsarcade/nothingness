@@ -68,6 +68,17 @@ public class Room
 		}
 	}
 	
+	public void renderOnMap(Graphics graphics)
+	{
+		for(int tx = 0; tx < this.getTileyWidth(); tx++)
+		{
+			for(int ty = 0; ty < this.getTileyHeight(); ty++)
+			{
+				this.tiles[tx][ty].renderOnMap(graphics);
+			}
+		}
+	}
+	
 	/*
 	 * Returns the horizontal position
 	 * of this room in units of pixels
