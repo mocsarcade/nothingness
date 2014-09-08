@@ -11,7 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
 
-import computc.Camera;
+import computc.cameras.Camera;
 import computc.entities.BigThug;
 import computc.entities.Enemy;
 import computc.entities.OldMan;

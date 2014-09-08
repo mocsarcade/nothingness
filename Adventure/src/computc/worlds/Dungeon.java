@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import computc.Camera;
+import computc.cameras.Camera;
 
 public abstract class Dungeon
 {

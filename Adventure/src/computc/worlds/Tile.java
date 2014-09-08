@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Graphics;
 
-import computc.Camera;
+import computc.cameras.Camera;
 
 public class Tile
 {

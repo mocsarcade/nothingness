@@ -11,11 +11,11 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import computc.Camera;
 import computc.Game;
 import computc.GameData;
 import computc.Menu;
-import computc.RoomFollowingCamera;
+import computc.cameras.Camera;
+import computc.cameras.RoomFollowingCamera;
 import computc.entities.Hero;
 import computc.entities.OldMan;
 import computc.worlds.Dungeon;

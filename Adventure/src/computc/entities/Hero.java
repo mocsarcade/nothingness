@@ -8,8 +8,8 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
-import computc.Camera;
 import computc.Direction;
+import computc.cameras.Camera;
 import computc.worlds.Dungeon;
 import computc.worlds.Room;
 

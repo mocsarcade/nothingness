@@ -7,6 +7,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import computc.cameras.Camera;
 import computc.entities.Hero;
 import computc.worlds.Dungeon;
 import computc.worlds.Room;

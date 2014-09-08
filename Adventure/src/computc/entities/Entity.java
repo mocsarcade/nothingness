@@ -7,8 +7,8 @@ import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.geom.Rectangle;
 
-import computc.Camera;
 import computc.Direction;
+import computc.cameras.Camera;
 import computc.worlds.Dungeon;
 import computc.worlds.Room;
 import computc.worlds.Tile;

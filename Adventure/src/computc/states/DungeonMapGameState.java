@@ -7,10 +7,10 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import computc.Camera;
 import computc.GameData;
-import computc.InputPollingCamera;
-import computc.RoomFollowingCamera;
+import computc.cameras.Camera;
+import computc.cameras.InputPollingCamera;
+import computc.cameras.RoomFollowingCamera;
 import computc.entities.Hero;
 import computc.worlds.Dungeon;
 

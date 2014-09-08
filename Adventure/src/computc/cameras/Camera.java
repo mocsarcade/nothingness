@@ -1,4 +1,4 @@
-package computc;
+package computc.cameras;
 
 import org.newdawn.slick.Input;
 
