@@ -47,10 +47,19 @@ public class Menu
 				
 				Room room = this.dungeon.getRoom(rx, ry);
 				
-				if(room != null	&& room.visited)
+				if(room != null)
 				{
-					graphics.setColor(Color.lightGray);
+					if(room.visited)
+					{
+						graphics.setColor(Color.lightGray);
+					}
+					else
+					{
+						graphics.setColor(Color.gray);
+					}
+					
 					graphics.fillRoundRect(x, y, UNIT, UNIT, 3);
+					
 
 					if(room.hasNorthernRoom()) {graphics.fillRect(x + (UNIT / 2) - 1, y - MARGIN, MARGIN, MARGIN);}
 					if(room.hasSouthernRoom()) {graphics.fillRect(x + (UNIT / 2) - 1, y + UNIT, MARGIN, MARGIN);}
