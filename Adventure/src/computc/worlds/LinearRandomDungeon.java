@@ -16,7 +16,9 @@ public class LinearRandomDungeon extends Dungeon
 		LinkedList<Room> rooms = new LinkedList<Room>();
 		rooms.add(new Room(this, 2, 2, "empty"));
 		
-		for(int i = 0; i < 5; i++)
+		final int SIZE = 5;
+		
+		for(int i = 0; i < SIZE; i++)
 		{
 			int size = rooms.size();
 			for(int index = 0; index < size; index++)

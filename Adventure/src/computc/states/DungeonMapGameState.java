@@ -13,6 +13,7 @@ import computc.cameras.InputPollingCamera;
 import computc.cameras.RoomFollowingCamera;
 import computc.entities.Hero;
 import computc.worlds.Dungeon;
+import computc.worlds.LinearRandomDungeon;
 
 public class DungeonMapGameState extends BasicGameState
 {
@@ -39,6 +40,11 @@ public class DungeonMapGameState extends BasicGameState
 		if(input.isKeyDown(Input.KEY_ESCAPE))
 		{
 			game.enterState(0);
+		}
+
+		if(input.isKeyDown(Input.KEY_R))
+		{
+			this.gamedata.dungeon = new LinearRandomDungeon();
 		}
 	}
 	
