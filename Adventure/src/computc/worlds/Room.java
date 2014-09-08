@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
@@ -24,7 +25,8 @@ public class Room
 	public Room southernRoom;
 	public Room northernRoom;
 	
-	public boolean visited;
+	public boolean visited = false;
+	public boolean hasStairs = false;
 
 	public Room(Dungeon dungeon, int rx, int ry, String layout) throws SlickException
 	{
@@ -75,6 +77,17 @@ public class Room
 			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
 				this.tiles[tx][ty].renderOnMap(graphics, camera);
+				
+				if(this.hasStairs)
+				{
+					graphics.setColor(Color.cyan);
+					
+					int s = 48 / 4;
+					int x = ((this.getX() + (this.getWidth() / 2)) / 8) - camera.getX();
+					int y = ((this.getY() + (this.getHeight() / 2)) / 8) - camera.getY();
+
+					graphics.fillRoundRect(x, y, s, s, 2);
+				}
 			}
 		}
 	}

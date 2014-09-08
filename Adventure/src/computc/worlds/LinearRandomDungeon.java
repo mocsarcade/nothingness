@@ -13,6 +13,7 @@ public class LinearRandomDungeon extends Dungeon
 {
 	public LinearRandomDungeon() throws SlickException
 	{
+		boolean hasAddedTheStairs = false;
 		LinkedList<Room> rooms = new LinkedList<Room>();
 		rooms.add(new Room(this, 2, 2, "empty"));
 		
@@ -34,6 +35,13 @@ public class LinearRandomDungeon extends Dungeon
 				else
 				{
 					rooms.remove(room); //is a dead end.
+				}
+				
+				if(i == SIZE - 1 && index == size - 1 && !hasAddedTheStairs)
+				{
+					System.out.println(room.getRoomyX() + " : " + room.getRoomyY());
+					room.hasStairs = true;
+					hasAddedTheStairs = true;
 				}
 			}
 		}
