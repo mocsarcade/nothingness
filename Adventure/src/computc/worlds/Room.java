@@ -1,6 +1,8 @@
 package computc.worlds;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 import org.newdawn.slick.Graphics;
@@ -470,6 +472,30 @@ public class Room
 		{
 			return null;
 		}
+	}
+	
+	public ArrayList<Direction> getExpandableDirections()
+	{
+		ArrayList<Direction> directions = new ArrayList<Direction>();
+		
+		if(!this.dungeon.hasRoom(this.rx, this.ry - 1))
+		{
+			directions.add(Direction.NORTH);
+		}
+		if(!this.dungeon.hasRoom(this.rx, this.ry + 1))
+		{
+			directions.add(Direction.SOUTH);
+		}
+		if(!this.dungeon.hasRoom(this.rx + 1, this.ry))
+		{
+			directions.add(Direction.EAST);
+		}
+		if(!this.dungeon.hasRoom(this.rx - 1, this.ry))
+		{
+			directions.add(Direction.WEST);
+		}
+		
+		return directions;
 	}
 
 	/*
