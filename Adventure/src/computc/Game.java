@@ -15,6 +15,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
+import computc.states.DungeonMapGameState;
 import computc.states.MainGameState;
 import computc.worlds.Room;
 
@@ -30,6 +31,7 @@ public class Game extends StateBasedGame
 	public void initStatesList(GameContainer arg0) throws SlickException
 	{
         this.addState(new MainGameState());
+        this.addState(new DungeonMapGameState());
 	}
 	
 	public static void main(String[] args) throws SlickException

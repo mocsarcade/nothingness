@@ -45,6 +45,7 @@ public class MainGameState extends BasicGameState
 		Input input = container.getInput();
 		
 		this.hero.update(input, delta);
+		this.menu.update(input, game);
 		this.camera.update(delta);
 	}
 	
