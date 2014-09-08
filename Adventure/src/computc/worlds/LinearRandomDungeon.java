@@ -10,11 +10,13 @@ public class LinearRandomDungeon extends Dungeon
 {
 	public LinearRandomDungeon() throws SlickException
 	{
-		Room room = new Room(this, 0, 0, "empty");
+		Room room = new Room(this, 2, 2, "empty");
+		room.addNorthernRoom("empty");
+		room = room.addWesternRoom("empty");
 		
-		for(int i = 0; i < 3; i++)
+		for(int i = 0; i < 10; i++)
 		{
-			room = room.addSouthernRoom(null);
+			room = room.addSouthernRoom("empty");
 		}
 	}
 }

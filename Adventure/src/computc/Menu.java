@@ -36,8 +36,11 @@ public class Menu
 		{
 			for(int j = 0; j < MAP_HEIGHT; j++)
 			{
-				int rx = i - (MAP_WIDTH / 2);
-				int ry = j - (MAP_HEIGHT / 2);
+				int dx = (int)(Math.floor((float)(this.hero.getRoomyX()) / MAP_WIDTH));
+				int dy = (int)(Math.floor((float)(this.hero.getRoomyY()) / MAP_HEIGHT));
+				
+				int rx = (dx * MAP_WIDTH) + i;
+				int ry = (dy * MAP_HEIGHT) + j;
 				
 				int x = OFFSET + MARGIN + (i * (UNIT + MARGIN));
 				int y = OFFSET + MARGIN + (j * (UNIT + MARGIN));
