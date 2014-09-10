@@ -26,12 +26,14 @@ public class Thug extends Enemy
 		this.maximumVelocity = 0.03f;
 		
 		this.currentHealth = this.maximumHealth = 3;
+		this.aiState = State.PATROL;
 		
 		right = true; down = true;
 	}
 	
 	public void update(int delta)
 	{
+		
 		getNextPosition(delta);
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
@@ -69,7 +71,14 @@ public class Thug extends Enemy
 		}
 	}
 	}
-	
+	/**
+	 * Check to see if the hero is within a certain area around.
+	 * If (s)he is, change state to active.
+	 */
+	private void checkForHero()
+	{
+
+	}
 	private void getNextPosition(int delta) 
 	{
 		if(left)

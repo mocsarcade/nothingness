@@ -20,6 +20,12 @@ public abstract class Enemy extends Entity
     protected boolean down;
     
     protected boolean attacking;
+    
+    public enum State 
+    {
+    	PATROL, ACTIVE
+    }
+    protected State aiState;
 	
 	public Enemy(Dungeon dungeon, int rx, int ry, int tx, int ty) throws SlickException 
 	{
