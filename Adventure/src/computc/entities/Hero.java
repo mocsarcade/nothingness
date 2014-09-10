@@ -1,21 +1,29 @@
-package computc;
+package computc.entities;
+
+import java.util.LinkedList;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
+import computc.Camera;
+import computc.Direction;
+import computc.worlds.Dungeon;
+import computc.worlds.Room;
+
 public class Hero extends Entity
 {
+	private boolean dead = false;
 	
 	public Hero(Dungeon dungeon, Room room, int tx, int ty) throws SlickException
 	{
 		super(dungeon, room.getRoomyX(), room.getRoomyY(), tx, ty);
 		
 		this.dungeon = dungeon;
-		this.acceleration = 0.25f;
-		this.deacceleration = 0.05f;
-		this.maximumVelocity = 4f;
+		this.acceleration = 0.06f;
+		this.deacceleration = 0.02f;
+		this.maximumVelocity = 3f;
 		
 		this.currentHealth = this.maximumHealth = 3;
 		
@@ -26,7 +34,7 @@ public class Hero extends Entity
 	{
 		if(blinking) 
 		{
-			if(blinkTimer % 4 == 0) 
+			if(blinkCooldown % 4 == 0) 
 			{
 				return;
 			}
@@ -43,11 +51,22 @@ public class Hero extends Entity
 		
 		if(input.isKeyDown(Input.KEY_Z))
 		{
-			maximumVelocity = 8f;
+			maximumVelocity = 6f;
 		}
 		else
 		{
-			maximumVelocity = 4f;
+			maximumVelocity = 3f;
+		}
+		
+
+		if (blinkCooldown > 0)
+		{
+			blinkCooldown --;
+		}
+		
+		if(blinkCooldown == 0)
+		{
+			blinking = false;
 		}
 	
 		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).visited = true;
@@ -155,6 +174,57 @@ public class Hero extends Entity
 				this.direction = Direction.EAST;
 //				this.x += step;
 			}
+	}
+	
+	private void hit(int damage)
+	{
+		if(blinking)
+		{
+			return;
+		}
+		
+		currentHealth -= damage;
+		
+		if(currentHealth < 0)
+		{
+			currentHealth = 0;
+		}
+		
+		if(currentHealth == 0)
+		{
+			dead = true;
+		}
+		
+		blinking = true;
+		blinkCooldown = 100;
+	}
+	
+	public void checkAttack(LinkedList<Enemy> enemies)
+	{
+		for(int i = 0; i < enemies.size(); i++)
+		{
+			Enemy e = enemies.get(i);
+			if(intersects(e))
+			{
+				hit(e.getDamage());
+				e.maximumVelocity = .3f;
+			}
+		}
+	}
+	
+	public int getHealth()
+	{
+		return currentHealth;
+	}
+	
+	public boolean isDead()
+	{
+		return dead;
+	}
+	
+	public void setAlive()
+	{
+		dead = false;
 	}
 	
 	private float speed = 0.25f;

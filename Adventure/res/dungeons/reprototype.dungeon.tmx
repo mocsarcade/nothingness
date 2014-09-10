@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="33" height="27" tilewidth="64" tileheight="64">
  <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64">
-  <image source="../tiles.png" width="128" height="64"/>
+  <image source="../tiles.png" width="192" height="64"/>
   <tile id="0">
    <properties>
     <property name="blocked" value="true"/>
@@ -10,7 +10,7 @@
  </tileset>
  <layer name="rooms" width="33" height="27">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC9VU0RLAIAiy/f9H732niU2KHrxuxRwhbJjZEKgHqB1YZFXi+92L9rt1mL2fcfDOb9VB1Q+d2L+5ZmBPcFCYRXaXyL9ev6hv9t1q35W8oXxXOKC8uvkydWDMrdKX5XUUe9u/hM0B0Yo5iwoOvSuS452ejDJV6Yt4Ocus96ykg4IfVHJxsl79r1ct7A0AAA==
+   H4sIAAAAAAAAC9VUwRaAIAjD/P9/7uSlBzEUdB54la41YauJSCOoB6gdWOTKpPe7Zq1n9+HvfU+Dtn9rH1j9kIldzXUF9oQGhll4Z7H8q/FZvN53x30HeWfyhupFsdr+bGVoyO5DZG4VvFVeR7G3/UuqNSC9qpxFBIeeFcnxTk9amYrwIl72Mqs9M/WBwQ8suThZL968Xs/sDQAA
   </data>
  </layer>
 </map>

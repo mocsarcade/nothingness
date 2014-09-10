@@ -1,5 +1,8 @@
 package computc;
 
+import computc.entities.Entity;
+import computc.worlds.Room;
+
 public class Camera
 {
 	private float x, y;
@@ -22,7 +25,7 @@ public class Camera
 			
 			if(this.getX() > this.getTargetX())
 			{
-				this.synchronizeX();
+				this.setToTargetX();
 			}
 		}
 		else if(this.getX() > this.getTargetX())
@@ -31,7 +34,7 @@ public class Camera
 			
 			if(this.getX() < this.getTargetX())
 			{
-				this.synchronizeX();
+				this.setToTargetX();
 			}
 		}
 		
@@ -41,7 +44,7 @@ public class Camera
 			
 			if(this.getY() > this.getTargetY())
 			{
-				this.synchronizeY();
+				this.setToTargetY();
 			}
 		}
 		else if(this.getY() > this.getTargetY())
@@ -50,7 +53,7 @@ public class Camera
 			
 			if(this.getY() < this.getTargetY())
 			{
-				this.synchronizeY();
+				this.setToTargetY();
 			}
 		}
 	}
@@ -85,12 +88,12 @@ public class Camera
 		this.y -= amount;
 	}
 	
-	public void synchronizeX()
+	public void setToTargetX()
 	{
 		this.x = this.getTargetX(); 
 	}
 	
-	public void synchronizeY()
+	public void setToTargetY()
 	{
 		this.y = this.getTargetY();
 	}

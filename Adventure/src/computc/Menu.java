@@ -2,16 +2,26 @@ package computc;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.SlickException;
+
+import computc.entities.Hero;
+import computc.worlds.Dungeon;
+import computc.worlds.Room;
 
 public class Menu
 {
 	private Hero hero;
 	private Dungeon dungeon;
 	
-	public Menu(Dungeon dungeon, Hero hero)
+	private Image heart;
+	
+	public Menu(Dungeon dungeon, Hero hero) throws SlickException
 	{
 		this.hero = hero;
 		this.dungeon = dungeon;
+		
+		this.heart = new Image("res/heart.png");
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -19,11 +29,8 @@ public class Menu
 		graphics.setColor(Color.black);
 		graphics.fillRect(0, Room.HEIGHT, Room.WIDTH, Menu.HEIGHT);
 		
-		int hrx = this.hero.getRoomyX();
-		int hry = this.hero.getRoomyY();
-		
-		int MAP_WIDTH = 5;
-		int MAP_HEIGHT = 5;
+		int MAP_WIDTH = 5, MAP_HEIGHT = 5;
+		int UNIT = 16, MARGIN = 3, OFFSET = 29;
 		
 		for(int i = 0; i < MAP_WIDTH; i++)
 		{
@@ -32,7 +39,6 @@ public class Menu
 				int rx = i + 4 - (MAP_WIDTH / 2);
 				int ry = j + 1 - (MAP_HEIGHT / 2);
 				
-				int UNIT = 16, MARGIN = 3, OFFSET = 29;
 				int x = OFFSET + MARGIN + (i * (UNIT + MARGIN));
 				int y = OFFSET + MARGIN + (j * (UNIT + MARGIN));
 				
@@ -61,6 +67,11 @@ public class Menu
 					graphics.fillRoundRect(x, y, UNIT, UNIT, 3);
 				}
 			}
+		}
+		
+		for(int h = 0; h < hero.getHealth(); h++)
+		{
+			heart.draw(540 + (40 * h), 30);
 		}
 	}
 	

@@ -1,16 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="99" height="45" tilewidth="64" tileheight="64">
  <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64">
-  <image source="../tiles.png" width="128" height="64"/>
+  <image source="../tiles.png" width="192" height="64"/>
   <tile id="0">
    <properties>
     <property name="blocked" value="true"/>
    </properties>
   </tile>
+  <tile id="2">
+   <properties>
+    <property name="stairs" value="true"/>
+   </properties>
+  </tile>
  </tileset>
  <layer name="rooms" width="99" height="45">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC+3W0Q6CMBAEwOL/f7SPGuzRQyk9k3mYEKWBdDct3VprG7x5JMweyyuzzFUX93TxTb7RM3TxWxej6yjHoy5693URd2Fd1OB7UcesfHVxf48zxqKL1exRdYwy2ecb5RyNjZ6ni+NsMvlesS50cX0X2cx1Mb+L0brIdMVnZvvcovtnetv/F72XOFfnqBpmZST7Opnp4lxWoz3EHrWmh15eo/zOnn9Xz7uaO77dW+v3sXru1WTyzeZ3dNbt/V4992qsi1p8L2rJ7Eez1hAAAAAAAAAA/+MJ70JYZJxFAAA=
+   H4sIAAAAAAAAC+3Wyw6CMBAF0KL//88uNdihg1o6JmdxQpQGw732sbXWNnhxS5g9lmdmmasurunik3yjZ+jiuy5G11GOR1307usi7sK8qMF+UcesfHVxfY8zxqKL1axRdYwy2ecb5RyNjZ6nizibezLfX8wLXRx3kf2v9+6PMtfF/C5G8yLTFe+Z7XOL7p/pbf9d9LvEuTpH1TArI9nXyUwX57IarSHWqDU99PIa5Xf2/Lv6vau5Yu/eWr+P1e9eTSbfbH5HZ93e59XvXo15UYv9opbMejRrDgEAAAAAAADwPx4STyannEUAAA==
   </data>
  </layer>
 </map>
