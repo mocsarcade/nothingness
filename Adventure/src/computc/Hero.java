@@ -16,7 +16,7 @@ public class Hero extends Entity
 		super(dungeon, room.getRoomyX(), room.getRoomyY(), tx, ty);
 		
 		this.dungeon = dungeon;
-		this.acceleration = 0.05f;
+		this.acceleration = 0.06f;
 		this.deacceleration = 0.02f;
 		this.maximumVelocity = 3f;
 		
