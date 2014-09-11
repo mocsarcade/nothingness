@@ -1,4 +1,4 @@
-package computc;
+package computc.entities;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -6,23 +6,11 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
+import computc.worlds.Dungeon;
+import computc.worlds.Room;
+
 public class Thug extends Enemy	
 {
-//	public Thug(Dungeon dungeon, int rx, int ry, int tx, int ty) throws SlickException 
-//	{
-//		super(dungeon, rx, ry, tx, ty);
-//		
-//		this.image = new Image("res/thug.png");
-//		
-//		this.damage = 2;
-//		this.acceleration = 0.03f;
-//		this.deacceleration = 0.001f;
-//		this.maximumVelocity = 0.03f;
-//		
-//		this.currentHealth = this.maximumHealth = 5;
-//		
-//		right = true; down = true;
-//	}
 	
 	public Thug(Dungeon dungeon, int tx, int ty) throws SlickException 
 	{
@@ -32,12 +20,12 @@ public class Thug extends Enemy
 		
 		this.image = new Image("res/thug.png");
 		
-		this.damage = 2;
+		this.damage = 1;
 		this.acceleration = 0.03f;
 		this.deacceleration = 0.001f;
 		this.maximumVelocity = 0.03f;
 		
-		this.currentHealth = this.maximumHealth = 5;
+		this.currentHealth = this.maximumHealth = 3;
 		
 		right = true; down = true;
 	}

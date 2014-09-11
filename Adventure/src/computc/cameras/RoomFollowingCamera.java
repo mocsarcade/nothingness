@@ -1,12 +1,15 @@
-package computc;
+package computc.cameras;
 
-public class Camera
+import org.newdawn.slick.Input;
+
+import computc.entities.Entity;
+import computc.worlds.Room;
+
+public class RoomFollowingCamera extends Camera
 {
-	private float x, y;
-	private Entity target;
-	private float speed = 1f;
+	protected Entity target;
 	
-	public Camera(Entity target)
+	public RoomFollowingCamera(Entity target)
 	{
 		this.target = target;
 		
@@ -14,7 +17,7 @@ public class Camera
 		this.y = this.getTargetY();
 	}
 	
-	public void update(int delta)
+	public void update(Input input, int delta)
 	{
 		if(this.getX() < this.getTargetX())
 		{
@@ -22,7 +25,7 @@ public class Camera
 			
 			if(this.getX() > this.getTargetX())
 			{
-				this.synchronizeX();
+				this.setToTargetX();
 			}
 		}
 		else if(this.getX() > this.getTargetX())
@@ -31,7 +34,7 @@ public class Camera
 			
 			if(this.getX() < this.getTargetX())
 			{
-				this.synchronizeX();
+				this.setToTargetX();
 			}
 		}
 		
@@ -41,7 +44,7 @@ public class Camera
 			
 			if(this.getY() > this.getTargetY())
 			{
-				this.synchronizeY();
+				this.setToTargetY();
 			}
 		}
 		else if(this.getY() > this.getTargetY())
@@ -50,47 +53,17 @@ public class Camera
 			
 			if(this.getY() < this.getTargetY())
 			{
-				this.synchronizeY();
+				this.setToTargetY();
 			}
 		}
 	}
 	
-	public int getX()
-	{
-		return (int)(this.x);
-	}
-	
-	public int getY()
-	{
-		return (int)(this.y);
-	}
-	
-	public void increaseX(int amount)
-	{
-		this.x += amount;
-	}
-	
-	public void decreaseX(int amount)
-	{
-		this.x -= amount;
-	}
-	
-	public void increaseY(int amount)
-	{
-		this.y += amount;
-	}
-	
-	public void decreaseY(int amount)
-	{
-		this.y -= amount;
-	}
-	
-	public void synchronizeX()
+	public void setToTargetX()
 	{
 		this.x = this.getTargetX(); 
 	}
 	
-	public void synchronizeY()
+	public void setToTargetY()
 	{
 		this.y = this.getTargetY();
 	}

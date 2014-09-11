@@ -1,21 +1,36 @@
-package computc;
+package computc.worlds;
 
 import java.awt.Point;
-import java.util.HashMap;
 import java.util.LinkedList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
 
-public class Dungeon
+import computc.cameras.Camera;
+import computc.entities.BigThug;
+import computc.entities.Enemy;
+import computc.entities.OldMan;
+import computc.entities.Thug;
+
+public class PredesignedDungeon extends Dungeon
 {
-	private HashMap<String, Room> rooms = new HashMap<String, Room>();
-	public LinkedList<Enemy> thugs; 
 	public Point[] thug_positions_in_tiley_coordinates;
+	public LinkedList<Enemy> thugs;
+	public OldMan oldman;
 	
-	public Dungeon() throws SlickException
+	private Image menuBox;
+	private Image largeTextBox;
+	private int counter, counter2;
+	Animation textBox;
+	public Color textColor = Color.white;
+	private boolean nextLevel = false;
+	
+	public PredesignedDungeon() throws SlickException
 	{
 		TiledMap tiled = new TiledMap("./res/dungeons/prototype.dungeon.tmx");
 		
@@ -26,7 +41,7 @@ public class Dungeon
 		{
 			for(int ry = 0; ry < ROOMY_HEIGHT; ry++)
 			{
-				Room room = new Room(this, rx, ry);
+				Room room = new Room(this, rx, ry, null);
 				
 				for(int tx = 0; tx < Room.TILEY_WIDTH; tx++)
 				{
@@ -101,9 +116,14 @@ public class Dungeon
 		}
 		
 		thugs.add(new BigThug(this, 36, 23));
+		this.oldman = new OldMan(this, 38, 12);
+		
+		this.menuBox = new Image("res/textBox.png");
+		this.largeTextBox = new Image("res/largeTextBox.png");
+		this.textBox = new Animation(new SpriteSheet(largeTextBox, 585, 100), 100);
 	}
 	
-	public void update(int delta) throws SlickException
+	public void update(int delta)
 	{
 		for(int i = 0; i < thugs.size(); i++)
 		{
@@ -116,69 +136,25 @@ public class Dungeon
 				}
 		}
 		
-		if (Game.reset)
+		this.oldman.update(delta);
+		
+		//hero.checkAttack(dungeon.thugs);
+		
+		/*if(dungeon.getTile(hero.getX(), hero.getY()).isStairs)
 		{
-			thugs.clear();
-			
-			for(Point point : thug_positions_in_tiley_coordinates)
-			{
-				thugs.add(new Thug(this, point.x, point.y));
-			}
-			Game.reset = false;
-		}
+			nextLevel = true;
+		}*/
 	}
-
+	
 	public void render(Graphics graphics, Camera camera)
 	{
-		for(Room room : this.getAllRooms())
-		{
-			room.render(graphics, camera);
-		}
+		super.render(graphics, camera);
 		
 		for(Enemy thug : this.thugs)
 		{
 			thug.render(graphics, camera);
 		}
-	}
-	
-	public void addRoom(Room room)
-	{
-		int rx = room.getRoomyX();
-		int ry = room.getRoomyY();
 		
-		if(this.hasRoom(rx, ry))
-		{
-			throw new DungeonException();
-		}
-		else
-		{
-			this.rooms.put(rx + ":" + ry, room);
-		}
-	}
-	
-	public Room getRoom(int rx, int ry)
-	{
-		return this.rooms.get(rx + ":" + ry);
-	}
-	
-	public boolean hasRoom(int rx, int ry)
-	{
-		return this.rooms.containsKey(rx + ":" + ry);
-	}
-	
-	public LinkedList<Room> getAllRooms()
-	{
-		return new LinkedList<Room>(this.rooms.values());
-	}
-	
-	public Tile getTile(float x, float y)
-	{
-		int rx = (int)(Math.floor(x / Room.WIDTH));
-		int ry = (int)(Math.floor(y / Room.HEIGHT));
-		
-		int tx = (int)(Math.floor((x - (rx * Room.WIDTH)) / Tile.SIZE));
-		int ty = (int)(Math.floor((y - (ry * Room.HEIGHT)) / Tile.SIZE));
-		
-		return this.getRoom(rx, ry).getTile(tx, ty);
+		this.oldman.render(graphics, camera);
 	}
 }

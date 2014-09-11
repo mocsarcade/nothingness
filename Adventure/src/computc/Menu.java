@@ -2,16 +2,37 @@ package computc;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
+import org.newdawn.slick.state.StateBasedGame;
+
+import computc.cameras.Camera;
+import computc.entities.Hero;
+import computc.worlds.Dungeon;
+import computc.worlds.Room;
 
 public class Menu
 {
 	private Hero hero;
 	private Dungeon dungeon;
 	
-	public Menu(Dungeon dungeon, Hero hero)
+	private Image heart;
+	
+	public Menu(Dungeon dungeon, Hero hero) throws SlickException
 	{
 		this.hero = hero;
 		this.dungeon = dungeon;
+		
+		this.heart = new Image("res/heart.png");
+	}
+	
+	public void update(Input input, StateBasedGame game)
+	{
+		if(input.isKeyDown(Input.KEY_M))
+		{
+			game.enterState(1);
+		}
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -19,30 +40,29 @@ public class Menu
 		graphics.setColor(Color.black);
 		graphics.fillRect(0, Room.HEIGHT, Room.WIDTH, Menu.HEIGHT);
 		
-		int hrx = this.hero.getRoomyX();
-		int hry = this.hero.getRoomyY();
-		
-		int MAP_WIDTH = 5;
-		int MAP_HEIGHT = 5;
+		int MAP_WIDTH = 5, MAP_HEIGHT = 5;
+		int UNIT = 12, MARGIN = 3, OFFSET = 29, MARKER = 6;
 		
 		for(int i = 0; i < MAP_WIDTH; i++)
 		{
 			for(int j = 0; j < MAP_HEIGHT; j++)
 			{
-				int rx = i + 4 - (MAP_WIDTH / 2);
-				int ry = j + 1 - (MAP_HEIGHT / 2);
+				int dx = (int)(Math.floor((float)(this.hero.getRoomyX()) / MAP_WIDTH));
+				int dy = (int)(Math.floor((float)(this.hero.getRoomyY()) / MAP_HEIGHT));
 				
-				int UNIT = 16, MARGIN = 3, OFFSET = 29;
+				int rx = (dx * MAP_WIDTH) + i;
+				int ry = (dy * MAP_HEIGHT) + j;
+				
 				int x = OFFSET + MARGIN + (i * (UNIT + MARGIN));
 				int y = OFFSET + MARGIN + (j * (UNIT + MARGIN));
 				
 				Room room = this.dungeon.getRoom(rx, ry);
 				
-				if(room != null	&& room.visited)
+				if(room != null && room.visited)
 				{
 					graphics.setColor(Color.lightGray);
 					graphics.fillRoundRect(x, y, UNIT, UNIT, 3);
-
+					
 					if(room.hasNorthernRoom()) {graphics.fillRect(x + (UNIT / 2) - 1, y - MARGIN, MARGIN, MARGIN);}
 					if(room.hasSouthernRoom()) {graphics.fillRect(x + (UNIT / 2) - 1, y + UNIT, MARGIN, MARGIN);}
 					if(room.hasEasternRoom()) {graphics.fillRect(x + UNIT, y + (UNIT / 2) - 1, MARGIN, MARGIN);}
@@ -52,7 +72,7 @@ public class Menu
 					&& ry == this.hero.getRoomyY())
 					{
 						graphics.setColor(Color.white);
-						graphics.fillOval(x + 3, y + 3, 5, 5);
+						graphics.fillOval(x + (UNIT / 2) - (MARKER / 2), y + (UNIT / 2) - (MARKER / 2), MARKER, MARKER);
 					}
 				}
 				else
@@ -61,6 +81,11 @@ public class Menu
 					graphics.fillRoundRect(x, y, UNIT, UNIT, 3);
 				}
 			}
+		}
+		
+		for(int h = 0; h < hero.getHealth(); h++)
+		{
+			heart.draw(540 + (40 * h), 30);
 		}
 	}
 	
