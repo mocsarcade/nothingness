@@ -4,7 +4,7 @@ import org.newdawn.slick.SlickException;
 
 import computc.entities.Hero;
 import computc.worlds.Dungeon;
-import computc.worlds.LinearRandomDungeon;
+import computc.worlds.RandomZeldaesqueDungeon;
 
 public class GameData
 {
@@ -13,7 +13,7 @@ public class GameData
 	
 	public void instantiate() throws SlickException
 	{
-		this.dungeon = new LinearRandomDungeon();
+		this.dungeon = new RandomZeldaesqueDungeon();
 		this.hero = new Hero(dungeon, dungeon.getRoom(2, 2), 5, 1);
 	}
 }

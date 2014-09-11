@@ -28,7 +28,7 @@ public class Game extends StateBasedGame
 		super(Game.TITLE + " " + Game.VERSION);
 	}
 	
-	public void initStatesList(GameContainer arg0) throws SlickException
+	public void initStatesList(GameContainer container) throws SlickException
 	{
 		GameData gamedata = new GameData();
 		
