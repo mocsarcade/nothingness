@@ -1,16 +1,21 @@
 package computc.worlds;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
 
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.XMLOutputter;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.tiled.TiledMap;
 
-import slick2d.GroupObject;
-import slick2d.TiledMapPlus;
 import computc.Direction;
 import computc.cameras.Camera;
 import computc.entities.Thug;
@@ -46,22 +51,42 @@ public class Room
 			layout = "./res/rooms/" + layout + ".room.tmx";
 		}
 		
-		TiledMapPlus tmx = new TiledMapPlus("./res/rooms/" + "arena" + ".room.tmx");
+		TiledMap tmx = new TiledMap(layout);
 		
-		for(slick2d.Tile t : tmx.getLayer("tiles").getTiles())
+		for(int tx = 0; tx < this.getTileyWidth(); tx++)
 		{
-			Tile tile = new Tile(this, t.x, t.y);
-			tile.isBlocked = (tmx.getTileId(t.x, t.y, 0) == 1);
-			this.tiles[t.x][t.y] = tile;
+			for(int ty = 0; ty < this.getTileyHeight(); ty++)
+			{
+				int tid = tmx.getTileId(tx, ty, 0);
+				Tile tile = new Tile(this, tx, ty);
+				tile.isBlocked = (tid == 1);
+				
+				this.setTile(tx, ty, tile);
+			}
 		}
 		
-		/*for(GroupObject object : tmx.getObjectGroup("thugs").getObjects())
+		try
 		{
-			int x = object.x * Tile.SIZE;
-			int y = object.y * Tile.SIZE;
+			SAXBuilder builder = new SAXBuilder();
+			Document document = builder.build("./res/rooms/arena.room.tmx");
 			
-			this.dungeon.thugs.add(new Thug(this.dungeon, x, y));
-		}*/
+			Element tiles = document.getRootElement().getChild("layer");
+			Element thugs = document.getRootElement().getChild("objectgroup");
+			
+			for(Element thug : thugs.getChildren())
+			{
+				int x = thug.getAttribute("x").getIntValue();
+				int y = thug.getAttribute("y").getIntValue();
+				int tx = (int)(Math.floor((x + this.getX()) / Tile.SIZE));
+				int ty = (int)(Math.floor((y + this.getY()) / Tile.SIZE));
+				
+				this.dungeon.thugs.add(new Thug(this.dungeon, tx, ty));
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
 	}
 	
 	public void render(Graphics graphics, Camera camera)

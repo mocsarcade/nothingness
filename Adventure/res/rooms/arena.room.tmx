@@ -7,8 +7,129 @@
   <image source="../thug.png" width="48" height="48"/>
  </tileset>
  <layer name="tiles" width="11" height="9">
-  <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NkYGBgJAMzYcHEqsOmHp86dPW0UkuKe0kNB2IwALyicvKMAQAA
+  <data>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="2"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
+   <tile gid="1"/>
   </data>
  </layer>
+ <objectgroup name="thugs" width="11" height="9">
+  <object gid="4" x="175" y="363"/>
+  <object gid="4" x="271" y="420"/>
+  <object gid="4" x="359" y="469"/>
+  <object gid="4" x="502" y="392"/>
+  <object gid="4" x="571" y="332"/>
+  <object gid="4" x="500" y="265"/>
+  <object gid="4" x="80" y="351"/>
+  <object gid="4" x="361" y="345"/>
+  <object gid="4" x="264" y="283"/>
+  <object gid="4" x="343" y="186"/>
+  <object gid="4" x="147" y="219"/>
+  <object gid="4" x="141" y="296"/>
+  <object gid="4" x="243" y="158"/>
+  <object gid="4" x="413" y="144"/>
+  <object gid="4" x="436" y="242"/>
+  <object gid="4" x="420" y="322"/>
+  <object gid="4" x="433" y="413"/>
+  <object gid="4" x="430" y="487"/>
+  <object gid="4" x="333" y="270"/>
+  <object gid="4" x="222" y="502"/>
+  <object gid="4" x="270" y="337"/>
+ </objectgroup>
 </map>

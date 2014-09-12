@@ -12,13 +12,18 @@ import computc.entities.Thug;
 public abstract class Dungeon
 {
 	private HashMap<String, Room> rooms = new HashMap<String, Room>();
-	public LinkedList<Thug> thugs;
+	public LinkedList<Thug> thugs = new LinkedList<Thug>();
 
 	public void render(Graphics graphics, Camera camera)
 	{
 		for(Room room : this.getAllRooms())
 		{
 			room.render(graphics, camera);
+		}
+		
+		for(Thug thug : this.thugs)
+		{
+			thug.render(graphics, camera);
 		}
 	}
 	
