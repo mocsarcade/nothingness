@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import computc.Direction;
+import computc.cameras.Camera;
+import computc.entities.Enemy;
+import computc.entities.Thug;
 
 public class RandomZeldaesqueDungeon extends Dungeon
 {
@@ -15,10 +19,16 @@ public class RandomZeldaesqueDungeon extends Dungeon
 	public RandomZeldaesqueDungeon() throws SlickException
 	{
 		Room room = new Room(this, 2, 2, "empty");
+		this.addRoom(room);
+	}
+	
+	public void render(Graphics graphics, Camera camera)
+	{
+		super.render(graphics, camera);
 		
-		for(int i = 0; i < SCALE; i++)
+		/*for(Thug thug : this.thugs)
 		{
-			room = room.addRoom(Direction.SOUTH, null);
-		}
+			thug.render(graphics, camera);
+		}*/
 	}
 }

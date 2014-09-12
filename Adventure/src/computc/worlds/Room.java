@@ -8,10 +8,12 @@ import java.util.Random;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.tiled.TiledMap;
 
+import slick2d.GroupObject;
+import slick2d.TiledMapPlus;
 import computc.Direction;
 import computc.cameras.Camera;
+import computc.entities.Thug;
 
 public class Room
 {
@@ -44,19 +46,22 @@ public class Room
 			layout = "./res/rooms/" + layout + ".room.tmx";
 		}
 		
-		TiledMap tmx = new TiledMap(layout);
+		TiledMapPlus tmx = new TiledMapPlus("./res/rooms/" + "arena" + ".room.tmx");
 		
-		for(int tx = 0; tx < this.getTileyWidth(); tx++)
+		for(slick2d.Tile t : tmx.getLayer("tiles").getTiles())
 		{
-			for(int ty = 0; ty < this.getTileyHeight(); ty++)
-			{
-				Tile tile = new Tile(this, tx, ty);
-				tile.isBlocked = (tmx.getTileId(tx, ty, 0) == 1);
-				this.tiles[tx][ty] = tile;
-			}
+			Tile tile = new Tile(this, t.x, t.y);
+			tile.isBlocked = (tmx.getTileId(t.x, t.y, 0) == 1);
+			this.tiles[t.x][t.y] = tile;
 		}
 		
-		this.dungeon.addRoom(this);
+		/*for(GroupObject object : tmx.getObjectGroup("thugs").getObjects())
+		{
+			int x = object.x * Tile.SIZE;
+			int y = object.y * Tile.SIZE;
+			
+			this.dungeon.thugs.add(new Thug(this.dungeon, x, y));
+		}*/
 	}
 	
 	public void render(Graphics graphics, Camera camera)
