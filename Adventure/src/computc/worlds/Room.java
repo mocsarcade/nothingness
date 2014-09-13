@@ -1,6 +1,6 @@
 package computc.worlds;
 
-import java.awt.List;
+import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,32 +60,25 @@ public class Room
 		try
 		{
 			Document tmx = new SAXBuilder().build("./res/rooms/arena.room.tmx");
-			
-			Element tiles = tmx.getRootElement().getChild("layer").getChild("data");
-			Element thugs = tmx.getRootElement().getChild("objectgroup");
 
-			int tx = 0;
-			int ty = 0;
+			List<Element> tilelayer = tmx.getRootElement().getChild("layer").getChild("data").getChildren();
+			List<Element> objectgroup = tmx.getRootElement().getChild("objectgroup").getChildren();
 			
-			for(Element tile : tiles.getChildren())
+			for(int tx = 0; tx < this.getTileyWidth(); tx++)
 			{
-				System.out.println(tx + " x " + ty);
-				
-				int gid = tile.getAttribute("gid").getIntValue();
-				this.tiles[tx][ty] = new Tile(this, tx, ty, gid);
-				
-				tx += 1;
-				if(tx >= 11)
+				for(int ty = 0; ty < this.getTileyHeight(); ty++)
 				{
-					tx = 0;
-					ty += 1;
+					Element element = tilelayer.get(ty * 11 + tx);
+					
+					int gid = element.getAttribute("gid").getIntValue();
+					this.tiles[tx][ty] = new Tile(this, tx, ty, gid);
 				}
 			}
 			
-			for(Element thug : thugs.getChildren())
+			for(Element element : objectgroup)
 			{
-				int x = thug.getAttribute("x").getIntValue();
-				int y = thug.getAttribute("y").getIntValue();
+				int x = element.getAttribute("x").getIntValue();
+				int y = element.getAttribute("y").getIntValue();
 				x = (int)(Math.floor((x + this.getX()) / Tile.SIZE));
 				y = (int)(Math.floor((y + this.getY()) / Tile.SIZE));
 				
@@ -348,7 +341,7 @@ public class Room
 		this.northernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = 0;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 1);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
 	}
 
 	/*
@@ -361,7 +354,7 @@ public class Room
 		this.southernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 1);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
 	}
 
 	/*
@@ -374,7 +367,7 @@ public class Room
 		this.easternRoom = room;
 		
 		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 1);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
 	}
 
 	/*
@@ -387,7 +380,7 @@ public class Room
 		this.westernRoom = room;
 		
 		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 1);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
 	}
 	
 	/*
