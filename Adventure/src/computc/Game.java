@@ -46,4 +46,6 @@ public class Game extends StateBasedGame
 	
 	public static final String TITLE = "Game";
 	public static final String VERSION = "v0.1.0";
+	public static final int WIDTH = Room.WIDTH;
+	public static final int HEIGHT = Room.HEIGHT;
 }

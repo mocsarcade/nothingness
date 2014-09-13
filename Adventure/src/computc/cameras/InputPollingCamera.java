@@ -2,6 +2,8 @@ package computc.cameras;
 
 import org.newdawn.slick.Input;
 
+import computc.worlds.Room;
+
 public class InputPollingCamera extends Camera
 {
 	public InputPollingCamera()

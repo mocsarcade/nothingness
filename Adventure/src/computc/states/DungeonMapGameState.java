@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import computc.Game;
 import computc.GameData;
 import computc.cameras.Camera;
 import computc.cameras.InputPollingCamera;
@@ -15,6 +16,7 @@ import computc.entities.Hero;
 import computc.worlds.Dungeon;
 import computc.worlds.RandomRoguelikeDungeon;
 import computc.worlds.RandomZeldaesqueDungeon;
+import computc.worlds.Room;
 
 public class DungeonMapGameState extends BasicGameState
 {
@@ -29,7 +31,9 @@ public class DungeonMapGameState extends BasicGameState
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		//code goes here.
+		Room firstRoom = this.gamedata.dungeon.getFirstRoom();
+		this.camera.setX(firstRoom.getX() - (Game.WIDTH / 2) + (Room.WIDTH / (8 * 2)));
+		this.camera.setY(firstRoom.getY() - (Game.HEIGHT / 2) + (Room.HEIGHT / (8 * 2)));
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException

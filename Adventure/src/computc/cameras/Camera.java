@@ -20,6 +20,16 @@ public abstract class Camera
 		return (int)(this.y);
 	}
 	
+	public void setX(float x)
+	{
+		this.x = x;
+	}
+	
+	public void setY(float y)
+	{
+		this.y = y;
+	}
+	
 	public void increaseX(float amount)
 	{
 		this.x += amount;
