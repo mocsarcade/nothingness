@@ -47,14 +47,10 @@ public class PredesignedDungeon extends Dungeon
 				{
 					for(int ty = 0; ty < Room.TILEY_HEIGHT; ty++)
 					{
-						Tile tile = new Tile(room, tx, ty);
-
 						int rxtx = (rx * Room.TILEY_WIDTH) + tx;
 						int ryty = (ry * Room.TILEY_HEIGHT) + ty;
 						int tid = tiled.getTileId(rxtx, ryty, 0);
-						
-						tile.isBlocked = (tid == 1);
-						tile.isStairs = (tid == 3);
+						Tile tile = new Tile(room, tx, ty, tid);
 						
 						room.setTile(tx, ty, tile);
 					}

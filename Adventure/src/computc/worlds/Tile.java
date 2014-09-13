@@ -16,12 +16,14 @@ public class Tile
 	public boolean isBlocked;
 	public boolean isStairs;
 	
-	public Tile(Room room, int tx, int ty)
+	public Tile(Room room, int tx, int ty, int gid)
 	{
 		this.room = room;
 		
 		this.tx = tx;
 		this.ty = ty;
+		
+		this.isBlocked = (gid == 1);
 	}
 	
 	public void render(Graphics graphics, Camera camera)

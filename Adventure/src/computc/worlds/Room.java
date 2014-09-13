@@ -1,5 +1,6 @@
 package computc.worlds;
 
+import java.awt.List;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,8 +23,9 @@ import computc.entities.Thug;
 
 public class Room
 {
-	private int rx, ry;
 	private Dungeon dungeon;
+	private int rx, ry;
+	private String layout;
 	
 	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
 	
@@ -33,6 +35,11 @@ public class Room
 	public Room northernRoom;
 	
 	public boolean visited = false;
+	
+	public Room(Dungeon dungeon, int rx, int ry) throws SlickException
+	{
+		this(dungeon, rx, ry, null);
+	}
 
 	public Room(Dungeon dungeon, int rx, int ry, String layout) throws SlickException
 	{
@@ -43,43 +50,46 @@ public class Room
 		
 		if(layout == null)
 		{
-			layout = Room.getRandomLayout();
+			this.layout = Room.getRandomLayout();
 		}
 		else
 		{
-			layout = "./res/rooms/" + layout + ".room.tmx";
-		}
-		
-		TiledMap tmx = new TiledMap(layout);
-		
-		for(int tx = 0; tx < this.getTileyWidth(); tx++)
-		{
-			for(int ty = 0; ty < this.getTileyHeight(); ty++)
-			{
-				int tid = tmx.getTileId(tx, ty, 0);
-				Tile tile = new Tile(this, tx, ty);
-				tile.isBlocked = (tid == 1);
-				
-				this.setTile(tx, ty, tile);
-			}
+			this.layout = "./res/rooms/" + layout + ".room.tmx";
 		}
 		
 		try
 		{
-			SAXBuilder builder = new SAXBuilder();
-			Document document = builder.build("./res/rooms/arena.room.tmx");
+			Document tmx = new SAXBuilder().build("./res/rooms/arena.room.tmx");
 			
-			Element tiles = document.getRootElement().getChild("layer");
-			Element thugs = document.getRootElement().getChild("objectgroup");
+			Element tiles = tmx.getRootElement().getChild("layer").getChild("data");
+			Element thugs = tmx.getRootElement().getChild("objectgroup");
+
+			int tx = 0;
+			int ty = 0;
+			
+			for(Element tile : tiles.getChildren())
+			{
+				System.out.println(tx + " x " + ty);
+				
+				int gid = tile.getAttribute("gid").getIntValue();
+				this.tiles[tx][ty] = new Tile(this, tx, ty, gid);
+				
+				tx += 1;
+				if(tx >= 11)
+				{
+					tx = 0;
+					ty += 1;
+				}
+			}
 			
 			for(Element thug : thugs.getChildren())
 			{
 				int x = thug.getAttribute("x").getIntValue();
 				int y = thug.getAttribute("y").getIntValue();
-				int tx = (int)(Math.floor((x + this.getX()) / Tile.SIZE));
-				int ty = (int)(Math.floor((y + this.getY()) / Tile.SIZE));
+				x = (int)(Math.floor((x + this.getX()) / Tile.SIZE));
+				y = (int)(Math.floor((y + this.getY()) / Tile.SIZE));
 				
-				this.dungeon.thugs.add(new Thug(this.dungeon, tx, ty));
+				this.dungeon.thugs.add(new Thug(this.dungeon, x, y));
 			}
 		}
 		catch(Exception exception)
@@ -338,7 +348,7 @@ public class Room
 		this.northernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = 0;
-		this.tiles[tx][ty] = new Tile(this, tx, ty);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 1);
 	}
 
 	/*
@@ -351,7 +361,7 @@ public class Room
 		this.southernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
-		this.tiles[tx][ty] = new Tile(this, tx, ty);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 1);
 	}
 
 	/*
@@ -364,7 +374,7 @@ public class Room
 		this.easternRoom = room;
 		
 		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 1);
 	}
 
 	/*
@@ -377,7 +387,7 @@ public class Room
 		this.westernRoom = room;
 		
 		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 1);
 	}
 	
 	/*
