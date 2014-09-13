@@ -88,8 +88,8 @@ public abstract class Entity
 	{
 		this.dungeon = dungeon;
 		
-		this.x = room.getX() + x + (Tile.SIZE * 0.4f);
-		this.y = room.getY() + y - (Tile.SIZE * 0.4f);
+		this.x = room.getX() + x;
+		this.y = room.getY() + y;
 	}
 	
 	public void update(int delta)

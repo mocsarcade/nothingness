@@ -109,8 +109,8 @@
    <tile gid="1"/>
   </data>
  </layer>
- <objectgroup name="thugs" width="11" height="9">
-  <object gid="4" x="486" y="262"/>
-  <object gid="4" x="205" y="383"/>
+ <objectgroup name="entities" width="11" height="9">
+  <object name="thug" gid="4" x="469" y="256"/>
+  <object name="thug" gid="4" x="206" y="369"/>
  </objectgroup>
 </map>

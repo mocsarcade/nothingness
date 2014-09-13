@@ -23,11 +23,9 @@ import computc.entities.Thug;
 
 public class Room
 {
-	private Dungeon dungeon;
 	private int rx, ry;
 	private String layout;
-	
-	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
+	private Dungeon dungeon;
 	
 	public Room westernRoom;
 	public Room easternRoom;
@@ -35,6 +33,8 @@ public class Room
 	public Room northernRoom;
 	
 	public boolean visited = false;
+	
+	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
 	
 	public Room(Dungeon dungeon, int rx, int ry) throws SlickException
 	{
@@ -59,8 +59,8 @@ public class Room
 		
 		try
 		{
-			Document tmx = new SAXBuilder().build("./res/rooms/arena.room.tmx");
-
+			Document tmx = new SAXBuilder().build(this.layout);
+			
 			List<Element> tilelayer = tmx.getRootElement().getChild("layer").getChild("data").getChildren();
 			List<Element> objectgroup = tmx.getRootElement().getChild("objectgroup").getChildren();
 			
@@ -79,8 +79,8 @@ public class Room
 			{
 				if(element.getAttribute("gid").getIntValue() == 4)
 				{
-					int x = element.getAttribute("x").getIntValue();
-					int y = element.getAttribute("y").getIntValue();
+					int x = element.getAttribute("x").getIntValue() + (48 / 2);
+					int y = element.getAttribute("y").getIntValue() - (48 / 2);
 					
 					this.dungeon.thugs.add(new Thug(this.dungeon, this, x, y));
 				}
