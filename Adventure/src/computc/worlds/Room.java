@@ -33,7 +33,6 @@ public class Room
 	public Room northernRoom;
 	
 	public boolean visited = false;
-	public boolean hasStairs = false;
 
 	public Room(Dungeon dungeon, int rx, int ry, String layout) throws SlickException
 	{
@@ -107,17 +106,6 @@ public class Room
 			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
 				this.tiles[tx][ty].renderOnMap(graphics, camera);
-				
-				if(this.hasStairs)
-				{
-					graphics.setColor(Color.cyan);
-					
-					int s = 48 / 4;
-					int x = ((this.getX() + (this.getWidth() / 2)) / 8) - camera.getX();
-					int y = ((this.getY() + (this.getHeight() / 2)) / 8) - camera.getY();
-
-					graphics.fillRoundRect(x, y, s, s, 2);
-				}
 			}
 		}
 	}

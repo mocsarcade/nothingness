@@ -3,17 +3,15 @@ package computc.worlds;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.Random;
 
 import org.newdawn.slick.SlickException;
 
 import computc.Direction;
 
-public class LinearRandomDungeon extends Dungeon
+public class RandomRoguelikeDungeon extends Dungeon
 {
-	public LinearRandomDungeon() throws SlickException
+	public RandomRoguelikeDungeon() throws SlickException
 	{
-		boolean hasAddedTheStairs = false;
 		LinkedList<Room> rooms = new LinkedList<Room>();
 		rooms.add(new Room(this, 2, 2, "empty"));
 		
@@ -35,13 +33,6 @@ public class LinearRandomDungeon extends Dungeon
 				else
 				{
 					rooms.remove(room); //is a dead end.
-				}
-				
-				if(i == SIZE - 1 && index == size - 1 && !hasAddedTheStairs)
-				{
-					System.out.println(room.getRoomyX() + " : " + room.getRoomyY());
-					room.hasStairs = true;
-					hasAddedTheStairs = true;
 				}
 			}
 		}

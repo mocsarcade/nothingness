@@ -20,7 +20,7 @@ import computc.entities.Hero;
 import computc.entities.OldMan;
 import computc.worlds.Dungeon;
 import computc.worlds.PredesignedDungeon;
-import computc.worlds.LinearRandomDungeon;
+import computc.worlds.RandomRoguelikeDungeon;
 import computc.worlds.Tile;
 
 public class MainGameState extends BasicGameState
