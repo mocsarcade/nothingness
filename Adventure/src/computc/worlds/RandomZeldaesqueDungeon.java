@@ -15,21 +15,19 @@ public class RandomZeldaesqueDungeon extends Dungeon
 	
 	public RandomZeldaesqueDungeon() throws SlickException
 	{
-		Room room = new Room(this, 2, 2, "empty");
-		this.addRoom(room);
+		Room currentRoom = this.firstRoom = new Room(this, 2, 2, "empty");
 		
 		for(int i = 0; i < SCALE; i++)
 		{
-			ArrayList<Direction> directions = room.getPotentialDirections();
+			Direction direction = currentRoom.getRandomPotentialDirection();
 			
-			if(directions.size() > 0)
+			if(direction != Direction.NONE)
 			{
-				Collections.shuffle(directions);
-				room = room.instantiateRoom(directions.get(0));
+				currentRoom = currentRoom.instantiateRoom(direction);
 			}
 			else
 			{
-				//is a dead end.
+				//uh oh! dead end!
 			}
 		}
 	}
