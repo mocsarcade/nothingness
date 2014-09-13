@@ -77,10 +77,13 @@ public class Room
 			
 			for(Element element : objectgroup)
 			{
-				int x = element.getAttribute("x").getIntValue();
-				int y = element.getAttribute("y").getIntValue();
-				
-				this.dungeon.thugs.add(new Thug(this.dungeon, this, x, y));
+				if(element.getAttribute("gid").getIntValue() == 4)
+				{
+					int x = element.getAttribute("x").getIntValue();
+					int y = element.getAttribute("y").getIntValue();
+					
+					this.dungeon.thugs.add(new Thug(this.dungeon, this, x, y));
+				}
 			}
 		}
 		catch(Exception exception)
@@ -453,6 +456,7 @@ public class Room
 	{
 		Room room = new Room(this.dungeon, this.rx, this.ry - 1, layout);
 		this.connectNorthernRoom(room);
+		this.dungeon.addRoom(room);
 		return room;
 	}
 
@@ -464,6 +468,7 @@ public class Room
 	{
 		Room room = new Room(this.dungeon, this.rx, this.ry + 1, layout);
 		this.connectSouthernRoom(room);
+		this.dungeon.addRoom(room);
 		return room;
 	}
 
@@ -475,6 +480,7 @@ public class Room
 	{
 		Room room = new Room(this.dungeon, this.rx + 1, this.ry, layout);
 		this.connectEasternRoom(room);
+		this.dungeon.addRoom(room);
 		return room;
 	}
 
@@ -486,6 +492,7 @@ public class Room
 	{
 		Room room = new Room(this.dungeon, this.rx - 1, this.ry, layout);
 		this.connectWesternRoom(room);
+		this.dungeon.addRoom(room);
 		return room;
 	}
 

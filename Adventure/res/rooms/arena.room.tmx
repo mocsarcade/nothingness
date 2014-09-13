@@ -110,7 +110,7 @@
   </data>
  </layer>
  <objectgroup name="thugs" width="11" height="9">
-  <object gid="4" x="65" y="240"/>
-  <object gid="4" x="128" y="177"/>
+  <object gid="4" x="486" y="262"/>
+  <object gid="4" x="205" y="383"/>
  </objectgroup>
 </map>
