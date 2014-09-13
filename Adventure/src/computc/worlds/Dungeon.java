@@ -12,8 +12,9 @@ import computc.entities.Thug;
 
 public abstract class Dungeon
 {
-	public HashMap<String, Room> rooms = new HashMap<String, Room>();
-	public LinkedList<Entity> entities = new LinkedList<Entity>();
+	protected HashMap<String, Room> rooms = new HashMap<String, Room>();
+	protected LinkedList<Entity> entities = new LinkedList<Entity>();
+	protected Room firstRoom;
 
 	public void render(Graphics graphics, Camera camera)
 	{
@@ -74,6 +75,16 @@ public abstract class Dungeon
 	public LinkedList<Room> getAllRooms()
 	{
 		return new LinkedList<Room>(this.rooms.values());
+	}
+	
+	public Room getFirstRoom()
+	{
+		return this.firstRoom;
+	}
+	
+	public void setFirstRoom(Room firstRoom)
+	{
+		this.firstRoom = firstRoom;
 	}
 	
 	public Tile getTile(float x, float y)

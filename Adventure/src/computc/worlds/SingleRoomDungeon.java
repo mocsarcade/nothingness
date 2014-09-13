@@ -6,6 +6,7 @@ public class SingleRoomDungeon extends Dungeon
 {
 	public SingleRoomDungeon() throws SlickException
 	{
-		this.addRoom(new Room(this, 0, 0, "empty"));
+		this.firstRoom = new Room(this, 0, 0, "empty");
+		this.addRoom(this.firstRoom);
 	}
 }

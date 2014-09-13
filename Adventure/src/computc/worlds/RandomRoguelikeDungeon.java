@@ -28,7 +28,7 @@ public class RandomRoguelikeDungeon extends Dungeon
 				if(directions.size() > 0)
 				{
 					Collections.shuffle(directions);
-					rooms.add(room.addRoom(directions.get(0), null));
+					rooms.add(room.instantiateRoom(directions.get(0), null));
 				}
 				else
 				{

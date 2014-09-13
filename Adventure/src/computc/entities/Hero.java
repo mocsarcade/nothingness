@@ -17,9 +17,9 @@ public class Hero extends Entity
 {
 	private boolean dead = false;
 	
-	public Hero(Dungeon dungeon, Room room, int tx, int ty) throws SlickException
+	public Hero(Dungeon dungeon, int tx, int ty) throws SlickException
 	{
-		super(dungeon, room, tx, ty);
+		super(dungeon, dungeon.getFirstRoom(), tx, ty);
 		
 		this.dungeon = dungeon;
 		this.acceleration = 0.06f;

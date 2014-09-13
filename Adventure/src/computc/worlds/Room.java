@@ -90,6 +90,8 @@ public class Room
 		{
 			exception.printStackTrace();
 		}
+		
+		this.dungeon.addRoom(this);
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -452,11 +454,10 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the north.
 	 */
-	public Room addNorthernRoom(String layout) throws SlickException
+	public Room instantiateNorthernRoom(String layout) throws SlickException
 	{
 		Room room = new Room(this.dungeon, this.rx, this.ry - 1, layout);
 		this.connectNorthernRoom(room);
-		this.dungeon.addRoom(room);
 		return room;
 	}
 
@@ -464,11 +465,10 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the south.
 	 */
-	public Room addSouthernRoom(String layout) throws SlickException
+	public Room instantiateSouthernRoom(String layout) throws SlickException
 	{
 		Room room = new Room(this.dungeon, this.rx, this.ry + 1, layout);
 		this.connectSouthernRoom(room);
-		this.dungeon.addRoom(room);
 		return room;
 	}
 
@@ -476,11 +476,10 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the east.
 	 */
-	public Room addEasternRoom(String layout) throws SlickException
+	public Room instantiateEasternRoom(String layout) throws SlickException
 	{
 		Room room = new Room(this.dungeon, this.rx + 1, this.ry, layout);
 		this.connectEasternRoom(room);
-		this.dungeon.addRoom(room);
 		return room;
 	}
 
@@ -488,11 +487,10 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the west.
 	 */
-	public Room addWesternRoom(String layout) throws SlickException
+	public Room instantiateWesternRoom(String layout) throws SlickException
 	{
 		Room room = new Room(this.dungeon, this.rx - 1, this.ry, layout);
 		this.connectWesternRoom(room);
-		this.dungeon.addRoom(room);
 		return room;
 	}
 
@@ -500,23 +498,23 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room in any direction.
 	 */
-	public Room addRoom(Direction direction, String layout) throws SlickException
+	public Room instantiateRoom(Direction direction, String layout) throws SlickException
 	{
 		if(direction == Direction.NORTH)
 		{
-			return this.addNorthernRoom(layout);
+			return this.instantiateNorthernRoom(layout);
 		}
 		else if(direction == Direction.SOUTH)
 		{
-			return this.addSouthernRoom(layout);
+			return this.instantiateSouthernRoom(layout);
 		}
 		else if(direction == Direction.EAST)
 		{
-			return this.addEasternRoom(layout);
+			return this.instantiateEasternRoom(layout);
 		}
 		else if(direction == Direction.WEST)
 		{
-			return this.addWesternRoom(layout);
+			return this.instantiateWesternRoom(layout);
 		}
 		else
 		{
@@ -524,9 +522,13 @@ public class Room
 		}
 	}
 	
-	public Room addRoom(Direction direction) throws SlickException
+	/*
+	 * Executes the relevant subroutines to
+	 * instantiate a new room in any direction.
+	 */
+	public Room instantiateRoom(Direction direction) throws SlickException
 	{
-		return this.addRoom(direction, null);
+		return this.instantiateRoom(direction, null);
 	}
 	
 	public ArrayList<Direction> getExpandableDirections()

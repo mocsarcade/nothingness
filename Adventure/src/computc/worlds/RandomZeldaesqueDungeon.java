@@ -25,7 +25,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 			if(directions.size() > 0)
 			{
 				Collections.shuffle(directions);
-				room = room.addRoom(directions.get(0));
+				room = room.instantiateRoom(directions.get(0));
 			}
 			else
 			{

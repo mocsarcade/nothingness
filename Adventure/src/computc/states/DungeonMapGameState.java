@@ -45,7 +45,7 @@ public class DungeonMapGameState extends BasicGameState
 
 		if(input.isKeyDown(Input.KEY_R))
 		{
-			this.gamedata.dungeon = new RandomZeldaesqueDungeon();
+			this.gamedata.instantiate();
 		}
 	}
 	
