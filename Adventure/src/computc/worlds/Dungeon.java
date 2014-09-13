@@ -13,6 +13,7 @@ import computc.Camera;
 import computc.Game;
 import computc.entities.BigThug;
 import computc.entities.Enemy;
+import computc.entities.Hero.ProjectileController;
 import computc.entities.Thug;
 
 public class Dungeon
@@ -21,8 +22,12 @@ public class Dungeon
 	public LinkedList<Enemy> thugs; 
 	public Point[] thug_positions_in_tiley_coordinates;
 	
+	public ProjectileController pc;
+	
 	public Dungeon() throws SlickException
 	{
+		pc = new ProjectileController();
+		
 		TiledMap tiled = new TiledMap("./res/dungeons/prototype.dungeon.tmx");
 		
 		int ROOMY_WIDTH = 9;
@@ -132,6 +137,8 @@ public class Dungeon
 			}
 			Game.reset = false;
 		}
+		
+		pc.update(delta);
 	}
 
 	public void render(Graphics graphics, Camera camera)
@@ -145,6 +152,8 @@ public class Dungeon
 		{
 			thug.render(graphics, camera);
 		}
+		
+		pc.render(graphics);
 	}
 	
 	public void addRoom(Room room)

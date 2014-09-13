@@ -16,6 +16,8 @@ public class Hero extends Entity
 {
 	private boolean dead = false;
 	
+	private int projectileCooldown = 0;
+	
 	public Hero(Dungeon dungeon, Room room, int tx, int ty) throws SlickException
 	{
 		super(dungeon, room.getRoomyX(), room.getRoomyY(), tx, ty);
@@ -43,7 +45,7 @@ public class Hero extends Entity
 		super.render(graphics, camera);
 	}
 	
-	public void update(Input input, int delta)
+	public void update(Input input, int delta) throws SlickException
 	{
 		getNextPosition(input, delta);
 		checkTileMapCollision();
@@ -68,6 +70,20 @@ public class Hero extends Entity
 		{
 			blinking = false;
 		}
+		
+		if (input.isKeyDown(Input.KEY_SPACE)) {
+			
+			if (projectileCooldown <= 0) {
+			dungeon.pc.addArrow(new Arrow(this.x, this.y, this.direction, true));
+			System.out.println("shooting");
+			projectileCooldown = 300;
+			}
+			
+		}
+		
+		if(projectileCooldown > 0){
+			projectileCooldown -= delta;
+		}
 	
 		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).visited = true;
 		
@@ -79,6 +95,8 @@ public class Hero extends Entity
 	{
 		if(input.isKeyDown(Input.KEY_UP)) 
 		{
+			this.direction = Direction.NORTH;
+			
 			dy -= acceleration * delta;
 			if(dy < -maximumVelocity)
 			{
@@ -87,6 +105,8 @@ public class Hero extends Entity
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
+			this.direction = Direction.SOUTH;
+			
 			dy += acceleration * delta;
 			
 			if(dy > maximumVelocity)
@@ -117,6 +137,8 @@ public class Hero extends Entity
 
 		 if(input.isKeyDown(Input.KEY_RIGHT))
 		{
+			 this.direction = Direction.EAST;
+			 
 			dx += acceleration * delta;
 			if(dx > maximumVelocity) 
 			{
@@ -125,6 +147,8 @@ public class Hero extends Entity
 		}
 		 else if(input.isKeyDown(Input.KEY_LEFT)) 
 		{
+			 this.direction = Direction.WEST;
+			 
 			dx -= acceleration * delta;
 			if(dx < -maximumVelocity)
 			{
@@ -226,6 +250,47 @@ public class Hero extends Entity
 	{
 		dead = false;
 	}
+	
+	// projectile Manager
+	public static class ProjectileController {
+		
+		private LinkedList<Arrow> quiver = new LinkedList<Arrow>();
+			
+			 static Arrow TempArrow;
+			
+			Dungeon dungeon;
+			
+			public void update(int delta) {
+				 for(int i = 0; i < quiver.size(); i++) {
+					 TempArrow = quiver.get(i);
+					 
+					 if(TempArrow.getY() < 0)
+						 removeArrow(TempArrow);
+					 
+					 TempArrow.update(delta);
+				 }
+			}
+			
+			public void render (Graphics g) {
+				for (int i = 0; i < quiver.size(); i++) {
+					quiver.get(i).render(g);
+				}
+			}
+			
+			public void addArrow(Arrow block) {
+				quiver.add(block);
+			}
+			
+			public void removeArrow(Arrow block) {
+				quiver.remove(block);
+			}
+			
+			public int getQuiverSize(){
+				return quiver.size();
+			}
+
+		}
+
 	
 	private float speed = 0.25f;
 }

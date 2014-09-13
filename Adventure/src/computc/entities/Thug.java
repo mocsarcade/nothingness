@@ -11,6 +11,7 @@ import computc.worlds.Room;
 
 public class Thug extends Enemy	
 {
+	public static boolean hit = false;
 	
 	public Thug(Dungeon dungeon, int tx, int ty) throws SlickException 
 	{
