@@ -19,7 +19,7 @@ public class Hero extends Entity
 	
 	public Hero(Dungeon dungeon, Room room, int tx, int ty) throws SlickException
 	{
-		super(dungeon, room.getRoomyX(), room.getRoomyY(), tx, ty);
+		super(dungeon, room, tx, ty);
 		
 		this.dungeon = dungeon;
 		this.acceleration = 0.06f;

@@ -108,10 +108,10 @@ public class PredesignedDungeon extends Dungeon
 		
 		for(Point point : thug_positions_in_tiley_coordinates)
 		{
-			thugs.add(new Thug(this, point.x, point.y));
+			//thugs.add(new Thug(this, point.x, point.y));
 		}
 		
-		thugs.add(new BigThug(this, 36, 23));
+		//thugs.add(new BigThug(this, 36, 23));
 		this.oldman = new OldMan(this, 38, 12);
 		
 		this.menuBox = new Image("res/textBox.png");

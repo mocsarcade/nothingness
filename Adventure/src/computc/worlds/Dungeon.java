@@ -33,6 +33,11 @@ public abstract class Dungeon
 		{
 			room.renderOnMap(graphics, camera);
 		}
+		
+		for(Thug thug : this.thugs)
+		{
+			thug.renderOnMap(graphics, camera);
+		}
 	}
 	
 	public void addRoom(Room room)

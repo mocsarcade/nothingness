@@ -79,10 +79,8 @@ public class Room
 			{
 				int x = element.getAttribute("x").getIntValue();
 				int y = element.getAttribute("y").getIntValue();
-				x = (int)(Math.floor((x + this.getX()) / Tile.SIZE));
-				y = (int)(Math.floor((y + this.getY()) / Tile.SIZE));
 				
-				this.dungeon.thugs.add(new Thug(this.dungeon, x, y));
+				this.dungeon.thugs.add(new Thug(this.dungeon, this, x, y));
 			}
 		}
 		catch(Exception exception)

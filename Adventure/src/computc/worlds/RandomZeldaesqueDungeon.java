@@ -13,7 +13,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 	{
 		Room room = new Room(this, 2, 2, "empty");
 		this.addRoom(room);
-		room.addNorthernRoom("empty");
+		room.addSouthernRoom("arena");
 	}
 	
 	public void render(Graphics graphics, Camera camera)

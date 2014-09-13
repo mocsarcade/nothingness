@@ -3,9 +3,15 @@ package computc.entities;
 import org.newdawn.slick.SlickException;
 
 import computc.worlds.Dungeon;
+import computc.worlds.Room;
 
 public abstract class Enemy extends Entity
 {
+	public Enemy(Dungeon dungeon, Room room, float x, float y)
+	{
+		super(dungeon, room, x, y);
+	}
+
 	protected int health;
 	protected int maxHealth;
 	protected boolean dead;
@@ -20,11 +26,6 @@ public abstract class Enemy extends Entity
     protected boolean down;
     
     protected boolean attacking;
-	
-	public Enemy(Dungeon dungeon, int rx, int ry, int tx, int ty) throws SlickException 
-	{
-		super(dungeon, rx, ry, tx, ty);
-	}
 	
 	public boolean isDead()
 	{
