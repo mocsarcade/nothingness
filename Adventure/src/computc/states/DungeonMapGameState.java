@@ -31,9 +31,7 @@ public class DungeonMapGameState extends BasicGameState
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		Room firstRoom = this.gamedata.dungeon.getFirstRoom();
-		this.camera.setX(firstRoom.getX() - (Game.WIDTH / 2) + (Room.WIDTH / (8 * 2)));
-		this.camera.setY(firstRoom.getY() - (Game.HEIGHT / 2) + (Room.HEIGHT / (8 * 2)));
+		//code goes here
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException

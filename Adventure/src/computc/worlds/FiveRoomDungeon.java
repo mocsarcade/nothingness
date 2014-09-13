@@ -2,12 +2,12 @@ package computc.worlds;
 
 import org.newdawn.slick.SlickException;
 
-public class HandfulOfRoomsDungeon extends Dungeon
+public class FiveRoomDungeon extends Dungeon
 {
-	public HandfulOfRoomsDungeon() throws SlickException
+	public FiveRoomDungeon() throws SlickException
 	{
-		this.firstRoom = new Room(this, 0, 0, "grid");
-
+		this.firstRoom = new Room(this, 2, 2, "grid");
+		
 		this.firstRoom.instantiateNorthernRoom("corners");
 		this.firstRoom.instantiateSouthernRoom("threelines");
 		this.firstRoom.instantiateEasternRoom("fivedots");

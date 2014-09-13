@@ -4,6 +4,7 @@ import java.util.List;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -531,7 +532,7 @@ public class Room
 		return this.instantiateRoom(direction, null);
 	}
 	
-	public ArrayList<Direction> getExpandableDirections()
+	public ArrayList<Direction> getPotentialDirections()
 	{
 		ArrayList<Direction> directions = new ArrayList<Direction>();
 		
@@ -553,6 +554,21 @@ public class Room
 		}
 		
 		return directions;
+	}
+	
+	public Direction getRandomPotentialDirection()
+	{
+		ArrayList<Direction> directions = this.getPotentialDirections();
+		
+		if(directions.size() > 0)
+		{
+			Collections.shuffle(directions);
+			return directions.get(0);
+		}
+		else
+		{
+			return Direction.NONE;
+		}
 	}
 
 	/*

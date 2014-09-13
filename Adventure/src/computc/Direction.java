@@ -4,7 +4,7 @@ import java.util.Random;
 
 public enum Direction
 {
-	NORTH, SOUTH, EAST, WEST;
+	NORTH, SOUTH, EAST, WEST, NONE;
 	
 	public static Direction getRandom()
 	{

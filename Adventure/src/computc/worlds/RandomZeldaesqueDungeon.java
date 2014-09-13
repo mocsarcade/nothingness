@@ -11,7 +11,7 @@ import computc.cameras.Camera;
 
 public class RandomZeldaesqueDungeon extends Dungeon
 {
-	final int SCALE = 5;
+	private final int SCALE = 5;
 	
 	public RandomZeldaesqueDungeon() throws SlickException
 	{
@@ -20,7 +20,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 		
 		for(int i = 0; i < SCALE; i++)
 		{
-			ArrayList<Direction> directions = room.getExpandableDirections();
+			ArrayList<Direction> directions = room.getPotentialDirections();
 			
 			if(directions.size() > 0)
 			{

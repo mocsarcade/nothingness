@@ -10,30 +10,21 @@ import computc.Direction;
 
 public class RandomRoguelikeDungeon extends Dungeon
 {
+	private final int SCALE = 5;
+	
 	public RandomRoguelikeDungeon() throws SlickException
 	{
-		LinkedList<Room> rooms = new LinkedList<Room>();
-		rooms.add(new Room(this, 2, 2, "empty"));
+		this.firstRoom = new Room(this, 2, 2, "empty");
 		
-		final int SIZE = 5;
-		
-		for(int i = 0; i < SIZE; i++)
+		for(int i = 0; i < SCALE; i++)
 		{
-			int size = rooms.size();
-			for(int index = 0; index < size; index++)
+			LinkedList<Room> rooms = this.getAllRooms();
+			
+			while(rooms.size() > 0)
 			{
-				Room room = rooms.get(index);
-				ArrayList<Direction> directions = room.getExpandableDirections();
-				
-				if(directions.size() > 0)
-				{
-					Collections.shuffle(directions);
-					rooms.add(room.instantiateRoom(directions.get(0), null));
-				}
-				else
-				{
-					rooms.remove(room); //is a dead end.
-				}
+				Room room = rooms.pop();
+				Direction direction = room.getRandomPotentialDirection();
+				room.instantiateRoom(direction);
 			}
 		}
 	}
