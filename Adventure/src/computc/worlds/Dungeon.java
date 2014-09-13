@@ -153,7 +153,7 @@ public class Dungeon
 			thug.render(graphics, camera);
 		}
 		
-		pc.render(graphics);
+		pc.render(graphics, camera);
 	}
 	
 	public void addRoom(Room room)

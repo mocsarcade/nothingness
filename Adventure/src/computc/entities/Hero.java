@@ -73,8 +73,9 @@ public class Hero extends Entity
 		
 		if (input.isKeyDown(Input.KEY_SPACE)) {
 			
-			if (projectileCooldown <= 0) {
-			dungeon.pc.addArrow(new Arrow(this.x, this.y, this.direction, true));
+			if (projectileCooldown <= 0) 
+			{
+			dungeon.pc.addArrow(new Arrow(this.getX(), this.getY(), this.direction, true));
 			System.out.println("shooting");
 			projectileCooldown = 300;
 			}
@@ -268,12 +269,13 @@ public class Hero extends Entity
 						 removeArrow(TempArrow);
 					 
 					 TempArrow.update(delta);
+					 System.out.println("arrows coord: " + TempArrow.getX() + " , " + TempArrow.getY());
 				 }
 			}
 			
-			public void render (Graphics g) {
+			public void render (Graphics g, Camera camera) {
 				for (int i = 0; i < quiver.size(); i++) {
-					quiver.get(i).render(g);
+					quiver.get(i).render(g, camera);
 				}
 			}
 			

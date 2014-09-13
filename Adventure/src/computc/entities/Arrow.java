@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import computc.Camera;
 import computc.Direction;
 
 public class Arrow
@@ -35,8 +36,7 @@ public class Arrow
 	
 	public void update(int delta) 
 	{
-		System.out.println("the arrows coord:" + x + " , " + y);
-		
+
 		if(direction == Direction.NORTH)
 			y -= delta * speed;
 		
@@ -54,10 +54,10 @@ public class Arrow
 		
 	}
 	
-	public void render(Graphics g) 
+	public void render(Graphics g, Camera camera) 
 	{
 		if(!arrowHit)
-		arrow.draw((float)x, (float)y);
+		arrow.draw((float)x - camera.getX(), (float)y - camera.getY());
 	}
 	
 	public float getX() 
