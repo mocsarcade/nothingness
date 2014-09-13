@@ -7,12 +7,13 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import computc.cameras.Camera;
+import computc.entities.Entity;
 import computc.entities.Thug;
 
 public abstract class Dungeon
 {
-	private HashMap<String, Room> rooms = new HashMap<String, Room>();
-	public LinkedList<Thug> thugs = new LinkedList<Thug>();
+	public HashMap<String, Room> rooms = new HashMap<String, Room>();
+	public LinkedList<Entity> entities = new LinkedList<Entity>();
 
 	public void render(Graphics graphics, Camera camera)
 	{
@@ -20,10 +21,10 @@ public abstract class Dungeon
 		{
 			room.render(graphics, camera);
 		}
-		
-		for(Thug thug : this.thugs)
+
+		for(Entity entity : this.getAllEntities())
 		{
-			thug.render(graphics, camera);
+			entity.render(graphics, camera);
 		}
 	}
 	
@@ -34,10 +35,15 @@ public abstract class Dungeon
 			room.renderOnMap(graphics, camera);
 		}
 		
-		for(Thug thug : this.thugs)
+		for(Entity entity : this.getAllEntities())
 		{
-			thug.renderOnMap(graphics, camera);
+			entity.renderOnMap(graphics, camera);
 		}
+	}
+	
+	public LinkedList<Entity> getAllEntities()
+	{
+		return this.entities;
 	}
 	
 	public void addRoom(Room room)
