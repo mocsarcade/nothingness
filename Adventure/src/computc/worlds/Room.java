@@ -524,6 +524,11 @@ public class Room
 		}
 	}
 	
+	public Room addRoom(Direction direction) throws SlickException
+	{
+		return this.addRoom(direction, null);
+	}
+	
 	public ArrayList<Direction> getExpandableDirections()
 	{
 		ArrayList<Direction> directions = new ArrayList<Direction>();

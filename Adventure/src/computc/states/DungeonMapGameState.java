@@ -14,6 +14,7 @@ import computc.cameras.RoomFollowingCamera;
 import computc.entities.Hero;
 import computc.worlds.Dungeon;
 import computc.worlds.RandomRoguelikeDungeon;
+import computc.worlds.RandomZeldaesqueDungeon;
 
 public class DungeonMapGameState extends BasicGameState
 {
@@ -44,7 +45,7 @@ public class DungeonMapGameState extends BasicGameState
 
 		if(input.isKeyDown(Input.KEY_R))
 		{
-			this.gamedata.dungeon = new RandomRoguelikeDungeon();
+			this.gamedata.dungeon = new RandomZeldaesqueDungeon();
 		}
 	}
 	

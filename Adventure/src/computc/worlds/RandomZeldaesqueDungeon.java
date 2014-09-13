@@ -1,8 +1,12 @@
 package computc.worlds;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import computc.Direction;
 import computc.cameras.Camera;
 
 public class RandomZeldaesqueDungeon extends Dungeon
@@ -13,11 +17,20 @@ public class RandomZeldaesqueDungeon extends Dungeon
 	{
 		Room room = new Room(this, 2, 2, "empty");
 		this.addRoom(room);
-		room.addSouthernRoom("arena");
-	}
-	
-	public void render(Graphics graphics, Camera camera)
-	{
-		super.render(graphics, camera);
+		
+		for(int i = 0; i < SCALE; i++)
+		{
+			ArrayList<Direction> directions = room.getExpandableDirections();
+			
+			if(directions.size() > 0)
+			{
+				Collections.shuffle(directions);
+				room = room.addRoom(directions.get(0));
+			}
+			else
+			{
+				//is a dead end.
+			}
+		}
 	}
 }

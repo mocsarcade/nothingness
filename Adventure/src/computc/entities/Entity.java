@@ -117,11 +117,12 @@ public abstract class Entity
 	{
 		int x = ((int)(this.getX() - this.getHalfWidth()) / 8) - camera.getX();
 		int y = ((int)(this.getY() - this.getHalfHeight()) / 8) - camera.getY();
-		
-		final int UNIT = Tile.SIZE / 8;
+
+		int WIDTH = this.getWidth() / 8;
+		int HEIGHT = this.getHeight() / 8;
 		
 		graphics.setColor(Color.red);
-		graphics.fillRect(x, y, UNIT, UNIT);
+		graphics.fillRoundRect(x, y, WIDTH, HEIGHT, 4);
 	}
 	
 	public boolean intersects(Entity that)
