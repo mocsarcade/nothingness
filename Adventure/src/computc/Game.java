@@ -15,6 +15,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.StateBasedGame;
 
+import computc.states.DungeonMapGameState;
 import computc.states.MainGameState;
 import computc.worlds.Room;
 
@@ -26,19 +27,25 @@ public class Game extends StateBasedGame
 	{
 		super(Game.TITLE + " " + Game.VERSION);
 	}
-
-	public void initStatesList(GameContainer arg0) throws SlickException
+	
+	public void initStatesList(GameContainer container) throws SlickException
 	{
-        this.addState(new MainGameState());
+		GameData gamedata = new GameData();
+		
+        this.addState(new MainGameState(gamedata));
+        this.addState(new DungeonMapGameState(gamedata));
 	}
 	
 	public static void main(String[] args) throws SlickException
 	{
 		AppGameContainer container = new AppGameContainer(new Game());
 		container.setDisplayMode(Room.WIDTH, Room.HEIGHT, false);
+		container.setTargetFrameRate(60);
 		container.start();
 	}
 	
 	public static final String TITLE = "Game";
 	public static final String VERSION = "v0.1.0";
+	public static final int WIDTH = Room.WIDTH;
+	public static final int HEIGHT = Room.HEIGHT;
 }
