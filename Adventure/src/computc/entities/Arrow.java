@@ -7,57 +7,77 @@ import org.newdawn.slick.SlickException;
 
 import computc.Camera;
 import computc.Direction;
+import computc.worlds.Dungeon;
 
-public class Arrow
+public class Arrow extends Entity
 {
-	private float x, y;
-	
-	private double speed = .7;
-	
-	private Direction direction;
-	
-	Animation projectile;
-	
-	public boolean loaded = false;
-	public boolean arrowHit = false;
-	
-	Image arrows = new Image("res/arrowSpriteSheet.png");
-	Image arrow = arrows.getSubImage(1, 1, 30, 30);
-	
-	public Arrow(float x, float y, Direction direction, boolean arrowHit) throws SlickException
-	{
-		
-		this.x = x;
-		this.y = y;
-		this.direction = direction;
-		this.arrowHit = false;
-		
-	}
-	
-	public void update(int delta) 
-	{
 
-		if(direction == Direction.NORTH)
-			y -= delta * speed;
+	private boolean hit;
+	private boolean remove;
+	protected boolean left;
+    protected boolean right;
+    protected boolean up;
+    protected boolean down;
+    
+    Image arrows = new Image("res/arrowSpriteSheet.png");
+	
+	public Arrow(Dungeon dungeon, int rx, int ry, int tx, int ty) throws SlickException
+	{
+		super(dungeon, rx, ry, tx, ty);
 		
-		else if(direction == Direction.SOUTH)
-			y += delta * speed;
+		right = true; down = true;
 		
-		else if(direction == Direction.WEST)
-			x -= delta * speed;
+		this.acceleration = 2f;
 		
-		else if(direction == Direction.EAST)
-			x += delta * speed;
+		if(right)
+		{
+			dx = acceleration;
+		}
+		else 
+		{
+			dx = - acceleration;
+		}
 		
-		if(Thug.hit == true)
-			arrowHit = true;	
+		if(down)
+		{
+			dy = acceleration;
+		}
+		else 
+		{
+			dy = -acceleration;
+		}
 		
+		this.image = arrows.getSubImage(1, 1, 30, 30);
 	}
 	
-	public void render(Graphics g, Camera camera) 
+	public void update()
 	{
-		if(!arrowHit)
-		arrow.draw((float)x - camera.getX(), (float)y - camera.getY());
+//		checkTileMapCollision();
+//		setPosition(xtemp, ytemp);
+		
+		if(dx == 0 && !hit)
+		{
+			setHit();
+		}
+		
+		if(hit)
+		{
+			remove = true;
+		}
+	}
+	
+	public void setHit() 
+	{
+		if(hit)
+			return;
+		
+		hit = true;
+		dx = 0; dy = 0;
+	}
+	
+	public boolean shouldRemove()
+	{
+		return remove;
 	}
 	
 	public float getX() 

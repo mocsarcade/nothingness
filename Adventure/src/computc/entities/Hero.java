@@ -1,5 +1,6 @@
 package computc.entities;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import org.newdawn.slick.Graphics;
@@ -11,12 +12,20 @@ import computc.Camera;
 import computc.Direction;
 import computc.worlds.Dungeon;
 import computc.worlds.Room;
+import computc.worlds.Tile;
 
 public class Hero extends Entity
 {
 	private boolean dead = false;
 	
 	private int projectileCooldown = 0;
+	
+	private int arrowCount;
+	private int maxArrows;
+	
+	private boolean firing;
+	private int arrowDamage;
+	private ArrayList<Arrow> arrows;
 	
 	public Hero(Dungeon dungeon, Room room, int tx, int ty) throws SlickException
 	{
@@ -26,6 +35,10 @@ public class Hero extends Entity
 		this.acceleration = 0.06f;
 		this.deacceleration = 0.02f;
 		this.maximumVelocity = 3f;
+		
+		this.arrowCount = this.maxArrows = 25;
+		arrowDamage = 2;
+		arrows = new ArrayList<Arrow>();
 		
 		this.currentHealth = this.maximumHealth = 3;
 		
@@ -40,6 +53,13 @@ public class Hero extends Entity
 			{
 				return;
 			}
+		}
+		
+		// draw arrows
+		for(int i = 0; i < arrows.size(); i++)
+		{
+			arrows.get(i).render(graphics, camera);
+//			System.out.println("this is happening");
 		}
 			
 		super.render(graphics, camera);
@@ -71,16 +91,34 @@ public class Hero extends Entity
 			blinking = false;
 		}
 		
-		if (input.isKeyDown(Input.KEY_SPACE)) {
-			
-			if (projectileCooldown <= 0) 
-			{
-			dungeon.pc.addArrow(new Arrow(this.getX(), this.getY(), this.direction, true));
-			System.out.println("shooting");
-			projectileCooldown = 300;
-			}
-			
+		if(arrowCount > maxArrows)
+		{
+			arrowCount = maxArrows;
 		}
+		
+		if(input.isKeyDown(Input.KEY_SPACE))
+		{
+			if(arrowCount != 0)
+			{
+				arrowCount -= 1;
+				Arrow arrow = new Arrow(this.dungeon, this.getRoomyX(), this.getRoomyY(), this.getTileyX(), this.getTileyY());
+				arrow.setPosition(this.x, this.y);
+				arrows.add(arrow);
+			}
+		}
+		
+		// update arrows
+		for (int i = 0; i < arrows.size(); i++) 
+			{
+				arrows.get(i).update();
+				Tile tile = dungeon.getTile(arrows.get(i).getX() - getHitboxWidth()/ 2, arrows.get(i).getY() - getHitboxHeight()/ 2);
+				System.out.println(" the arrow's topleft tile is: " + tile.getX() +"x"+ tile.getY());
+				if(arrows.get(i).shouldRemove()) 
+				{
+					arrows.remove(i);
+					i--;
+				}
+			}
 		
 		if(projectileCooldown > 0){
 			projectileCooldown -= delta;
@@ -234,7 +272,18 @@ public class Hero extends Entity
 				hit(e.getDamage());
 				e.maximumVelocity = .3f;
 			}
+			
+			for(int j = 0; j < arrows.size(); j++) 
+			{
+				if(arrows.get(j).intersects(e)) {
+					e.hit(arrowDamage);
+					arrows.get(j).setHit();
+					break;
+				}
+			}
 		}
+		
+		
 	}
 	
 	public int getHealth()
@@ -253,45 +302,45 @@ public class Hero extends Entity
 	}
 	
 	// projectile Manager
-	public static class ProjectileController {
-		
-		private LinkedList<Arrow> quiver = new LinkedList<Arrow>();
-			
-			 static Arrow TempArrow;
-			
-			Dungeon dungeon;
-			
-			public void update(int delta) {
-				 for(int i = 0; i < quiver.size(); i++) {
-					 TempArrow = quiver.get(i);
-					 
-					 if(TempArrow.getY() < 0)
-						 removeArrow(TempArrow);
-					 
-					 TempArrow.update(delta);
-					 System.out.println("arrows coord: " + TempArrow.getX() + " , " + TempArrow.getY());
-				 }
-			}
-			
-			public void render (Graphics g, Camera camera) {
-				for (int i = 0; i < quiver.size(); i++) {
-					quiver.get(i).render(g, camera);
-				}
-			}
-			
-			public void addArrow(Arrow block) {
-				quiver.add(block);
-			}
-			
-			public void removeArrow(Arrow block) {
-				quiver.remove(block);
-			}
-			
-			public int getQuiverSize(){
-				return quiver.size();
-			}
-
-		}
+//	public static class ProjectileController {
+//		
+//		private LinkedList<Arrow> quiver = new LinkedList<Arrow>();
+//			
+//			 static Arrow TempArrow;
+//			
+//			Dungeon dungeon;
+//			
+//			public void update(int delta) {
+//				 for(int i = 0; i < quiver.size(); i++) {
+//					 TempArrow = quiver.get(i);
+//					 
+//					 if(TempArrow.getY() < 0)
+//						 removeArrow(TempArrow);
+//					 
+//					 TempArrow.update(delta);
+//					 System.out.println("arrows coord: " + TempArrow.getX() + " , " + TempArrow.getY());
+//				 }
+//			}
+//			
+//			public void render (Graphics g, Camera camera) {
+//				for (int i = 0; i < quiver.size(); i++) {
+//					quiver.get(i).render(g, camera);
+//				}
+//			}
+//			
+//			public void addArrow(Arrow block) {
+//				quiver.add(block);
+//			}
+//			
+//			public void removeArrow(Arrow block) {
+//				quiver.remove(block);
+//			}
+//			
+//			public int getQuiverSize(){
+//				return quiver.size();
+//			}
+//
+//		}
 
 	
 	private float speed = 0.25f;

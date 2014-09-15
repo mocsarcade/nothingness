@@ -223,6 +223,11 @@ public abstract class Entity
 		   int topRow = (int)(y - getHitboxHeight()/ 2);
 		   int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1);
 		   
+		   if(this instanceof Arrow)
+		   {
+			   System.out.println(leftColumn + "x" + topRow);
+		   }
+		   
 		   topLeft = dungeon.getTile(leftColumn, topRow).isBlocked;
 		   topRight = dungeon.getTile(rightColumn, topRow).isBlocked;
 		   bottomLeft = dungeon.getTile(leftColumn, bottomRow).isBlocked;
