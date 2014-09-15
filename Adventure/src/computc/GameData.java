@@ -16,7 +16,7 @@ public class GameData
 	
 	public void instantiate() throws SlickException
 	{
-		this.dungeon = new OneRoomDungeon();
+		this.dungeon = new RandomZeldaesqueDungeon();
 		this.hero = new Hero(dungeon, 5, 4);
 	}
 }

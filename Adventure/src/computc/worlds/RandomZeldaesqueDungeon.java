@@ -27,7 +27,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 			}
 			else
 			{
-				//uh oh! dead end!
+				throw new DungeonException(); //is a dead end.
 			}
 		}
 	}
