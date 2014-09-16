@@ -21,11 +21,11 @@ public class Hero extends Entity
 	
 	private int projectileCooldown = 0;
 	
-	private int arrowCount;
+	public int arrowCount;
 	private int maxArrows;
 	
 	private int arrowDamage;
-	private ArrayList<Arrow> arrows;
+	public ArrayList<Arrow> arrows;
 	
 	protected boolean firing;
 	protected boolean swinging;
@@ -47,7 +47,7 @@ public class Hero extends Entity
 		facingRight = true; 
 		facingDown = true;
 		
-		this.arrowCount = this.maxArrows = 25;
+		this.arrowCount = this.maxArrows = 300;
 		arrowDamage = 2;
 		arrows = new ArrayList<Arrow>();
 		
@@ -63,19 +63,19 @@ public class Hero extends Entity
 	
 	public void render(Graphics graphics, Camera camera)
 	{
+	
+		// draw arrows
+		for(int i = 0; i < arrows.size(); i++)
+		{
+			arrows.get(i).render(graphics, camera);
+		}
+		
 		if(blinking) 
 		{
 			if(blinkCooldown % 4 == 0) 
 			{
 				return;
 			}
-		}
-		
-		// draw arrows
-		for(int i = 0; i < arrows.size(); i++)
-		{
-			arrows.get(i).render(graphics, camera);
-			System.out.println("this is happening");
 		}
 			
 		super.render(graphics, camera);
@@ -110,17 +110,6 @@ public class Hero extends Entity
 		if(arrowCount > maxArrows)
 		{
 			arrowCount = maxArrows;
-		}
-		
-		if(input.isKeyDown(Input.KEY_SPACE))
-		{
-			if(arrowCount != 0)
-			{
-				arrowCount -= 1;
-				Arrow arrow = new Arrow(this.dungeon, this.getRoomyX(), this.getRoomyY(), this.getTileyX(), this.getTileyY(), facingDown, facingRight);
-				arrow.setPosition(this.x, this.y);
-				arrows.add(arrow);
-			}
 		}
 		
 		// update arrows
@@ -255,26 +244,30 @@ public class Hero extends Entity
 		
 			if(input.isKeyDown(Input.KEY_UP))
 				{
-					this.direction = Direction.NORTH;
-//					this.y -= step;
+				this.direction = Direction.NORTH;
+				facingDown = false;
+//				this.y -= step;
 				}
 			else if(input.isKeyDown(Input.KEY_DOWN))
 				{
 				this.direction = Direction.SOUTH;
+				facingDown = true;
 //				this.y += step;
 				}
 		
-			else if(input.isKeyDown(Input.KEY_LEFT))
+			if(input.isKeyDown(Input.KEY_LEFT))
 				{
 				this.direction = Direction.WEST;
+				facingRight = false;
 //				this.x -= step;
 				}
 			else if(input.isKeyDown(Input.KEY_RIGHT))
 				{
 				this.direction = Direction.EAST;
+				facingRight = true;
 //				this.x += step;
 				}
-			else this.direction = null;
+			
 	}
 	
 	private void hit(int damage)
@@ -356,46 +349,6 @@ public class Hero extends Entity
 		dead = false;
 	}
 	
-	// projectile Manager
-//	public static class ProjectileController {
-//		
-//		private LinkedList<Arrow> quiver = new LinkedList<Arrow>();
-//			
-//			 static Arrow TempArrow;
-//			
-//			Dungeon dungeon;
-//			
-//			public void update(int delta) {
-//				 for(int i = 0; i < quiver.size(); i++) {
-//					 TempArrow = quiver.get(i);
-//					 
-//					 if(TempArrow.getY() < 0)
-//						 removeArrow(TempArrow);
-//					 
-//					 TempArrow.update(delta);
-//					 System.out.println("arrows coord: " + TempArrow.getX() + " , " + TempArrow.getY());
-//				 }
-//			}
-//			
-//			public void render (Graphics g, Camera camera) {
-//				for (int i = 0; i < quiver.size(); i++) {
-//					quiver.get(i).render(g, camera);
-//				}
-//			}
-//			
-//			public void addArrow(Arrow block) {
-//				quiver.add(block);
-//			}
-//			
-//			public void removeArrow(Arrow block) {
-//				quiver.remove(block);
-//			}
-//			
-//			public int getQuiverSize(){
-//				return quiver.size();
-//			}
-//
-//		}
 
 	
 	private float speed = 0.25f;

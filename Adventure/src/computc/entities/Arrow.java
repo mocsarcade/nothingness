@@ -21,33 +21,37 @@ public class Arrow extends Entity
     
     Image arrows = new Image("res/arrowSpriteSheet.png");
 	
-	public Arrow(Dungeon dungeon, int rx, int ry, int tx, int ty, boolean down, boolean right) throws SlickException
+	public Arrow(Dungeon dungeon, int rx, int ry, int tx, int ty, Direction direction) throws SlickException
 	{
 		super(dungeon, rx, ry, tx, ty);
 		
+		this.direction = direction;
+		
 		this.dungeon = dungeon;
 		
-		facingRight = right; facingDown = down;
+		System.out.println(" down is: " + down + " , and right is: " + right );
 		
-		this.acceleration = 2f;
+//		facingRight = right; facingDown = down;
 		
-		if(right)
-		{
-			dx = acceleration;
-		}
-		else if(left)
-		{
-			dx = - acceleration;
-		}
+		this.acceleration = 5f;
 		
-		if(down)
-		{
-			dy = acceleration;
-		}
-		else if(up)
+		if(direction == Direction.NORTH)
 		{
 			dy = -acceleration;
 		}
+		else if(direction == Direction.SOUTH)
+		{
+			dy = acceleration;
+		}
+		else if(direction == Direction.EAST)
+		{
+			dx = acceleration;
+		}
+		else if(direction == Direction.WEST)
+		{
+			dx = -acceleration;
+		}
+		
 		
 		this.image = arrows.getSubImage(1, 1, 30, 30);
 	}
@@ -57,7 +61,12 @@ public class Arrow extends Entity
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
-		if(dx == 0 && !hit)
+		if(dx == 0 && !hit && (this.direction == Direction.EAST || this.direction == Direction.WEST))
+		{
+			setHit();
+		}
+		
+		if(dy == 0 && !hit && (this.direction == Direction.NORTH || this.direction == Direction.SOUTH))
 		{
 			setHit();
 		}
@@ -66,6 +75,8 @@ public class Arrow extends Entity
 		{
 			remove = true;
 		}
+		
+		System.out.println("the arrow dx is: " + this.dx);
 	}
 	
 	public void setHit() 

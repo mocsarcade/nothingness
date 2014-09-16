@@ -14,6 +14,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import computc.Camera;
 import computc.Game;
 import computc.Menu;
+import computc.entities.Arrow;
 import computc.entities.Hero;
 import computc.entities.OldMan;
 import computc.worlds.Dungeon;
@@ -110,6 +111,42 @@ public class MainGameState extends BasicGameState
 			graphics.drawString("Main Menu (M)", Room.WIDTH/3, Room.HEIGHT/3 + 35);
 			graphics.drawString("Quit Game (Q)", Room.WIDTH/3, Room.HEIGHT/3 + 50);
 		}*/
+	}
+	
+	@Override
+	public void keyReleased(int k, char c)
+	{
+		
+		if(k == Input.KEY_UP)
+		{
+		}
+		if(k == Input.KEY_DOWN)
+		{
+		}
+		if(k == Input.KEY_LEFT)
+		{
+		}
+		if(k == Input.KEY_RIGHT)
+		{
+		}
+		
+		if(k == Input.KEY_SPACE)
+		{
+			if(hero.arrowCount != 0)
+			{
+				hero.arrowCount -= 1;
+				Arrow arrow;
+				try {
+					arrow = new Arrow(this.dungeon, this.hero.getRoomyX(), this.hero.getRoomyY(), this.hero.getTileyX(), this.hero.getTileyY(), this.hero.getDirection());
+					arrow.setPosition(this.hero.getX(), this.hero.getY());
+					hero.arrows.add(arrow);
+				} catch (SlickException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+		}
 	}
 	
 	public int getID()

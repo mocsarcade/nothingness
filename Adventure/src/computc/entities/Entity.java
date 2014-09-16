@@ -248,14 +248,6 @@ public abstract class Entity
 		   int topRow = (int)(y - getHitboxHeight()/ 2);
 		   int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1);
 		   
-		   if(this instanceof Arrow)
-		   {
-			   System.out.println(leftColumn + "x" + topRow);
-			   System.out.println("the arrow x & y is: " + this.getX() + " , " + this.getY());
-			   System.out.println(this.getRoom().getTile(this.getRoomPositionX(), this.getRoomPositionY()).isBlocked);
-			   System.out.println("blah test" + dungeon.getTile(this.getX(), this.getY()).isBlocked);
-		   }
-		   
 		   topLeft = dungeon.getTile(leftColumn, topRow).isBlocked;
 		   topRight = dungeon.getTile(rightColumn, topRow).isBlocked;
 		   bottomLeft = dungeon.getTile(leftColumn, bottomRow).isBlocked;
