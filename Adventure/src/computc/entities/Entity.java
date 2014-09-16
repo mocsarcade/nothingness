@@ -1,5 +1,6 @@
 package computc.entities;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.Graphics;
@@ -20,6 +21,11 @@ public abstract class Entity
 	// position
 	protected float x;
 	protected float y;
+	
+	// actions
+	protected Animation animation;
+	protected int currentAction;
+	protected int previousAction;
 	
 	// movement
 	protected Vector2f step;
@@ -52,6 +58,10 @@ public abstract class Entity
 	protected int currentHealth;
 	protected int maximumHealth;
 	protected int justHit = 0;
+	
+	protected boolean facingRight;
+	protected boolean facingDown;
+
 	
 	public Entity(Dungeon dungeon, int rx, int ry, int tx, int ty)
 	{
@@ -157,6 +167,16 @@ public abstract class Entity
 		return (int)(Math.floor(this.y / Room.HEIGHT));
 	}
 	
+	public float getRoomPositionX()
+	{
+		return this.x - (Room.WIDTH * this.getRoomyX());
+	}
+	
+	public float getRoomPositionY()
+	{
+		return this.y - (Room.HEIGHT * this.getRoomyY());
+	}
+	
 	public void setX(float x)
 	{
 		this.x = x;
@@ -175,6 +195,11 @@ public abstract class Entity
 	public int getHeight()
 	{
 		return this.image.getHeight();
+	}
+	
+	public Room getRoom()
+	{
+		return dungeon.getRoom(this.getRoomyX(), this.getRoomyY());
 	}
 	
 	public int getHalfWidth()
@@ -226,6 +251,9 @@ public abstract class Entity
 		   if(this instanceof Arrow)
 		   {
 			   System.out.println(leftColumn + "x" + topRow);
+			   System.out.println("the arrow x & y is: " + this.getX() + " , " + this.getY());
+			   System.out.println(this.getRoom().getTile(this.getRoomPositionX(), this.getRoomPositionY()).isBlocked);
+			   System.out.println("blah test" + dungeon.getTile(this.getX(), this.getY()).isBlocked);
 		   }
 		   
 		   topLeft = dungeon.getTile(leftColumn, topRow).isBlocked;

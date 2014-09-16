@@ -35,10 +35,12 @@ public class Tile
 		else if(this.isStairs)
 		{
 			Tile.STAIR_IMAGE.draw(x,y);
+			this.isBlocked = false;
 		}
 		else
 		{
 			Tile.FLOOR_IMAGE.draw(x, y);
+			this.isBlocked = false;
 		}
 	}
 	

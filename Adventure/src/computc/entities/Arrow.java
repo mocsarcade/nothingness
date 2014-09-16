@@ -21,11 +21,13 @@ public class Arrow extends Entity
     
     Image arrows = new Image("res/arrowSpriteSheet.png");
 	
-	public Arrow(Dungeon dungeon, int rx, int ry, int tx, int ty) throws SlickException
+	public Arrow(Dungeon dungeon, int rx, int ry, int tx, int ty, boolean down, boolean right) throws SlickException
 	{
 		super(dungeon, rx, ry, tx, ty);
 		
-		right = true; down = true;
+		this.dungeon = dungeon;
+		
+		facingRight = right; facingDown = down;
 		
 		this.acceleration = 2f;
 		
@@ -33,7 +35,7 @@ public class Arrow extends Entity
 		{
 			dx = acceleration;
 		}
-		else 
+		else if(left)
 		{
 			dx = - acceleration;
 		}
@@ -42,7 +44,7 @@ public class Arrow extends Entity
 		{
 			dy = acceleration;
 		}
-		else 
+		else if(up)
 		{
 			dy = -acceleration;
 		}
@@ -52,8 +54,8 @@ public class Arrow extends Entity
 	
 	public void update()
 	{
-//		checkTileMapCollision();
-//		setPosition(xtemp, ytemp);
+		checkTileMapCollision();
+		setPosition(xtemp, ytemp);
 		
 		if(dx == 0 && !hit)
 		{

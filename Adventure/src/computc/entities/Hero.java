@@ -3,6 +3,7 @@ package computc.entities;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -23,9 +24,16 @@ public class Hero extends Entity
 	private int arrowCount;
 	private int maxArrows;
 	
-	private boolean firing;
 	private int arrowDamage;
 	private ArrayList<Arrow> arrows;
+	
+	protected boolean firing;
+	protected boolean swinging;
+	private int swingDamage;
+	private int swingRange;
+	
+	// actions 
+	private Animation sprite, firingArrow, meleeSwing, idle;
 	
 	public Hero(Dungeon dungeon, Room room, int tx, int ty) throws SlickException
 	{
@@ -36,11 +44,19 @@ public class Hero extends Entity
 		this.deacceleration = 0.02f;
 		this.maximumVelocity = 3f;
 		
+		facingRight = true; 
+		facingDown = true;
+		
 		this.arrowCount = this.maxArrows = 25;
 		arrowDamage = 2;
 		arrows = new ArrayList<Arrow>();
 		
 		this.currentHealth = this.maximumHealth = 3;
+		
+		swingDamage = 2;
+		swingRange = 32;
+		
+		sprite = idle;
 		
 		this.image = new Image("res/hero.png");
 	}
@@ -59,7 +75,7 @@ public class Hero extends Entity
 		for(int i = 0; i < arrows.size(); i++)
 		{
 			arrows.get(i).render(graphics, camera);
-//			System.out.println("this is happening");
+			System.out.println("this is happening");
 		}
 			
 		super.render(graphics, camera);
@@ -101,7 +117,7 @@ public class Hero extends Entity
 			if(arrowCount != 0)
 			{
 				arrowCount -= 1;
-				Arrow arrow = new Arrow(this.dungeon, this.getRoomyX(), this.getRoomyY(), this.getTileyX(), this.getTileyY());
+				Arrow arrow = new Arrow(this.dungeon, this.getRoomyX(), this.getRoomyY(), this.getTileyX(), this.getTileyY(), facingDown, facingRight);
 				arrow.setPosition(this.x, this.y);
 				arrows.add(arrow);
 			}
@@ -111,8 +127,6 @@ public class Hero extends Entity
 		for (int i = 0; i < arrows.size(); i++) 
 			{
 				arrows.get(i).update();
-				Tile tile = dungeon.getTile(arrows.get(i).getX() - getHitboxWidth()/ 2, arrows.get(i).getY() - getHitboxHeight()/ 2);
-				System.out.println(" the arrow's topleft tile is: " + tile.getX() +"x"+ tile.getY());
 				if(arrows.get(i).shouldRemove()) 
 				{
 					arrows.remove(i);
@@ -122,6 +136,29 @@ public class Hero extends Entity
 		
 		if(projectileCooldown > 0){
 			projectileCooldown -= delta;
+		}
+		
+		// set Animation
+		if(swinging) 
+		{
+			if(sprite != meleeSwing) 
+			{
+				sprite = meleeSwing;
+			}
+		}
+		else if(firing) 
+		{
+			if(sprite != firingArrow) 
+			{
+				sprite = firingArrow;
+			}
+		}
+		
+		// set direction
+		if(sprite != meleeSwing && sprite != firingArrow) 
+		{
+			if(this.direction == Direction.EAST) facingRight = true;
+			if(this.direction == Direction.WEST) facingRight = false;
 		}
 	
 		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).visited = true;
@@ -227,16 +264,17 @@ public class Hero extends Entity
 //				this.y += step;
 				}
 		
-			if(input.isKeyDown(Input.KEY_LEFT))
+			else if(input.isKeyDown(Input.KEY_LEFT))
 				{
 				this.direction = Direction.WEST;
 //				this.x -= step;
 				}
 			else if(input.isKeyDown(Input.KEY_RIGHT))
-			{
+				{
 				this.direction = Direction.EAST;
 //				this.x += step;
-			}
+				}
+			else this.direction = null;
 	}
 	
 	private void hit(int damage)
@@ -267,6 +305,25 @@ public class Hero extends Entity
 		for(int i = 0; i < enemies.size(); i++)
 		{
 			Enemy e = enemies.get(i);
+			
+			if(swinging) 
+			{
+				if(facingRight) 
+				{
+					if(e.getX() > x && e.getX() < x + swingRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
+					{
+						e.hit(swingDamage);
+					}
+				}
+				else 
+				{
+					if( e.getX() > x && e.getX() < x + swingRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
+					{
+						e.hit(swingDamage);
+					}
+				}
+			}
+			
 			if(intersects(e))
 			{
 				hit(e.getDamage());
@@ -282,8 +339,6 @@ public class Hero extends Entity
 				}
 			}
 		}
-		
-		
 	}
 	
 	public int getHealth()
