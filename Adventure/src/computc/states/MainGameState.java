@@ -76,6 +76,7 @@ public class MainGameState extends BasicGameState
 			{
 				Game.reset = true;
 				this.hero = new Hero(dungeon, dungeon.getRoom(3, 0), 5, 1);
+				this.menu = new Menu(dungeon, hero);
 				this.camera = new Camera(hero);
 				this.hero.setAlive();
 			}

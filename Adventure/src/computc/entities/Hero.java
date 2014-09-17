@@ -65,11 +65,14 @@ public class Hero extends Entity
 		this.swingingImage = new Image("res/heroMelee.png");
 		
 		this.meleeSwing = new Animation(new SpriteSheet(swingingImage, 48, 48), 500);
+		
+		this.direction = Direction.SOUTH;
 	}
 	
 	public void render(Graphics graphics, Camera camera)
 	{
 		super.render(graphics, camera);
+		
 		// draw arrows
 		for(int i = 0; i < arrows.size(); i++)
 		{
@@ -331,7 +334,7 @@ public class Hero extends Entity
 				}
 				else 
 				{
-					if( e.getX() > x && e.getX() < x + meleeRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
+					if( e.getX() < x && e.getX() > x - meleeRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
 					{
 						e.hit(meleeDamage);
 					}

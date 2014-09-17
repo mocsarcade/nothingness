@@ -29,10 +29,6 @@ public class Arrow extends Entity
 		
 		this.dungeon = dungeon;
 		
-		System.out.println(" down is: " + down + " , and right is: " + right );
-		
-//		facingRight = right; facingDown = down;
-		
 		this.acceleration = 5f;
 		
 		if(direction == Direction.NORTH)
@@ -75,8 +71,6 @@ public class Arrow extends Entity
 		{
 			remove = true;
 		}
-		
-		System.out.println("the arrow dx is: " + this.dx);
 	}
 	
 	public void setHit() 
@@ -101,6 +95,11 @@ public class Arrow extends Entity
 	public float getY() 
 	{
 		return y;
+	}
+	
+	public Image getImage()
+	{
+		return this.image;
 	}
 
 }
