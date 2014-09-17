@@ -120,6 +120,7 @@ public class Dungeon
 		{
 			Enemy e = thugs.get(i);
 			e.update(delta);
+			System.out.println("the enemy's health is: " + e.getHealth());
 				if(e.isDead())
 				{
 					thugs.remove(i);

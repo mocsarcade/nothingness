@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 import computc.Camera;
 import computc.Direction;
@@ -29,8 +30,10 @@ public class Hero extends Entity
 	
 	protected boolean firing;
 	protected boolean swinging;
-	private int swingDamage;
-	private int swingRange;
+	private int meleeDamage;
+	private int meleeRange;
+	
+	private Image swingingImage;
 	
 	// actions 
 	private Animation sprite, firingArrow, meleeSwing, idle;
@@ -53,17 +56,20 @@ public class Hero extends Entity
 		
 		this.currentHealth = this.maximumHealth = 3;
 		
-		swingDamage = 2;
-		swingRange = 32;
+		meleeDamage = 3;
+		meleeRange = 64;
 		
 		sprite = idle;
 		
-		this.image = new Image("res/hero.png");
+		this.image = new Image("res/hero.png"); 
+		this.swingingImage = new Image("res/heroMelee.png");
+		
+		this.meleeSwing = new Animation(new SpriteSheet(swingingImage, 48, 48), 500);
 	}
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-	
+		super.render(graphics, camera);
 		// draw arrows
 		for(int i = 0; i < arrows.size(); i++)
 		{
@@ -77,8 +83,12 @@ public class Hero extends Entity
 				return;
 			}
 		}
-			
-		super.render(graphics, camera);
+		
+		if(swinging)
+		{
+			meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		
 	}
 	
 	public void update(Input input, int delta) throws SlickException
@@ -94,6 +104,17 @@ public class Hero extends Entity
 		else
 		{
 			maximumVelocity = 3f;
+		}
+		
+		// Check if the attack has stopped
+		if(swinging) 
+		{
+			meleeSwing.setLooping(false);
+			if(meleeSwing.isStopped())
+			{
+				swinging = false;
+				meleeSwing.restart();
+			}
 		}
 		
 
@@ -303,16 +324,16 @@ public class Hero extends Entity
 			{
 				if(facingRight) 
 				{
-					if(e.getX() > x && e.getX() < x + swingRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
+					if(e.getX() > x && e.getX() < x + meleeRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
 					{
-						e.hit(swingDamage);
+						e.hit(meleeDamage);
 					}
 				}
 				else 
 				{
-					if( e.getX() > x && e.getX() < x + swingRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
+					if( e.getX() > x && e.getX() < x + meleeRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
 					{
-						e.hit(swingDamage);
+						e.hit(meleeDamage);
 					}
 				}
 			}
@@ -349,6 +370,14 @@ public class Hero extends Entity
 		dead = false;
 	}
 	
+	public void setFiring()
+	{
+		firing = true;
+	}
+	public void setSwinging()
+	{
+		swinging = true;
+	}
 
 	
 	private float speed = 0.25f;

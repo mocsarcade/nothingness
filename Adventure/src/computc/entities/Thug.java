@@ -6,6 +6,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
+import computc.Camera;
 import computc.worlds.Dungeon;
 import computc.worlds.Room;
 
@@ -26,7 +27,7 @@ public class Thug extends Enemy
 		this.deacceleration = 0.001f;
 		this.maximumVelocity = 0.03f;
 		
-		this.currentHealth = this.maximumHealth = 3;
+		this.health = this.maximumHealth = 5;
 		
 		right = true; down = true;
 	}
@@ -61,14 +62,16 @@ public class Thug extends Enemy
 		}
 		
 		// check blinking
-		if(blinking)
+		if (blinkCooldown > 0)
 		{
-			long elapsed = (System.nanoTime() - blinkCooldown) / 1000000;
-			if(elapsed > 400)
-		{
-				blinking = false;
+			blinkCooldown --;
 		}
-	}
+		
+		if(blinkCooldown == 0)
+		{
+			blinking = false;
+		}
+	
 	}
 	
 	private void getNextPosition(int delta) 
@@ -113,5 +116,16 @@ public class Thug extends Enemy
 			dy *= delta;
 		}	
 	}
-
+	
+	public void render(Graphics graphics, Camera camera)
+	{
+		if(blinking) 
+		{
+			if(blinkCooldown % 4 == 0) 
+			{
+				return;
+			}
+		}
+		super.render(graphics, camera);
+	}
 }

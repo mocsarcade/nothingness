@@ -114,6 +114,15 @@ public class MainGameState extends BasicGameState
 	}
 	
 	@Override
+	public void keyPressed(int k, char c)
+	{
+		if(k == Input.KEY_B)
+		{
+			hero.setSwinging();
+		}
+	}
+	
+	@Override
 	public void keyReleased(int k, char c)
 	{
 		
@@ -141,7 +150,6 @@ public class MainGameState extends BasicGameState
 					arrow.setPosition(this.hero.getX(), this.hero.getY());
 					hero.arrows.add(arrow);
 				} catch (SlickException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				
