@@ -9,6 +9,6 @@ public enum Direction
 	public static Direction getRandom()
 	{
 		Direction[] directions = Direction.values();
-		return directions[new Random().nextInt(directions.length)];
+		return directions[Game.randomness.nextInt(directions.length)];
 	}
 }

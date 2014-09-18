@@ -19,6 +19,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import computc.Direction;
+import computc.Game;
 import computc.cameras.Camera;
 import computc.entities.Thug;
 
@@ -577,9 +578,8 @@ public class Room
 	 */
 	public static String getRandomLayout()
 	{
-		Random random = new Random();
 		File[] list = new File("./res/rooms/").listFiles();
-		return "./res/rooms/" + list[random.nextInt(list.length)].getName();
+		return "./res/rooms/" + list[Game.randomness.nextInt(list.length)].getName();
 	}
 	
 	public final static int TILEY_WIDTH = 11;

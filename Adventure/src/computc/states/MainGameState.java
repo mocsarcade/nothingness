@@ -41,7 +41,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.instantiate();
 		
 		this.menu = new Menu(this.gamedata.dungeon, this.gamedata.hero);
-		this.camera = new RoomFollowingCamera(this.gamedata.hero);
+		this.camera = new RoomFollowingCamera(this.gamedata);
 		
 		Tile.WALL_IMAGE = new Image("./res/wall.png");
 		Tile.FLOOR_IMAGE = new Image("./res/floor.png");
