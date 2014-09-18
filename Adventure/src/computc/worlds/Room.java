@@ -83,7 +83,7 @@ public class Room
 					int x = element.getAttribute("x").getIntValue() + (48 / 2);
 					int y = element.getAttribute("y").getIntValue() - (48 / 2);
 					
-					this.dungeon.entities.add(new Thug(this.dungeon, this, x, y));
+					this.dungeon.enemies.add(new Thug(this.dungeon, this, x, y));
 				}
 			}
 		}

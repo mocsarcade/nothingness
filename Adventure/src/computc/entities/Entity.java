@@ -1,3 +1,4 @@
+
 package computc.entities;
 
 import org.newdawn.slick.Color;
@@ -53,6 +54,9 @@ public abstract class Entity
 	protected int currentHealth;
 	protected int maximumHealth;
 	protected int justHit = 0;
+	
+	protected boolean facingRight;
+	protected boolean facingDown;
 	
 	public Entity(Dungeon dungeon, float x, float y)
 	{
@@ -190,6 +194,16 @@ public abstract class Entity
 		return (int)(Math.floor(this.y / Room.HEIGHT));
 	}
 	
+	public float getRoomPositionX()
+	{
+		return this.x - (Room.WIDTH * this.getRoomyX());
+	}
+	
+	public float getRoomPositionY()
+	{
+		return this.y - (Room.HEIGHT * this.getRoomyY());
+	}
+	
 	public void setX(float x)
 	{
 		this.x = x;
@@ -208,6 +222,11 @@ public abstract class Entity
 	public int getHeight()
 	{
 		return this.image.getHeight();
+	}
+	
+	public Room getRoom()
+	{
+		return dungeon.getRoom(this.getRoomyX(), this.getRoomyY());
 	}
 	
 	public int getHalfWidth()
@@ -331,4 +350,5 @@ public abstract class Entity
 		}
 		else return false;
 	 	}
+
 }

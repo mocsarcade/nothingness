@@ -51,5 +51,11 @@ public abstract class Enemy extends Entity
 		}
 		
 		blinking = true;
+		blinkCooldown = 50;
+	}
+	
+	public int getHealth()
+	{
+		return health;
 	}
 }

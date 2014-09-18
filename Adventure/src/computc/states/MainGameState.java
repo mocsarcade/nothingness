@@ -1,3 +1,4 @@
+
 package computc.states;
 
 import org.newdawn.slick.Animation;
@@ -16,6 +17,7 @@ import computc.GameData;
 import computc.Menu;
 import computc.cameras.Camera;
 import computc.cameras.RoomFollowingCamera;
+import computc.entities.Arrow;
 import computc.entities.Hero;
 import computc.entities.OldMan;
 import computc.worlds.Dungeon;
@@ -53,6 +55,9 @@ public class MainGameState extends BasicGameState
 		this.gamedata.hero.update(input, delta);
 		this.menu.update(input, game);
 		this.camera.update(input, delta);
+		
+		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
+		this.gamedata.dungeon.update(delta);
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
@@ -62,10 +67,57 @@ public class MainGameState extends BasicGameState
 		this.menu.render(graphics, this.camera);
 	}
 	
+	@Override
+	public void keyPressed(int k, char c)
+	{
+		if(k == Input.KEY_B)
+		{
+			this.gamedata.hero.setSwinging();
+		}
+	}
+	
+	@Override
+	public void keyReleased(int k, char c)
+	{
+		
+		if(k == Input.KEY_UP)
+		{
+		}
+		if(k == Input.KEY_DOWN)
+		{
+		}
+		if(k == Input.KEY_LEFT)
+		{
+		}
+		if(k == Input.KEY_RIGHT)
+		{
+		}
+		
+		if(k == Input.KEY_SPACE)
+		{
+			if(this.gamedata.hero.arrowCount != 0)
+			{
+				this.gamedata.hero.arrowCount -= 1;
+				Arrow arrow;
+				try 
+				{
+					arrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
+					arrow.setPosition(this.gamedata.hero.getX(), this.gamedata.hero.getY());
+					this.gamedata.hero.arrows.add(arrow);
+				} catch (SlickException e) 
+				{
+					e.printStackTrace();
+				}
+				
+			}
+		}
+	}
+	
 	public int getID()
 	{
 		return MainGameState.ID;
 	}
 	
 	public static final int ID = 0;
+
 }
