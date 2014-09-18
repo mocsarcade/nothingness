@@ -1,15 +1,15 @@
-package computc;
+package computc.cameras;
+
+import org.newdawn.slick.Input;
 
 import computc.entities.Entity;
 import computc.worlds.Room;
 
-public class Camera
+public class RoomFollowingCamera extends Camera
 {
-	private float x, y;
-	private Entity target;
-	private float speed = 1f;
+	protected Entity target;
 	
-	public Camera(Entity target)
+	public RoomFollowingCamera(Entity target)
 	{
 		this.target = target;
 		
@@ -17,7 +17,7 @@ public class Camera
 		this.y = this.getTargetY();
 	}
 	
-	public void update(int delta)
+	public void update(Input input, int delta)
 	{
 		if(this.getX() < this.getTargetX())
 		{
@@ -56,36 +56,6 @@ public class Camera
 				this.setToTargetY();
 			}
 		}
-	}
-	
-	public int getX()
-	{
-		return (int)(this.x);
-	}
-	
-	public int getY()
-	{
-		return (int)(this.y);
-	}
-	
-	public void increaseX(int amount)
-	{
-		this.x += amount;
-	}
-	
-	public void decreaseX(int amount)
-	{
-		this.x -= amount;
-	}
-	
-	public void increaseY(int amount)
-	{
-		this.y += amount;
-	}
-	
-	public void decreaseY(int amount)
-	{
-		this.y -= amount;
 	}
 	
 	public void setToTargetX()

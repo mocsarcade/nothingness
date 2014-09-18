@@ -5,9 +5,10 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import computc.Camera;
+import computc.cameras.Camera;
 import computc.Direction;
 import computc.worlds.Dungeon;
+import computc.worlds.Room;
 
 public class Arrow extends Entity
 {
@@ -21,9 +22,9 @@ public class Arrow extends Entity
     
     Image arrows = new Image("res/arrowSpriteSheet.png");
 	
-	public Arrow(Dungeon dungeon, int rx, int ry, int tx, int ty, Direction direction) throws SlickException
+	public Arrow(Dungeon dungeon, Room room, int tx, int ty, Direction direction) throws SlickException
 	{
-		super(dungeon, rx, ry, tx, ty);
+		super(dungeon, room, tx, ty);
 		
 		this.direction = direction;
 		

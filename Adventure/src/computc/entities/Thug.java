@@ -1,3 +1,4 @@
+
 package computc.entities;
 
 import org.newdawn.slick.Graphics;
@@ -6,7 +7,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
-import computc.Camera;
+import computc.cameras.Camera;
 import computc.worlds.Dungeon;
 import computc.worlds.Room;
 
@@ -14,9 +15,9 @@ public class Thug extends Enemy
 {
 	public static boolean hit = false;
 	
-	public Thug(Dungeon dungeon, int tx, int ty) throws SlickException 
+	public Thug(Dungeon dungeon, Room room, float x, float y) throws SlickException 
 	{
-		super(dungeon, (int)(Math.floor(tx / Room.WIDTH)), (int)(Math.floor(ty / Room.HEIGHT)), tx - ((int)(Math.floor(tx / Room.WIDTH)) * Room.TILEY_WIDTH), ty - ((int)(Math.floor(ty / Room.HEIGHT)) * Room.TILEY_HEIGHT));
+		super(dungeon, room, x, y);
 		
 		this.dungeon = dungeon;
 		

@@ -1,55 +1,98 @@
 package computc.worlds;
 
+import java.util.List;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Random;
 
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.XMLOutputter;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
-import computc.Camera;
 import computc.Direction;
+import computc.cameras.Camera;
+import computc.entities.Thug;
 
 public class Room
 {
 	private int rx, ry;
-	private Tile[][] tiles;
+	private String layout;
 	private Dungeon dungeon;
-	
-	public boolean visited;
 	
 	public Room westernRoom;
 	public Room easternRoom;
 	public Room southernRoom;
 	public Room northernRoom;
 	
+	public boolean visited = false;
+	
+	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
+	
 	public Room(Dungeon dungeon, int rx, int ry) throws SlickException
+	{
+		this(dungeon, rx, ry, null);
+	}
+
+	public Room(Dungeon dungeon, int rx, int ry, String layout) throws SlickException
 	{
 		this.dungeon = dungeon;
 		
 		this.rx = rx;
 		this.ry = ry;
 		
-		this.tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
-		
-		//this.loadLayout(Room.getRandomLayout());
-	}
-	
-	public void loadLayout(String layout) throws SlickException
-	{
-		TiledMap tmx = new TiledMap(layout);
-		
-		for(int tx = 0; tx < this.getTileyWidth(); tx++)
+		if(layout == null)
 		{
-			for(int ty = 0; ty < this.getTileyHeight(); ty++)
+			this.layout = Room.getRandomLayout();
+		}
+		else
+		{
+			this.layout = "./res/rooms/" + layout + ".room.tmx";
+		}
+		
+		try
+		{
+			Document tmx = new SAXBuilder().build(this.layout);
+			
+			List<Element> tilelayer = tmx.getRootElement().getChild("layer").getChild("data").getChildren();
+			List<Element> objectgroup = tmx.getRootElement().getChild("objectgroup").getChildren();
+			
+			for(int tx = 0; tx < this.getTileyWidth(); tx++)
 			{
-				int tid = tmx.getTileId(tx, ty, 0);
-				Tile tile = new Tile(this, tx, ty);
-				tile.isBlocked = (tid == 1);
-				
-				this.setTile(tx, ty, tile);
+				for(int ty = 0; ty < this.getTileyHeight(); ty++)
+				{
+					Element element = tilelayer.get(ty * 11 + tx);
+					
+					int gid = element.getAttribute("gid").getIntValue();
+					this.tiles[tx][ty] = new Tile(this, tx, ty, gid);
+				}
+			}
+			
+			for(Element element : objectgroup)
+			{
+				if(element.getAttribute("gid").getIntValue() == 4)
+				{
+					int x = element.getAttribute("x").getIntValue() + (48 / 2);
+					int y = element.getAttribute("y").getIntValue() - (48 / 2);
+					
+					this.dungeon.enemies.add(new Thug(this.dungeon, this, x, y));
+				}
 			}
 		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		
+		this.dungeon.addRoom(this);
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -59,6 +102,17 @@ public class Room
 			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
 				this.tiles[tx][ty].render(graphics, camera);
+			}
+		}
+	}
+	
+	public void renderOnMap(Graphics graphics, Camera camera)
+	{
+		for(int tx = 0; tx < this.getTileyWidth(); tx++)
+		{
+			for(int ty = 0; ty < this.getTileyHeight(); ty++)
+			{
+				this.tiles[tx][ty].renderOnMap(graphics, camera);
 			}
 		}
 	}
@@ -291,7 +345,7 @@ public class Room
 		this.northernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = 0;
-		this.tiles[tx][ty] = new Tile(this, tx, ty);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
 	}
 
 	/*
@@ -304,7 +358,7 @@ public class Room
 		this.southernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
-		this.tiles[tx][ty] = new Tile(this, tx, ty);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
 	}
 
 	/*
@@ -317,7 +371,7 @@ public class Room
 		this.easternRoom = room;
 		
 		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
 	}
 
 	/*
@@ -330,7 +384,7 @@ public class Room
 		this.westernRoom = room;
 		
 		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
 	}
 	
 	/*
@@ -396,6 +450,126 @@ public class Room
 			this.connectWesternRoom(room);
 		}
 	}
+	
+	/*
+	 * Executes the relevant subroutines to
+	 * instantiate a new room to the north.
+	 */
+	public Room instantiateNorthernRoom(String layout) throws SlickException
+	{
+		Room room = new Room(this.dungeon, this.rx, this.ry - 1, layout);
+		this.connectNorthernRoom(room);
+		return room;
+	}
+
+	/*
+	 * Executes the relevant subroutines to
+	 * instantiate a new room to the south.
+	 */
+	public Room instantiateSouthernRoom(String layout) throws SlickException
+	{
+		Room room = new Room(this.dungeon, this.rx, this.ry + 1, layout);
+		this.connectSouthernRoom(room);
+		return room;
+	}
+
+	/*
+	 * Executes the relevant subroutines to
+	 * instantiate a new room to the east.
+	 */
+	public Room instantiateEasternRoom(String layout) throws SlickException
+	{
+		Room room = new Room(this.dungeon, this.rx + 1, this.ry, layout);
+		this.connectEasternRoom(room);
+		return room;
+	}
+
+	/*
+	 * Executes the relevant subroutines to
+	 * instantiate a new room to the west.
+	 */
+	public Room instantiateWesternRoom(String layout) throws SlickException
+	{
+		Room room = new Room(this.dungeon, this.rx - 1, this.ry, layout);
+		this.connectWesternRoom(room);
+		return room;
+	}
+
+	/*
+	 * Executes the relevant subroutines to
+	 * instantiate a new room in any direction.
+	 */
+	public Room instantiateRoom(Direction direction, String layout) throws SlickException
+	{
+		if(direction == Direction.NORTH)
+		{
+			return this.instantiateNorthernRoom(layout);
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			return this.instantiateSouthernRoom(layout);
+		}
+		else if(direction == Direction.EAST)
+		{
+			return this.instantiateEasternRoom(layout);
+		}
+		else if(direction == Direction.WEST)
+		{
+			return this.instantiateWesternRoom(layout);
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
+	/*
+	 * Executes the relevant subroutines to
+	 * instantiate a new room in any direction.
+	 */
+	public Room instantiateRoom(Direction direction) throws SlickException
+	{
+		return this.instantiateRoom(direction, null);
+	}
+	
+	public ArrayList<Direction> getPotentialDirections()
+	{
+		ArrayList<Direction> directions = new ArrayList<Direction>();
+		
+		if(!this.dungeon.hasRoom(this.rx, this.ry - 1))
+		{
+			directions.add(Direction.NORTH);
+		}
+		if(!this.dungeon.hasRoom(this.rx, this.ry + 1))
+		{
+			directions.add(Direction.SOUTH);
+		}
+		if(!this.dungeon.hasRoom(this.rx + 1, this.ry))
+		{
+			directions.add(Direction.EAST);
+		}
+		if(!this.dungeon.hasRoom(this.rx - 1, this.ry))
+		{
+			directions.add(Direction.WEST);
+		}
+		
+		return directions;
+	}
+	
+	public Direction getRandomPotentialDirection()
+	{
+		ArrayList<Direction> directions = this.getPotentialDirections();
+		
+		if(directions.size() > 0)
+		{
+			Collections.shuffle(directions);
+			return directions.get(0);
+		}
+		else
+		{
+			return Direction.NONE;
+		}
+	}
 
 	/*
 	 * Returns the filepath to a room
@@ -404,7 +578,7 @@ public class Room
 	public static String getRandomLayout()
 	{
 		Random random = new Random();
-		File[] list = new File("./res/rooms").listFiles();
+		File[] list = new File("./res/rooms/").listFiles();
 		return "./res/rooms/" + list[random.nextInt(list.length)].getName();
 	}
 	

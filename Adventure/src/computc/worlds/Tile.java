@@ -1,9 +1,11 @@
+
 package computc.worlds;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Graphics;
 
-import computc.Camera;
+import computc.cameras.Camera;
 
 public class Tile
 {
@@ -15,12 +17,14 @@ public class Tile
 	public boolean isBlocked;
 	public boolean isStairs;
 	
-	public Tile(Room room, int tx, int ty)
+	public Tile(Room room, int tx, int ty, int gid)
 	{
 		this.room = room;
 		
 		this.tx = tx;
 		this.ty = ty;
+		
+		this.isBlocked = (gid == 1);
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -35,13 +39,33 @@ public class Tile
 		else if(this.isStairs)
 		{
 			Tile.STAIR_IMAGE.draw(x,y);
-			this.isBlocked = false;
 		}
 		else
 		{
 			Tile.FLOOR_IMAGE.draw(x, y);
-			this.isBlocked = false;
 		}
+	}
+	
+	public void renderOnMap(Graphics graphics, Camera camera)
+	{
+		int x = (this.getX() / 8) - camera.getX();
+		int y = (this.getY() / 8) - camera.getY();
+		
+		if(this.isBlocked)
+		{
+			graphics.setColor(Color.lightGray);
+		}
+		else if(this.isStairs)
+		{
+			graphics.setColor(Color.cyan);
+		}
+		else
+		{
+			graphics.setColor(Color.gray);
+		}
+		
+		final int UNIT = Tile.SIZE / 8;
+		graphics.fillRect(x, y, UNIT, UNIT);
 	}
 	
 	/*
@@ -123,4 +147,5 @@ public class Tile
 	public static Image STAIR_IMAGE;
 	
 	public final static int SIZE = 64;
+
 }

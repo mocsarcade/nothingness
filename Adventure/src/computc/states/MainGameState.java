@@ -1,3 +1,4 @@
+
 package computc.states;
 
 import org.newdawn.slick.Animation;
@@ -11,41 +12,36 @@ import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-import computc.Camera;
 import computc.Game;
+import computc.GameData;
 import computc.Menu;
+import computc.cameras.Camera;
+import computc.cameras.RoomFollowingCamera;
 import computc.entities.Arrow;
 import computc.entities.Hero;
 import computc.entities.OldMan;
 import computc.worlds.Dungeon;
+import computc.worlds.PredesignedDungeon;
+import computc.worlds.RandomRoguelikeDungeon;
 import computc.worlds.Tile;
 
 public class MainGameState extends BasicGameState
 {
-	public Hero hero;
-	public Dungeon dungeon;
-	public OldMan oldman;
+	public GameData gamedata;
 	public Camera camera;
 	public Menu menu;
 	
-	private Image menuBox;
-	private Image largeTextBox;
-	private int counter, counter2;
-	Animation textBox;
-	public Color textColor = Color.white;
-	private boolean nextLevel = false;
+	public MainGameState(GameData gamedata)
+	{
+		this.gamedata = gamedata;
+	}
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		this.dungeon = new Dungeon();
-		this.hero = new Hero(dungeon, dungeon.getRoom(3, 0), 5, 1);
-		this.oldman = new OldMan(dungeon, hero, 38, 12);
-		this.camera = new Camera(hero);
-		this.menu = new Menu(dungeon, hero);
+		this.gamedata.instantiate();
 		
-		this.menuBox = new Image("res/textBox.png");
-		this.largeTextBox = new Image("res/largeTextBox.png");
-		this.textBox = new Animation(new SpriteSheet(largeTextBox, 585, 100), 100);
+		this.menu = new Menu(this.gamedata.dungeon, this.gamedata.hero);
+		this.camera = new RoomFollowingCamera(this.gamedata.hero);
 		
 		Tile.WALL_IMAGE = new Image("./res/wall.png");
 		Tile.FLOOR_IMAGE = new Image("./res/floor.png");
@@ -56,62 +52,19 @@ public class MainGameState extends BasicGameState
 	{
 		Input input = container.getInput();
 		
-		if(!hero.isDead())
-		{
-			this.hero.update(input, delta);
-			this.oldman.update(delta);
-			this.dungeon.update(delta);
-			this.camera.update(delta);
-			
-			hero.checkAttack(dungeon.thugs);
-			
-			if(dungeon.getTile(hero.getX(), hero.getY()).isStairs)
-			{
-				nextLevel = true;
-			}
-		}
-		else
-		{
-			if(input.isKeyDown(Input.KEY_R))
-			{
-				Game.reset = true;
-				this.hero = new Hero(dungeon, dungeon.getRoom(3, 0), 5, 1);
-				this.menu = new Menu(dungeon, hero);
-				this.camera = new Camera(hero);
-				this.hero.setAlive();
-			}
-			if(input.isKeyDown(Input.KEY_Q))
-			{
-				System.exit(0);
-			}
-		}
+		this.gamedata.hero.update(input, delta);
+		this.menu.update(input, game);
+		this.camera.update(input, delta);
+		
+		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
+		this.gamedata.dungeon.update(delta);
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
-		this.dungeon.render(graphics, camera);
-		this.hero.render(graphics, camera);
-		this.oldman.render(graphics, camera);
-		this.menu.render(graphics, camera);
-		
-		/*if(hero.isDead() == true)
-		{
-			graphics.setColor(textColor);
-			menuBox.draw(Room.WIDTH/5, Room.HEIGHT/3);
-			graphics.drawString("Restart (R)", Room.WIDTH/3, Room.HEIGHT/3 + 10);
-			graphics.drawString("Main Menu (M)", Room.WIDTH/3, Room.HEIGHT/3 + 30);
-			graphics.drawString("Quit Game (Q)", Room.WIDTH/3, Room.HEIGHT/3 + 50);
-		}
-		
-		if(nextLevel)
-		{
-			graphics.setColor(textColor);
-			menuBox.draw(Room.WIDTH/5, Room.HEIGHT/3);
-			graphics.drawString("Congrats! 1st floor complete!", Room.WIDTH/3, Room.HEIGHT/3 + 5);
-			graphics.drawString("Restart (R)", Room.WIDTH/3, Room.HEIGHT/3 + 20);
-			graphics.drawString("Main Menu (M)", Room.WIDTH/3, Room.HEIGHT/3 + 35);
-			graphics.drawString("Quit Game (Q)", Room.WIDTH/3, Room.HEIGHT/3 + 50);
-		}*/
+		this.gamedata.dungeon.render(graphics, this.camera);
+		this.gamedata.hero.render(graphics, this.camera);
+		this.menu.render(graphics, this.camera);
 	}
 	
 	@Override
@@ -119,7 +72,7 @@ public class MainGameState extends BasicGameState
 	{
 		if(k == Input.KEY_B)
 		{
-			hero.setSwinging();
+			this.gamedata.hero.setSwinging();
 		}
 	}
 	
@@ -142,15 +95,17 @@ public class MainGameState extends BasicGameState
 		
 		if(k == Input.KEY_SPACE)
 		{
-			if(hero.arrowCount != 0)
+			if(this.gamedata.hero.arrowCount != 0)
 			{
-				hero.arrowCount -= 1;
+				this.gamedata.hero.arrowCount -= 1;
 				Arrow arrow;
-				try {
-					arrow = new Arrow(this.dungeon, this.hero.getRoomyX(), this.hero.getRoomyY(), this.hero.getTileyX(), this.hero.getTileyY(), this.hero.getDirection());
-					arrow.setPosition(this.hero.getX(), this.hero.getY());
-					hero.arrows.add(arrow);
-				} catch (SlickException e) {
+				try 
+				{
+					arrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
+					arrow.setPosition(this.gamedata.hero.getX(), this.gamedata.hero.getY());
+					this.gamedata.hero.arrows.add(arrow);
+				} catch (SlickException e) 
+				{
 					e.printStackTrace();
 				}
 				
@@ -164,4 +119,5 @@ public class MainGameState extends BasicGameState
 	}
 	
 	public static final int ID = 0;
+
 }
