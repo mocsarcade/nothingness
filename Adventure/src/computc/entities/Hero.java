@@ -339,6 +339,21 @@ public class Hero extends Entity
 						e.hit(meleeDamage);
 					}
 				}
+				
+				if(facingDown) 
+				{
+					if(e.getY() > y && e.getY() < y + meleeRange && e.getX() > x - getHalfHeight() && e.getX() < x + getHalfHeight()) 
+					{
+						e.hit(meleeDamage);
+					}
+				}
+				else 
+				{
+					if( e.getY() < y && e.getY() > y - meleeRange && e.getX() > x - getHalfHeight() && e.getX() < x + getHalfHeight()) 
+					{
+						e.hit(meleeDamage);
+					}
+				}
 			}
 			
 			if(intersects(e))
