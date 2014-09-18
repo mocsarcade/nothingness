@@ -2,6 +2,7 @@ package computc.worlds;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -11,23 +12,54 @@ import computc.cameras.Camera;
 
 public class RandomZeldaesqueDungeon extends Dungeon
 {
-	private final int SCALE = 5;
+	private final int AMOUNT_OF_ROOMS_IN_SEGMENT = 3;
+	private final int AMOUNT_OF_SEGMENTS_IN_DUNGEON = 2;
+	//private final int AMOUNT_OF_ROOMS_IN_SIDEPATH;
+	//private final int AMOUNT_OF_SIDEPATHS_PER_SEGMENT;
 	
 	public RandomZeldaesqueDungeon() throws SlickException
 	{
-		Room currentRoom = this.firstRoom = new Room(this, 2, 2, "empty");
+		ArrayList<LinkedList<Room>> segments = new ArrayList<LinkedList<Room>>();
 		
-		for(int i = 0; i < SCALE; i++)
+		Room currentRoom = this.firstRoom = new Room(this, 2, 2, "oval");
+		
+		for(int i = 0; i < AMOUNT_OF_SEGMENTS_IN_DUNGEON; i++)
 		{
-			Direction direction = currentRoom.getRandomPotentialDirection();
+			LinkedList<Room> segment = new LinkedList<Room>();
 			
-			if(direction != Direction.NONE)
+			for(int j = 0; j < AMOUNT_OF_ROOMS_IN_SEGMENT; j++)
 			{
-				currentRoom = currentRoom.instantiateRoom(direction);
+				Direction direction = currentRoom.getRandomPotentialDirection();
+				
+				if(direction != Direction.NONE)
+				{
+					Room instantiatedRoom = currentRoom.instantiateRoom(direction, "oval");
+					segment.add(instantiatedRoom);
+					currentRoom = instantiatedRoom;
+				}
+				else
+				{
+					throw new DungeonException(); //is a dead end.
+				}
 			}
-			else
+			
+			segments.add(segment);
+		}
+		
+		for(LinkedList<Room> segment : segments)
+		{
+			for(Room room : segment)
 			{
-				throw new DungeonException(); //is a dead end.
+				Direction direction = room.getRandomPotentialDirection();
+				
+				if(direction != Direction.NONE)
+				{
+					room.instantiateRoom(direction, "empty");
+				}
+				else
+				{
+					throw new DungeonException(); //is a dead end.
+				}
 			}
 		}
 	}

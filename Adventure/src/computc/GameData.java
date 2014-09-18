@@ -4,6 +4,7 @@ import org.newdawn.slick.SlickException;
 
 import computc.entities.Hero;
 import computc.worlds.Dungeon;
+import computc.worlds.DungeonException;
 import computc.worlds.OneRoomDungeon;
 import computc.worlds.FiveRoomDungeon;
 import computc.worlds.RandomRoguelikeDungeon;
