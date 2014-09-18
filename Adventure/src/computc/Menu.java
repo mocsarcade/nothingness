@@ -18,6 +18,9 @@ public class Menu
 	private Dungeon dungeon;
 	
 	private Image heart;
+	private Image arrow = new Image("res/arrowSpriteSheet.png");
+	private Image arrowGuiPic;
+	
 	
 	public Menu(Dungeon dungeon, Hero hero) throws SlickException
 	{
@@ -25,6 +28,7 @@ public class Menu
 		this.dungeon = dungeon;
 		
 		this.heart = new Image("res/heart.png");
+		arrowGuiPic = arrow.getSubImage(1, 33, 63, 63);
 	}
 	
 	public void update(Input input, StateBasedGame game)
@@ -87,6 +91,12 @@ public class Menu
 		{
 			heart.draw(540 + (40 * h), 30);
 		}
+		
+		// draw arrow count HUD
+		
+			arrowGuiPic.draw(15, 480);
+		
+		graphics.drawString(String.valueOf(hero.arrowCount), 30, 540);
 	}
 	
 	public static final int HEIGHT = 128;

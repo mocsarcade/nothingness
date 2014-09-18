@@ -1,3 +1,4 @@
+
 package computc.worlds;
 
 import org.newdawn.slick.Color;
@@ -146,4 +147,5 @@ public class Tile
 	public static Image STAIR_IMAGE;
 	
 	public final static int SIZE = 64;
+
 }

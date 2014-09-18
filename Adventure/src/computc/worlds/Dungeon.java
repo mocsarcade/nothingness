@@ -1,3 +1,4 @@
+
 package computc.worlds;
 
 import java.util.HashMap;
@@ -7,14 +8,29 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import computc.cameras.Camera;
+import computc.entities.Enemy;
 import computc.entities.Entity;
 import computc.entities.Thug;
 
 public abstract class Dungeon
 {
 	protected HashMap<String, Room> rooms = new HashMap<String, Room>();
-	protected LinkedList<Entity> entities = new LinkedList<Entity>();
+	protected LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 	protected Room firstRoom;
+
+	public void update(int delta)
+	{
+		for(int i = 0; i < enemies.size(); i++)
+		{
+			Enemy e = enemies.get(i);
+			e.update(delta);
+				if(e.isDead())
+				{
+					enemies.remove(i);
+					i--;
+				}
+		}
+	}
 
 	public void render(Graphics graphics, Camera camera)
 	{
@@ -23,9 +39,9 @@ public abstract class Dungeon
 			room.render(graphics, camera);
 		}
 
-		for(Entity entity : this.getAllEntities())
+		for(Enemy enemy: this.getAllEnemies())
 		{
-			entity.render(graphics, camera);
+			enemy.render(graphics, camera);
 		}
 	}
 	
@@ -36,15 +52,15 @@ public abstract class Dungeon
 			room.renderOnMap(graphics, camera);
 		}
 		
-		for(Entity entity : this.getAllEntities())
+		for(Enemy enemy: this.getAllEnemies())
 		{
-			entity.renderOnMap(graphics, camera);
+			enemy.renderOnMap(graphics, camera);
 		}
 	}
 	
-	public LinkedList<Entity> getAllEntities()
+	public LinkedList<Enemy> getAllEnemies()
 	{
-		return this.entities;
+		return this.enemies;
 	}
 	
 	public void addRoom(Room room)
@@ -97,4 +113,5 @@ public abstract class Dungeon
 		
 		return this.getRoom(rx, ry).getTile(tx, ty);
 	}
+
 }
