@@ -71,9 +71,18 @@ public class Room
 				for(int ty = 0; ty < this.getTileyHeight(); ty++)
 				{
 					Element element = tilelayer.get(ty * 11 + tx);
-					
 					int gid = element.getAttribute("gid").getIntValue();
-					this.tiles[tx][ty] = new Tile(this, tx, ty, gid);
+					
+					
+					if(gid == 1)
+					{
+						this.tiles[tx][ty] = new Tile(this, tx, ty, "wall");
+						this.tiles[tx][ty].isBlocked = true;
+					}
+					else if(gid == 2)
+					{
+						this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
+					}
 				}
 			}
 			
@@ -346,7 +355,7 @@ public class Room
 		this.northernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = 0;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 	}
 
 	/*
@@ -359,7 +368,7 @@ public class Room
 		this.southernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 	}
 
 	/*
@@ -372,7 +381,7 @@ public class Room
 		this.easternRoom = room;
 		
 		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 	}
 
 	/*
@@ -385,7 +394,7 @@ public class Room
 		this.westernRoom = room;
 		
 		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 	}
 	
 	/*

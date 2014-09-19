@@ -38,14 +38,13 @@ public class MainGameState extends BasicGameState
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
+		Tile.images.put("wall", new Image("./res/wall.png"));
+		Tile.images.put("floor", new Image("./res/floor.png"));
+		
 		this.gamedata.instantiate();
 		
 		this.menu = new Menu(this.gamedata.dungeon, this.gamedata.hero);
 		this.camera = new RoomFollowingCamera(this.gamedata);
-		
-		Tile.WALL_IMAGE = new Image("./res/wall.png");
-		Tile.FLOOR_IMAGE = new Image("./res/floor.png");
-		Tile.STAIR_IMAGE = new Image("./res/stairs.png");
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException

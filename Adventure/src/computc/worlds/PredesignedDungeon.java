@@ -50,9 +50,9 @@ public class PredesignedDungeon extends Dungeon
 						int rxtx = (rx * Room.TILEY_WIDTH) + tx;
 						int ryty = (ry * Room.TILEY_HEIGHT) + ty;
 						int tid = tiled.getTileId(rxtx, ryty, 0);
-						Tile tile = new Tile(room, tx, ty, tid);
+						//Tile tile = new Tile(room, tx, ty, tid);
 						
-						room.setTile(tx, ty, tile);
+						//room.setTile(tx, ty, tile);
 					}
 				}
 				
