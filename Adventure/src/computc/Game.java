@@ -2,6 +2,7 @@ package computc;
 
 import java.awt.Point;
 import java.util.LinkedList;
+import java.util.Random;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.AppGameContainer;
@@ -48,4 +49,6 @@ public class Game extends StateBasedGame
 	public static final String VERSION = "v0.1.0";
 	public static final int WIDTH = Room.WIDTH;
 	public static final int HEIGHT = Room.HEIGHT;
+	
+	public static Random randomness = new Random();
 }

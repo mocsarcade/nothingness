@@ -97,6 +97,9 @@ public class Menu
 			arrowGuiPic.draw(15, 480);
 		
 		graphics.drawString(String.valueOf(hero.arrowCount), 30, 540);
+		
+		graphics.setColor(Color.yellow);
+		graphics.drawString(String.valueOf(hero.coinage), 665, 540);
 	}
 	
 	public static final int HEIGHT = 128;
