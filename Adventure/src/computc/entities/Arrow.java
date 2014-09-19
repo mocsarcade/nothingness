@@ -35,22 +35,26 @@ public class Arrow extends Entity
 		if(direction == Direction.NORTH)
 		{
 			dy = -acceleration;
+			this.image = arrows.getSubImage(1, 1, 30, 30);
 		}
 		else if(direction == Direction.SOUTH)
 		{
 			dy = acceleration;
+			this.image = arrows.getSubImage(129, 1, 30, 30);
 		}
 		else if(direction == Direction.EAST)
 		{
 			dx = acceleration;
+			this.image = arrows.getSubImage(97, 1, 30, 30);
 		}
 		else if(direction == Direction.WEST)
 		{
 			dx = -acceleration;
+			this.image = arrows.getSubImage(161, 1, 30, 30);
 		}
 		
 		
-		this.image = arrows.getSubImage(1, 1, 30, 30);
+		
 	}
 	
 	public void update()
