@@ -61,14 +61,17 @@ public class MainGameState extends BasicGameState
 		this.menu.update(input, game);
 		this.camera.update(input, delta);
 		
-		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
 		this.gamedata.dungeon.update(delta);
+		
+		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
+		this.gamedata.hero.checkPickup(this.gamedata.dungeon.keys);
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
 		this.gamedata.dungeon.render(graphics, this.camera);
 		this.gamedata.hero.render(graphics, this.camera);
+		this.gamedata.dungeon.renderKeys(graphics, camera);
 		this.menu.render(graphics, this.camera);
 	}
 	

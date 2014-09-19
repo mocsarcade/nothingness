@@ -409,6 +409,18 @@ public class Hero extends Entity
 	{
 		swinging = true;
 	}
+	
+	public void checkPickup(LinkedList<Key> keys)
+	{
+		for(Key key : keys)
+		{
+			if(this.intersects(key))
+			{
+				System.out.println("!");
+				key.target = this;
+			}
+		}
+	}
 
 	
 	private float speed = 0.25f;

@@ -17,7 +17,7 @@ public abstract class Dungeon
 {
 	protected HashMap<String, Room> rooms = new HashMap<String, Room>();
 	protected LinkedList<Enemy> enemies = new LinkedList<Enemy>();
-	protected LinkedList<Key> keys = new LinkedList<Key>();
+	public LinkedList<Key> keys = new LinkedList<Key>();
 	protected Room firstRoom;
 
 	public void update(int delta)
@@ -32,6 +32,11 @@ public abstract class Dungeon
 					i--;
 				}
 		}
+		
+		for(Key key : this.keys)
+		{
+			key.update(delta);
+		}
 	}
 
 	public void render(Graphics graphics, Camera camera)
@@ -45,7 +50,10 @@ public abstract class Dungeon
 		{
 			enemy.render(graphics, camera);
 		}
-		
+	}
+	
+	public void renderKeys(Graphics graphics, Camera camera)
+	{
 		for(Key key : this.keys)
 		{
 			key.render(graphics, camera);
