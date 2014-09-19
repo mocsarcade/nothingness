@@ -14,6 +14,7 @@ public class GameData
 {
 	public Hero hero;
 	public Dungeon dungeon;
+	public Menu menu;
 	
 	public void instantiate() throws SlickException
 	{
@@ -31,5 +32,6 @@ public class GameData
 		}
 		
 		this.hero = new Hero(dungeon, 5, 4);
+		this.menu = new Menu(this.dungeon, this.hero);
 	}
 }

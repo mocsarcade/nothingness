@@ -32,7 +32,7 @@ public class MainGameState extends BasicGameState
 {
 	public GameData gamedata;
 	public Camera camera;
-	public Menu menu;
+	
 	
 	private Animation textBox;
 	
@@ -57,7 +57,7 @@ public class MainGameState extends BasicGameState
 		
 		this.gamedata.instantiate();
 		
-		this.menu = new Menu(this.gamedata.dungeon, this.gamedata.hero);
+		
 		this.camera = new RoomFollowingCamera(this.gamedata);
 	}
 	
@@ -66,7 +66,7 @@ public class MainGameState extends BasicGameState
 		Input input = container.getInput();
 		
 		this.gamedata.hero.update(input, delta);
-		this.menu.update(input, game);
+		this.gamedata.menu.update(input, game);
 		this.camera.update(input, delta);
 		
 		this.gamedata.dungeon.update(delta);
@@ -103,7 +103,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.dungeon.render(graphics, this.camera);
 		this.gamedata.hero.render(graphics, this.camera);
 		this.gamedata.dungeon.renderKeys(graphics, camera);
-		this.menu.render(graphics, this.camera);
+		this.gamedata.menu.render(graphics, this.camera);
 		
 		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
 		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())

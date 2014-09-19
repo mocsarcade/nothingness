@@ -30,7 +30,7 @@ public class Arrow extends Entity
 		
 		this.dungeon = dungeon;
 		
-		this.acceleration = 5f;
+		this.acceleration = 7f;
 		
 		if(direction == Direction.NORTH)
 		{
