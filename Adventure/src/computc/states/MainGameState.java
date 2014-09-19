@@ -95,7 +95,7 @@ public class MainGameState extends BasicGameState
 	}
 
 	private String greeting = "You've won! Congratulations! Thanks for playing! Enjoy the";
-	private String greeting2 = "donuts, and join us at our next sprint party!";
+	private String greeting2 = "donuts, and join us at our next party! Your score was ";
 	private float counter, counter2;
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
@@ -116,9 +116,10 @@ public class MainGameState extends BasicGameState
 			int xCoord2 = (int) (Room.WIDTH/11 + 12);
 			int yCoord2 = (int) (Room.HEIGHT/11 + 32);
 			
+			String greeting2temp = greeting2 + this.gamedata.hero.coinage + ".";
 			graphics.setColor(Color.white);
 			graphics.drawString(greeting.substring(0, (int)(Math.min(counter, greeting.length()))), xCoord, yCoord);
-			graphics.drawString(greeting2.substring(0, (int)(Math.min(counter2, greeting2.length()))), xCoord2, yCoord2);
+			graphics.drawString(greeting2temp.substring(0, (int)(Math.min(counter2, greeting2temp.length()))), xCoord2, yCoord2);
 		}
 	}
 	
