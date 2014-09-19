@@ -35,10 +35,10 @@ public class Hero extends Entity
 	private int meleeDamage;
 	private int meleeRange;
 	
-	private Image swingingImage;
+	private Image swingRight, swingLeft, swingUp, swingDown;
 	
 	// actions 
-	private Animation sprite, firingArrow, meleeSwing, idle;
+	private Animation sprite, firingArrow, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle;
 
 	public int coinage;
 	
@@ -66,9 +66,15 @@ public class Hero extends Entity
 		sprite = idle;
 		
 		this.image = new Image("res/hero.png"); 
-		this.swingingImage = new Image("res/heroMelee.png");
+		this.swingRight = new Image("res/heroMeleeRight.png");
+		this.swingLeft = new Image("res/heroMeleeLeft.png");
+		this.swingUp = new Image("res/heroMeleeUp.png");
+		this.swingDown = new Image("res/heroMeleeDown.png");
 		
-		this.meleeSwing = new Animation(new SpriteSheet(swingingImage, 48, 48), 500);
+		this.meleeRight = new Animation(new SpriteSheet(swingRight, 96, 48), 300);
+		this.meleeLeft = new Animation(new SpriteSheet(swingLeft, 96, 48), 300);
+		this.meleeDown = new Animation(new SpriteSheet(swingDown, 48, 96), 300);
+		this.meleeUp = new Animation(new SpriteSheet(swingUp, 48, 96), 300);
 		
 		this.direction = Direction.SOUTH;
 	}
@@ -91,9 +97,38 @@ public class Hero extends Entity
 			}
 		}
 		
+		if(this.direction == Direction.NORTH)
+		{
+			meleeSwing = meleeUp;
+		}
+		if(this.direction == Direction.SOUTH)
+		{
+			meleeSwing = meleeDown;
+		}
+		if(this.direction == Direction.EAST)
+		{
+			meleeSwing = meleeRight;
+		}
+		if(this.direction == Direction.WEST)
+		{
+			meleeSwing = meleeLeft;
+		}
+		
+		
 		if(swinging)
 		{
+			if(meleeSwing == meleeLeft)
+			{
+				meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX() - 48, this.getY() - this.getHalfHeight() - camera.getY());	
+			}
+			else if(meleeSwing == meleeUp)
+			{
+				meleeSwing.draw((this.getX() - this.getHalfWidth() - camera.getX()), (this.getY() - this.getHalfHeight() - camera.getY()) - 48);	
+			}
+			else
+			{
 			meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			}
 		}
 		
 	}
