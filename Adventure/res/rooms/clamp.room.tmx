@@ -109,7 +109,5 @@
    <tile gid="1"/>
   </data>
  </layer>
- <objectgroup name="entities" width="11" height="9">
-  <object gid="4" x="320" y="322"/>
- </objectgroup>
+ <objectgroup name="entities" width="11" height="9"/>
 </map>

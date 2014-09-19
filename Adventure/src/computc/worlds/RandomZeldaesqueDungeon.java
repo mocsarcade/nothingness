@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 import computc.Direction;
 import computc.cameras.Camera;
 import computc.entities.Key;
+import computc.entities.OldMan;
 
 public class RandomZeldaesqueDungeon extends Dungeon
 {
@@ -17,8 +21,6 @@ public class RandomZeldaesqueDungeon extends Dungeon
 	private final int AMOUNT_OF_SEGMENTS_IN_DUNGEON = 2;
 	//private final int AMOUNT_OF_ROOMS_IN_SIDEPATH;
 	//private final int AMOUNT_OF_SIDEPATHS_PER_SEGMENT;
-	
-	private Room lastRoom;
 	
 	public RandomZeldaesqueDungeon() throws SlickException
 	{
@@ -93,7 +95,6 @@ public class RandomZeldaesqueDungeon extends Dungeon
 			sidepath.get(0).addKey();
 		}
 		
-		//this.firstRoom.addDoor(this.firstRoom.critpathDirection);
-		//this.keys.add(new Key(this, this.firstRoom, 5, 4));
+		this.oldman = new OldMan(this, this.lastRoom, 200, 200);
 	}
 }

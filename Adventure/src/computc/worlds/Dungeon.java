@@ -11,6 +11,7 @@ import computc.cameras.Camera;
 import computc.entities.Enemy;
 import computc.entities.Entity;
 import computc.entities.Key;
+import computc.entities.OldMan;
 import computc.entities.Thug;
 
 public abstract class Dungeon
@@ -19,6 +20,8 @@ public abstract class Dungeon
 	protected LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 	public LinkedList<Key> keys = new LinkedList<Key>();
 	protected Room firstRoom;
+	public Room lastRoom;
+	public OldMan oldman;
 
 	public void update(int delta)
 	{
@@ -49,6 +52,11 @@ public abstract class Dungeon
 		for(Enemy enemy: this.getAllEnemies())
 		{
 			enemy.render(graphics, camera);
+		}
+		
+		if(this.oldman != null)
+		{
+			this.oldman.render(graphics, camera);
 		}
 	}
 	

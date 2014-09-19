@@ -22,6 +22,7 @@ import computc.Direction;
 import computc.Game;
 import computc.cameras.Camera;
 import computc.entities.Key;
+import computc.entities.OldMan;
 import computc.entities.Thug;
 
 public class Room
@@ -685,13 +686,10 @@ public class Room
 		{
 			this.addWesternDoor();
 		}
-		
-		System.out.println(direction);
 	}
 
 	public void addKey()
 	{
-		System.out.println(this.keyX + ":" + this.keyY);
 		this.dungeon.keys.add(new Key(this.dungeon, this, this.keyX, this.keyY));
 	}
 	

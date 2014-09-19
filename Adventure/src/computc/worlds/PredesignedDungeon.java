@@ -112,11 +112,11 @@ public class PredesignedDungeon extends Dungeon
 		}
 		
 		//thugs.add(new BigThug(this, 36, 23));
-		this.oldman = new OldMan(this, 38, 12);
+		//this.oldman = new OldMan(this, 38, 12);
 		
 		this.menuBox = new Image("res/textBox.png");
 		this.largeTextBox = new Image("res/largeTextBox.png");
-		this.textBox = new Animation(new SpriteSheet(largeTextBox, 585, 100), 100);
+		this.textBox = new Animation(new SpriteSheet(new Image("res/largeTextBox.png"), 585, 100), 100);
 	}
 	
 	public void update(int delta)

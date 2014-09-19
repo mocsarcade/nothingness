@@ -24,6 +24,7 @@ import computc.entities.OldMan;
 import computc.worlds.Dungeon;
 import computc.worlds.PredesignedDungeon;
 import computc.worlds.RandomRoguelikeDungeon;
+import computc.worlds.Room;
 import computc.worlds.Tile;
 
 public class MainGameState extends BasicGameState
@@ -31,6 +32,8 @@ public class MainGameState extends BasicGameState
 	public GameData gamedata;
 	public Camera camera;
 	public Menu menu;
+	
+	private Animation textBox;
 	
 	public MainGameState(GameData gamedata)
 	{
@@ -47,6 +50,8 @@ public class MainGameState extends BasicGameState
 		Tile.images.put("western arrow", new Image("./res/west.png"));
 		Tile.images.put("door", new Image("./res/door.png"));
 		Key.IMAGE = new Image("./res/key.png");
+		
+		this.textBox = new Animation(new SpriteSheet(new Image("res/largeTextBox.png"), 585, 100), 100);
 		
 		this.gamedata.instantiate();
 		
@@ -66,7 +71,29 @@ public class MainGameState extends BasicGameState
 		
 		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
 		this.gamedata.hero.checkPickup(this.gamedata.dungeon.keys);
+		
+		if(this.gamedata.hero.isDead())
+		{
+			this.gamedata.instantiate();
+		}
+		
+		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
+		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
+		{
+			if((int)(counter) < greeting.length())
+			{
+				counter += delta * 0.025;
+			}
+			else
+			{
+				counter2 += delta * 0.025;
+			}
+		}
 	}
+
+	private String greeting = "You've won! Congratulations! Thanks for playing! Enjoy the";
+	private String greeting2 = "donuts, and join us at our next sprint party!";
+	private float counter, counter2;
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
@@ -74,6 +101,22 @@ public class MainGameState extends BasicGameState
 		this.gamedata.hero.render(graphics, this.camera);
 		this.gamedata.dungeon.renderKeys(graphics, camera);
 		this.menu.render(graphics, this.camera);
+		
+		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
+		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
+		{
+			textBox.draw(Room.WIDTH/11, Room.HEIGHT/11);
+			textBox.setLooping(false);
+			
+			int xCoord = (int) (Room.WIDTH/11 + 12);
+			int yCoord = (int) (Room.HEIGHT/11 + 12);
+			int xCoord2 = (int) (Room.WIDTH/11 + 12);
+			int yCoord2 = (int) (Room.HEIGHT/11 + 32);
+			
+			graphics.setColor(Color.white);
+			graphics.drawString(greeting.substring(0, (int)(Math.min(counter, greeting.length()))), xCoord, yCoord);
+			graphics.drawString(greeting2.substring(0, (int)(Math.min(counter2, greeting2.length()))), xCoord2, yCoord2);
+		}
 	}
 	
 	@Override
