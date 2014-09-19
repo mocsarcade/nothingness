@@ -50,9 +50,9 @@ public class PredesignedDungeon extends Dungeon
 						int rxtx = (rx * Room.TILEY_WIDTH) + tx;
 						int ryty = (ry * Room.TILEY_HEIGHT) + ty;
 						int tid = tiled.getTileId(rxtx, ryty, 0);
-						Tile tile = new Tile(room, tx, ty, tid);
+						//Tile tile = new Tile(room, tx, ty, tid);
 						
-						room.setTile(tx, ty, tile);
+						//room.setTile(tx, ty, tile);
 					}
 				}
 				
@@ -112,11 +112,11 @@ public class PredesignedDungeon extends Dungeon
 		}
 		
 		//thugs.add(new BigThug(this, 36, 23));
-		this.oldman = new OldMan(this, 38, 12);
+		//this.oldman = new OldMan(this, 38, 12);
 		
 		this.menuBox = new Image("res/textBox.png");
 		this.largeTextBox = new Image("res/largeTextBox.png");
-		this.textBox = new Animation(new SpriteSheet(largeTextBox, 585, 100), 100);
+		this.textBox = new Animation(new SpriteSheet(new Image("res/largeTextBox.png"), 585, 100), 100);
 	}
 	
 	public void update(int delta)

@@ -1,6 +1,8 @@
 
 package computc.worlds;
 
+import java.util.HashMap;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Graphics;
@@ -17,14 +19,18 @@ public class Tile
 	public boolean isBlocked;
 	public boolean isStairs;
 	
-	public Tile(Room room, int tx, int ty, int gid)
+	public Image image;
+
+	public boolean locked;
+	
+	public Tile(Room room, int tx, int ty, String imagename)
 	{
 		this.room = room;
 		
 		this.tx = tx;
 		this.ty = ty;
 		
-		this.isBlocked = (gid == 1);
+		this.image = Tile.images.get(imagename);
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -32,18 +38,7 @@ public class Tile
 		int x = this.getX() - camera.getX();
 		int y = this.getY() - camera.getY();
 		
-		if(this.isBlocked)
-		{
-			Tile.WALL_IMAGE.draw(x, y);
-		}
-		else if(this.isStairs)
-		{
-			Tile.STAIR_IMAGE.draw(x,y);
-		}
-		else
-		{
-			Tile.FLOOR_IMAGE.draw(x, y);
-		}
+		this.image.draw(x, y);
 	}
 	
 	public void renderOnMap(Graphics graphics, Camera camera)
@@ -53,7 +48,14 @@ public class Tile
 		
 		if(this.isBlocked)
 		{
-			graphics.setColor(Color.lightGray);
+			if(this.locked)
+			{
+				graphics.setColor(Color.yellow);
+			}
+			else
+			{
+				graphics.setColor(Color.lightGray);
+			}
 		}
 		else if(this.isStairs)
 		{
@@ -142,9 +144,21 @@ public class Tile
 		return Tile.SIZE;
 	}
 	
-	public static Image WALL_IMAGE;
-	public static Image FLOOR_IMAGE;
-	public static Image STAIR_IMAGE;
+	public void lock()
+	{
+		this.image = Tile.images.get("door");
+		this.isBlocked = true;
+		this.locked = true;
+	}
+	
+	public void unlock()
+	{
+		this.image = Tile.images.get("floor");
+		this.isBlocked = false;
+		this.locked = false;
+	}
+	
+	public static HashMap<String, Image> images = new HashMap<String, Image>();
 	
 	public final static int SIZE = 64;
 

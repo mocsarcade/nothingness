@@ -19,7 +19,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.tiled.TiledMap;
 
 import computc.Direction;
+import computc.Game;
 import computc.cameras.Camera;
+import computc.entities.Coin;
+import computc.entities.Key;
+import computc.entities.OldMan;
 import computc.entities.Thug;
 
 public class Room
@@ -33,9 +37,13 @@ public class Room
 	public Room southernRoom;
 	public Room northernRoom;
 	
+	public Direction critpathDirection;
+	
 	public boolean visited = false;
 	
 	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
+	private int keyX;
+	private int keyY;
 	
 	public Room(Dungeon dungeon, int rx, int ry) throws SlickException
 	{
@@ -51,7 +59,8 @@ public class Room
 		
 		if(layout == null)
 		{
-			this.layout = Room.getRandomLayout();
+			File[] list = new File("./res/rooms/").listFiles();
+			this.layout = "./res/rooms/" + list[Game.randomness.nextInt(list.length)].getName();
 		}
 		else
 		{
@@ -70,9 +79,18 @@ public class Room
 				for(int ty = 0; ty < this.getTileyHeight(); ty++)
 				{
 					Element element = tilelayer.get(ty * 11 + tx);
-					
 					int gid = element.getAttribute("gid").getIntValue();
-					this.tiles[tx][ty] = new Tile(this, tx, ty, gid);
+					
+					
+					if(gid == 1)
+					{
+						this.tiles[tx][ty] = new Tile(this, tx, ty, "wall");
+						this.tiles[tx][ty].isBlocked = true;
+					}
+					else if(gid == 2)
+					{
+						this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
+					}
 				}
 			}
 			
@@ -84,6 +102,18 @@ public class Room
 					int y = element.getAttribute("y").getIntValue() - (48 / 2);
 					
 					this.dungeon.enemies.add(new Thug(this.dungeon, this, x, y));
+				}
+				else if(element.getAttribute("gid").getIntValue() == 5)
+				{
+					this.keyX = element.getAttribute("x").getIntValue() + (64 / 2);
+					this.keyY = element.getAttribute("y").getIntValue() - (32 / 2);
+				}
+				else if(element.getAttribute("gid").getIntValue() == 6)
+				{
+					int x = element.getAttribute("x").getIntValue() + (16 / 2);
+					int y = element.getAttribute("y").getIntValue() - (16 / 2);
+					
+					this.dungeon.coins.add(new Coin(this.dungeon, this, x, y));
 				}
 			}
 		}
@@ -345,7 +375,7 @@ public class Room
 		this.northernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = 0;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 	}
 
 	/*
@@ -358,7 +388,7 @@ public class Room
 		this.southernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 	}
 
 	/*
@@ -371,7 +401,7 @@ public class Room
 		this.easternRoom = room;
 		
 		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 	}
 
 	/*
@@ -384,7 +414,7 @@ public class Room
 		this.westernRoom = room;
 		
 		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 	}
 	
 	/*
@@ -570,16 +600,98 @@ public class Room
 			return Direction.NONE;
 		}
 	}
-
-	/*
-	 * Returns the filepath to a room
-	 * in the resources directory.
-	 */
-	public static String getRandomLayout()
+	
+	public void addNorthernArrow()
 	{
-		Random random = new Random();
-		File[] list = new File("./res/rooms/").listFiles();
-		return "./res/rooms/" + list[random.nextInt(list.length)].getName();
+		int tx = Room.TILEY_WIDTH / 2, ty = 0;
+		this.tiles[tx][ty+1] = new Tile(this, tx, ty+1, "northern arrow");
+	}
+
+	public void addSouthernArrow()
+	{
+		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
+		this.tiles[tx][ty-1] = new Tile(this, tx, ty-1, "southern arrow");
+	}
+
+	public void addEasternArrow()
+	{
+		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
+		this.tiles[tx-1][ty] = new Tile(this, tx-1, ty, "eastern arrow");
+	}
+	
+	public void addWesternArrow()
+	{
+		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
+		this.tiles[tx+1][ty] = new Tile(this, tx+1, ty, "western arrow");
+	}
+	
+	public void addArrow(Direction direction)
+	{
+		if(direction == Direction.NORTH)
+		{
+			this.addNorthernArrow();
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			this.addSouthernArrow();
+		}
+		else if(direction == Direction.EAST)
+		{
+			this.addEasternArrow();
+		}
+		else if(direction == Direction.WEST)
+		{
+			this.addWesternArrow();
+		}
+	}
+	
+	public void addNorthernDoor()
+	{
+		int tx = Room.TILEY_WIDTH / 2, ty = 0;
+		this.tiles[tx][ty].lock();
+	}
+
+	public void addSouthernDoor()
+	{
+		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
+		this.tiles[tx][ty].lock();
+	}
+
+	public void addEasternDoor()
+	{
+		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
+		this.tiles[tx][ty].lock();
+	}
+	
+	public void addWesternDoor()
+	{
+		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
+		this.tiles[tx][ty].lock();
+	}
+	
+	public void addDoor(Direction direction)
+	{
+		if(direction == Direction.NORTH)
+		{
+			this.addNorthernDoor();
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			this.addSouthernDoor();
+		}
+		else if(direction == Direction.EAST)
+		{
+			this.addEasternDoor();
+		}
+		else if(direction == Direction.WEST)
+		{
+			this.addWesternDoor();
+		}
+	}
+
+	public void addKey()
+	{
+		this.dungeon.keys.add(new Key(this.dungeon, this, this.keyX, this.keyY));
 	}
 	
 	public final static int TILEY_WIDTH = 11;

@@ -2,16 +2,17 @@ package computc.cameras;
 
 import org.newdawn.slick.Input;
 
+import computc.GameData;
 import computc.entities.Entity;
 import computc.worlds.Room;
 
 public class RoomFollowingCamera extends Camera
 {
-	protected Entity target;
+	protected GameData gamedata;
 	
-	public RoomFollowingCamera(Entity target)
+	public RoomFollowingCamera(GameData gamedata)
 	{
-		this.target = target;
+		this.gamedata = gamedata;
 		
 		this.x = this.getTargetX();
 		this.y = this.getTargetY();
@@ -70,7 +71,7 @@ public class RoomFollowingCamera extends Camera
 	
 	public Entity getTarget()
 	{
-		return this.target;
+		return this.gamedata.hero;
 	}
 	
 	public int getTargetX()

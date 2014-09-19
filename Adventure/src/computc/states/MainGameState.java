@@ -18,11 +18,14 @@ import computc.Menu;
 import computc.cameras.Camera;
 import computc.cameras.RoomFollowingCamera;
 import computc.entities.Arrow;
+import computc.entities.Coin;
 import computc.entities.Hero;
+import computc.entities.Key;
 import computc.entities.OldMan;
 import computc.worlds.Dungeon;
 import computc.worlds.PredesignedDungeon;
 import computc.worlds.RandomRoguelikeDungeon;
+import computc.worlds.Room;
 import computc.worlds.Tile;
 
 public class MainGameState extends BasicGameState
@@ -31,6 +34,8 @@ public class MainGameState extends BasicGameState
 	public Camera camera;
 	public Menu menu;
 	
+	private Animation textBox;
+	
 	public MainGameState(GameData gamedata)
 	{
 		this.gamedata = gamedata;
@@ -38,14 +43,22 @@ public class MainGameState extends BasicGameState
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
+		Tile.images.put("wall", new Image("./res/wall.png"));
+		Tile.images.put("floor", new Image("./res/floor.png"));
+		Tile.images.put("northern arrow", new Image("./res/north.png"));
+		Tile.images.put("southern arrow", new Image("./res/south.png"));
+		Tile.images.put("eastern arrow", new Image("./res/east.png"));
+		Tile.images.put("western arrow", new Image("./res/west.png"));
+		Tile.images.put("door", new Image("./res/door.png"));
+		Key.IMAGE = new Image("./res/key.png");
+		Coin.IMAGE = new Image("./res/coin.png");
+		
+		this.textBox = new Animation(new SpriteSheet(new Image("res/largeTextBox.png"), 585, 100), 100);
+		
 		this.gamedata.instantiate();
 		
 		this.menu = new Menu(this.gamedata.dungeon, this.gamedata.hero);
-		this.camera = new RoomFollowingCamera(this.gamedata.hero);
-		
-		Tile.WALL_IMAGE = new Image("./res/wall.png");
-		Tile.FLOOR_IMAGE = new Image("./res/floor.png");
-		Tile.STAIR_IMAGE = new Image("./res/stairs.png");
+		this.camera = new RoomFollowingCamera(this.gamedata);
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
@@ -56,15 +69,58 @@ public class MainGameState extends BasicGameState
 		this.menu.update(input, game);
 		this.camera.update(input, delta);
 		
-		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
 		this.gamedata.dungeon.update(delta);
+		
+		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
+		this.gamedata.hero.checkPickup(this.gamedata.dungeon.keys);
+		this.gamedata.hero.checkGetCoin();
+		
+		if(this.gamedata.hero.isDead())
+		{
+			this.gamedata.instantiate();
+		}
+		
+		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
+		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
+		{
+			if((int)(counter) < greeting.length())
+			{
+				counter += delta * 0.025;
+			}
+			else
+			{
+				counter2 += delta * 0.025;
+			}
+		}
 	}
+
+	private String greeting = "You've won! Congratulations! Thanks for playing! Enjoy the";
+	private String greeting2 = "donuts, and join us at our next party! Your score was ";
+	private float counter, counter2;
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
 		this.gamedata.dungeon.render(graphics, this.camera);
 		this.gamedata.hero.render(graphics, this.camera);
+		this.gamedata.dungeon.renderKeys(graphics, camera);
 		this.menu.render(graphics, this.camera);
+		
+		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
+		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
+		{
+			textBox.draw(Room.WIDTH/11, Room.HEIGHT/11);
+			textBox.setLooping(false);
+			
+			int xCoord = (int) (Room.WIDTH/11 + 12);
+			int yCoord = (int) (Room.HEIGHT/11 + 12);
+			int xCoord2 = (int) (Room.WIDTH/11 + 12);
+			int yCoord2 = (int) (Room.HEIGHT/11 + 32);
+			
+			String greeting2temp = greeting2 + this.gamedata.hero.coinage + ".";
+			graphics.setColor(Color.white);
+			graphics.drawString(greeting.substring(0, (int)(Math.min(counter, greeting.length()))), xCoord, yCoord);
+			graphics.drawString(greeting2temp.substring(0, (int)(Math.min(counter2, greeting2temp.length()))), xCoord2, yCoord2);
+		}
 	}
 	
 	@Override
