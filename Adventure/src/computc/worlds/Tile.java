@@ -48,7 +48,14 @@ public class Tile
 		
 		if(this.isBlocked)
 		{
-			graphics.setColor(Color.lightGray);
+			if(this.locked)
+			{
+				graphics.setColor(Color.yellow);
+			}
+			else
+			{
+				graphics.setColor(Color.lightGray);
+			}
 		}
 		else if(this.isStairs)
 		{

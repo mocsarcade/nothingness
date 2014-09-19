@@ -18,10 +18,12 @@ public class RandomZeldaesqueDungeon extends Dungeon
 	//private final int AMOUNT_OF_ROOMS_IN_SIDEPATH;
 	//private final int AMOUNT_OF_SIDEPATHS_PER_SEGMENT;
 	
+	private Room lastRoom;
+	
 	public RandomZeldaesqueDungeon() throws SlickException
 	{
+		//MAINPATH
 		ArrayList<LinkedList<Room>> segments = new ArrayList<LinkedList<Room>>();
-		
 		Room currentRoom = this.firstRoom = new Room(this, 2, 2, "oval");
 		
 		for(int i = 0; i < AMOUNT_OF_SEGMENTS_IN_DUNGEON; i++)
@@ -49,6 +51,21 @@ public class RandomZeldaesqueDungeon extends Dungeon
 			
 			segments.add(segment);
 		}
+		
+		Direction finaldirection = currentRoom.getRandomPotentialDirection();
+		
+		if(finaldirection != Direction.NONE)
+		{
+			currentRoom.addArrow(finaldirection);
+			currentRoom.critpathDirection = finaldirection;
+			this.lastRoom = currentRoom.instantiateRoom(finaldirection, "clamp");
+		}
+		else
+		{
+			throw new DungeonException(); //is a dead end.
+		}
+		
+		//SIDEPATH
 		
 		for(LinkedList<Room> segment : segments)
 		{
