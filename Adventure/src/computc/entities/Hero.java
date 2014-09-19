@@ -37,6 +37,8 @@ public class Hero extends Entity
 	
 	private Image swingingImage;
 	
+	private LinkedList<Key> keys = new LinkedList<Key>();
+	
 	// actions 
 	private Animation sprite, firingArrow, meleeSwing, idle;
 	
@@ -416,8 +418,8 @@ public class Hero extends Entity
 		{
 			if(this.intersects(key))
 			{
-				System.out.println("!");
 				key.target = this;
+				this.keys.add(key);
 			}
 		}
 	}

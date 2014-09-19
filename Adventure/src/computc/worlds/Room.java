@@ -21,6 +21,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import computc.Direction;
 import computc.Game;
 import computc.cameras.Camera;
+import computc.entities.Door;
 import computc.entities.Thug;
 
 public class Room
@@ -33,6 +34,8 @@ public class Room
 	public Room easternRoom;
 	public Room southernRoom;
 	public Room northernRoom;
+	
+	public Direction critpathDirection;
 	
 	public boolean visited = false;
 	
@@ -624,6 +627,52 @@ public class Room
 		{
 			this.addWesternArrow();
 		}
+	}
+	
+	public void addNorthernDoor()
+	{
+		int tx = Room.TILEY_WIDTH / 2, ty = 0;
+		this.dungeon.doors.add(new Door(this.dungeon, this, tx, ty));
+	}
+
+	public void addSouthernDoor()
+	{
+		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
+		this.dungeon.doors.add(new Door(this.dungeon, this, tx, ty));
+	}
+
+	public void addEasternDoor()
+	{
+		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
+		this.dungeon.doors.add(new Door(this.dungeon, this, tx, ty));
+	}
+	
+	public void addWesternDoor()
+	{
+		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
+		this.dungeon.doors.add(new Door(this.dungeon, this, tx, ty));
+	}
+	
+	public void addDoor(Direction direction)
+	{
+		if(direction == Direction.NORTH)
+		{
+			this.addNorthernDoor();
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			this.addSouthernDoor();
+		}
+		else if(direction == Direction.EAST)
+		{
+			this.addEasternDoor();
+		}
+		else if(direction == Direction.WEST)
+		{
+			this.addWesternDoor();
+		}
+		
+		System.out.println(direction);
 	}
 	
 	public final static int TILEY_WIDTH = 11;

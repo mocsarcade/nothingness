@@ -35,6 +35,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 				if(direction != Direction.NONE)
 				{
 					currentRoom.addArrow(direction);
+					currentRoom.critpathDirection = direction;
 					Room instantiatedRoom = currentRoom.instantiateRoom(direction, "oval");
 					
 					segment.add(instantiatedRoom);
@@ -51,6 +52,9 @@ public class RandomZeldaesqueDungeon extends Dungeon
 		
 		for(LinkedList<Room> segment : segments)
 		{
+			Room lastRoom = segment.getLast();
+			lastRoom.addDoor(lastRoom.critpathDirection);
+			
 			for(Room room : segment)
 			{
 				Direction direction = room.getRandomPotentialDirection();
