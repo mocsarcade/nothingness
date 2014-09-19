@@ -73,6 +73,7 @@ public class MainGameState extends BasicGameState
 		
 		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
 		this.gamedata.hero.checkPickup(this.gamedata.dungeon.keys);
+		this.gamedata.hero.checkGetCoin();
 		
 		if(this.gamedata.hero.isDead())
 		{

@@ -39,6 +39,8 @@ public class Hero extends Entity
 	
 	// actions 
 	private Animation sprite, firingArrow, meleeSwing, idle;
+
+	public int coinage;
 	
 	public Hero(Dungeon dungeon, int tx, int ty) throws SlickException
 	{
@@ -419,6 +421,19 @@ public class Hero extends Entity
 				key.target = this;
 				this.keys.add(key);
 				key.pickedup = true;
+			}
+		}
+	}
+	
+	public void checkGetCoin()
+	{
+		for(Coin coin : this.dungeon.coins)
+		{
+			if(this.intersects(coin) && coin.pickedup == false)
+			{
+				coin.pickedup = true;
+				this.coinage++;
+				System.out.println(coinage);
 			}
 		}
 	}
