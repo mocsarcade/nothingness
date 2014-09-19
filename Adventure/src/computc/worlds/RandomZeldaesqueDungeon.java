@@ -33,7 +33,9 @@ public class RandomZeldaesqueDungeon extends Dungeon
 				
 				if(direction != Direction.NONE)
 				{
+					currentRoom.addArrow(direction);
 					Room instantiatedRoom = currentRoom.instantiateRoom(direction, "oval");
+					
 					segment.add(instantiatedRoom);
 					currentRoom = instantiatedRoom;
 				}

@@ -52,7 +52,8 @@ public class Room
 		
 		if(layout == null)
 		{
-			this.layout = Room.getRandomLayout();
+			File[] list = new File("./res/rooms/").listFiles();
+			this.layout = "./res/rooms/" + list[Game.randomness.nextInt(list.length)].getName();
 		}
 		else
 		{
@@ -580,15 +581,49 @@ public class Room
 			return Direction.NONE;
 		}
 	}
-
-	/*
-	 * Returns the filepath to a room
-	 * in the resources directory.
-	 */
-	public static String getRandomLayout()
+	
+	public void addNorthernArrow()
 	{
-		File[] list = new File("./res/rooms/").listFiles();
-		return "./res/rooms/" + list[Game.randomness.nextInt(list.length)].getName();
+		int tx = Room.TILEY_WIDTH / 2, ty = 0;
+		this.tiles[tx][ty+1] = new Tile(this, tx, ty+1, "northern arrow");
+	}
+
+	public void addSouthernArrow()
+	{
+		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
+		this.tiles[tx][ty-1] = new Tile(this, tx, ty-1, "southern arrow");
+	}
+
+	public void addEasternArrow()
+	{
+		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
+		this.tiles[tx-1][ty] = new Tile(this, tx-1, ty, "eastern arrow");
+	}
+	
+	public void addWesternArrow()
+	{
+		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
+		this.tiles[tx+1][ty] = new Tile(this, tx+1, ty, "western arrow");
+	}
+	
+	public void addArrow(Direction direction)
+	{
+		if(direction == Direction.NORTH)
+		{
+			this.addNorthernArrow();
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			this.addSouthernArrow();
+		}
+		else if(direction == Direction.EAST)
+		{
+			this.addEasternArrow();
+		}
+		else if(direction == Direction.WEST)
+		{
+			this.addWesternArrow();
+		}
 	}
 	
 	public final static int TILEY_WIDTH = 11;
