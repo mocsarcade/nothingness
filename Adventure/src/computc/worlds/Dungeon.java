@@ -10,12 +10,14 @@ import org.newdawn.slick.SlickException;
 import computc.cameras.Camera;
 import computc.entities.Enemy;
 import computc.entities.Entity;
+import computc.entities.Key;
 import computc.entities.Thug;
 
 public abstract class Dungeon
 {
 	protected HashMap<String, Room> rooms = new HashMap<String, Room>();
 	protected LinkedList<Enemy> enemies = new LinkedList<Enemy>();
+	protected LinkedList<Key> keys = new LinkedList<Key>();
 	protected Room firstRoom;
 
 	public void update(int delta)
@@ -42,6 +44,11 @@ public abstract class Dungeon
 		for(Enemy enemy: this.getAllEnemies())
 		{
 			enemy.render(graphics, camera);
+		}
+		
+		for(Key key : this.keys)
+		{
+			key.render(graphics, camera);
 		}
 	}
 	

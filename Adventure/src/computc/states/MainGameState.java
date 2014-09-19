@@ -19,6 +19,7 @@ import computc.cameras.Camera;
 import computc.cameras.RoomFollowingCamera;
 import computc.entities.Arrow;
 import computc.entities.Hero;
+import computc.entities.Key;
 import computc.entities.OldMan;
 import computc.worlds.Dungeon;
 import computc.worlds.PredesignedDungeon;
@@ -44,6 +45,7 @@ public class MainGameState extends BasicGameState
 		Tile.images.put("southern arrow", new Image("./res/south.png"));
 		Tile.images.put("eastern arrow", new Image("./res/east.png"));
 		Tile.images.put("western arrow", new Image("./res/west.png"));
+		Key.IMAGE = new Image("./res/key.png");
 		
 		this.gamedata.instantiate();
 		

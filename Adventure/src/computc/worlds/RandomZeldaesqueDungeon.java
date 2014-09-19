@@ -9,6 +9,7 @@ import org.newdawn.slick.SlickException;
 
 import computc.Direction;
 import computc.cameras.Camera;
+import computc.entities.Key;
 
 public class RandomZeldaesqueDungeon extends Dungeon
 {
@@ -64,5 +65,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 				}
 			}
 		}
+		
+		this.keys.add(new Key(this, this.firstRoom, 5, 4));
 	}
 }
