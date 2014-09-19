@@ -21,7 +21,6 @@ import org.newdawn.slick.tiled.TiledMap;
 import computc.Direction;
 import computc.Game;
 import computc.cameras.Camera;
-import computc.entities.Door;
 import computc.entities.Thug;
 
 public class Room
@@ -632,25 +631,25 @@ public class Room
 	public void addNorthernDoor()
 	{
 		int tx = Room.TILEY_WIDTH / 2, ty = 0;
-		this.dungeon.doors.add(new Door(this.dungeon, this, tx, ty));
+		this.tiles[tx][ty].lock();
 	}
 
 	public void addSouthernDoor()
 	{
 		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
-		this.dungeon.doors.add(new Door(this.dungeon, this, tx, ty));
+		this.tiles[tx][ty].lock();
 	}
 
 	public void addEasternDoor()
 	{
 		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
-		this.dungeon.doors.add(new Door(this.dungeon, this, tx, ty));
+		this.tiles[tx][ty].lock();
 	}
 	
 	public void addWesternDoor()
 	{
 		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
-		this.dungeon.doors.add(new Door(this.dungeon, this, tx, ty));
+		this.tiles[tx][ty].lock();
 	}
 	
 	public void addDoor(Direction direction)

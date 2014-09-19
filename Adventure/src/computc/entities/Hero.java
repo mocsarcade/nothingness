@@ -37,8 +37,6 @@ public class Hero extends Entity
 	
 	private Image swingingImage;
 	
-	private LinkedList<Key> keys = new LinkedList<Key>();
-	
 	// actions 
 	private Animation sprite, firingArrow, meleeSwing, idle;
 	
@@ -416,14 +414,14 @@ public class Hero extends Entity
 	{
 		for(Key key : keys)
 		{
-			if(this.intersects(key))
+			if(this.intersects(key) && key.pickedup == false)
 			{
 				key.target = this;
 				this.keys.add(key);
+				key.pickedup = true;
 			}
 		}
 	}
-
 	
 	private float speed = 0.25f;
 }

@@ -55,21 +55,28 @@ public class RandomZeldaesqueDungeon extends Dungeon
 			Room lastRoom = segment.getLast();
 			lastRoom.addDoor(lastRoom.critpathDirection);
 			
+			LinkedList<Room> sidepath = new LinkedList<Room>();
+			
 			for(Room room : segment)
 			{
 				Direction direction = room.getRandomPotentialDirection();
 				
 				if(direction != Direction.NONE)
 				{
-					room.instantiateRoom(direction, "empty");
+					Room instantiatedRoom = room.instantiateRoom(direction, "empty");
+					sidepath.add(instantiatedRoom);
 				}
 				else
 				{
 					throw new DungeonException(); //is a dead end.
 				}
 			}
+			
+			Collections.shuffle(sidepath);
+			this.keys.add(new Key(this, sidepath.get(0), 5, 4));
 		}
 		
-		this.keys.add(new Key(this, this.firstRoom, 5, 4));
+		//this.firstRoom.addDoor(this.firstRoom.critpathDirection);
+		//this.keys.add(new Key(this, this.firstRoom, 5, 4));
 	}
 }

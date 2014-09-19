@@ -1,6 +1,8 @@
 
 package computc.entities;
 
+import java.util.LinkedList;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -37,10 +39,10 @@ public abstract class Entity
 	protected float maximumVelocity;
 	
 	//collision
-	protected boolean topLeft;
-	protected boolean topRight;
-	protected boolean bottomRight;
-	protected boolean bottomLeft;
+	protected Tile topLeft;
+	protected Tile topRight;
+	protected Tile bottomRight;
+	protected Tile bottomLeft;
 	
 	// blinking collision indicator
 	protected boolean blinking;
@@ -57,6 +59,8 @@ public abstract class Entity
 	
 	protected boolean facingRight;
 	protected boolean facingDown;
+	
+	protected LinkedList<Key> keys = new LinkedList<Key>();
 	
 	public Entity(Dungeon dungeon, float x, float y)
 	{
@@ -275,10 +279,10 @@ public abstract class Entity
 		   int topRow = (int)(y - getHitboxHeight()/ 2);
 		   int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1);
 		   
-		   topLeft = dungeon.getTile(leftColumn, topRow).isBlocked;
-		   topRight = dungeon.getTile(rightColumn, topRow).isBlocked;
-		   bottomLeft = dungeon.getTile(leftColumn, bottomRow).isBlocked;
-		   bottomRight = dungeon.getTile(rightColumn, bottomRow).isBlocked;
+		   topLeft = dungeon.getTile(leftColumn, topRow);
+		   topRight = dungeon.getTile(rightColumn, topRow);
+		   bottomLeft = dungeon.getTile(leftColumn, bottomRow);
+		   bottomRight = dungeon.getTile(rightColumn, bottomRow);
 	   }
 	
 	public void checkTileMapCollision() 
@@ -293,9 +297,23 @@ public abstract class Entity
 		   
 		   if(dy < 0) 
 		   {
-			   if(topLeft || topRight) 
+			   if(topLeft.isBlocked || topRight.isBlocked) 
 			   {
 				   dy = 0;
+					if(topLeft.locked && this.keys.size() > 0)
+					{
+						Key key = this.keys.pop();
+						this.dungeon.keys.remove(key);
+						
+						topLeft.unlock();
+					}
+					if(topRight.locked && this.keys.size() > 0)
+					{
+						Key key = this.keys.pop();
+						this.dungeon.keys.remove(key);
+						
+						topRight.unlock();
+					}
 			   }
 			   else {
 				   ytemp += dy;
@@ -304,8 +322,23 @@ public abstract class Entity
 			   
 			if(dy > 0) 
 			{
-				if(bottomLeft || bottomRight) 
+				if(bottomLeft.isBlocked || bottomRight.isBlocked)
 				{
+					if(bottomLeft.locked && this.keys.size() > 0)
+					{
+						Key key = this.keys.pop();
+						this.dungeon.keys.remove(key);
+						
+						bottomLeft.unlock();
+					}
+					if(bottomRight.locked && this.keys.size() > 0)
+					{
+						Key key = this.keys.pop();
+						this.dungeon.keys.remove(key);
+						
+						bottomRight.unlock();
+					}
+					
 					dy = 0;
 				}
 				else 
@@ -317,9 +350,23 @@ public abstract class Entity
 			calculateCorners(xdest, y);
 			
 			if(dx < 0) {
-				if(topLeft || bottomLeft) 
+				if(topLeft.isBlocked || bottomLeft.isBlocked) 
 				{
 					dx = 0;
+					if(topLeft.locked && this.keys.size() > 0)
+					{
+						Key key = this.keys.pop();
+						this.dungeon.keys.remove(key);
+						
+						topLeft.unlock();
+					}
+					if(bottomLeft.locked && this.keys.size() > 0)
+					{
+						Key key = this.keys.pop();
+						this.dungeon.keys.remove(key);
+						
+						bottomLeft.unlock();
+					}
 				}
 				else 
 				{
@@ -328,9 +375,23 @@ public abstract class Entity
 			}
 				
 			if(dx > 0) {
-				if(topRight || bottomRight) 
+				if(topRight.isBlocked || bottomRight.isBlocked) 
 				{
 					dx = 0;
+					if(topRight.locked && this.keys.size() > 0)
+					{
+						Key key = this.keys.pop();
+						this.dungeon.keys.remove(key);
+						
+						topRight.unlock();
+					}
+					if(bottomRight.locked && this.keys.size() > 0)
+					{
+						Key key = this.keys.pop();
+						this.dungeon.keys.remove(key);
+						
+						bottomRight.unlock();
+					}
 				}
 				else 
 				{

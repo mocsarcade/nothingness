@@ -20,6 +20,8 @@ public class Tile
 	public boolean isStairs;
 	
 	public Image image;
+
+	public boolean locked;
 	
 	public Tile(Room room, int tx, int ty, String imagename)
 	{
@@ -133,6 +135,20 @@ public class Tile
 	public int getHeight()
 	{
 		return Tile.SIZE;
+	}
+	
+	public void lock()
+	{
+		this.image = Tile.images.get("door");
+		this.isBlocked = true;
+		this.locked = true;
+	}
+	
+	public void unlock()
+	{
+		this.image = Tile.images.get("floor");
+		this.isBlocked = false;
+		this.locked = false;
 	}
 	
 	public static HashMap<String, Image> images = new HashMap<String, Image>();

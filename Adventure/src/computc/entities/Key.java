@@ -9,6 +9,7 @@ public class Key extends Entity
 {
 	public Hero target;
 	private float speed = 1f;
+	public boolean pickedup = false;
 
 	public Key(Dungeon dungeon, Room room, int tx, int ty)
 	{
