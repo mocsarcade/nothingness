@@ -18,6 +18,7 @@ import computc.Menu;
 import computc.cameras.Camera;
 import computc.cameras.RoomFollowingCamera;
 import computc.entities.Arrow;
+import computc.entities.Coin;
 import computc.entities.Hero;
 import computc.entities.Key;
 import computc.entities.OldMan;
@@ -50,6 +51,7 @@ public class MainGameState extends BasicGameState
 		Tile.images.put("western arrow", new Image("./res/west.png"));
 		Tile.images.put("door", new Image("./res/door.png"));
 		Key.IMAGE = new Image("./res/key.png");
+		Coin.IMAGE = new Image("./res/coin.png");
 		
 		this.textBox = new Animation(new SpriteSheet(new Image("res/largeTextBox.png"), 585, 100), 100);
 		

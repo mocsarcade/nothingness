@@ -8,6 +8,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 import computc.cameras.Camera;
+import computc.entities.Coin;
 import computc.entities.Enemy;
 import computc.entities.Entity;
 import computc.entities.Key;
@@ -19,6 +20,7 @@ public abstract class Dungeon
 	protected HashMap<String, Room> rooms = new HashMap<String, Room>();
 	protected LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 	public LinkedList<Key> keys = new LinkedList<Key>();
+	public LinkedList<Coin> coins = new LinkedList<Coin>();
 	protected Room firstRoom;
 	public Room lastRoom;
 	public OldMan oldman;
@@ -47,6 +49,11 @@ public abstract class Dungeon
 		for(Room room : this.getAllRooms())
 		{
 			room.render(graphics, camera);
+		}
+
+		for(Coin coin : this.coins)
+		{
+			coin.render(graphics, camera);
 		}
 
 		for(Enemy enemy: this.getAllEnemies())

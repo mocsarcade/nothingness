@@ -21,6 +21,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import computc.Direction;
 import computc.Game;
 import computc.cameras.Camera;
+import computc.entities.Coin;
 import computc.entities.Key;
 import computc.entities.OldMan;
 import computc.entities.Thug;
@@ -109,10 +110,10 @@ public class Room
 				}
 				else if(element.getAttribute("gid").getIntValue() == 6)
 				{
-					int x = element.getAttribute("x").getIntValue() + (48 / 2);
-					int y = element.getAttribute("y").getIntValue() - (48 / 2);
+					int x = element.getAttribute("x").getIntValue() + (16 / 2);
+					int y = element.getAttribute("y").getIntValue() - (16 / 2);
 					
-					//this.dungeon.coins.add(new Coin(this.dungeon, this, x, y));
+					this.dungeon.coins.add(new Coin(this.dungeon, this, x, y));
 				}
 			}
 		}
