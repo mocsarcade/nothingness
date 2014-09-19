@@ -21,6 +21,7 @@ import org.newdawn.slick.tiled.TiledMap;
 import computc.Direction;
 import computc.Game;
 import computc.cameras.Camera;
+import computc.entities.Key;
 import computc.entities.Thug;
 
 public class Room
@@ -39,6 +40,8 @@ public class Room
 	public boolean visited = false;
 	
 	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
+	private int keyX;
+	private int keyY;
 	
 	public Room(Dungeon dungeon, int rx, int ry) throws SlickException
 	{
@@ -97,6 +100,18 @@ public class Room
 					int y = element.getAttribute("y").getIntValue() - (48 / 2);
 					
 					this.dungeon.enemies.add(new Thug(this.dungeon, this, x, y));
+				}
+				else if(element.getAttribute("gid").getIntValue() == 5)
+				{
+					this.keyX = element.getAttribute("x").getIntValue() + (64 / 2);
+					this.keyY = element.getAttribute("y").getIntValue() - (32 / 2);
+				}
+				else if(element.getAttribute("gid").getIntValue() == 6)
+				{
+					int x = element.getAttribute("x").getIntValue() + (48 / 2);
+					int y = element.getAttribute("y").getIntValue() - (48 / 2);
+					
+					//this.dungeon.coins.add(new Coin(this.dungeon, this, x, y));
 				}
 			}
 		}
@@ -672,6 +687,12 @@ public class Room
 		}
 		
 		System.out.println(direction);
+	}
+
+	public void addKey()
+	{
+		System.out.println(this.keyX + ":" + this.keyY);
+		this.dungeon.keys.add(new Key(this.dungeon, this, this.keyX, this.keyY));
 	}
 	
 	public final static int TILEY_WIDTH = 11;

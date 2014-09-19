@@ -24,7 +24,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 	{
 		//MAINPATH
 		ArrayList<LinkedList<Room>> segments = new ArrayList<LinkedList<Room>>();
-		Room currentRoom = this.firstRoom = new Room(this, 2, 2, "oval");
+		Room currentRoom = this.firstRoom = new Room(this, 2, 2, "empty");
 		
 		for(int i = 0; i < AMOUNT_OF_SEGMENTS_IN_DUNGEON; i++)
 		{
@@ -38,7 +38,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 				{
 					currentRoom.addArrow(direction);
 					currentRoom.critpathDirection = direction;
-					Room instantiatedRoom = currentRoom.instantiateRoom(direction, "oval");
+					Room instantiatedRoom = currentRoom.instantiateRoom(direction, "twolines");
 					
 					segment.add(instantiatedRoom);
 					currentRoom = instantiatedRoom;
@@ -80,7 +80,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 				
 				if(direction != Direction.NONE)
 				{
-					Room instantiatedRoom = room.instantiateRoom(direction, "empty");
+					Room instantiatedRoom = room.instantiateRoom(direction, "threelines");
 					sidepath.add(instantiatedRoom);
 				}
 				else
@@ -90,7 +90,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 			}
 			
 			Collections.shuffle(sidepath);
-			this.keys.add(new Key(this, sidepath.get(0), 5, 4));
+			sidepath.get(0).addKey();
 		}
 		
 		//this.firstRoom.addDoor(this.firstRoom.critpathDirection);
