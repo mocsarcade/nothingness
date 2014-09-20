@@ -1,4 +1,4 @@
-package computc.worlds;
+package computc.worlds.rooms;
 
 import java.util.List;
 import java.io.File;
@@ -25,6 +25,8 @@ import computc.entities.Coin;
 import computc.entities.Key;
 import computc.entities.OldMan;
 import computc.entities.Thug;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.tiles.Tile;
 
 public class Room
 {
@@ -57,12 +59,12 @@ public class Room
 		this.rx = rx;
 		this.ry = ry;
 		
-		if(layout == null)
+		/*if(layout == null)
 		{
 			File[] list = new File("./res/rooms/").listFiles();
 			this.layout = "./res/rooms/" + list[Game.randomness.nextInt(list.length)].getName();
 		}
-		else
+		else*/
 		{
 			this.layout = "./res/rooms/" + layout + ".room.tmx";
 		}
@@ -72,29 +74,28 @@ public class Room
 			Document tmx = new SAXBuilder().build(this.layout);
 			
 			List<Element> tilelayer = tmx.getRootElement().getChild("layer").getChild("data").getChildren();
-			List<Element> objectgroup = tmx.getRootElement().getChild("objectgroup").getChildren();
+			//List<Element> objectgroup = tmx.getRootElement().getChild("objectgroup").getChildren();
 			
 			for(int tx = 0; tx < this.getTileyWidth(); tx++)
 			{
 				for(int ty = 0; ty < this.getTileyHeight(); ty++)
 				{
-					Element element = tilelayer.get(ty * 11 + tx);
-					int gid = element.getAttribute("gid").getIntValue();
+					Element element = tilelayer.get(ty * Room.TILEY_WIDTH + tx);
+					int type = element.getAttribute("gid").getIntValue();
 					
-					
-					if(gid == 1)
+					if(type == 1)
 					{
 						this.tiles[tx][ty] = new Tile(this, tx, ty, "wall");
 						this.tiles[tx][ty].isBlocked = true;
 					}
-					else if(gid == 2)
+					else if(type == 2)
 					{
 						this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 					}
 				}
 			}
 			
-			for(Element element : objectgroup)
+			/*for(Element element : objectgroup)
 			{
 				if(element.getAttribute("gid").getIntValue() == 4)
 				{
@@ -115,7 +116,7 @@ public class Room
 					
 					this.dungeon.coins.add(new Coin(this.dungeon, this, x, y));
 				}
-			}
+			}*/
 		}
 		catch(Exception exception)
 		{

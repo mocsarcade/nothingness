@@ -1,4 +1,4 @@
-package computc.worlds;
+package computc.worlds.dungeons;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import org.newdawn.slick.SlickException;
 
 import computc.Direction;
+import computc.worlds.rooms.Room;
 
 public class RandomRoguelikeDungeon extends Dungeon
 {

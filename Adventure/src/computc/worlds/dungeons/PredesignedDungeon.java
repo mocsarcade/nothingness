@@ -1,4 +1,4 @@
-package computc.worlds;
+package computc.worlds.dungeons;
 
 import java.awt.Point;
 import java.util.LinkedList;
@@ -16,6 +16,7 @@ import computc.entities.BigThug;
 import computc.entities.Enemy;
 import computc.entities.OldMan;
 import computc.entities.Thug;
+import computc.worlds.rooms.Room;
 
 public class PredesignedDungeon extends Dungeon
 {

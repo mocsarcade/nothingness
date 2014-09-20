@@ -3,8 +3,8 @@ package computc.entities;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
-import computc.worlds.Dungeon;
-import computc.worlds.Room;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
 
 public class BigThug extends Thug
 {

@@ -1,5 +1,5 @@
 
-package computc.worlds;
+package computc.worlds.tiles;
 
 import java.util.HashMap;
 
@@ -8,6 +8,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Graphics;
 
 import computc.cameras.Camera;
+import computc.worlds.rooms.Room;
 
 public class Tile
 {

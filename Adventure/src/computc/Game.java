@@ -18,7 +18,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import computc.states.DungeonMapGameState;
 import computc.states.MainGameState;
-import computc.worlds.Room;
+import computc.worlds.rooms.Room;
 
 public class Game extends StateBasedGame
 {

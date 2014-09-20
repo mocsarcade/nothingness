@@ -7,8 +7,8 @@ import org.newdawn.slick.SlickException;
 
 import computc.cameras.Camera;
 import computc.Direction;
-import computc.worlds.Dungeon;
-import computc.worlds.Room;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
 
 public class Arrow extends Entity
 {

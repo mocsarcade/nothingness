@@ -9,8 +9,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import computc.cameras.Camera;
 import computc.entities.Hero;
-import computc.worlds.Dungeon;
-import computc.worlds.Room;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
 
 public class Menu
 {

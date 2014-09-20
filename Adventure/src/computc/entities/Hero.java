@@ -14,9 +14,9 @@ import org.newdawn.slick.SpriteSheet;
 
 import computc.cameras.Camera;
 import computc.Direction;
-import computc.worlds.Dungeon;
-import computc.worlds.Room;
-import computc.worlds.Tile;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
+import computc.worlds.tiles.Tile;
 
 public class Hero extends Entity
 {

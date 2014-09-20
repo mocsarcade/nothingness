@@ -1,6 +1,8 @@
-package computc.worlds;
+package computc.worlds.dungeons;
 
 import org.newdawn.slick.SlickException;
+
+import computc.worlds.rooms.Room;
 
 public class FiveRoomDungeon extends Dungeon
 {

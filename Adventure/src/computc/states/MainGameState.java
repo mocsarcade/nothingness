@@ -22,11 +22,11 @@ import computc.entities.Coin;
 import computc.entities.Hero;
 import computc.entities.Key;
 import computc.entities.OldMan;
-import computc.worlds.Dungeon;
-import computc.worlds.PredesignedDungeon;
-import computc.worlds.RandomRoguelikeDungeon;
-import computc.worlds.Room;
-import computc.worlds.Tile;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.dungeons.PredesignedDungeon;
+import computc.worlds.dungeons.RandomRoguelikeDungeon;
+import computc.worlds.rooms.Room;
+import computc.worlds.tiles.Tile;
 
 public class MainGameState extends BasicGameState
 {
@@ -80,7 +80,7 @@ public class MainGameState extends BasicGameState
 			this.gamedata.instantiate();
 		}
 		
-		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
+		/*if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
 		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
 		{
 			if((int)(counter) < greeting.length())
@@ -91,7 +91,7 @@ public class MainGameState extends BasicGameState
 			{
 				counter2 += delta * 0.025;
 			}
-		}
+		}*/
 	}
 
 	private String greeting = "You've won! Congratulations! Thanks for playing! Enjoy the";
@@ -105,7 +105,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.dungeon.renderKeys(graphics, camera);
 		this.gamedata.menu.render(graphics, this.camera);
 		
-		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
+		/*if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
 		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
 		{
 			textBox.draw(Room.WIDTH/11, Room.HEIGHT/11);
@@ -120,7 +120,7 @@ public class MainGameState extends BasicGameState
 			graphics.setColor(Color.white);
 			graphics.drawString(greeting.substring(0, (int)(Math.min(counter, greeting.length()))), xCoord, yCoord);
 			graphics.drawString(greeting2temp.substring(0, (int)(Math.min(counter2, greeting2temp.length()))), xCoord2, yCoord2);
-		}
+		}*/
 	}
 	
 	@Override

@@ -1,5 +1,5 @@
 
-package computc.worlds;
+package computc.worlds.dungeons;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -14,6 +14,8 @@ import computc.entities.Entity;
 import computc.entities.Key;
 import computc.entities.OldMan;
 import computc.entities.Thug;
+import computc.worlds.rooms.Room;
+import computc.worlds.tiles.Tile;
 
 public abstract class Dungeon
 {

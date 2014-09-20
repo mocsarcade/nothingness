@@ -1,4 +1,4 @@
-package computc.worlds;
+package computc.worlds.dungeons;
 
 public class DungeonException extends RuntimeException
 {

@@ -1,4 +1,4 @@
-package computc.worlds;
+package computc.worlds.dungeons;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,6 +14,7 @@ import computc.Direction;
 import computc.cameras.Camera;
 import computc.entities.Key;
 import computc.entities.OldMan;
+import computc.worlds.rooms.Room;
 
 public class RandomZeldaesqueDungeon extends Dungeon
 {

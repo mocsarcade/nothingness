@@ -13,10 +13,10 @@ import computc.cameras.Camera;
 import computc.cameras.InputPollingCamera;
 import computc.cameras.RoomFollowingCamera;
 import computc.entities.Hero;
-import computc.worlds.Dungeon;
-import computc.worlds.RandomRoguelikeDungeon;
-import computc.worlds.RandomZeldaesqueDungeon;
-import computc.worlds.Room;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.dungeons.RandomRoguelikeDungeon;
+import computc.worlds.dungeons.RandomZeldaesqueDungeon;
+import computc.worlds.rooms.Room;
 
 public class DungeonMapGameState extends BasicGameState
 {

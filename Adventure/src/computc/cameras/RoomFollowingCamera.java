@@ -4,7 +4,7 @@ import org.newdawn.slick.Input;
 
 import computc.GameData;
 import computc.entities.Entity;
-import computc.worlds.Room;
+import computc.worlds.rooms.Room;
 
 public class RoomFollowingCamera extends Camera
 {
