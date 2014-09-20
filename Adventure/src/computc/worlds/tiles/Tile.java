@@ -2,7 +2,11 @@
 package computc.worlds.tiles;
 
 import java.util.HashMap;
+import java.util.List;
 
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Graphics;
@@ -47,6 +51,31 @@ public abstract class Tile
 		Tile.colors.put("wall tile", Color.darkGray);
 		Tile.colors.put("floor tile", Color.gray);
 		Tile.colors.put("door tile", Color.yellow);
+		
+		try
+		{
+			Document document = new SAXBuilder().build("./res/tileset.xml");
+			
+			List<Element> tiles = document.getRootElement().getChildren("tile");
+			
+			for(Element tile : tiles)
+			{
+				Element image = tile.getChild("image");
+				Element color = tile.getChild("color");
+
+				int red = color.getAttribute("red").getIntValue();
+				int green = color.getAttribute("green").getIntValue();
+				int blue = color.getAttribute("blue").getIntValue();
+
+				int width = image.getAttribute("width").getIntValue();
+				int height = image.getAttribute("height").getIntValue();
+				String source = image.getAttribute("source").getValue();
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
 	}
 	
 	public void update(int delta)
