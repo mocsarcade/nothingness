@@ -6,7 +6,7 @@ import computc.worlds.rooms.Room;
 
 public class FiveRoomDungeon extends Dungeon
 {
-	public FiveRoomDungeon() throws SlickException
+	public FiveRoomDungeon()
 	{
 		this.firstRoom = new Room(this, 2, 2, "grid");
 		

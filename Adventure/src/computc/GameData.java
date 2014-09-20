@@ -13,27 +13,13 @@ import computc.worlds.dungeons.RandomZeldaesqueDungeon;
 public class GameData
 {
 	public Hero hero;
-	public Dungeon dungeon;
+	public Level level;
 	public Menu menu;
 	
 	public void instantiate() throws SlickException
 	{
-		/*this.dungeon = null;
-		while(this.dungeon == null)
-		{
-			try
-			{
-				this.dungeon = new RandomZeldaesqueDungeon();
-			}
-			catch(DungeonException exception)
-			{
-				exception.printStackTrace();
-			}
-		}*/
-		
-		this.dungeon = new OneRoomDungeon();
-		
-		this.hero = new Hero(dungeon, 5, 4);
-		this.menu = new Menu(this.dungeon, this.hero);
+		this.level = new Level();
+		this.hero = new Hero(this.level.dungeon, 5, 4);
+		this.menu = new Menu(this.level.dungeon, this.hero);
 	}
 }

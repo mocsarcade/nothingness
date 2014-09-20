@@ -16,4 +16,6 @@ public class WallTile extends Tile
 	{
 		return false;
 	}
+	
+	public static final int GID = 1;
 }

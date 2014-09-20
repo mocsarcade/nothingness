@@ -63,10 +63,10 @@ public class MainGameState extends BasicGameState
 		this.gamedata.menu.update(input, game);
 		this.camera.update(input, delta);
 		
-		this.gamedata.dungeon.update(delta);
+		this.gamedata.level.dungeon.update(delta);
 		
-		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
-		this.gamedata.hero.checkPickup(this.gamedata.dungeon.keys);
+		this.gamedata.hero.checkAttack(this.gamedata.level.dungeon.getAllEnemies());
+		this.gamedata.hero.checkPickup(this.gamedata.level.dungeon.keys);
 		this.gamedata.hero.checkGetCoin();
 		
 		if(this.gamedata.hero.isDead())
@@ -94,9 +94,9 @@ public class MainGameState extends BasicGameState
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
-		this.gamedata.dungeon.render(graphics, this.camera);
+		this.gamedata.level.dungeon.render(graphics, this.camera);
 		this.gamedata.hero.render(graphics, this.camera);
-		this.gamedata.dungeon.renderKeys(graphics, camera);
+		this.gamedata.level.dungeon.renderKeys(graphics, camera);
 		this.gamedata.menu.render(graphics, this.camera);
 		
 		/*if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
@@ -151,7 +151,7 @@ public class MainGameState extends BasicGameState
 				Arrow arrow;
 				try 
 				{
-					arrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
+					arrow = new Arrow(this.gamedata.level.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
 					arrow.setPosition(this.gamedata.hero.getX(), this.gamedata.hero.getY());
 					this.gamedata.hero.arrows.add(arrow);
 				} catch (SlickException e) 

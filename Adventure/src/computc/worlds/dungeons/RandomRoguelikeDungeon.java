@@ -13,7 +13,7 @@ public class RandomRoguelikeDungeon extends Dungeon
 {
 	private final int SCALE = 5;
 	
-	public RandomRoguelikeDungeon() throws SlickException
+	public RandomRoguelikeDungeon()
 	{
 		this.firstRoom = new Room(this, 2, 2, "empty");
 		

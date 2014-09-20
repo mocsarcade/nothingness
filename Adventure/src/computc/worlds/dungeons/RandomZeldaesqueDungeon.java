@@ -23,7 +23,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 	//private final int AMOUNT_OF_ROOMS_IN_SIDEPATH;
 	//private final int AMOUNT_OF_SIDEPATHS_PER_SEGMENT;
 	
-	public RandomZeldaesqueDungeon() throws SlickException
+	public RandomZeldaesqueDungeon()
 	{
 		//MAINPATH
 		ArrayList<LinkedList<Room>> segments = new ArrayList<LinkedList<Room>>();
@@ -96,6 +96,6 @@ public class RandomZeldaesqueDungeon extends Dungeon
 			sidepath.get(0).addKey();
 		}
 		
-		this.oldman = new OldMan(this, this.lastRoom, 200, 200);
+		//this.oldman = new OldMan(this, this.lastRoom, 200, 200);
 	}
 }

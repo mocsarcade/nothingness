@@ -11,4 +11,6 @@ public class FloorTile extends Tile
 		this.image = Tile.images.get("floor tile");
 		this.color = Tile.colors.get("floor tile");
 	}
+	
+	public static final int GID = 2;
 }

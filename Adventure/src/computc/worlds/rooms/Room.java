@@ -51,27 +51,19 @@ public class Room
 	private int keyX;
 	private int keyY;
 	
-	public Room(Dungeon dungeon, int rx, int ry) throws SlickException
+	public Room(Dungeon dungeon, int rx, int ry)
 	{
 		this(dungeon, rx, ry, null);
 	}
 
-	public Room(Dungeon dungeon, int rx, int ry, String layout) throws SlickException
+	public Room(Dungeon dungeon, int rx, int ry, String layout)
 	{
 		this.dungeon = dungeon;
 		
 		this.rx = rx;
 		this.ry = ry;
 		
-		/*if(layout == null)
-		{
-			File[] list = new File("./res/rooms/").listFiles();
-			this.layout = "./res/rooms/" + list[Game.randomness.nextInt(list.length)].getName();
-		}
-		else*/
-		{
-			this.layout = "./res/rooms/" + layout + ".room.tmx";
-		}
+		this.layout = layout;
 		
 		try
 		{
@@ -85,13 +77,13 @@ public class Room
 				for(int ty = 0; ty < this.getTileyHeight(); ty++)
 				{
 					Element element = tilelayer.get(ty * Room.TILEY_WIDTH + tx);
-					int type = element.getAttribute("gid").getIntValue();
+					int gid = element.getAttribute("gid").getIntValue();
 					
-					if(type == 1)
+					if(gid == WallTile.GID)
 					{
 						this.tiles[tx][ty] = new WallTile(this, tx, ty);
 					}
-					else if(type == 2)
+					else if(gid == FloorTile.GID)
 					{
 						this.tiles[tx][ty] = new FloorTile(this, tx, ty);
 					}
@@ -489,7 +481,7 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the north.
 	 */
-	public Room instantiateNorthernRoom(String layout) throws SlickException
+	public Room instantiateNorthernRoom(String layout)
 	{
 		Room room = new Room(this.dungeon, this.rx, this.ry - 1, layout);
 		this.connectNorthernRoom(room);
@@ -500,7 +492,7 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the south.
 	 */
-	public Room instantiateSouthernRoom(String layout) throws SlickException
+	public Room instantiateSouthernRoom(String layout)
 	{
 		Room room = new Room(this.dungeon, this.rx, this.ry + 1, layout);
 		this.connectSouthernRoom(room);
@@ -511,7 +503,7 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the east.
 	 */
-	public Room instantiateEasternRoom(String layout) throws SlickException
+	public Room instantiateEasternRoom(String layout)
 	{
 		Room room = new Room(this.dungeon, this.rx + 1, this.ry, layout);
 		this.connectEasternRoom(room);
@@ -522,7 +514,7 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the west.
 	 */
-	public Room instantiateWesternRoom(String layout) throws SlickException
+	public Room instantiateWesternRoom(String layout)
 	{
 		Room room = new Room(this.dungeon, this.rx - 1, this.ry, layout);
 		this.connectWesternRoom(room);
@@ -533,7 +525,7 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room in any direction.
 	 */
-	public Room instantiateRoom(Direction direction, String layout) throws SlickException
+	public Room instantiateRoom(Direction direction, String layout) 
 	{
 		if(direction == Direction.NORTH)
 		{
@@ -561,7 +553,7 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room in any direction.
 	 */
-	public Room instantiateRoom(Direction direction) throws SlickException
+	public Room instantiateRoom(Direction direction) 
 	{
 		return this.instantiateRoom(direction, null);
 	}
