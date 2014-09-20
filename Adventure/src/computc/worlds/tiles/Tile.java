@@ -34,14 +34,14 @@ public abstract class Tile
 	
 	public static void init() throws SlickException
 	{
-		Tile.images.put("null tile", new Image("./res/null.tile.png"));
-		Tile.images.put("wall tile", new Image("./res/wall.png"));
-		Tile.images.put("floor tile", new Image("./res/floor.png"));
-		Tile.images.put("door tile", new Image("./res/door.png"));
-		Tile.images.put("northern arrow floor tile", new Image("./res/north.png"));
-		Tile.images.put("southern arrow floor tile", new Image("./res/south.png"));
-		Tile.images.put("eastern arrow floor tile", new Image("./res/east.png"));
-		Tile.images.put("western arrow floor tile", new Image("./res/west.png"));
+		Tile.images.put("null tile", new Image("./res/tiles/null.tile.png"));
+		Tile.images.put("wall tile", new Image("./res/tiles/wall.tile.png"));
+		Tile.images.put("floor tile", new Image("./res/tiles/floor.tile.png"));
+		Tile.images.put("door tile", new Image("./res/tiles/door.tile.png"));
+		Tile.images.put("northern arrow floor tile", new Image("./res/tiles/northern.arrow.tile.png"));
+		Tile.images.put("southern arrow floor tile", new Image("./res/tiles/southern.arrow.tile.png"));
+		Tile.images.put("eastern arrow floor tile", new Image("./res/tiles/eastern.arrow.tile.png"));
+		Tile.images.put("western arrow floor tile", new Image("./res/tiles/western.arrow.tile.png"));
 		
 		Tile.colors.put("null tile", Color.pink);
 		Tile.colors.put("wall tile", Color.darkGray);
