@@ -1,0 +1,15 @@
+<dungeon name="alpha">
+	<rooms>
+		<room source="./res/rooms/example.room.xml"/>
+	</rooms>
+	<tiles>
+		<tile name="wall">
+			<color red="255" green="0" blue="0"/>
+			<image source="./res/wall.tiles.png"/>
+		</tile>
+		<tile name="floor">
+			<color red="0" green="255" blue="0"/>
+			<image source="./res/floor.tiles.png"/>
+		</tile>
+	</tiles>
+</dungeon>

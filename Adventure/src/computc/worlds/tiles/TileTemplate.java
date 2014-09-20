@@ -27,18 +27,13 @@ public class TileTemplate
 			Element tileElement = document.getRootElement();
 			
 			this.name = tileElement.getAttributeValue("name");
-
+			
 			Element imageElement = tileElement.getChild("image");
 			String source = imageElement.getAttributeValue("source");
 			SpriteSheet spritesheet = new SpriteSheet(source, 64, 64);
-			
 			for(int sx = 0; sx < spritesheet.getHorizontalCount(); sx++)
-			{
 				for(int sy = 0; sy < spritesheet.getVerticalCount(); sy++)
-				{
 					this.images.add(spritesheet.getSprite(sx, sy));
-				}
-			}
 			
 			Element colorElement = tileElement.getChild("color");
 			int red = colorElement.getAttribute("red").getIntValue();
