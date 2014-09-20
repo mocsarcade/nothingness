@@ -67,7 +67,7 @@ public class PredesignedDungeon extends Dungeon
 			{
 				Room room = this.getRoom(rx, ry);
 				
-				if(!room.getTile(Room.TILEY_WIDTH / 2, 0).isBlocked)
+				/*if(!room.getTile(Room.TILEY_WIDTH / 2, 0).isBlocked)
 				{
 					room.connectNorthernRoom(this.getRoom(rx, ry - 1));
 				}
@@ -82,7 +82,7 @@ public class PredesignedDungeon extends Dungeon
 				if(!room.getTile(0, Room.TILEY_HEIGHT / 2).isBlocked)
 				{
 					room.connectWesternRoom(this.getRoom(rx - 1, ry));
-				}
+				}*/
 			}
 		}
 		

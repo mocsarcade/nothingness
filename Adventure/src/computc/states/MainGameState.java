@@ -43,13 +43,7 @@ public class MainGameState extends BasicGameState
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		Tile.images.put("wall", new Image("./res/wall.png"));
-		Tile.images.put("floor", new Image("./res/floor.png"));
-		Tile.images.put("northern arrow", new Image("./res/north.png"));
-		Tile.images.put("southern arrow", new Image("./res/south.png"));
-		Tile.images.put("eastern arrow", new Image("./res/east.png"));
-		Tile.images.put("western arrow", new Image("./res/west.png"));
-		Tile.images.put("door", new Image("./res/door.png"));
+		Tile.init();
 		Key.IMAGE = new Image("./res/key.png");
 		Coin.IMAGE = new Image("./res/coin.png");
 		

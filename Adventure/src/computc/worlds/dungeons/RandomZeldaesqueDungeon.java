@@ -39,7 +39,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 				
 				if(direction != Direction.NONE)
 				{
-					currentRoom.addArrow(direction);
+					currentRoom.addArrowTile(direction);
 					currentRoom.critpathDirection = direction;
 					Room instantiatedRoom = currentRoom.instantiateRoom(direction, "twolines");
 					
@@ -59,7 +59,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 		
 		if(finaldirection != Direction.NONE)
 		{
-			currentRoom.addArrow(finaldirection);
+			currentRoom.addArrowTile(finaldirection);
 			currentRoom.critpathDirection = finaldirection;
 			this.lastRoom = currentRoom.instantiateRoom(finaldirection, "clamp");
 		}

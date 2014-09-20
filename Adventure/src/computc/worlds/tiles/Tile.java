@@ -6,32 +6,52 @@ import java.util.HashMap;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import computc.cameras.Camera;
 import computc.worlds.rooms.Room;
 
-public class Tile
+public abstract class Tile
 {
-	private Room room;
+	protected Room room;
 	
-	private int tx;
-	private int ty;
+	protected int tx;
+	protected int ty;
 	
-	public boolean isBlocked;
-	public boolean isStairs;
+	protected Image image;
+	protected Color color;
 	
-	public Image image;
-
-	public boolean locked;
-	
-	public Tile(Room room, int tx, int ty, String imagename)
+	public Tile(Room room, int tx, int ty)
 	{
 		this.room = room;
 		
 		this.tx = tx;
 		this.ty = ty;
 		
-		this.image = Tile.images.get(imagename);
+		this.image = Tile.images.get("null tile");
+		this.color = Tile.colors.get("null tile");
+	}
+	
+	public static void init() throws SlickException
+	{
+		Tile.images.put("null tile", new Image("./res/null.tile.png"));
+		Tile.images.put("wall tile", new Image("./res/wall.png"));
+		Tile.images.put("floor tile", new Image("./res/floor.png"));
+		Tile.images.put("door tile", new Image("./res/door.png"));
+		Tile.images.put("northern arrow floor tile", new Image("./res/north.png"));
+		Tile.images.put("southern arrow floor tile", new Image("./res/south.png"));
+		Tile.images.put("eastern arrow floor tile", new Image("./res/east.png"));
+		Tile.images.put("western arrow floor tile", new Image("./res/west.png"));
+		
+		Tile.colors.put("null tile", Color.pink);
+		Tile.colors.put("wall tile", Color.darkGray);
+		Tile.colors.put("floor tile", Color.gray);
+		Tile.colors.put("door tile", Color.yellow);
+	}
+	
+	public void update(int delta)
+	{
+		//code goes here.
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -47,27 +67,9 @@ public class Tile
 		int x = (this.getX() / 8) - camera.getX();
 		int y = (this.getY() / 8) - camera.getY();
 		
-		if(this.isBlocked)
-		{
-			if(this.locked)
-			{
-				graphics.setColor(Color.yellow);
-			}
-			else
-			{
-				graphics.setColor(Color.lightGray);
-			}
-		}
-		else if(this.isStairs)
-		{
-			graphics.setColor(Color.cyan);
-		}
-		else
-		{
-			graphics.setColor(Color.gray);
-		}
-		
 		final int UNIT = Tile.SIZE / 8;
+		
+		graphics.setColor(this.color);
 		graphics.fillRect(x, y, UNIT, UNIT);
 	}
 	
@@ -144,22 +146,18 @@ public class Tile
 	{
 		return Tile.SIZE;
 	}
-	
-	public void lock()
+
+	/*
+	 * Returns whether an entity can
+	 * move here without collision.
+	 */
+	public boolean canMoveHere()
 	{
-		this.image = Tile.images.get("door");
-		this.isBlocked = true;
-		this.locked = true;
+		return true;
 	}
-	
-	public void unlock()
-	{
-		this.image = Tile.images.get("floor");
-		this.isBlocked = false;
-		this.locked = false;
-	}
-	
+
 	public static HashMap<String, Image> images = new HashMap<String, Image>();
+	public static HashMap<String, Color> colors = new HashMap<String, Color>();
 	
 	public final static int SIZE = 64;
 

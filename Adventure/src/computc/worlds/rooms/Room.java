@@ -26,7 +26,11 @@ import computc.entities.Key;
 import computc.entities.OldMan;
 import computc.entities.Thug;
 import computc.worlds.dungeons.Dungeon;
+import computc.worlds.tiles.ArrowFloorTile;
+import computc.worlds.tiles.DoorTile;
+import computc.worlds.tiles.FloorTile;
 import computc.worlds.tiles.Tile;
+import computc.worlds.tiles.WallTile;
 
 public class Room
 {
@@ -85,12 +89,11 @@ public class Room
 					
 					if(type == 1)
 					{
-						this.tiles[tx][ty] = new Tile(this, tx, ty, "wall");
-						this.tiles[tx][ty].isBlocked = true;
+						this.tiles[tx][ty] = new WallTile(this, tx, ty);
 					}
 					else if(type == 2)
 					{
-						this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
+						this.tiles[tx][ty] = new FloorTile(this, tx, ty);
 					}
 				}
 			}
@@ -376,7 +379,7 @@ public class Room
 		this.northernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = 0;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
+		this.tiles[tx][ty] = new FloorTile(this, tx, ty);
 	}
 
 	/*
@@ -389,7 +392,7 @@ public class Room
 		this.southernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
+		this.tiles[tx][ty] = new FloorTile(this, tx, ty);
 	}
 
 	/*
@@ -402,7 +405,7 @@ public class Room
 		this.easternRoom = room;
 		
 		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
+		this.tiles[tx][ty] = new FloorTile(this, tx, ty);
 	}
 
 	/*
@@ -415,7 +418,7 @@ public class Room
 		this.westernRoom = room;
 		
 		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
+		this.tiles[tx][ty] = new FloorTile(this, tx, ty);
 	}
 	
 	/*
@@ -602,72 +605,72 @@ public class Room
 		}
 	}
 	
-	public void addNorthernArrow()
+	public void addNorthernArrowTile()
 	{
 		int tx = Room.TILEY_WIDTH / 2, ty = 0;
-		this.tiles[tx][ty+1] = new Tile(this, tx, ty+1, "northern arrow");
+		this.tiles[tx][ty+1] = new ArrowFloorTile(this, tx, ty+1, Direction.NORTH);
 	}
 
-	public void addSouthernArrow()
+	public void addSouthernArrowTile()
 	{
 		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
-		this.tiles[tx][ty-1] = new Tile(this, tx, ty-1, "southern arrow");
+		this.tiles[tx][ty-1] = new ArrowFloorTile(this, tx, ty-1, Direction.SOUTH);
 	}
 
-	public void addEasternArrow()
+	public void addEasternArrowTile()
 	{
 		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx-1][ty] = new Tile(this, tx-1, ty, "eastern arrow");
+		this.tiles[tx-1][ty] = new ArrowFloorTile(this, tx-1, ty, Direction.EAST);
 	}
 	
-	public void addWesternArrow()
+	public void addWesternArrowTile()
 	{
 		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx+1][ty] = new Tile(this, tx+1, ty, "western arrow");
+		this.tiles[tx+1][ty] = new ArrowFloorTile(this, tx+1, ty, Direction.WEST);
 	}
 	
-	public void addArrow(Direction direction)
+	public void addArrowTile(Direction direction)
 	{
 		if(direction == Direction.NORTH)
 		{
-			this.addNorthernArrow();
+			this.addNorthernArrowTile();
 		}
 		else if(direction == Direction.SOUTH)
 		{
-			this.addSouthernArrow();
+			this.addSouthernArrowTile();
 		}
 		else if(direction == Direction.EAST)
 		{
-			this.addEasternArrow();
+			this.addEasternArrowTile();
 		}
 		else if(direction == Direction.WEST)
 		{
-			this.addWesternArrow();
+			this.addWesternArrowTile();
 		}
 	}
 	
 	public void addNorthernDoor()
 	{
 		int tx = Room.TILEY_WIDTH / 2, ty = 0;
-		this.tiles[tx][ty].lock();
+		this.tiles[tx][ty] = new DoorTile(this, tx, ty);
 	}
 
 	public void addSouthernDoor()
 	{
 		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
-		this.tiles[tx][ty].lock();
+		this.tiles[tx][ty] = new DoorTile(this, tx, ty);
 	}
 
 	public void addEasternDoor()
 	{
 		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty].lock();
+		this.tiles[tx][ty] = new DoorTile(this, tx, ty);
 	}
 	
 	public void addWesternDoor()
 	{
 		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty].lock();
+		this.tiles[tx][ty] = new DoorTile(this, tx, ty);
 	}
 	
 	public void addDoor(Direction direction)
