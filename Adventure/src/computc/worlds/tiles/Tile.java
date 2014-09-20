@@ -1,6 +1,7 @@
 
 package computc.worlds.tiles;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 import computc.cameras.Camera;
 import computc.worlds.rooms.Room;
@@ -63,13 +65,26 @@ public abstract class Tile
 				Element image = tile.getChild("image");
 				Element color = tile.getChild("color");
 
-				int red = color.getAttribute("red").getIntValue();
+				/*int red = color.getAttribute("red").getIntValue();
 				int green = color.getAttribute("green").getIntValue();
 				int blue = color.getAttribute("blue").getIntValue();
+				Color color = new Color(red, green, blue);
 
-				int width = image.getAttribute("width").getIntValue();
-				int height = image.getAttribute("height").getIntValue();
+				int tw = image.getAttribute("width").getIntValue();
+				int th = image.getAttribute("height").getIntValue();
 				String source = image.getAttribute("source").getValue();
+				SpriteSheet spritesheet = new SpriteSheet(source, tw, th);
+				ArrayList<Image> images = new ArrayList<Image>();
+				for(int tx = 0; tx < tw; tx++)
+				{
+					for(int ty = 0; ty < th; ty++)
+					{
+						Image image = spritesheet.getSprite(tx, ty);
+						images.add(image);
+					}
+				}
+				
+				TileType type = new TileType(images, color);*/
 			}
 		}
 		catch(Exception exception)
