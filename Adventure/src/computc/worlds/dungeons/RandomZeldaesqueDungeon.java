@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import computc.Direction;
+import computc.Level;
 import computc.cameras.Camera;
 import computc.entities.Key;
 import computc.entities.OldMan;
@@ -23,8 +24,10 @@ public class RandomZeldaesqueDungeon extends Dungeon
 	//private final int AMOUNT_OF_ROOMS_IN_SIDEPATH;
 	//private final int AMOUNT_OF_SIDEPATHS_PER_SEGMENT;
 	
-	public RandomZeldaesqueDungeon()
+	public RandomZeldaesqueDungeon(Level level)
 	{
+		super(level);
+		
 		//MAINPATH
 		ArrayList<LinkedList<Room>> segments = new ArrayList<LinkedList<Room>>();
 		Room currentRoom = this.firstRoom = new Room(this, 2, 2, "empty");

@@ -9,7 +9,7 @@ import computc.worlds.dungeons.OneRoomDungeon;
 public class Level
 {
 	public Dungeon dungeon;
-	public LinkedList<String> layouts = new LinkedList<String>();
+	private LinkedList<String> layouts = new LinkedList<String>();
 	
 	public Level()
 	{
@@ -19,7 +19,7 @@ public class Level
 		{
 			try
 			{
-				this.dungeon = new OneRoomDungeon();
+				this.dungeon = new OneRoomDungeon(this);
 			}
 			catch(DungeonException exception)
 			{

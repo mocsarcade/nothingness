@@ -2,12 +2,15 @@ package computc.worlds.dungeons;
 
 import org.newdawn.slick.SlickException;
 
+import computc.Level;
 import computc.worlds.rooms.Room;
 
 public class FiveRoomDungeon extends Dungeon
 {
-	public FiveRoomDungeon()
+	public FiveRoomDungeon(Level level)
 	{
+		super(level);
+		
 		this.firstRoom = new Room(this, 2, 2, "grid");
 		
 		this.firstRoom.instantiateNorthernRoom("corners");

@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
 
+import computc.Level;
 import computc.cameras.Camera;
 import computc.entities.BigThug;
 import computc.entities.Enemy;
@@ -31,9 +32,11 @@ public class PredesignedDungeon extends Dungeon
 	public Color textColor = Color.white;
 	private boolean nextLevel = false;
 	
-	public PredesignedDungeon() throws SlickException
+	public PredesignedDungeon(Level level)
 	{
-		TiledMap tiled = new TiledMap("./res/dungeons/prototype.dungeon.tmx");
+		super(level);
+		
+		TiledMap tiled;// = new TiledMap("./res/dungeons/prototype.dungeon.tmx");
 		
 		int ROOMY_WIDTH = 9;
 		int ROOMY_HEIGHT = 5;
@@ -50,7 +53,7 @@ public class PredesignedDungeon extends Dungeon
 					{
 						int rxtx = (rx * Room.TILEY_WIDTH) + tx;
 						int ryty = (ry * Room.TILEY_HEIGHT) + ty;
-						int tid = tiled.getTileId(rxtx, ryty, 0);
+						//int tid = tiled.getTileId(rxtx, ryty, 0);
 						//Tile tile = new Tile(room, tx, ty, tid);
 						
 						//room.setTile(tx, ty, tile);
@@ -115,9 +118,9 @@ public class PredesignedDungeon extends Dungeon
 		//thugs.add(new BigThug(this, 36, 23));
 		//this.oldman = new OldMan(this, 38, 12);
 		
-		this.menuBox = new Image("res/textBox.png");
+		/*this.menuBox = new Image("res/textBox.png");
 		this.largeTextBox = new Image("res/largeTextBox.png");
-		this.textBox = new Animation(new SpriteSheet(new Image("res/largeTextBox.png"), 585, 100), 100);
+		this.textBox = new Animation(new SpriteSheet(new Image("res/largeTextBox.png"), 585, 100), 100);*/
 	}
 	
 	public void update(int delta)

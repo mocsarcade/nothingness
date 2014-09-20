@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import computc.Level;
 import computc.cameras.Camera;
 import computc.entities.Coin;
 import computc.entities.Enemy;
@@ -26,6 +27,12 @@ public abstract class Dungeon
 	protected Room firstRoom;
 	public Room lastRoom;
 	public OldMan oldman;
+	private Level level;
+	
+	public Dungeon(Level level)
+	{
+		this.level = level;
+	}
 
 	public void update(int delta)
 	{
