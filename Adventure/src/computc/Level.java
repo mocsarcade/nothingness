@@ -20,7 +20,7 @@ public class Level
 		{
 			try
 			{
-				this.dungeon = new RandomZeldaesqueDungeon(this);
+				this.dungeon = new OneRoomDungeon(this);
 			}
 			catch(DungeonException exception)
 			{

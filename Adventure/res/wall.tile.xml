@@ -1,4 +1,4 @@
 <tile name="wall">
 	<color red="255" green="0" blue="0"/>
-	<image source="./res/wall.tiles.png" width="4" height="1"/>
+	<image source="./res/wall.tiles.png"/>
 </tile>

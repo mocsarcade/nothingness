@@ -17,7 +17,7 @@ import org.newdawn.slick.SpriteSheet;
 import computc.cameras.Camera;
 import computc.worlds.rooms.Room;
 
-public abstract class Tile
+public class Tile
 {
 	protected Room room;
 	
@@ -27,70 +27,23 @@ public abstract class Tile
 	protected Image image;
 	protected Color color;
 	
-	public Tile(Room room, int tx, int ty)
+	public Tile(Room room, int tx, int ty, int gid)
 	{
 		this.room = room;
 		
 		this.tx = tx;
 		this.ty = ty;
 		
-		this.image = Tile.images.get("null tile");
-		this.color = Tile.colors.get("null tile");
+		TileTemplate template = Tile.templates.get(gid);
+		
+		this.image = template.getImage();
+		this.color = template.getColor();
 	}
 	
 	public static void init() throws SlickException
 	{
-		Tile.images.put("null tile", new Image("./res/tiles/null.tile.png"));
-		Tile.images.put("wall tile", new Image("./res/tiles/wall.tile.png"));
-		Tile.images.put("floor tile", new Image("./res/tiles/floor.tile.png"));
-		Tile.images.put("door tile", new Image("./res/tiles/door.tile.png"));
-		Tile.images.put("northern arrow floor tile", new Image("./res/tiles/northern.arrow.tile.png"));
-		Tile.images.put("southern arrow floor tile", new Image("./res/tiles/southern.arrow.tile.png"));
-		Tile.images.put("eastern arrow floor tile", new Image("./res/tiles/eastern.arrow.tile.png"));
-		Tile.images.put("western arrow floor tile", new Image("./res/tiles/western.arrow.tile.png"));
-		
-		Tile.colors.put("null tile", Color.pink);
-		Tile.colors.put("wall tile", Color.darkGray);
-		Tile.colors.put("floor tile", Color.gray);
-		Tile.colors.put("door tile", Color.yellow);
-		
-		try
-		{
-			Document document = new SAXBuilder().build("./res/tileset.xml");
-			
-			List<Element> tiles = document.getRootElement().getChildren("tile");
-			
-			for(Element tile : tiles)
-			{
-				Element image = tile.getChild("image");
-				Element color = tile.getChild("color");
-
-				/*int red = color.getAttribute("red").getIntValue();
-				int green = color.getAttribute("green").getIntValue();
-				int blue = color.getAttribute("blue").getIntValue();
-				Color color = new Color(red, green, blue);
-
-				int tw = image.getAttribute("width").getIntValue();
-				int th = image.getAttribute("height").getIntValue();
-				String source = image.getAttribute("source").getValue();
-				SpriteSheet spritesheet = new SpriteSheet(source, tw, th);
-				ArrayList<Image> images = new ArrayList<Image>();
-				for(int tx = 0; tx < tw; tx++)
-				{
-					for(int ty = 0; ty < th; ty++)
-					{
-						Image image = spritesheet.getSprite(tx, ty);
-						images.add(image);
-					}
-				}
-				
-				TileType type = new TileType(images, color);*/
-			}
-		}
-		catch(Exception exception)
-		{
-			exception.printStackTrace();
-		}
+		Tile.templates.put(1, new TileTemplate("./res/wall.tile.xml"));
+		Tile.templates.put(2, new TileTemplate("./res/floor.tile.xml"));
 	}
 	
 	public void update(int delta)
@@ -200,8 +153,7 @@ public abstract class Tile
 		return true;
 	}
 
-	public static HashMap<String, Image> images = new HashMap<String, Image>();
-	public static HashMap<String, Color> colors = new HashMap<String, Color>();
+	public static HashMap<Integer, TileTemplate> templates = new HashMap<Integer, TileTemplate>();
 	
 	public final static int SIZE = 64;
 

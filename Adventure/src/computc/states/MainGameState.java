@@ -51,7 +51,6 @@ public class MainGameState extends BasicGameState
 		
 		this.gamedata.instantiate();
 		
-		
 		this.camera = new RoomFollowingCamera(this.gamedata);
 	}
 	
