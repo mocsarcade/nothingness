@@ -56,7 +56,7 @@ public abstract class Dungeon
 		}
 	}
 	
-	public RoomTemplate getRandomRoomLayout()
+	public RoomTemplate getRandomRoomTemplate()
 	{
 		return this.roomTemplates.get(Game.randomness.nextInt(this.roomTemplates.size()));
 	}

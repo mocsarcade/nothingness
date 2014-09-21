@@ -11,9 +11,9 @@ public class Key extends Entity
 	private float speed = 1f;
 	public boolean pickedup = false;
 
-	public Key(Dungeon dungeon, Room room, float x, float y)
+	public Key(Dungeon dungeon, Room room, int tx, int ty)
 	{
-		super(dungeon, room, x, y);
+		super(dungeon, room, tx, ty);
 		this.image = Key.IMAGE;
 	}
 	

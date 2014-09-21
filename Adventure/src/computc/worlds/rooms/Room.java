@@ -1,6 +1,7 @@
 package computc.worlds.rooms;
 
 import java.util.List;
+import java.awt.Point;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -45,9 +46,13 @@ public class Room
 	public boolean visited = false;
 	
 	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
-	private int keyX;
-	private int keyY;
-
+	private RoomTemplate template;
+	
+	public Room(Dungeon dungeon, int rx, int ry)
+	{
+		this(dungeon, rx, ry, dungeon.getRandomRoomTemplate());
+	}
+	
 	public Room(Dungeon dungeon, int rx, int ry, RoomTemplate template)
 	{
 		this.dungeon = dungeon;
@@ -55,11 +60,13 @@ public class Room
 		this.rx = rx;
 		this.ry = ry;
 		
+		this.template = template;
+		
 		for(int tx = 0; tx < Room.TILEY_WIDTH; tx++)
 		{
 			for(int ty = 0; ty < Room.TILEY_HEIGHT; ty++)
 			{
-				int gid = template.tiles[tx][ty];
+				int gid = this.template.getTileID(tx, ty);
 				this.tiles[tx][ty] = new Tile(this, tx, ty, gid);
 			}
 		}
@@ -427,9 +434,9 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the north.
 	 */
-	public Room instantiateNorthernRoom(RoomTemplate template)
+	public Room instantiateNorthernRoom()
 	{
-		Room room = new Room(this.dungeon, this.rx, this.ry - 1, template);
+		Room room = new Room(this.dungeon, this.rx, this.ry - 1);
 		this.connectNorthernRoom(room);
 		return room;
 	}
@@ -438,9 +445,9 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the south.
 	 */
-	public Room instantiateSouthernRoom(RoomTemplate template)
+	public Room instantiateSouthernRoom()
 	{
-		Room room = new Room(this.dungeon, this.rx, this.ry + 1, template);
+		Room room = new Room(this.dungeon, this.rx, this.ry + 1);
 		this.connectSouthernRoom(room);
 		return room;
 	}
@@ -449,9 +456,9 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the east.
 	 */
-	public Room instantiateEasternRoom(RoomTemplate template)
+	public Room instantiateEasternRoom()
 	{
-		Room room = new Room(this.dungeon, this.rx + 1, this.ry, template);
+		Room room = new Room(this.dungeon, this.rx + 1, this.ry);
 		this.connectEasternRoom(room);
 		return room;
 	}
@@ -460,9 +467,9 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the west.
 	 */
-	public Room instantiateWesternRoom(RoomTemplate template)
+	public Room instantiateWesternRoom()
 	{
-		Room room = new Room(this.dungeon, this.rx - 1, this.ry, template);
+		Room room = new Room(this.dungeon, this.rx - 1, this.ry);
 		this.connectWesternRoom(room);
 		return room;
 	}
@@ -471,37 +478,28 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room in any direction.
 	 */
-	public Room instantiateRoom(Direction direction, RoomTemplate template) 
+	public Room instantiateRoom(Direction direction) 
 	{
 		if(direction == Direction.NORTH)
 		{
-			return this.instantiateNorthernRoom(template);
+			return this.instantiateNorthernRoom();
 		}
 		else if(direction == Direction.SOUTH)
 		{
-			return this.instantiateSouthernRoom(template);
+			return this.instantiateSouthernRoom();
 		}
 		else if(direction == Direction.EAST)
 		{
-			return this.instantiateEasternRoom(template);
+			return this.instantiateEasternRoom();
 		}
 		else if(direction == Direction.WEST)
 		{
-			return this.instantiateWesternRoom(template);
+			return this.instantiateWesternRoom();
 		}
 		else
 		{
 			return null;
 		}
-	}
-	
-	/*
-	 * Executes the relevant subroutines to
-	 * instantiate a new room in any direction.
-	 */
-	public Room instantiateRoom(Direction direction) 
-	{
-		return this.instantiateRoom(direction, null);
 	}
 	
 	public ArrayList<Direction> getPotentialDirections()
@@ -633,7 +631,8 @@ public class Room
 
 	public void addKey()
 	{
-		this.dungeon.keys.add(new Key(this.dungeon, this, this.keyX, this.keyY));
+		Point spawnpoint = this.template.getRandomChestSpawnpoint();
+		this.dungeon.keys.add(new Key(this.dungeon, this, spawnpoint.x, spawnpoint.y));
 	}
 	
 	public final static int TILEY_WIDTH = 11;

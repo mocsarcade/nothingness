@@ -17,7 +17,7 @@ public class RandomRoguelikeDungeon extends Dungeon
 	{
 		super(filepath);
 		
-		this.firstRoom = new Room(this, 2, 2, this.getRandomRoomLayout());
+		this.firstRoom = new Room(this, 2, 2, this.getRandomRoomTemplate());
 		
 		for(int i = 0; i < SCALE; i++)
 		{

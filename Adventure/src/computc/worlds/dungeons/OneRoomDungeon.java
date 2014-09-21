@@ -10,6 +10,6 @@ public class OneRoomDungeon extends Dungeon
 	{
 		super(filepath);
 		
-		this.firstRoom = new Room(this, 2, 2, this.getRandomRoomLayout());
+		this.firstRoom = new Room(this, 2, 2);
 	}
 }
