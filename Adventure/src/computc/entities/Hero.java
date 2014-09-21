@@ -61,7 +61,7 @@ public class Hero extends Entity
 		this.currentHealth = this.maximumHealth = 3;
 		
 		meleeDamage = 3;
-		meleeRange = 64;
+		meleeRange = 96;
 		
 		sprite = idle;
 		
@@ -81,13 +81,8 @@ public class Hero extends Entity
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		super.render(graphics, camera);
 		
-		// draw arrows
-		for(int i = 0; i < arrows.size(); i++)
-		{
-			arrows.get(i).render(graphics, camera);
-		}
+		
 		
 		if(blinking) 
 		{
@@ -96,6 +91,15 @@ public class Hero extends Entity
 				return;
 			}
 		}
+		
+		super.render(graphics, camera);
+		
+		// draw arrows
+		for(int i = 0; i < arrows.size(); i++)
+		{
+			arrows.get(i).render(graphics, camera);
+		}
+				
 		
 		if(this.direction == Direction.NORTH)
 		{
