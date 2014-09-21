@@ -11,7 +11,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
 
-import computc.Level;
 import computc.cameras.Camera;
 import computc.entities.BigThug;
 import computc.entities.Enemy;
@@ -32,9 +31,9 @@ public class PredesignedDungeon extends Dungeon
 	public Color textColor = Color.white;
 	private boolean nextLevel = false;
 	
-	public PredesignedDungeon(Level level)
+	public PredesignedDungeon(String filepath)
 	{
-		super(level);
+		super(filepath);
 		
 		TiledMap tiled;// = new TiledMap("./res/dungeons/prototype.dungeon.tmx");
 		

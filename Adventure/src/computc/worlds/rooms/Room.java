@@ -33,7 +33,6 @@ import computc.worlds.tiles.TileTemplate;
 public class Room
 {
 	private int rx, ry;
-	private String layout;
 	private Dungeon dungeon;
 	
 	public Room westernRoom;
@@ -48,64 +47,21 @@ public class Room
 	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
 	private int keyX;
 	private int keyY;
-	
-	public Room(Dungeon dungeon, int rx, int ry)
-	{
-		this(dungeon, rx, ry, null);
-	}
 
-	public Room(Dungeon dungeon, int rx, int ry, String layout)
+	public Room(Dungeon dungeon, int rx, int ry, RoomTemplate template)
 	{
 		this.dungeon = dungeon;
 		
 		this.rx = rx;
 		this.ry = ry;
 		
-		this.layout = layout;
-		
-		try
+		for(int tx = 0; tx < Room.TILEY_WIDTH; tx++)
 		{
-			Document tmx = new SAXBuilder().build(this.layout);
-			
-			List<Element> tilelayer = tmx.getRootElement().getChild("layer").getChild("data").getChildren();
-			//List<Element> objectgroup = tmx.getRootElement().getChild("objectgroup").getChildren();
-			
-			for(int tx = 0; tx < this.getTileyWidth(); tx++)
+			for(int ty = 0; ty < Room.TILEY_HEIGHT; ty++)
 			{
-				for(int ty = 0; ty < this.getTileyHeight(); ty++)
-				{
-					Element element = tilelayer.get(ty * Room.TILEY_WIDTH + tx);
-					int gid = element.getAttribute("gid").getIntValue();
-					this.tiles[tx][ty] = new Tile(this, tx, ty, gid);
-				}
+				int gid = template.tiles[tx][ty];
+				this.tiles[tx][ty] = new Tile(this, tx, ty, gid);
 			}
-			
-			/*for(Element element : objectgroup)
-			{
-				if(element.getAttribute("gid").getIntValue() == 4)
-				{
-					int x = element.getAttribute("x").getIntValue() + (48 / 2);
-					int y = element.getAttribute("y").getIntValue() - (48 / 2);
-					
-					this.dungeon.enemies.add(new Thug(this.dungeon, this, x, y));
-				}
-				else if(element.getAttribute("gid").getIntValue() == 5)
-				{
-					this.keyX = element.getAttribute("x").getIntValue() + (64 / 2);
-					this.keyY = element.getAttribute("y").getIntValue() - (32 / 2);
-				}
-				else if(element.getAttribute("gid").getIntValue() == 6)
-				{
-					int x = element.getAttribute("x").getIntValue() + (16 / 2);
-					int y = element.getAttribute("y").getIntValue() - (16 / 2);
-					
-					this.dungeon.coins.add(new Coin(this.dungeon, this, x, y));
-				}
-			}*/
-		}
-		catch(Exception exception)
-		{
-			exception.printStackTrace();
 		}
 		
 		this.dungeon.addRoom(this);
@@ -361,7 +317,7 @@ public class Room
 		this.northernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = 0;
-		//this.tiles[tx][ty] = new FloorTile(this, tx, ty);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
 	}
 
 	/*
@@ -374,7 +330,7 @@ public class Room
 		this.southernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
-		//this.tiles[tx][ty] = new FloorTile(this, tx, ty);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
 	}
 
 	/*
@@ -387,7 +343,7 @@ public class Room
 		this.easternRoom = room;
 		
 		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
-		//this.tiles[tx][ty] = new FloorTile(this, tx, ty);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
 	}
 
 	/*
@@ -400,7 +356,7 @@ public class Room
 		this.westernRoom = room;
 		
 		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
-		//this.tiles[tx][ty] = new FloorTile(this, tx, ty);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
 	}
 	
 	/*
@@ -471,9 +427,9 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the north.
 	 */
-	public Room instantiateNorthernRoom(String layout)
+	public Room instantiateNorthernRoom(RoomTemplate template)
 	{
-		Room room = new Room(this.dungeon, this.rx, this.ry - 1, layout);
+		Room room = new Room(this.dungeon, this.rx, this.ry - 1, template);
 		this.connectNorthernRoom(room);
 		return room;
 	}
@@ -482,9 +438,9 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the south.
 	 */
-	public Room instantiateSouthernRoom(String layout)
+	public Room instantiateSouthernRoom(RoomTemplate template)
 	{
-		Room room = new Room(this.dungeon, this.rx, this.ry + 1, layout);
+		Room room = new Room(this.dungeon, this.rx, this.ry + 1, template);
 		this.connectSouthernRoom(room);
 		return room;
 	}
@@ -493,9 +449,9 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the east.
 	 */
-	public Room instantiateEasternRoom(String layout)
+	public Room instantiateEasternRoom(RoomTemplate template)
 	{
-		Room room = new Room(this.dungeon, this.rx + 1, this.ry, layout);
+		Room room = new Room(this.dungeon, this.rx + 1, this.ry, template);
 		this.connectEasternRoom(room);
 		return room;
 	}
@@ -504,9 +460,9 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room to the west.
 	 */
-	public Room instantiateWesternRoom(String layout)
+	public Room instantiateWesternRoom(RoomTemplate template)
 	{
-		Room room = new Room(this.dungeon, this.rx - 1, this.ry, layout);
+		Room room = new Room(this.dungeon, this.rx - 1, this.ry, template);
 		this.connectWesternRoom(room);
 		return room;
 	}
@@ -515,23 +471,23 @@ public class Room
 	 * Executes the relevant subroutines to
 	 * instantiate a new room in any direction.
 	 */
-	public Room instantiateRoom(Direction direction, String layout) 
+	public Room instantiateRoom(Direction direction, RoomTemplate template) 
 	{
 		if(direction == Direction.NORTH)
 		{
-			return this.instantiateNorthernRoom(layout);
+			return this.instantiateNorthernRoom(template);
 		}
 		else if(direction == Direction.SOUTH)
 		{
-			return this.instantiateSouthernRoom(layout);
+			return this.instantiateSouthernRoom(template);
 		}
 		else if(direction == Direction.EAST)
 		{
-			return this.instantiateEasternRoom(layout);
+			return this.instantiateEasternRoom(template);
 		}
 		else if(direction == Direction.WEST)
 		{
-			return this.instantiateWesternRoom(layout);
+			return this.instantiateWesternRoom(template);
 		}
 		else
 		{

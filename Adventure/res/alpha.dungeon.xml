@@ -1,6 +1,6 @@
 <dungeon name="alpha">
 	<rooms>
-		<room source="./res/rooms/example.room.xml"/>
+		<room source="./res/rooms/fourdots.room.tmx"/>
 	</rooms>
 	<tiles>
 		<tile name="wall">

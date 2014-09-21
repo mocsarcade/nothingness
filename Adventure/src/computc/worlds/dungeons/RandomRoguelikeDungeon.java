@@ -7,18 +7,17 @@ import java.util.LinkedList;
 import org.newdawn.slick.SlickException;
 
 import computc.Direction;
-import computc.Level;
 import computc.worlds.rooms.Room;
 
 public class RandomRoguelikeDungeon extends Dungeon
 {
 	private final int SCALE = 5;
 	
-	public RandomRoguelikeDungeon(Level level)
+	public RandomRoguelikeDungeon(String filepath)
 	{
-		super(level);
+		super(filepath);
 		
-		this.firstRoom = new Room(this, 2, 2, "empty");
+		this.firstRoom = new Room(this, 2, 2, this.getRandomRoomLayout());
 		
 		for(int i = 0; i < SCALE; i++)
 		{

@@ -11,7 +11,6 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import computc.Direction;
-import computc.Level;
 import computc.cameras.Camera;
 import computc.entities.Key;
 import computc.entities.OldMan;
@@ -24,13 +23,13 @@ public class RandomZeldaesqueDungeon extends Dungeon
 	//private final int AMOUNT_OF_ROOMS_IN_SIDEPATH;
 	//private final int AMOUNT_OF_SIDEPATHS_PER_SEGMENT;
 	
-	public RandomZeldaesqueDungeon(Level level)
+	public RandomZeldaesqueDungeon(String filepath)
 	{
-		super(level);
+		super(filepath);
 		
 		//MAINPATH
 		ArrayList<LinkedList<Room>> segments = new ArrayList<LinkedList<Room>>();
-		Room currentRoom = this.firstRoom = new Room(this, 2, 2, level.getLayout());
+		Room currentRoom = this.firstRoom = new Room(this, 2, 2, this.getRandomRoomLayout());
 		
 		for(int i = 0; i < AMOUNT_OF_SEGMENTS_IN_DUNGEON; i++)
 		{
@@ -44,7 +43,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 				{
 					currentRoom.addArrowTile(direction);
 					currentRoom.critpathDirection = direction;
-					Room instantiatedRoom = currentRoom.instantiateRoom(direction, level.getLayout());
+					Room instantiatedRoom = currentRoom.instantiateRoom(direction, this.getRandomRoomLayout());
 					
 					segment.add(instantiatedRoom);
 					currentRoom = instantiatedRoom;
@@ -64,7 +63,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 		{
 			currentRoom.addArrowTile(finaldirection);
 			currentRoom.critpathDirection = finaldirection;
-			this.lastRoom = currentRoom.instantiateRoom(finaldirection, level.getLayout());
+			this.lastRoom = currentRoom.instantiateRoom(finaldirection, this.getRandomRoomLayout());
 		}
 		else
 		{
@@ -86,7 +85,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 				
 				if(direction != Direction.NONE)
 				{
-					Room instantiatedRoom = room.instantiateRoom(direction, level.getLayout());
+					Room instantiatedRoom = room.instantiateRoom(direction, this.getRandomRoomLayout());
 					sidepath.add(instantiatedRoom);
 				}
 				else

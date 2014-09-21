@@ -1,13 +1,18 @@
 
 package computc.worlds.dungeons;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
-import computc.Level;
+import computc.Game;
 import computc.cameras.Camera;
 import computc.entities.Coin;
 import computc.entities.Enemy;
@@ -16,6 +21,7 @@ import computc.entities.Key;
 import computc.entities.OldMan;
 import computc.entities.Thug;
 import computc.worlds.rooms.Room;
+import computc.worlds.rooms.RoomTemplate;
 import computc.worlds.tiles.Tile;
 
 public abstract class Dungeon
@@ -27,13 +33,34 @@ public abstract class Dungeon
 	protected Room firstRoom;
 	public Room lastRoom;
 	public OldMan oldman;
-	private Level level;
 	
-	public Dungeon(Level level)
+	private LinkedList<RoomTemplate> roomTemplates = new LinkedList<RoomTemplate>();
+	
+	public Dungeon(String filepath)
 	{
-		this.level = level;
+		try
+		{
+			Document document = new SAXBuilder().build(filepath);
+			
+			Element dungeonElement = document.getRootElement();
+			Element roomsElement = dungeonElement.getChild("rooms");
+			for(Element roomElement : roomsElement.getChildren())
+			{
+				String source = roomElement.getAttributeValue("source");
+				this.roomTemplates.add(new RoomTemplate(source));
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
 	}
-
+	
+	public RoomTemplate getRandomRoomLayout()
+	{
+		return this.roomTemplates.get(Game.randomness.nextInt(this.roomTemplates.size()));
+	}
+	
 	public void update(int delta)
 	{
 		for(int i = 0; i < enemies.size(); i++)
