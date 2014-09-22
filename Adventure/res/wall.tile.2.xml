@@ -1,0 +1,5 @@
+<tile name="wall">
+	<color red="63" green="72" blue="204"/>
+	<image source="./res/wall.tiles.2.png"/>
+	<property passability="false"/>
+</tile>

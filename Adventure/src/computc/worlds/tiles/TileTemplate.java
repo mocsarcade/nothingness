@@ -18,7 +18,8 @@ public class TileTemplate
 	private String name;
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private Color color;
-	public boolean canMoveHere;
+	
+	public boolean passability = true;
 	
 	public TileTemplate(String filepath)
 	{
@@ -42,10 +43,14 @@ public class TileTemplate
 			int blue = colorElement.getAttribute("blue").getIntValue();
 			this.color = new Color(red, green, blue);
 			
-			Element propertyElement;
-			if((propertyElement = tileElement.getChild("property")) != null)
-				this.canMoveHere = propertyElement.getAttribute("canmovehere").getBooleanValue();
-			else this.canMoveHere = true;
+			for(Element propertyElement : tileElement.getChildren("property"))
+			{
+				if(propertyElement.getAttribute("passability") != null)
+				{
+					System.out.println("!");
+					this.passability = propertyElement.getAttribute("passability").getBooleanValue();
+				}
+			}
 		}
 		catch(Exception exception)
 		{
