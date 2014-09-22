@@ -96,7 +96,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.dungeon.render(graphics, this.camera);
 		this.gamedata.hero.render(graphics, this.camera);
 		this.gamedata.dungeon.renderKeys(graphics, camera);
-		this.gamedata.menu.render(graphics, this.camera);
+		//this.gamedata.menu.render(graphics, this.camera);
 		
 		/*if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
 		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())

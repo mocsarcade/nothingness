@@ -12,9 +12,9 @@ public class FiveRoomDungeon extends Dungeon
 		
 		this.firstRoom = new Room(this, 2, 2);
 		
-		this.firstRoom.instantiateNorthernRoom().addKey();;
-		this.firstRoom.instantiateSouthernRoom().addKey();;
-		this.firstRoom.instantiateEasternRoom().addKey();;
-		this.firstRoom.instantiateWesternRoom().addKey();;
+		this.firstRoom.instantiateNorthernRoom().addKey();
+		this.firstRoom.instantiateSouthernRoom().addKey();
+		this.firstRoom.instantiateEasternRoom().addKey();
+		this.firstRoom.instantiateWesternRoom().addKey();
 	}
 }

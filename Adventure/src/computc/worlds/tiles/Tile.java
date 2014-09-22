@@ -27,6 +27,8 @@ public class Tile
 	protected Image image;
 	protected Color color;
 	
+	protected boolean canMoveHere;
+	
 	public Tile(Room room, int tx, int ty, int gid)
 	{
 		this.room = room;
@@ -38,6 +40,8 @@ public class Tile
 		
 		this.image = template.getImage();
 		this.color = template.getColor();
+		
+		this.canMoveHere = template.canMoveHere;
 	}
 	
 	public static void init() throws SlickException
@@ -150,7 +154,7 @@ public class Tile
 	 */
 	public boolean canMoveHere()
 	{
-		return true;
+		return this.canMoveHere;
 	}
 
 	public static HashMap<Integer, TileTemplate> templates = new HashMap<Integer, TileTemplate>();

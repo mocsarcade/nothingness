@@ -18,6 +18,7 @@ public class TileTemplate
 	private String name;
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private Color color;
+	public boolean canMoveHere;
 	
 	public TileTemplate(String filepath)
 	{
@@ -40,6 +41,11 @@ public class TileTemplate
 			int green = colorElement.getAttribute("green").getIntValue();
 			int blue = colorElement.getAttribute("blue").getIntValue();
 			this.color = new Color(red, green, blue);
+			
+			Element propertyElement;
+			if((propertyElement = tileElement.getChild("property")) != null)
+				this.canMoveHere = propertyElement.getAttribute("canmovehere").getBooleanValue();
+			else this.canMoveHere = true;
 		}
 		catch(Exception exception)
 		{

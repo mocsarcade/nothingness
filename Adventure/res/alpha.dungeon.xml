@@ -5,11 +5,11 @@
 	</rooms>
 	<tiles>
 		<tile name="wall">
-			<color red="255" green="0" blue="0"/>
+			<color red="80" green="80" blue="80"/>
 			<image source="./res/wall.tiles.png"/>
 		</tile>
 		<tile name="floor">
-			<color red="0" green="255" blue="0"/>
+			<color red="160" green="160" blue="160"/>
 			<image source="./res/floor.tiles.png"/>
 		</tile>
 	</tiles>
