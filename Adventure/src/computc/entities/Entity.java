@@ -298,12 +298,7 @@ public abstract class Entity
 		   int leftColumn = (int)(x - getHitboxWidth()/ 2);
 		   int rightColumn = (int)(x + getHitboxWidth()/ 2 - 1);
 		   int topRow = (int)(y - getHitboxHeight()/ 2);
-		   int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1);
-		   
-		   if(this instanceof ChainEnd)
-		   {
-			   System.out.println("the leftColumn and topRow are:" + leftColumn + " , " + topRow);
-		   }   
+		   int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1); 
 		   
 		   topLeft = dungeon.getTile(leftColumn, topRow);
 		   topRight = dungeon.getTile(rightColumn, topRow);

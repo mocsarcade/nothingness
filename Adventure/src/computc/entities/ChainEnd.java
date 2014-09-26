@@ -53,7 +53,6 @@ public class ChainEnd extends Entity{
 		{
 			
 		}
-		System.out.println("the ball's x & y are:" + this.x + " , " + this.y);
 	}
 	
 		public void update(int delta)
