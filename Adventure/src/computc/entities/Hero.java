@@ -241,7 +241,7 @@ public class Hero extends Entity
 				chainAttackCooldown = 0;
 			}
 				
-			this.ball.update();
+			this.ball.update(delta);
 				
 			this.chain.update(input, delta);		
 		}

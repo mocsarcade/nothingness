@@ -14,6 +14,7 @@ public class ChainEnd extends Entity{
 	private boolean hit;
 	private boolean remove;
 	private Entity entity;
+	private int chainAssembleCooldown;
 	
 	
 	private Chain chain;
@@ -24,12 +25,13 @@ public class ChainEnd extends Entity{
 	{
 		super(dungeon, tx, ty);
 		
-		this.direction = direction;
 		this.dungeon = dungeon;
-		
-		this.image = ironBall;
 		this.entity = entity;
+		this.direction = direction;
+		this.image = ironBall;
+		
 		this.chain = chain;
+		this.chainAssembleCooldown = 200;
 		
 		
 		this.x = this.entity.getX();
@@ -51,13 +53,11 @@ public class ChainEnd extends Entity{
 		{
 			
 		}
-		
+		System.out.println("the ball's x & y are:" + this.x + " , " + this.y);
 	}
 	
-		public void update()
+		public void update(int delta)
 		{
-			System.out.println(" the ball's x & y are: " + this.x + " , " + this.y);
-			System.out.println("the hero's x & y are: " + this.entity.x + " , " + this.entity.y);
 			if(this.entity.roomTransition)
 			{
 				this.x = this.entity.x;
@@ -69,25 +69,26 @@ public class ChainEnd extends Entity{
 				this.y = this.entity.getRoom().getY() + (chain.lastLinkBody.getPosition().y * 30) + this.getHalfHeight();
 			}
 			
-
+			if(chainAssembleCooldown == 0)
+			{
 			checkTileMapCollision();
 			setPosition(xtemp, ytemp);
-		
-//			if(dx == 0 && !hit && (this.direction == Direction.EAST || this.direction == Direction.WEST))
-//			{
-//				setHit();
-//			}
-//			if(dy == 0 && !hit && (this.direction == Direction.NORTH || this.direction == Direction.SOUTH))
-//			{
-//				setHit();
-//			}
+			}
 			
 			if(hit)
 			{
 				remove = true;
 			}
 			
+			if(chainAssembleCooldown > 0)
+			{
+				chainAssembleCooldown -= delta;
+			}
 			
+			if(chainAssembleCooldown < 0)
+			{
+				chainAssembleCooldown = 0;
+			}
 		}
 	
 		public void setHit()

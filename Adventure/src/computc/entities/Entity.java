@@ -300,6 +300,11 @@ public abstract class Entity
 		   int topRow = (int)(y - getHitboxHeight()/ 2);
 		   int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1);
 		   
+		   if(this instanceof ChainEnd)
+		   {
+			   System.out.println("the leftColumn and topRow are:" + leftColumn + " , " + topRow);
+		   }   
+		   
 		   topLeft = dungeon.getTile(leftColumn, topRow);
 		   topRight = dungeon.getTile(rightColumn, topRow);
 		   bottomLeft = dungeon.getTile(leftColumn, bottomRow);
