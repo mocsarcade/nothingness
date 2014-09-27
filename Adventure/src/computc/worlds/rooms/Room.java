@@ -67,7 +67,15 @@ public class Room
 			for(int ty = 0; ty < Room.TILEY_HEIGHT; ty++)
 			{
 				int gid = this.template.getTileID(tx, ty);
-				this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
+				
+				if(gid == 1)
+				{
+					this.tiles[tx][ty] = new Tile(this, tx, ty, "wall");
+				}
+				else if(gid == 2)
+				{
+					this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
+				}
 			}
 		}
 		

@@ -12,6 +12,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
 import computc.Game;
+import computc.worlds.rooms.Room;
 
 public class TileTemplate
 {

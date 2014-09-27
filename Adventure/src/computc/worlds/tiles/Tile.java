@@ -27,10 +27,6 @@ public class Tile
 	protected Image image;
 	protected Color color;
 	
-	protected boolean canMoveHere;
-	
-	public static int tileset = 0;
-	
 	public Tile(Room room, int tx, int ty, String type)
 	{
 		this.room = room;
@@ -38,13 +34,13 @@ public class Tile
 		this.tx = tx;
 		this.ty = ty;
 
-		this.image = room.dungeon.tileTemplates.get(type).getImage();
-		this.color = room.dungeon.tileTemplates.get(type).getColor();
+		this.image = this.room.dungeon.tileTemplates.get(type).getImage();
+		this.color = this.room.dungeon.tileTemplates.get(type).getColor();
 	}
 	
 	public void update(int delta)
 	{
-		//code goes here.
+		return;
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -148,9 +144,6 @@ public class Tile
 	{
 		return true;
 	}
-
-	public static HashMap<Integer, TileTemplate> templates = new HashMap<Integer, TileTemplate>();
 	
 	public final static int SIZE = 64;
-
 }
