@@ -35,7 +35,7 @@ public class Tile
 		this.tx = tx;
 		this.ty = ty;
 
-		this.image = Game.assets.getTileImage("./res/tiles/floor.tile.png");
+		this.image = Game.assets.getTileImage("./res/" + type + ".tiles.png");
 		this.color = this.room.dungeon.tileTemplates.get(type).getColor();
 	}
 	
