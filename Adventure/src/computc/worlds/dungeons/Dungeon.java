@@ -1,28 +1,24 @@
-
 package computc.worlds.dungeons;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.SlickException;
 
 import computc.Game;
 import computc.cameras.Camera;
 import computc.entities.Coin;
 import computc.entities.Enemy;
-import computc.entities.Entity;
 import computc.entities.Key;
 import computc.entities.OldMan;
-import computc.entities.Thug;
 import computc.worlds.rooms.Room;
 import computc.worlds.rooms.RoomTemplate;
 import computc.worlds.tiles.Tile;
+import computc.worlds.tiles.TileTemplate;
 
 public abstract class Dungeon
 {
@@ -33,21 +29,27 @@ public abstract class Dungeon
 	protected Room firstRoom;
 	public Room lastRoom;
 	public OldMan oldman;
-	
-	private LinkedList<RoomTemplate> roomTemplates = new LinkedList<RoomTemplate>();
+
+	private ArrayList<RoomTemplate> roomTemplates = new ArrayList<RoomTemplate>();
+	public HashMap<String, TileTemplate> tileTemplates = new HashMap<String, TileTemplate>();
 	
 	public Dungeon(String filepath)
 	{
 		try
 		{
 			Document document = new SAXBuilder().build(filepath);
-			
 			Element dungeonElement = document.getRootElement();
-			Element roomsElement = dungeonElement.getChild("rooms");
-			for(Element roomElement : roomsElement.getChildren())
+			
+			for(Element roomElement : dungeonElement.getChild("rooms").getChildren())
 			{
 				String source = roomElement.getAttributeValue("source");
 				this.roomTemplates.add(new RoomTemplate(source));
+			}
+			
+			for(Element tileElement : dungeonElement.getChild("tiles").getChildren())
+			{
+				String type = tileElement.getAttributeValue("type");
+				this.tileTemplates.put(type, new TileTemplate(tileElement));
 			}
 		}
 		catch(Exception exception)

@@ -4,11 +4,11 @@
 		<room source="./res/rooms/corners.room.tmx"/>
 	</rooms>
 	<tiles>
-		<tile name="wall">
+		<tile type="wall">
 			<color red="80" green="80" blue="80"/>
 			<image source="./res/wall.tiles.png"/>
 		</tile>
-		<tile name="floor">
+		<tile type="floor">
 			<color red="160" green="160" blue="160"/>
 			<image source="./res/floor.tiles.png"/>
 		</tile>

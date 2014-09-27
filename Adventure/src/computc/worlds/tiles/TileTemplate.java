@@ -15,20 +15,17 @@ import computc.Game;
 
 public class TileTemplate
 {
-	private String name;
+	private String type;
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private Color color;
 	
 	public boolean passability = true;
 	
-	public TileTemplate(String filepath)
+	public TileTemplate(Element tileElement)
 	{
 		try
 		{
-			Document document = new SAXBuilder().build(filepath);
-			Element tileElement = document.getRootElement();
-			
-			this.name = tileElement.getAttributeValue("name");
+			this.type = tileElement.getAttributeValue("type");
 			
 			Element imageElement = tileElement.getChild("image");
 			String source = imageElement.getAttributeValue("source");
@@ -58,9 +55,9 @@ public class TileTemplate
 		}
 	}
 	
-	public String getName()
+	public String getType()
 	{
-		return this.name;
+		return this.type;
 	}
 	
 	public Image getImage()

@@ -23,7 +23,6 @@ public class Tile
 	
 	protected int tx;
 	protected int ty;
-	protected int gid;
 	
 	protected Image image;
 	protected Color color;
@@ -32,25 +31,15 @@ public class Tile
 	
 	public static int tileset = 0;
 	
-	public Tile(Room room, int tx, int ty, int gid)
+	public Tile(Room room, int tx, int ty, String type)
 	{
 		this.room = room;
 		
 		this.tx = tx;
 		this.ty = ty;
-		
-		this.gid = gid;
 
-		this.image = Tile.templates.get(gid).getImage();
-		this.color = Tile.templates.get(gid).getColor();
-	}
-	
-	public static void init() throws SlickException
-	{
-		//Tile.templates.put(1, new TileTemplate("./res/wall.tile.xml"));
-		//Tile.templates.put(2, new TileTemplate("./res/floor.tile.xml"));
-		Tile.templates.put(1, new TileTemplate("./res/wall.tile.2.xml"));
-		Tile.templates.put(2, new TileTemplate("./res/floor.tile.2.xml"));
+		this.image = room.dungeon.tileTemplates.get(type).getImage();
+		this.color = room.dungeon.tileTemplates.get(type).getColor();
 	}
 	
 	public void update(int delta)
@@ -157,7 +146,7 @@ public class Tile
 	 */
 	public boolean canMoveHere()
 	{
-		return Tile.templates.get(gid + tileset).passability;
+		return true;
 	}
 
 	public static HashMap<Integer, TileTemplate> templates = new HashMap<Integer, TileTemplate>();

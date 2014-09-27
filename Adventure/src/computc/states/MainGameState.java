@@ -43,7 +43,6 @@ public class MainGameState extends BasicGameState
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		Tile.init();
 		Key.IMAGE = new Image("./res/key.png");
 		Coin.IMAGE = new Image("./res/coin.png");
 		

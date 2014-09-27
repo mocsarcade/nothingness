@@ -34,7 +34,7 @@ import computc.worlds.tiles.TileTemplate;
 public class Room
 {
 	private int rx, ry;
-	private Dungeon dungeon;
+	public Dungeon dungeon;
 	
 	public Room westernRoom;
 	public Room easternRoom;
@@ -67,7 +67,7 @@ public class Room
 			for(int ty = 0; ty < Room.TILEY_HEIGHT; ty++)
 			{
 				int gid = this.template.getTileID(tx, ty);
-				this.tiles[tx][ty] = new Tile(this, tx, ty, gid);
+				this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 			}
 		}
 		
@@ -324,7 +324,7 @@ public class Room
 		this.northernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = 0;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 	}
 
 	/*
@@ -337,7 +337,7 @@ public class Room
 		this.southernRoom = room;
 		
 		int tx = Room.TILEY_WIDTH / 2, ty = Room.TILEY_HEIGHT - 1;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 	}
 
 	/*
@@ -350,7 +350,7 @@ public class Room
 		this.easternRoom = room;
 		
 		int tx = Room.TILEY_WIDTH - 1, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 	}
 
 	/*
@@ -363,7 +363,7 @@ public class Room
 		this.westernRoom = room;
 		
 		int tx = 0, ty = Room.TILEY_HEIGHT / 2;
-		this.tiles[tx][ty] = new Tile(this, tx, ty, 2);
+		this.tiles[tx][ty] = new Tile(this, tx, ty, "floor");
 	}
 	
 	/*
