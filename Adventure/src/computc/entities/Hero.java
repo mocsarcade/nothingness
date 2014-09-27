@@ -4,6 +4,8 @@ package computc.entities;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.World;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
@@ -21,6 +23,22 @@ import computc.worlds.Tile;
 public class Hero extends Entity
 {
 	private boolean dead = false;
+	
+	protected boolean chainAttack;
+	protected int chainAttackCooldown;
+	
+	Image ironBall = new Image("res/ironball.png");
+	
+	
+	// box2d "world"
+	 
+	private final Vec2 gravity = new Vec2(0, .5f);
+	private Vec2 box2dPlayerPosition;
+	 
+	 
+	public Chain chain;
+	private ChainEnd ball;
+	private int ballDamage;
 	
 	private int projectileCooldown = 0;
 	
@@ -58,10 +76,12 @@ public class Hero extends Entity
 		arrowDamage = 2;
 		arrows = new ArrayList<Arrow>();
 		
+		this.ballDamage = 2;
+		
 		this.currentHealth = this.maximumHealth = 3;
 		
 		meleeDamage = 3;
-		meleeRange = 64;
+		meleeRange = 96;
 		
 		sprite = idle;
 		
@@ -77,18 +97,23 @@ public class Hero extends Entity
 		this.meleeUp = new Animation(new SpriteSheet(swingUp, 48, 96), 300);
 		
 		this.direction = Direction.SOUTH;
+		
+		// box2d stuff (chain)
+		this.world = new World(gravity);
+				
+		// converts box2d position to hero's position on screen
+		box2dPlayerPosition = new Vec2(this.getRoomPositionX()/30, this.getRoomPositionY()/30);
+				
+		if(this.dungeon.chainEnabled)
+		{
+		this.chain = new Chain(this.world, this);
+		this.chain.playerBody.setTransform(box2dPlayerPosition, 0);
+		this.ball = new ChainEnd(this.dungeon, this.getTileyX(), this.getTileyY(), this.direction, this.chain, this);
+		}
 	}
 	
 	public void render(Graphics graphics, Camera camera)
-	{
-		super.render(graphics, camera);
-		
-		// draw arrows
-		for(int i = 0; i < arrows.size(); i++)
-		{
-			arrows.get(i).render(graphics, camera);
-		}
-		
+	{	
 		if(blinking) 
 		{
 			if(blinkCooldown % 4 == 0) 
@@ -96,6 +121,22 @@ public class Hero extends Entity
 				return;
 			}
 		}
+		
+		super.render(graphics, camera);
+		
+		// draw chain
+		if(this.dungeon.chainEnabled)
+		{
+		this.chain.render(graphics, camera);
+		ironBall.draw(this.chain.lastLinkBody.getPosition().x * 30, (this.chain.lastLinkBody.getPosition().y * 30));
+		}
+		
+		// draw arrows
+		for(int i = 0; i < arrows.size(); i++)
+		{
+			arrows.get(i).render(graphics, camera);
+		}
+				
 		
 		if(this.direction == Direction.NORTH)
 		{
@@ -130,7 +171,8 @@ public class Hero extends Entity
 			meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
 			}
 		}
-		
+		// converts box2d position to hero's position on screen
+		box2dPlayerPosition = new Vec2(this.getLocalX(camera)/30, this.getLocalY(camera)/30);
 	}
 	
 	public void renderOnMap(Graphics graphics, Camera camera)
@@ -146,6 +188,8 @@ public class Hero extends Entity
 	
 	public void update(Input input, int delta) throws SlickException
 	{
+//		System.out.println("the ball at the end of the chain's x & y are: " + this.ball.x + " , " + this.ball.y);
+		
 		getNextPosition(input, delta);
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
@@ -179,6 +223,27 @@ public class Hero extends Entity
 		if(blinkCooldown == 0)
 		{
 			blinking = false;
+		}
+		
+		// chain stuff
+		if(this.dungeon.chainEnabled)
+		{	
+			this.chain.playerBody.setTransform(box2dPlayerPosition, 0);
+				
+			if(chainAttackCooldown > 0)
+			{
+				chainAttackCooldown -= delta;
+			}
+				
+			if(chainAttackCooldown <= 0)
+			{
+				chainAttack = false;
+				chainAttackCooldown = 0;
+			}
+				
+			this.ball.update(delta);
+				
+			this.chain.update(input, delta);		
 		}
 		
 		if(arrowCount > maxArrows)
@@ -227,6 +292,9 @@ public class Hero extends Entity
 		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).visited = true;
 		
 		super.update(delta);
+		
+		// the update method for the box2d world
+		world.step(1/60f, 8, 3);
 	}
 	
 	// movement method
@@ -342,6 +410,10 @@ public class Hero extends Entity
 //				this.x += step;
 				}
 			
+			if(input.isKeyDown(Input.KEY_D))
+			{
+				this.dungeon.toggleDebugDraw();
+			}	
 	}
 	
 	private void hit(int damage)
@@ -420,6 +492,15 @@ public class Hero extends Entity
 					break;
 				}
 			}
+			
+			if(chainAttack)
+			{
+				if(this.ball.intersects(e))
+				{
+					e.hit(ballDamage);
+					break;
+				}
+			}
 		}
 	}
 	
@@ -445,6 +526,17 @@ public class Hero extends Entity
 	public void setSwinging()
 	{
 		swinging = true;
+	}
+	
+	public void setChainAttack()
+	{
+		chainAttack = true;
+		chainAttackCooldown = 200;
+	}
+	
+	public boolean getChainAttack()
+	{
+		return chainAttack;
 	}
 	
 	public void checkPickup(LinkedList<Key> keys)

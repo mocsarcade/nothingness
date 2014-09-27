@@ -9,5 +9,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/jars/slick.jar"/>
 	<classpathentry kind="lib" path="lib/jars/jdom.jar"/>
+	<classpathentry kind="lib" path="lib/jars/jbox2d-library-2.2.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/jars/jbox2d-testbed-2.2.1.1-jar-with-dependencies.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
