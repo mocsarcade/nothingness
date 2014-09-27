@@ -51,4 +51,5 @@ public class Game extends StateBasedGame
 	public static final int HEIGHT = Room.HEIGHT;
 	
 	public static Random randomness = new Random();
+	public static AssetManager assets = new AssetManager();
 }

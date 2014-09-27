@@ -14,6 +14,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import computc.Game;
 import computc.cameras.Camera;
 import computc.worlds.rooms.Room;
 
@@ -34,7 +35,7 @@ public class Tile
 		this.tx = tx;
 		this.ty = ty;
 
-		this.image = this.room.dungeon.tileTemplates.get(type).getImage();
+		this.image = Game.assets.getTileImage("./res/tiles/floor.tile.png");
 		this.color = this.room.dungeon.tileTemplates.get(type).getColor();
 	}
 	
