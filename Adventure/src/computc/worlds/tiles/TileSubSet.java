@@ -27,7 +27,7 @@ public class TileSubSet
 			int ts = Tile.SIZE;
 			for(int tx = 0; tx < image.getWidth() / Tile.SIZE; tx++)
 				for(int ty = 0; ty < image.getHeight() / Tile.SIZE; ty++)
-					this.images.add(image.getSubImage(tx*ts, ty*ts, ts, ts));
+					this.images.add(image.getSubImage(tx * ts, ty * ts, ts, ts));
 			
 			Element tilesubsetColorElement = tilesubsetElement.getChild("color");
 			int red = tilesubsetColorElement.getAttribute("red").getIntValue();
@@ -48,7 +48,7 @@ public class TileSubSet
 	
 	public Image getRandomImage()
 	{
-		return this.images.get(Game.randomness.nextInt(this.images.size()));
+		return this.images.get(Game.random.nextInt(this.images.size()));
 	}
 	
 	public Color getColor()

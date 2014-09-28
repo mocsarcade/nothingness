@@ -115,6 +115,6 @@ public class RoomTemplate
 
 	public Point getRandomChestSpawnpoint()
 	{
-		return this.chests.get(Game.randomness.nextInt(this.chests.size()));
+		return this.chests.get(Game.random.nextInt(this.chests.size()));
 	}
 }

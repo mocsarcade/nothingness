@@ -35,7 +35,7 @@ public abstract class Dungeon
 	
 	public TileSet getTileSet()
 	{
-		return this.tilesets.get(Game.randomness.nextInt(tilesets.size()));
+		return this.tilesets.get(Game.random.nextInt(tilesets.size()));
 	}
 	
 	public void update(int delta)

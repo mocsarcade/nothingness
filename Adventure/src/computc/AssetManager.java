@@ -11,6 +11,25 @@ import computc.worlds.tiles.TileSubSet;
 
 public class AssetManager
 {
+	private HashMap<String, Image> images = new HashMap<String, Image>();
+	
+	public Image getImage(String source)
+	{
+		try
+		{
+			if(this.images.get(source) == null)
+			{
+				this.images.put(source, new Image(source));
+			}
+		}
+		catch(Exception exception)
+		{
+			exception.printStackTrace();
+		}
+		
+		return this.images.get(source);
+	}
+	
 	/*private HashMap<String, TileSubSet> tileGroups = new HashMap<String, TileSubSet>();
 	
 	public TileSubSet getTileGroup(String source)

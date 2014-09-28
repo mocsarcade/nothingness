@@ -1,24 +1,15 @@
 package computc;
 
-import java.awt.Point;
-import java.util.LinkedList;
 import java.util.Random;
 
-import org.newdawn.slick.Animation;
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.SlickException;
 
-import computc.states.DungeonMapGameState;
-import computc.states.MainGameState;
 import computc.worlds.rooms.Room;
+import computc.states.MainGameState;
+import computc.states.DungeonMapGameState;
 
 public class Game extends StateBasedGame
 {
@@ -40,7 +31,7 @@ public class Game extends StateBasedGame
 	public static void main(String[] args) throws SlickException
 	{
 		AppGameContainer container = new AppGameContainer(new Game());
-		container.setDisplayMode(Room.WIDTH, Room.HEIGHT, false);
+		container.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
 		container.setTargetFrameRate(60);
 		container.start();
 	}
@@ -50,7 +41,7 @@ public class Game extends StateBasedGame
 	public static final int WIDTH = Room.WIDTH;
 	public static final int HEIGHT = Room.HEIGHT;
 	
-	public static Random randomness = new Random();
+	public static Random random = new Random();
 	public static AssetManager assets = new AssetManager();
 	public static GameLevel level = new GameLevel("./res/first.gamelevel.xml");
 }
