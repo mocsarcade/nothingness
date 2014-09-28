@@ -15,6 +15,7 @@ import computc.cameras.Camera;
 import computc.entities.Key;
 import computc.entities.OldMan;
 import computc.worlds.rooms.Room;
+import computc.worlds.tiles.TileSet;
 
 public class RandomZeldaesqueDungeon extends Dungeon
 {
@@ -25,6 +26,8 @@ public class RandomZeldaesqueDungeon extends Dungeon
 	
 	public RandomZeldaesqueDungeon()
 	{
+		this.tilesets.add(new TileSet("./res/tilesets/rocky.tileset.xml"));
+		
 		//MAINPATH
 		ArrayList<LinkedList<Room>> segments = new ArrayList<LinkedList<Room>>();
 		Room currentRoom = this.firstRoom = new Room(this, 2, 2);

@@ -2,6 +2,7 @@ package computc.worlds.dungeons;
 
 import computc.Direction;
 import computc.worlds.rooms.Room;
+import computc.worlds.tiles.TileSet;
 
 public class FiveRoomDungeon extends Dungeon
 {

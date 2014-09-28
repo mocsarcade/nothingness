@@ -33,6 +33,11 @@ public abstract class Dungeon
 	
 	ArrayList<TileSet> tilesets = new ArrayList<TileSet>();
 	
+	public TileSet getTileSet()
+	{
+		return this.tilesets.get(Game.randomness.nextInt(tilesets.size()));
+	}
+	
 	public void update(int delta)
 	{
 		for(int i = 0; i < enemies.size(); i++)

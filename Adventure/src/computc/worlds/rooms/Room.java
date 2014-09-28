@@ -92,6 +92,13 @@ public class Room
 		}
 		
 		this.dungeon.addRoom(this);
+		
+		this.tileset = this.getDungeon().getTileSet();
+	}
+	
+	public Dungeon getDungeon()
+	{
+		return this.dungeon;
 	}
 	
 	public void render(Graphics graphics, Camera camera)
