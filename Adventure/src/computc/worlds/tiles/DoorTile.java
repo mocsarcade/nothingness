@@ -10,9 +10,11 @@ public class DoorTile extends Tile
 	public DoorTile(Room room, int tx, int ty)
 	{
 		super(room, tx, ty);
-
-		this.image = Game.assets.getTileGroup("./res/tiles/door.tile.png").getRandomImage();
-		this.color = Color.yellow;
+		
+		TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("door");
+		
+		this.image = tilesubset.getRandomImage();
+		this.color = tilesubset.getColor();
 		
 		this.collideable = true;
 	}

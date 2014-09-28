@@ -7,18 +7,18 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import computc.worlds.tiles.Tile;
-import computc.worlds.tiles.TileGroup;
+import computc.worlds.tiles.TileSubSet;
 
 public class AssetManager
 {
-	private HashMap<String, TileGroup> tileGroups = new HashMap<String, TileGroup>();
+	/*private HashMap<String, TileSubSet> tileGroups = new HashMap<String, TileSubSet>();
 	
-	public TileGroup getTileGroup(String source)
+	public TileSubSet getTileGroup(String source)
 	{
 		if(this.tileGroups.get(source) == null)
 		{
-			this.tileGroups.put(source, new TileGroup(source));
+			this.tileGroups.put(source, new TileSubSet(source));
 		}
 		return this.tileGroups.get(source);
-	}
+	}*/
 }

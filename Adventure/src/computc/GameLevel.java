@@ -8,7 +8,7 @@ import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 
 import computc.worlds.rooms.RoomTemplate;
-import computc.worlds.tiles.TileGroup;
+import computc.worlds.tiles.TileSubSet;
 
 public class GameLevel
 {

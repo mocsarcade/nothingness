@@ -10,21 +10,27 @@ public class ArrowFloorTile extends FloorTile
 	{
 		super(room, tx, ty);
 		
+		TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("arrow");
+		
 		if(direction == Direction.NORTH)
 		{
-			this.image = Game.assets.getTileGroup("./res/tiles/northern.arrow.tile.png").getRandomImage();
+			this.image = tilesubset.getImage(0);
+			this.color = tilesubset.getColor();
 		}
 		else if(direction == Direction.SOUTH)
 		{
-			this.image = Game.assets.getTileGroup("./res/tiles/southern.arrow.tile.png").getRandomImage();
+			this.image = tilesubset.getImage(1);
+			this.color = tilesubset.getColor();
 		}
 		else if(direction == Direction.EAST)
 		{
-			this.image = Game.assets.getTileGroup("./res/tiles/eastern.arrow.tile.png").getRandomImage();
+			this.image = tilesubset.getImage(2);
+			this.color = tilesubset.getColor();
 		}
 		else if(direction == Direction.WEST)
 		{
-			this.image = Game.assets.getTileGroup("./res/tiles/western.arrow.tile.png").getRandomImage();
+			this.image = tilesubset.getImage(3);
+			this.color = tilesubset.getColor();
 		}
 	}
 }

@@ -1,8 +1,5 @@
 package computc.worlds.tiles;
 
-import org.newdawn.slick.Color;
-
-import computc.Game;
 import computc.worlds.rooms.Room;
 
 public class FloorTile extends Tile
@@ -11,7 +8,7 @@ public class FloorTile extends Tile
 	{
 		super(room, tx, ty);
 		
-		TileGroup tilesubset = this.getRoom().getTileSet().getTileGroup("floor");
+		TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("floor");
 		
 		this.image = tilesubset.getRandomImage();
 		this.color = tilesubset.getColor();

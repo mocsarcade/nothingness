@@ -32,7 +32,7 @@ import computc.worlds.tiles.ArrowFloorTile;
 import computc.worlds.tiles.DoorTile;
 import computc.worlds.tiles.FloorTile;
 import computc.worlds.tiles.Tile;
-import computc.worlds.tiles.TileGroup;
+import computc.worlds.tiles.TileSubSet;
 import computc.worlds.tiles.TileSet;
 import computc.worlds.tiles.WallTile;
 
