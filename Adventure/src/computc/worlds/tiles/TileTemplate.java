@@ -12,7 +12,6 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
 import computc.Game;
-import computc.worlds.rooms.Room;
 
 public class TileTemplate
 {
@@ -40,15 +39,6 @@ public class TileTemplate
 			int green = colorElement.getAttribute("green").getIntValue();
 			int blue = colorElement.getAttribute("blue").getIntValue();
 			this.color = new Color(red, green, blue);
-			
-			for(Element propertyElement : tileElement.getChildren("property"))
-			{
-				if(propertyElement.getAttribute("passability") != null)
-				{
-					System.out.println("!");
-					this.passability = propertyElement.getAttribute("passability").getBooleanValue();
-				}
-			}
 		}
 		catch(Exception exception)
 		{

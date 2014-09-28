@@ -28,15 +28,17 @@ public class Tile
 	protected Image image;
 	protected Color color;
 	
-	public Tile(Room room, int tx, int ty, String type)
+	protected boolean collideable;
+	
+	public Tile(Room room, int tx, int ty)
 	{
 		this.room = room;
 		
 		this.tx = tx;
 		this.ty = ty;
 
-		this.image = Game.assets.getTileImage("./res/" + type + ".tiles.png");
-		this.color = this.room.dungeon.tileTemplates.get(type).getColor();
+		this.image = Game.assets.getTileGroup("./res/tiles/null.tile.png").getRandomImage();
+		this.color = Color.pink;
 	}
 	
 	public void update(int delta)
@@ -143,7 +145,7 @@ public class Tile
 	 */
 	public boolean canMoveHere()
 	{
-		return true;
+		return this.collideable == false;
 	}
 	
 	public final static int SIZE = 64;

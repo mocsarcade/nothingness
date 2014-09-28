@@ -18,6 +18,7 @@ import computc.entities.OldMan;
 import computc.worlds.rooms.Room;
 import computc.worlds.rooms.RoomTemplate;
 import computc.worlds.tiles.Tile;
+import computc.worlds.tiles.TileGroup;
 import computc.worlds.tiles.TileTemplate;
 
 public abstract class Dungeon
@@ -29,9 +30,9 @@ public abstract class Dungeon
 	protected Room firstRoom;
 	public Room lastRoom;
 	public OldMan oldman;
-
+	
 	private ArrayList<RoomTemplate> roomTemplates = new ArrayList<RoomTemplate>();
-	public HashMap<String, TileTemplate> tileTemplates = new HashMap<String, TileTemplate>();
+	public HashMap<String, TileGroup> tileGroups = new HashMap<String, TileGroup>();
 	
 	public Dungeon(String filepath)
 	{
@@ -48,8 +49,11 @@ public abstract class Dungeon
 			
 			for(Element tileElement : dungeonElement.getChild("tiles").getChildren())
 			{
-				String type = tileElement.getAttributeValue("type");
-				this.tileTemplates.put(type, new TileTemplate(tileElement));
+				String tileElementType = tileElement.getAttributeValue("type");
+				Element imageElement = tileElement.getChild("image");
+				String imageElementSource = imageElement.getAttributeValue("source");
+				
+				this.tileGroups.put(tileElementType, Game.assets.getTileGroup(imageElementSource));
 			}
 		}
 		catch(Exception exception)

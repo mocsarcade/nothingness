@@ -1,56 +1,23 @@
 package computc;
 
 import java.util.HashMap;
-import java.util.ArrayList;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
 import computc.worlds.tiles.Tile;
+import computc.worlds.tiles.TileGroup;
 
 public class AssetManager
 {
-	private HashMap<String, ArrayList<Image>> tileImageLists = new HashMap<String, ArrayList<Image>>();
+	private HashMap<String, TileGroup> tileGroups = new HashMap<String, TileGroup>();
 	
-	public ArrayList<Image> getTileImageList(String source)
+	public TileGroup getTileGroup(String source)
 	{
-		try
+		if(this.tileGroups.get(source) == null)
 		{
-			// if the images for the tiles have not yet been
-			// loaded into the game, load them into the game!!
-			
-			if(this.tileImageLists.get(source) == null)
-			{
-				// since the images for tiles are saved in the same
-				// file, we parse the image into subimages when loading.
-				
-				ArrayList<Image> tileImageList = new ArrayList<Image>();
-				SpriteSheet tileImageSheet = new SpriteSheet(source, Tile.SIZE, Tile.SIZE);
-				
-				for(int tx = 0; tx < tileImageSheet.getHorizontalCount(); tx++)
-					for(int ty = 0; ty < tileImageSheet.getVerticalCount(); ty++)
-						tileImageList.add(tileImageSheet.getSprite(tx, ty));
-				
-				this.tileImageLists.put(source, tileImageList);
-			}
+			this.tileGroups.put(source, new TileGroup(source));
 		}
-		catch(Exception exception)
-		{
-			exception.printStackTrace();
-		}
-		
-		return this.tileImageLists.get(source);
-	}
-	
-	public Image getTileImage(String source)
-	{
-		ArrayList<Image> tileImageList = this.getTileImageList(source);
-		return tileImageList.get(Game.randomness.nextInt(tileImageList.size()));
-	}
-	
-	public Image getTileImage(String source, int index)
-	{
-		ArrayList<Image> tileImageList = this.getTileImageList(source);
-		return tileImageList.get(index);
+		return this.tileGroups.get(source);
 	}
 }
