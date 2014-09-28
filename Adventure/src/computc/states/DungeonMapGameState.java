@@ -14,8 +14,7 @@ import computc.cameras.InputPollingCamera;
 import computc.cameras.RoomFollowingCamera;
 import computc.entities.Hero;
 import computc.worlds.dungeons.Dungeon;
-import computc.worlds.dungeons.RandomRoguelikeDungeon;
-import computc.worlds.dungeons.RandomZeldaesqueDungeon;
+import computc.worlds.dungeons.RandomDungeon;
 import computc.worlds.rooms.Room;
 
 public class DungeonMapGameState extends BasicGameState

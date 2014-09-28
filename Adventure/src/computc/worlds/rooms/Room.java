@@ -57,14 +57,18 @@ public class Room
 	
 	public Room(Dungeon dungeon, int rx, int ry)
 	{
-		this.dungeon = dungeon;
-		
 		this.rx = rx;
 		this.ry = ry;
-		
-		for(int tx = 0; tx < Room.TILEY_WIDTH; tx++)
+
+		this.dungeon = dungeon;
+		this.dungeon.addRoom(this);
+	}
+	
+	public void initiate()
+	{
+		for(int tx = 0; tx < this.getTileyWidth(); tx++)
 		{
-			for(int ty = 0; ty < Room.TILEY_HEIGHT; ty++)
+			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
 				int gid = this.getRoomLayout().getTileGID(tx, ty);
 				
@@ -78,8 +82,6 @@ public class Room
 				}
 			}
 		}
-		
-		this.dungeon.addRoom(this);
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -114,9 +116,19 @@ public class Room
 		return this.roomlayout;
 	}
 	
+	public void setRoomLayout(RoomLayout roomlayout)
+	{
+		this.roomlayout = roomlayout;
+	}
+	
 	public TileSet getTileSet()
 	{
 		return this.tileset;
+	}
+	
+	public void setTileSet(TileSet tileset)
+	{
+		this.tileset = tileset;
 	}
 	
 	/*

@@ -24,7 +24,6 @@ import computc.entities.Key;
 import computc.entities.OldMan;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.dungeons.PredesignedDungeon;
-import computc.worlds.dungeons.RandomRoguelikeDungeon;
 import computc.worlds.rooms.Room;
 import computc.worlds.tiles.Tile;
 

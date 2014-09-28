@@ -45,6 +45,14 @@ public abstract class Dungeon
 		this.specialRoomLayouts.put("last room", Game.assets.getRoomLayout("./res/rooms/twodots.room.tmx"));
 	}
 	
+	public void initiate()
+	{
+		for(Room room : this.getAllRooms())
+		{
+			room.initiate();
+		}
+	}
+	
 	public void update(int delta)
 	{
 		for(int i = 0; i < enemies.size(); i++)

@@ -7,8 +7,7 @@ import computc.worlds.dungeons.Dungeon;
 import computc.worlds.dungeons.DungeonException;
 import computc.worlds.dungeons.FiveRoomDungeon;
 import computc.worlds.dungeons.OneRoomDungeon;
-import computc.worlds.dungeons.RandomRoguelikeDungeon;
-import computc.worlds.dungeons.RandomZeldaesqueDungeon;
+import computc.worlds.dungeons.RandomDungeon;
 
 public class GameData
 {
@@ -18,7 +17,20 @@ public class GameData
 	
 	public void instantiate() throws SlickException
 	{
-		this.dungeon = new RandomZeldaesqueDungeon();
+		while(this.dungeon == null)
+		{
+			try
+			{
+				this.dungeon = new RandomDungeon();
+			}
+			catch(Exception exception)
+			{
+				exception.printStackTrace();
+			}
+		}
+		
+		this.dungeon.initiate();
+		
 		this.hero = new Hero(this.dungeon, 5, 4);
 		this.menu = new Menu(this.dungeon, this.hero);
 	}
