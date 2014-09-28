@@ -36,8 +36,8 @@ public class Tile
 		
 		this.tx = tx;
 		this.ty = ty;
-
-		this.image = Game.assets.getTileGroup("./res/tiles/null.tile.png").getRandomImage();
+		
+		//this.image = Game.assets.getImage("./res/tiles/null.tile.png");
 		this.color = Color.pink;
 	}
 	
@@ -146,6 +146,11 @@ public class Tile
 	public boolean canMoveHere()
 	{
 		return this.collideable == false;
+	}
+	
+	public Room getRoom()
+	{
+		return this.room;
 	}
 	
 	public final static int SIZE = 64;

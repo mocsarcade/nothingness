@@ -1,0 +1,4 @@
+<tileset>
+	<tile type="wall" source="./res/tilesets/rocky.wall.tile.xml"/>
+	<tile type="floor" source="./res/tilesets/rocky.floor.tile.xml"/>
+</tileset>

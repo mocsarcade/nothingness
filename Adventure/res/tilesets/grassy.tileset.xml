@@ -1,0 +1,4 @@
+<tileset>
+	<tile type="floor" source="./res/tilesets/grassy.wall.tile.xml">
+	<tile type="floor" source="./res/tilesets/grassy.floor.tile.xml">
+</tileset>

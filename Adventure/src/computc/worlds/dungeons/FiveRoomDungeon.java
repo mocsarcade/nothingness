@@ -11,10 +11,10 @@ public class FiveRoomDungeon extends Dungeon
 	{
 		this.firstRoom = new Room(this, 2, 2);
 
-		this.firstRoom.addArrowTile(Direction.NORTH);
+		/*this.firstRoom.addArrowTile(Direction.NORTH);
 		this.firstRoom.addArrowTile(Direction.SOUTH);
 		this.firstRoom.addArrowTile(Direction.EAST);
-		this.firstRoom.addArrowTile(Direction.WEST);
+		this.firstRoom.addArrowTile(Direction.WEST);*/
 		
 		this.firstRoom.instantiateNorthernRoom().addKey();
 		this.firstRoom.instantiateSouthernRoom().addKey();

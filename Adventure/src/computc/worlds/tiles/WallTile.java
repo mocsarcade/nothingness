@@ -12,8 +12,9 @@ public class WallTile extends Tile
 		super(room, tx, ty);
 		this.collideable = true;
 		
-		TileGroup tilegroup = this.room.getTileGroup("wall");
-		this.image = tilegroup.getRandomImage();
-		this.color = Color.darkGray; //tilegroup.getColor();
+		TileGroup tilesubset = this.getRoom().getTileSet().getTileGroup("wall");
+		
+		this.image = tilesubset.getRandomImage();
+		this.color = tilesubset.getColor();
 	}
 }

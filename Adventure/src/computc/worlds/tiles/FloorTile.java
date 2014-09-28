@@ -11,8 +11,9 @@ public class FloorTile extends Tile
 	{
 		super(room, tx, ty);
 		
-		TileGroup tilegroup = this.room.getTileGroup("floor");
-		this.image = tilegroup.getRandomImage();
-		this.color = Color.gray; //tilegroup.getColor();
+		TileGroup tilesubset = this.getRoom().getTileSet().getTileGroup("floor");
+		
+		this.image = tilesubset.getRandomImage();
+		this.color = tilesubset.getColor();
 	}
 }

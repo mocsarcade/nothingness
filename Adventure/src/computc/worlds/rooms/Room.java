@@ -33,6 +33,7 @@ import computc.worlds.tiles.DoorTile;
 import computc.worlds.tiles.FloorTile;
 import computc.worlds.tiles.Tile;
 import computc.worlds.tiles.TileGroup;
+import computc.worlds.tiles.TileSet;
 import computc.worlds.tiles.WallTile;
 
 public class Room
@@ -52,7 +53,12 @@ public class Room
 	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
 	private RoomTemplate template;
 	
-	private HashMap<String, TileGroup> tileGroups = new HashMap<String, TileGroup>();
+	private TileSet tileset = new TileSet("./res/tilesets/rocky.tileset.xml");
+	
+	public TileSet getTileSet()
+	{
+		return this.tileset;
+	}
 	
 	public Room(Dungeon dungeon, int rx, int ry)
 	{
@@ -67,9 +73,6 @@ public class Room
 		this.ry = ry;
 		
 		this.template = template;
-
-		this.tileGroups.put("wall", Game.assets.getTileGroup("./res/wall.tiles.png"));
-		this.tileGroups.put("floor", Game.assets.getTileGroup("./res/floor.tiles.png"));
 		
 		for(int tx = 0; tx < Room.TILEY_WIDTH; tx++)
 		{
@@ -89,11 +92,6 @@ public class Room
 		}
 		
 		this.dungeon.addRoom(this);
-	}
-	
-	public TileGroup getTileGroup(String type)
-	{
-		return this.tileGroups.get(type);
 	}
 	
 	public void render(Graphics graphics, Camera camera)

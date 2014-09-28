@@ -19,6 +19,7 @@ import computc.worlds.rooms.Room;
 import computc.worlds.rooms.RoomTemplate;
 import computc.worlds.tiles.Tile;
 import computc.worlds.tiles.TileGroup;
+import computc.worlds.tiles.TileSet;
 
 public abstract class Dungeon
 {
@@ -29,6 +30,8 @@ public abstract class Dungeon
 	protected Room firstRoom;
 	public Room lastRoom;
 	public OldMan oldman;
+	
+	ArrayList<TileSet> tilesets = new ArrayList<TileSet>();
 	
 	public void update(int delta)
 	{
