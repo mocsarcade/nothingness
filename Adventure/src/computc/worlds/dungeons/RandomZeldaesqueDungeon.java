@@ -26,7 +26,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 	
 	public RandomZeldaesqueDungeon()
 	{
-		this.tilesets.add(new TileSet("./res/tilesets/rocky.tileset.xml"));
+		super();
 		
 		//MAINPATH
 		ArrayList<LinkedList<Room>> segments = new ArrayList<LinkedList<Room>>();

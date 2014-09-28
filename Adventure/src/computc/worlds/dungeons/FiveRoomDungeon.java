@@ -8,6 +8,8 @@ public class FiveRoomDungeon extends Dungeon
 {
 	public FiveRoomDungeon()
 	{
+		super();
+		
 		this.firstRoom = new Room(this, 2, 2);
 
 		this.firstRoom.addArrowTile(Direction.NORTH);

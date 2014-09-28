@@ -15,6 +15,8 @@ public class RandomRoguelikeDungeon extends Dungeon
 	
 	public RandomRoguelikeDungeon()
 	{
+		super();
+		
 		this.firstRoom = new Room(this, 2, 2);
 		
 		for(int i = 0; i < SCALE; i++)

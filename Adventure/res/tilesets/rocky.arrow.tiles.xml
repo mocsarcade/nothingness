@@ -1,4 +1,4 @@
 <tile>
-	<color red="255" green="0" blue="0"/>
-	<image source="./res/arrow.tiles.png"/>
+	<color red="244" green="237" blue="204"/>
+	<image source="./res/tiles/arrow.tiles.png"/>
 </tile>

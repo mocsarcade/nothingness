@@ -31,9 +31,9 @@ public class TileSubSet
 			
 			Element tilesubsetColorElement = tilesubsetElement.getChild("color");
 			int red = tilesubsetColorElement.getAttribute("red").getIntValue();
-			int blue = tilesubsetColorElement.getAttribute("blue").getIntValue();
 			int green = tilesubsetColorElement.getAttribute("green").getIntValue();
-			this.color = new Color(red, blue, green);
+			int blue = tilesubsetColorElement.getAttribute("blue").getIntValue();
+			this.color = new Color(red, green, blue);
 		}
 		catch(Exception exception)
 		{

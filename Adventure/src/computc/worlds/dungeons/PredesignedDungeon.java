@@ -33,6 +33,8 @@ public class PredesignedDungeon extends Dungeon
 	
 	public PredesignedDungeon()
 	{
+		super();
+		
 		TiledMap tiled;// = new TiledMap("./res/dungeons/prototype.dungeon.tmx");
 		
 		int ROOMY_WIDTH = 9;

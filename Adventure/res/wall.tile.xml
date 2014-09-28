@@ -1,5 +1,0 @@
-<tile name="wall">
-	<color red="80" green="80" blue="80"/>
-	<image source="./res/wall.tiles.png"/>
-	<property canmovehere="false"/>
-</tile>

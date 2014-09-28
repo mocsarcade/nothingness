@@ -1,4 +1,4 @@
 <tile>
-	<color red="255" green="0" blue="255"/>
+	<color red="255" green="201" blue="14"/>
 	<image source="./res/tiles/door.tile.png"/>
 </tile>

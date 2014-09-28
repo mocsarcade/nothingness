@@ -33,6 +33,11 @@ public abstract class Dungeon
 	
 	ArrayList<TileSet> tilesets = new ArrayList<TileSet>();
 	
+	public Dungeon()
+	{
+		this.tilesets.add(new TileSet("./res/tilesets/grassy.tileset.xml"));
+	}
+	
 	public TileSet getTileSet()
 	{
 		return this.tilesets.get(Game.random.nextInt(tilesets.size()));

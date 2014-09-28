@@ -74,6 +74,8 @@ public class Room
 		
 		this.template = template;
 		
+		this.tileset = this.getDungeon().getTileSet();
+		
 		for(int tx = 0; tx < Room.TILEY_WIDTH; tx++)
 		{
 			for(int ty = 0; ty < Room.TILEY_HEIGHT; ty++)
@@ -92,8 +94,6 @@ public class Room
 		}
 		
 		this.dungeon.addRoom(this);
-		
-		this.tileset = this.getDungeon().getTileSet();
 	}
 	
 	public Dungeon getDungeon()

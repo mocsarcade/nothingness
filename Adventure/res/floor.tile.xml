@@ -1,4 +1,0 @@
-<tile name="floor">
-	<color red="160" green="160" blue="160"/>
-	<image source="./res/floor.tiles.png"/>
-</tile>
