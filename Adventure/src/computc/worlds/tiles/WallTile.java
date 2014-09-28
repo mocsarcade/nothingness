@@ -18,4 +18,6 @@ public class WallTile extends Tile
 		
 		this.collideable = true;
 	}
+	
+	public static final int GID = 1;
 }

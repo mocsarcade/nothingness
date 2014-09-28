@@ -20,7 +20,7 @@ import computc.worlds.rooms.Room;
 
 public class PredesignedDungeon extends Dungeon
 {
-	public Point[] thug_positions_in_tiley_coordinates;
+	/*public Point[] thug_positions_in_tiley_coordinates;
 	public LinkedList<Enemy> thugs;
 	public OldMan oldman;
 	
@@ -69,7 +69,7 @@ public class PredesignedDungeon extends Dungeon
 			{
 				Room room = this.getRoom(rx, ry);
 				
-				/*if(!room.getTile(Room.TILEY_WIDTH / 2, 0).isBlocked)
+				if(!room.getTile(Room.TILEY_WIDTH / 2, 0).isBlocked)
 				{
 					room.connectNorthernRoom(this.getRoom(rx, ry - 1));
 				}
@@ -84,7 +84,7 @@ public class PredesignedDungeon extends Dungeon
 				if(!room.getTile(0, Room.TILEY_HEIGHT / 2).isBlocked)
 				{
 					room.connectWesternRoom(this.getRoom(rx - 1, ry));
-				}*/
+				}
 			}
 		}
 		
@@ -117,9 +117,9 @@ public class PredesignedDungeon extends Dungeon
 		//thugs.add(new BigThug(this, 36, 23));
 		//this.oldman = new OldMan(this, 38, 12);
 		
-		/*this.menuBox = new Image("res/textBox.png");
-		this.largeTextBox = new Image("res/largeTextBox.png");
-		this.textBox = new Animation(new SpriteSheet(new Image("res/largeTextBox.png"), 585, 100), 100);*/
+		//this.menuBox = new Image("res/textBox.png");
+		//this.largeTextBox = new Image("res/largeTextBox.png");
+		//this.textBox = new Animation(new SpriteSheet(new Image("res/largeTextBox.png"), 585, 100), 100);
 	}
 	
 	public void update(int delta)
@@ -139,10 +139,10 @@ public class PredesignedDungeon extends Dungeon
 		
 		//hero.checkAttack(dungeon.thugs);
 		
-		/*if(dungeon.getTile(hero.getX(), hero.getY()).isStairs)
-		{
-			nextLevel = true;
-		}*/
+		//if(dungeon.getTile(hero.getX(), hero.getY()).isStairs)
+		//{
+		//	nextLevel = true;
+		//}
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -155,5 +155,5 @@ public class PredesignedDungeon extends Dungeon
 		}
 		
 		this.oldman.render(graphics, camera);
-	}
+	}*/
 }

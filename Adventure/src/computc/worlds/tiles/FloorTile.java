@@ -13,4 +13,6 @@ public class FloorTile extends Tile
 		this.image = tilesubset.getRandomImage();
 		this.color = tilesubset.getColor();
 	}
+	
+	public static final int GID = 2;
 }

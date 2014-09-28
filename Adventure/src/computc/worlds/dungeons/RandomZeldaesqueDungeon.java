@@ -21,8 +21,6 @@ public class RandomZeldaesqueDungeon extends Dungeon
 {
 	private final int AMOUNT_OF_ROOMS_IN_SEGMENT = 3;
 	private final int AMOUNT_OF_SEGMENTS_IN_DUNGEON = 2;
-	//private final int AMOUNT_OF_ROOMS_IN_SIDEPATH;
-	//private final int AMOUNT_OF_SIDEPATHS_PER_SEGMENT;
 	
 	public RandomZeldaesqueDungeon()
 	{
@@ -30,7 +28,7 @@ public class RandomZeldaesqueDungeon extends Dungeon
 		
 		//MAINPATH
 		ArrayList<LinkedList<Room>> segments = new ArrayList<LinkedList<Room>>();
-		Room currentRoom = this.firstRoom = new Room(this, 2, 2);
+		Room currentRoom = this.firstRoom = new Room(this, 2, 2); //this.getSpecialRoomLayout("first room")
 		
 		for(int i = 0; i < AMOUNT_OF_SEGMENTS_IN_DUNGEON; i++)
 		{

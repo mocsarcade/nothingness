@@ -16,7 +16,7 @@ import computc.entities.Enemy;
 import computc.entities.Key;
 import computc.entities.OldMan;
 import computc.worlds.rooms.Room;
-import computc.worlds.rooms.RoomTemplate;
+import computc.worlds.rooms.RoomLayout;
 import computc.worlds.tiles.Tile;
 import computc.worlds.tiles.TileSubSet;
 import computc.worlds.tiles.TileSet;
@@ -32,17 +32,17 @@ public abstract class Dungeon
 	public OldMan oldman;
 	
 	ArrayList<TileSet> tilesets = new ArrayList<TileSet>();
-	LinkedList<RoomTemplate> randomRoomTemplates = new LinkedList<RoomTemplate>();
-	HashMap<String, RoomTemplate> specialRoomTemplates = new HashMap<String, RoomTemplate>();
+	LinkedList<RoomLayout> randomRoomLayouts = new LinkedList<RoomLayout>();
+	HashMap<String, RoomLayout> specialRoomLayouts = new HashMap<String, RoomLayout>();
 	
 	public Dungeon()
 	{
-		this.tilesets.add(new TileSet("./res/tilesets/rocky.tileset.xml"));
+		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/rocky.tileset.xml"));
 
-		this.randomRoomTemplates.add(Game.assets.getRoomTemplate("./res/rooms/corners.room.tmx"));
-		this.randomRoomTemplates.add(Game.assets.getRoomTemplate("./res/rooms/fourdots.room.tmx"));
-		this.specialRoomTemplates.put("first room", Game.assets.getRoomTemplate("./res/rooms/twodots.room.tmx"));
-		this.specialRoomTemplates.put("last room", Game.assets.getRoomTemplate("./res/rooms/twodots.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/corners.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/fourdots.room.tmx"));
+		this.specialRoomLayouts.put("first room", Game.assets.getRoomLayout("./res/rooms/twodots.room.tmx"));
+		this.specialRoomLayouts.put("last room", Game.assets.getRoomLayout("./res/rooms/twodots.room.tmx"));
 	}
 	
 	public void update(int delta)
@@ -169,15 +169,15 @@ public abstract class Dungeon
 		return this.tilesets.get(Game.random.nextInt(tilesets.size()));
 	}
 	
-	public RoomTemplate getRandomRoomTemplate()
+	public RoomLayout getRandomRoomLayout()
 	{
-		RoomTemplate randomRoomTemplate = this.randomRoomTemplates.pop();
-		this.randomRoomTemplates.add(randomRoomTemplate);
-		return randomRoomTemplate;
+		RoomLayout randomRoomLayout = this.randomRoomLayouts.pop();
+		this.randomRoomLayouts.add(randomRoomLayout);
+		return randomRoomLayout;
 	}
 	
-	public RoomTemplate getSpecialRoomTemplate(String type)
+	public RoomLayout getSpecialRoomLayout(String type)
 	{
-		return this.specialRoomTemplates.get(type);
+		return this.specialRoomLayouts.get(type);
 	}
 }

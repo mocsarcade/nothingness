@@ -9,16 +9,16 @@ import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.DataConversionException;
 
-public class RoomTemplate
+public class RoomLayout
 {
-	private int[][] tiles = new int[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
+	private int[][] tileGIDs = new int[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
 	
-	public RoomTemplate(String roomSource) throws IOException, JDOMException
+	public RoomLayout(String roomSource) throws IOException, JDOMException
 	{
 		this(new SAXBuilder().build(roomSource).getRootElement());
 	}
 	
-	public RoomTemplate(Element roomElement) throws DataConversionException
+	public RoomLayout(Element roomElement) throws JDOMException
 	{
 		for(Element layerElement : roomElement.getChildren("layer"))
 		{
@@ -32,15 +32,15 @@ public class RoomTemplate
 					{
 						Element tileElement = tileElements.get(ty * Room.TILEY_WIDTH + tx);
 						int gid = tileElement.getAttribute("gid").getIntValue();
-						this.tiles[tx][ty] = gid;
+						this.tileGIDs[tx][ty] = gid;
 					}
 				}
 			}
 		}
 	}
-
-	public int getTileID(int tx, int ty)
+	
+	public int getTileGID(int tx, int ty)
 	{
-		return this.tiles[tx][ty];
+		return this.tileGIDs[tx][ty];
 	}
 }

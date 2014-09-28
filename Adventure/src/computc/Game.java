@@ -43,5 +43,4 @@ public class Game extends StateBasedGame
 	
 	public static Random random = new Random();
 	public static AssetManager assets = new AssetManager();
-	public static GameLevel level = new GameLevel("./res/first.gamelevel.xml");
 }

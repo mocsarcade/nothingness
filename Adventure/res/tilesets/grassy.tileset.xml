@@ -1,6 +1,0 @@
-<tileset>
-	<tile type="wall" source="./res/tilesets/rocky.wall.tiles.xml"/>
-	<tile type="floor" source="./res/tilesets/grassy.floor.tiles.xml"/>
-	<tile type="arrow" source="./res/tilesets/rocky.arrow.tiles.xml"/>
-	<tile type="door" source="./res/tilesets/rocky.door.tiles.xml"/>
-</tileset>

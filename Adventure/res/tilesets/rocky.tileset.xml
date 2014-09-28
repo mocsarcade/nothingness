@@ -1,6 +1,18 @@
 <tileset>
-	<tile type="wall" source="./res/tilesets/rocky.wall.tiles.xml"/>
-	<tile type="floor" source="./res/tilesets/rocky.floor.tiles.xml"/>
-	<tile type="arrow" source="./res/tilesets/rocky.arrow.tiles.xml"/>
-	<tile type="door" source="./res/tilesets/rocky.door.tiles.xml"/>
+	<tile type="wall">
+		<color red="185" green="122" blue="87"/>
+		<image source="./res/tiles/rocky.wall.tiles.png"/>
+	</tile>
+	<tile type="floor">
+		<color red="239" green="228" blue="176"/>
+		<image source="./res/tiles/rocky.floor.tiles.png"/>
+	</tile>
+	<tile type="arrow">
+		<color red="244" green="237" blue="204"/>
+		<image source="./res/tiles/arrow.tiles.png"/>
+	</tile>
+	<tile type="door">
+		<color red="255" green="201" blue="14"/>
+		<image source="./res/tiles/door.tile.png"/>
+	</tile>
 </tileset>

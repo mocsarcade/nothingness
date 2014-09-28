@@ -45,40 +45,34 @@ public class Room
 	private Room easternRoom;
 	private Room southernRoom;
 	private Room northernRoom;
-
-	public int segmentIdnum;
-	public Direction critpathDirection;
-	public boolean visited = false;
 	
 	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
-	private TileSet tileset = new TileSet("./res/tilesets/rocky.tileset.xml");
-	private RoomTemplate roomtemplate;
+	
+	private TileSet tileset = Game.assets.getTileSet("./res/tilesets/rocky.tileset.xml");
+	private RoomLayout roomlayout = Game.assets.getRoomLayout("./res/rooms/empty.room.tmx");
+
+	public int segmentIdnum;
+	public boolean visited = false;
+	public Direction critpathDirection;
 	
 	public Room(Dungeon dungeon, int rx, int ry)
-	{
-		this(dungeon, rx, ry, dungeon.getRandomRoomTemplate());
-	}
-	
-	public Room(Dungeon dungeon, int rx, int ry, RoomTemplate template)
 	{
 		this.dungeon = dungeon;
 		
 		this.rx = rx;
 		this.ry = ry;
 		
-		this.tileset = this.getDungeon().getTileSet();
-		
 		for(int tx = 0; tx < Room.TILEY_WIDTH; tx++)
 		{
 			for(int ty = 0; ty < Room.TILEY_HEIGHT; ty++)
 			{
-				int gid = template.getTileID(tx, ty);
+				int gid = this.getRoomLayout().getTileGID(tx, ty);
 				
-				if(gid == 1)
+				if(gid == WallTile.GID)
 				{
 					this.tiles[tx][ty] = new WallTile(this, tx, ty);
 				}
-				else if(gid == 2)
+				else if(gid == FloorTile.GID)
 				{
 					this.tiles[tx][ty] = new FloorTile(this, tx, ty);
 				}
@@ -88,18 +82,13 @@ public class Room
 		this.dungeon.addRoom(this);
 	}
 	
-	public Dungeon getDungeon()
-	{
-		return this.dungeon;
-	}
-	
 	public void render(Graphics graphics, Camera camera)
 	{
 		for(int tx = 0; tx < this.getTileyWidth(); tx++)
 		{
 			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
-				this.tiles[tx][ty].render(graphics, camera);
+				this.getTile(tx, ty).render(graphics, camera);
 			}
 		}
 	}
@@ -110,9 +99,24 @@ public class Room
 		{
 			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
-				this.tiles[tx][ty].renderOnMap(graphics, camera);
+				this.getTile(tx, ty).renderOnMap(graphics, camera);
 			}
 		}
+	}
+	
+	public Dungeon getDungeon()
+	{
+		return this.dungeon;
+	}
+	
+	public RoomLayout getRoomLayout()
+	{
+		return this.roomlayout;
+	}
+	
+	public TileSet getTileSet()
+	{
+		return this.tileset;
 	}
 	
 	/*
@@ -125,7 +129,7 @@ public class Room
 	 */
 	public int getX()
 	{
-		return this.getRoomyX() * Room.WIDTH;
+		return this.getRoomyX() * this.getWidth();
 	}
 
 	/*
@@ -138,7 +142,7 @@ public class Room
 	 */
 	public int getY()
 	{
-		return this.getRoomyY() * Room.HEIGHT;
+		return this.getRoomyY() * this.getHeight();
 	}
 
 	/*
@@ -237,7 +241,7 @@ public class Room
 		int tx = (int)(Math.floor(x / Tile.SIZE));
 		int ty = (int)(Math.floor(y / Tile.SIZE));
 		
-		return this.tiles[tx][ty];
+		return this.getTile(tx, ty);
 	}
 	
 	/*
@@ -652,11 +656,6 @@ public class Room
 	{
 		//Point spawnpoint = this.template.getRandomChestSpawnpoint();
 		//this.dungeon.keys.add(new Key(this.dungeon, this, spawnpoint.x, spawnpoint.y));
-	}
-	
-	public TileSet getTileSet()
-	{
-		return this.tileset;
 	}
 	
 	public final static int TILEY_WIDTH = 11;
