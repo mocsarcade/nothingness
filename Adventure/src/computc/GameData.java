@@ -18,7 +18,7 @@ public class GameData
 	
 	public void instantiate() throws SlickException
 	{
-		this.dungeon = new FiveRoomDungeon("./res/alpha.dungeon.xml");
+		this.dungeon = new FiveRoomDungeon();
 		this.hero = new Hero(this.dungeon, 5, 4);
 		this.menu = new Menu(this.dungeon, this.hero);
 	}

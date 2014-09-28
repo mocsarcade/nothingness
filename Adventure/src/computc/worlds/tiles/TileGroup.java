@@ -11,14 +11,21 @@ public class TileGroup
 {
 	private ArrayList<Image> images = new ArrayList<Image>();
 	
-	public TileGroup(String source)
+	public TileGroup(String tilegroupSource)
 	{
 		try
 		{
-			SpriteSheet imagesheet = new SpriteSheet(source, Tile.SIZE, Tile.SIZE);
-			for(int tx = 0; tx < imagesheet.getHorizontalCount(); tx++)
-				for(int ty = 0; ty < imagesheet.getVerticalCount(); ty++)
-					this.images.add(imagesheet.getSprite(tx, ty));
+			Image image = new Image(tilegroupSource);
+			
+			for(int tx = 0; tx < image.getWidth() / Tile.SIZE; tx++)
+			{
+				for(int ty = 0; ty < image.getHeight() / Tile.SIZE; ty++)
+				{
+					int x = tx * Tile.SIZE, y = ty * Tile.SIZE;
+					
+					this.images.add(image.getSubImage(x, y, Tile.SIZE, Tile.SIZE));
+				}
+			}
 		}
 		catch(Exception exception)
 		{

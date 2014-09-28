@@ -33,7 +33,6 @@ import computc.worlds.tiles.DoorTile;
 import computc.worlds.tiles.FloorTile;
 import computc.worlds.tiles.Tile;
 import computc.worlds.tiles.TileGroup;
-import computc.worlds.tiles.TileTemplate;
 import computc.worlds.tiles.WallTile;
 
 public class Room
@@ -57,7 +56,7 @@ public class Room
 	
 	public Room(Dungeon dungeon, int rx, int ry)
 	{
-		this(dungeon, rx, ry, dungeon.getRandomRoomTemplate());
+		this(dungeon, rx, ry, Game.level.getRandomRoomTemplate());
 	}
 	
 	public Room(Dungeon dungeon, int rx, int ry, RoomTemplate template)
@@ -662,6 +661,4 @@ public class Room
 	public final static int TILEY_HEIGHT = 9;
 	public final static int WIDTH = Room.TILEY_WIDTH * Tile.SIZE;
 	public final static int HEIGHT = Room.TILEY_HEIGHT * Tile.SIZE;
-	
-	public static HashMap<String, TileTemplate> tileTemplates = new HashMap<String, TileTemplate>();
 }

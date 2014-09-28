@@ -19,7 +19,6 @@ import computc.worlds.rooms.Room;
 import computc.worlds.rooms.RoomTemplate;
 import computc.worlds.tiles.Tile;
 import computc.worlds.tiles.TileGroup;
-import computc.worlds.tiles.TileTemplate;
 
 public abstract class Dungeon
 {
@@ -30,42 +29,6 @@ public abstract class Dungeon
 	protected Room firstRoom;
 	public Room lastRoom;
 	public OldMan oldman;
-	
-	private ArrayList<RoomTemplate> roomTemplates = new ArrayList<RoomTemplate>();
-	public HashMap<String, TileGroup> tileGroups = new HashMap<String, TileGroup>();
-	
-	public Dungeon(String filepath)
-	{
-		try
-		{
-			Document document = new SAXBuilder().build(filepath);
-			Element dungeonElement = document.getRootElement();
-			
-			for(Element roomElement : dungeonElement.getChild("rooms").getChildren())
-			{
-				String source = roomElement.getAttributeValue("source");
-				this.roomTemplates.add(new RoomTemplate(source));
-			}
-			
-			for(Element tileElement : dungeonElement.getChild("tiles").getChildren())
-			{
-				String tileElementType = tileElement.getAttributeValue("type");
-				Element imageElement = tileElement.getChild("image");
-				String imageElementSource = imageElement.getAttributeValue("source");
-				
-				this.tileGroups.put(tileElementType, Game.assets.getTileGroup(imageElementSource));
-			}
-		}
-		catch(Exception exception)
-		{
-			exception.printStackTrace();
-		}
-	}
-	
-	public RoomTemplate getRandomRoomTemplate()
-	{
-		return this.roomTemplates.get(Game.randomness.nextInt(this.roomTemplates.size()));
-	}
 	
 	public void update(int delta)
 	{

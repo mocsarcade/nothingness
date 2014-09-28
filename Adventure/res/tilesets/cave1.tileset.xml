@@ -1,0 +1,10 @@
+<tileset>
+	<tile type="wall">
+		<color red="255" green="0" blue="0"/>
+		<image source="./res/wall.tiles.png"/>
+	</tile>
+	<tile type="floor">
+		<color red="0" green="0" blue="255"/>
+		<image source="./res/floor.tiles.png"/>
+	</tile>
+</tileset>

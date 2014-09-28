@@ -7,10 +7,8 @@ import computc.worlds.rooms.Room;
 
 public class FiveRoomDungeon extends Dungeon
 {
-	public FiveRoomDungeon(String filepath)
+	public FiveRoomDungeon()
 	{
-		super(filepath);
-		
 		this.firstRoom = new Room(this, 2, 2);
 
 		this.firstRoom.addArrowTile(Direction.NORTH);

@@ -6,10 +6,8 @@ import computc.worlds.rooms.Room;
 
 public class OneRoomDungeon extends Dungeon
 {
-	public OneRoomDungeon(String filepath)
+	public OneRoomDungeon()
 	{
-		super(filepath);
-		
 		this.firstRoom = new Room(this, 2, 2);
 	}
 }

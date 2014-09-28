@@ -31,10 +31,8 @@ public class PredesignedDungeon extends Dungeon
 	public Color textColor = Color.white;
 	private boolean nextLevel = false;
 	
-	public PredesignedDungeon(String filepath)
+	public PredesignedDungeon()
 	{
-		super(filepath);
-		
 		TiledMap tiled;// = new TiledMap("./res/dungeons/prototype.dungeon.tmx");
 		
 		int ROOMY_WIDTH = 9;
