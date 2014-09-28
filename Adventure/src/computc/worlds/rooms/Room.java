@@ -38,31 +38,25 @@ import computc.worlds.tiles.WallTile;
 
 public class Room
 {
+	private Dungeon dungeon;
 	private int rx, ry;
-	public Dungeon dungeon;
 	
-	public Room westernRoom;
-	public Room easternRoom;
-	public Room southernRoom;
-	public Room northernRoom;
-	
+	private Room westernRoom;
+	private Room easternRoom;
+	private Room southernRoom;
+	private Room northernRoom;
+
+	public int segmentIdnum;
 	public Direction critpathDirection;
-	
 	public boolean visited = false;
 	
 	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
-	private RoomTemplate template;
-	
 	private TileSet tileset = new TileSet("./res/tilesets/rocky.tileset.xml");
-	
-	public TileSet getTileSet()
-	{
-		return this.tileset;
-	}
+	private RoomTemplate roomtemplate;
 	
 	public Room(Dungeon dungeon, int rx, int ry)
 	{
-		this(dungeon, rx, ry, Game.level.getRandomRoomTemplate());
+		this(dungeon, rx, ry, dungeon.getRandomRoomTemplate());
 	}
 	
 	public Room(Dungeon dungeon, int rx, int ry, RoomTemplate template)
@@ -72,15 +66,13 @@ public class Room
 		this.rx = rx;
 		this.ry = ry;
 		
-		this.template = template;
-		
 		this.tileset = this.getDungeon().getTileSet();
 		
 		for(int tx = 0; tx < Room.TILEY_WIDTH; tx++)
 		{
 			for(int ty = 0; ty < Room.TILEY_HEIGHT; ty++)
 			{
-				int gid = this.template.getTileID(tx, ty);
+				int gid = template.getTileID(tx, ty);
 				
 				if(gid == 1)
 				{
@@ -658,8 +650,13 @@ public class Room
 
 	public void addKey()
 	{
-		Point spawnpoint = this.template.getRandomChestSpawnpoint();
-		this.dungeon.keys.add(new Key(this.dungeon, this, spawnpoint.x, spawnpoint.y));
+		//Point spawnpoint = this.template.getRandomChestSpawnpoint();
+		//this.dungeon.keys.add(new Key(this.dungeon, this, spawnpoint.x, spawnpoint.y));
+	}
+	
+	public TileSet getTileSet()
+	{
+		return this.tileset;
 	}
 	
 	public final static int TILEY_WIDTH = 11;

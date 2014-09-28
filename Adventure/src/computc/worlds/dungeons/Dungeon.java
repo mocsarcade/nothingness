@@ -32,15 +32,17 @@ public abstract class Dungeon
 	public OldMan oldman;
 	
 	ArrayList<TileSet> tilesets = new ArrayList<TileSet>();
+	LinkedList<RoomTemplate> randomRoomTemplates = new LinkedList<RoomTemplate>();
+	HashMap<String, RoomTemplate> specialRoomTemplates = new HashMap<String, RoomTemplate>();
 	
 	public Dungeon()
 	{
-		this.tilesets.add(new TileSet("./res/tilesets/grassy.tileset.xml"));
-	}
-	
-	public TileSet getTileSet()
-	{
-		return this.tilesets.get(Game.random.nextInt(tilesets.size()));
+		this.tilesets.add(new TileSet("./res/tilesets/rocky.tileset.xml"));
+
+		this.randomRoomTemplates.add(Game.assets.getRoomTemplate("./res/rooms/corners.room.tmx"));
+		this.randomRoomTemplates.add(Game.assets.getRoomTemplate("./res/rooms/fourdots.room.tmx"));
+		this.specialRoomTemplates.put("first room", Game.assets.getRoomTemplate("./res/rooms/twodots.room.tmx"));
+		this.specialRoomTemplates.put("last room", Game.assets.getRoomTemplate("./res/rooms/twodots.room.tmx"));
 	}
 	
 	public void update(int delta)
@@ -161,5 +163,21 @@ public abstract class Dungeon
 		
 		return this.getRoom(rx, ry).getTile(tx, ty);
 	}
-
+	
+	public TileSet getTileSet()
+	{
+		return this.tilesets.get(Game.random.nextInt(tilesets.size()));
+	}
+	
+	public RoomTemplate getRandomRoomTemplate()
+	{
+		RoomTemplate randomRoomTemplate = this.randomRoomTemplates.pop();
+		this.randomRoomTemplates.add(randomRoomTemplate);
+		return randomRoomTemplate;
+	}
+	
+	public RoomTemplate getSpecialRoomTemplate(String type)
+	{
+		return this.specialRoomTemplates.get(type);
+	}
 }

@@ -1,10 +1,12 @@
 package computc;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
 
 import computc.worlds.rooms.RoomTemplate;
@@ -41,6 +43,15 @@ public class GameLevel
 
 	public RoomTemplate getRandomRoomTemplate()
 	{
-		return new RoomTemplate("./res/rooms/fourdots.room.tmx");
+		try {
+			return new RoomTemplate("./res/rooms/fourdots.room.tmx");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JDOMException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 }
