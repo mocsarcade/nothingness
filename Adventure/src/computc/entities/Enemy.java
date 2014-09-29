@@ -26,6 +26,8 @@ public abstract class Enemy extends Entity
     protected boolean down;
     
     protected boolean attacking;
+    
+    protected boolean smash;
 	
 	public boolean isDead()
 	{
@@ -57,5 +59,10 @@ public abstract class Enemy extends Entity
 	public int getHealth()
 	{
 		return health;
+	}
+	
+	public boolean getSmash()
+	{
+		return smash;
 	}
 }

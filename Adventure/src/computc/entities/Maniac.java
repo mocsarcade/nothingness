@@ -13,6 +13,12 @@ public class Maniac extends Enemy
 	
 	public static boolean hit = false;
 	
+	private float bullRushSpeed;
+	private int bullRushCoolDown;
+	
+	
+	private boolean bullRush;
+	
 	public Maniac(Dungeon dungeon, Room room, float x, float y) throws SlickException 
 	{
 		super(dungeon, room, x, y);
@@ -25,6 +31,7 @@ public class Maniac extends Enemy
 		this.acceleration = 0.03f;
 		this.deacceleration = 0.001f;
 		this.maximumVelocity = 0.03f;
+		this.bullRushSpeed = 0.9f;
 		
 		this.health = this.maximumHealth = 5;
 		
@@ -39,38 +46,44 @@ public class Maniac extends Enemy
 				down = true;
 			}
 		
-		
+		bullRush = false;
+		bullRushCoolDown = 0;
 	}
 	
 	public void update(int delta)
 	{
+		
 		getNextPosition(delta);
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
 		// if hits wall change direction
-		if(right && dx == 0)
+		if(!bullRush && bullRushCoolDown == 0)
 		{
-			right = false;
-			left = true;
-		}
-		else if(left && dx == 0) 
-		{
-			right = true;
-			left = false;
-		}
+			this.maximumVelocity = 0.03f;
+			if(right && dx == 0)
+			{
+				right = false;
+				left = true;
+			}
+			else if(left && dx == 0) 
+			{
+				right = true;
+				left = false;
+			}
 		
-		if(up && dy == 0)
-		{
-			up = false;
-			down = true;
+			if(up && dy == 0)
+			{
+				up = false;
+				down = true;
+			}
+			else if(down && dy == 0) 
+			{
+				up = true;
+				down = false;
+			}
 		}
-		else if(down && dy == 0) 
-		{
-			up = true;
-			down = false;
-		}
-		
+			
 		// check blinking
 		if (blinkCooldown > 0)
 		{
@@ -82,13 +95,34 @@ public class Maniac extends Enemy
 			blinking = false;
 		}
 		
+		// check bullRush
+		if(bullRushCoolDown > 0)
+		{
+			bullRushCoolDown -= delta;
+		}
+		
+		if(bullRushCoolDown <= 0)
+		{
+			bullRushCoolDown = 0;
+			bullRush = false;
+		}
+		
+		if(bullRush && dx == 0 || bullRush && dy == 0)
+		{
+			smash = true;
+		}
+		
 		if(this.getRoom() == this.dungeon.gamedata.hero.getRoom())
 			{
 				if(this.dungeon.gamedata.hero.getX() > this.x - this.getHalfWidth() && this.dungeon.gamedata.hero.getX() < this.x + this.getHalfWidth())
 				{
-					System.out.println("this is happening");
+					this.maximumVelocity = this.bullRushSpeed;
+					bullRush = true;
+					bullRushCoolDown = 1000;
 				}
 			}
+		
+//		System.out.println("the bullRushCooldown is: " + bullRushCoolDown);
 	
 	}
 	
