@@ -1,25 +1,59 @@
 package computc.worlds;
 
-import computc.Direction;
+import computc.worlds.rooms.Room;
+import computc.worlds.dungeons.DungeonException;
 
 public class Door
 {
-	private Integer position;
-	private Direction direction;
+	private float tx, ty;
 	
-	public Door(Direction direction, Integer position)
+	public Door(Room alphaRoom, Room omegaRoom)
 	{
-		this.direction = direction;
-		this.position = position;
+		int drx = Math.abs(alphaRoom.getRoomyX() - omegaRoom.getRoomyX());
+		int dry = Math.abs(alphaRoom.getRoomyY() - omegaRoom.getRoomyY());
+		
+		if(drx + dry != 1)
+		{
+			//the rooms must not be same.
+			//the rooms must be orthogonal.
+			//the rooms must be adjacent.
+			throw new DungeonException();
+		}
+		
+		if(alphaRoom.getRoomyY() < omegaRoom.getRoomyY())
+		{
+			this.ty = alphaRoom.getTileyY() + alphaRoom.getTileyHeight() - 1 + 0.5f;
+			this.tx = alphaRoom.getTileyX() + (alphaRoom.getTileyWidth() / 2);
+		}
+		else if(alphaRoom.getRoomyY() > omegaRoom.getRoomyY())
+		{
+			this.ty = alphaRoom.getTileyY() - 0.5f;
+			this.tx = alphaRoom.getTileyX() + (alphaRoom.getTileyWidth() / 2);
+		}
+		else if(alphaRoom.getRoomyX() < omegaRoom.getRoomyX())
+		{
+			this.tx = alphaRoom.getTileyX() + alphaRoom.getTileyWidth() - 1 + 0.5f;
+			this.ty = alphaRoom.getTileyY() + (alphaRoom.getTileyHeight() / 2);
+		}
+		else if(alphaRoom.getRoomyX() > omegaRoom.getRoomyX())
+		{
+			this.tx = alphaRoom.getTileyX() - 0.5f;
+			this.ty = alphaRoom.getTileyY() + (alphaRoom.getTileyHeight() / 2);
+		}
+		
+		//check that rooms are adjacent?
+		
+		alphaRoom.addDoor(this);
+		omegaRoom.addDoor(this);
 	}
 	
-	public Direction getDirection()
+	public float getTileyX()
 	{
-		return this.direction;
+		return this.tx;
 	}
 	
-	public Integer getPosition()
+	public float getTileyY()
 	{
-		return this.position;
+		return this.ty;
 	}
 }

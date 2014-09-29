@@ -61,34 +61,12 @@ public class Room
 		
 		for(Door door : this.doors)
 		{
-			if(door.getDirection() == Direction.NORTH)
-			{
-				int tx = Room.TILEY_WIDTH / 2;
-				int ty = 0;
-				
-				this.tiles[tx][ty] = new FloorTile(this, tx, ty);
-			}
-			else if(door.getDirection() == Direction.SOUTH)
-			{
-				int tx = Room.TILEY_WIDTH / 2;
-				int ty = Room.TILEY_HEIGHT - 1;
-				
-				this.tiles[tx][ty] = new FloorTile(this, tx, ty);
-			}
-			else if(door.getDirection() == Direction.EAST)
-			{
-				int tx = Room.TILEY_WIDTH - 1;
-				int ty = Room.TILEY_HEIGHT / 2;
-				
-				this.tiles[tx][ty] = new FloorTile(this, tx, ty);
-			}
-			else if(door.getDirection() == Direction.WEST)
-			{
-				int tx = 0;
-				int ty = Room.TILEY_HEIGHT / 2;
-				
-				this.tiles[tx][ty] = new FloorTile(this, tx, ty);
-			}
+			float dtx = door.getTileyX() - this.getTileyX();
+			float dty = door.getTileyY() - this.getTileyY();
+			int tx = (int)(Math.floor(Math.abs(dtx)));
+			int ty = (int)(Math.floor(Math.abs(dty)));
+			
+			this.tiles[tx][ty] = new FloorTile(this, tx, ty);
 		}
 	}
 	
@@ -183,6 +161,32 @@ public class Room
 	public int getY()
 	{
 		return this.getRoomyY() * this.getHeight();
+	}
+
+	/*
+	 * Returns the horizontal position
+	 * of this room in units of tiles
+	 * and relative to the dungeon.
+	 * 
+	 * @units_of		tiles
+	 * @relative_to		dungeon
+	 */
+	public int getTileyX()
+	{
+		return this.getRoomyX() * this.getTileyWidth();
+	}
+
+	/*
+	 * Returns the vertical position
+	 * of this room in units of tiles
+	 * and relative to the dungeon.
+	 * 
+	 * @units_of		tiles
+	 * @relative_to		dungeon
+	 */
+	public int getTileyY()
+	{
+		return this.getRoomyY() * this.getTileyHeight();
 	}
 
 	/*
@@ -343,20 +347,53 @@ public class Room
 		return this.getDungeon().getRoom(rx, ry);
 	}
 	
-	public boolean hasRoomToTheNorth()
+	public Room getRoomToTheSouth()
 	{
 		int rx = this.getRoomyX();
-		int ry = this.getRoomyY() - 1;
+		int ry = this.getRoomyY() + 1;
 		
-		return this.getDungeon().hasRoom(rx, ry);
+		return this.getDungeon().getRoom(rx, ry);
 	}
 	
-	public void connectWithRoomToTheNorth()
+	public Room getRoomToTheEast()
 	{
-		Room roomToTheNorth = this.getRoomToTheNorth();
+		int rx = this.getRoomyX() + 1;
+		int ry = this.getRoomyY();
 		
-		this.doors.add(new Door(Direction.NORTH, -1));
-		roomToTheNorth.doors.add(new Door(Direction.SOUTH, -1));
+		return this.getDungeon().getRoom(rx, ry);
+	}
+	
+	public Room getRoomToTheWest()
+	{
+		int rx = this.getRoomyX() - 1;
+		int ry = this.getRoomyY();
+		
+		return this.getDungeon().getRoom(rx, ry);
+	}
+	
+	public void makeDoor(Direction direction)
+	{
+		if(direction == Direction.NORTH)
+		{
+			new Door(this, this.getRoomToTheNorth());
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			new Door(this, this.getRoomToTheSouth());
+		}
+		else if(direction == Direction.EAST)
+		{
+			new Door(this, this.getRoomToTheEast());
+		}
+		else if(direction == Direction.WEST)
+		{
+			new Door(this, this.getRoomToTheWest());
+		}
+	}
+	
+	public void addDoor(Door door)
+	{
+		this.doors.add(door);
 	}
 	
 	public final static int TILEY_WIDTH = 11;
