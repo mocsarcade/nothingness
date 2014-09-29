@@ -21,7 +21,7 @@ public class GameData
 		{
 			try
 			{
-				this.dungeon = new RandomDungeon();
+				this.dungeon = new FiveRoomDungeon();
 			}
 			catch(Exception exception)
 			{

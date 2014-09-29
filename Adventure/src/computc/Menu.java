@@ -62,15 +62,15 @@ public class Menu
 				
 				Room room = this.dungeon.getRoom(rx, ry);
 				
-				if(room != null && room.visited)
+				if(room != null && room.hasVisited)
 				{
 					graphics.setColor(Color.lightGray);
 					graphics.fillRoundRect(x, y, UNIT, UNIT, 3);
 					
-					if(room.hasNorthernRoom()) {graphics.fillRect(x + (UNIT / 2) - 1, y - MARGIN, MARGIN, MARGIN);}
+					/*if(room.hasNorthernRoom()) {graphics.fillRect(x + (UNIT / 2) - 1, y - MARGIN, MARGIN, MARGIN);}
 					if(room.hasSouthernRoom()) {graphics.fillRect(x + (UNIT / 2) - 1, y + UNIT, MARGIN, MARGIN);}
 					if(room.hasEasternRoom()) {graphics.fillRect(x + UNIT, y + (UNIT / 2) - 1, MARGIN, MARGIN);}
-					if(room.hasWesternRoom()) {graphics.fillRect(x - MARGIN, y + (UNIT / 2) - 1, MARGIN, MARGIN);}
+					if(room.hasWesternRoom()) {graphics.fillRect(x - MARGIN, y + (UNIT / 2) - 1, MARGIN, MARGIN);}*/
 					
 					if(rx == this.hero.getRoomyX()
 					&& ry == this.hero.getRoomyY())

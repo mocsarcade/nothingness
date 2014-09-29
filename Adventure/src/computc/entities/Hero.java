@@ -224,7 +224,7 @@ public class Hero extends Entity
 			if(this.direction == Direction.WEST) facingRight = false;
 		}
 	
-		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).visited = true;
+		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).hasVisited = true;
 		
 		super.update(delta);
 	}

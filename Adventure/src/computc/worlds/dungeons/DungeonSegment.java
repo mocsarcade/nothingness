@@ -13,11 +13,13 @@ public class DungeonSegment
 	public void addMajorRoom(Room room)
 	{
 		this.majorRooms.add(room);
+		room.setDungeonSegment(this);
 	}
 	
 	public void addMinorRoom(Room room)
 	{
 		this.minorRooms.add(room);
+		room.setDungeonSegment(this);
 	}
 	
 	public Room getFirstMajorRoom()
