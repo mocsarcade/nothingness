@@ -87,12 +87,6 @@ public class RoomFollowingCamera extends Camera
 			earthquakeCooldown--;
 		}
 		
-		if(earthquakeCooldown <= 0)
-		{
-			earthquakeCooldown = 0;
-			earthquake = false;
-		}
-		
 		if(earthquakeIntensity > 0)
 		{
 			earthquakeIntensity--;
@@ -131,6 +125,14 @@ public class RoomFollowingCamera extends Camera
 		{
 		return (this.getTarget().getRoomyX() + 1) * Room.WIDTH;
 		}
+		else if(peekerLeft)
+		{
+			return (this.getTarget().getRoomyX() * Room.WIDTH) - Room.WIDTH/2;
+		}
+		else if(peekerRight)
+		{
+			return (this.getTarget().getRoomyX() * Room.WIDTH) + Room.WIDTH/2;
+		}
 		else
 		{
 		return this.getTarget().getRoomyX() * Room.WIDTH;
@@ -146,6 +148,14 @@ public class RoomFollowingCamera extends Camera
 		else if(earthquakeDown && !(earthquakeIntensity == 0))
 		{
 			return (this.getTarget().getRoomyY() + 1) * Room.HEIGHT;
+		}
+		else if(peekerUp)
+		{
+			return (this.getTarget().getRoomyY() * Room.HEIGHT) - Room.HEIGHT/2;
+		}
+		else if(peekerDown)
+		{
+			return (this.getTarget().getRoomyY() * Room.HEIGHT) + Room.HEIGHT/2;
 		}
 		else
 		{
@@ -182,6 +192,37 @@ public class RoomFollowingCamera extends Camera
 		earthquakeIntensity = 3;
 		
 		earthquake = true;
+	}
+	
+	public void setPeeking(Direction direction)
+	{
+		if(direction == Direction.NORTH)
+		{
+			peekerUp = true;
+		}
+		if(direction == Direction.SOUTH)
+		{
+			peekerDown = true;
+		}
+		if(direction == Direction.EAST)
+		{
+			peekerRight = true;
+		}
+		if(direction == Direction.WEST)
+		{
+			peekerLeft = true;
+		}
+		
+		peekerCooldown = 100;
+		
+	}
+	
+	public void turnOffPeeking()
+	{
+		peekerLeft = false;
+		peekerRight = false;
+		peekerUp = false;
+		peekerDown = false;
 	}
 	
 	public boolean getEarthquake()

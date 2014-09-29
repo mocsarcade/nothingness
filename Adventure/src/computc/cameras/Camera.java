@@ -16,6 +16,14 @@ public abstract class Camera
 	public boolean earthquakeUp;
 	public boolean earthquakeDown;
 	
+	public boolean peeker;
+	public boolean peekerLeft;
+	public boolean peekerRight;
+	public boolean peekerUp;
+	public boolean peekerDown;
+	
+	public int peekerCooldown;
+	
 	public int earthquakeCooldown;
 	public int earthquakeIntensity;
 	

@@ -125,6 +125,10 @@ public class MainGameState extends BasicGameState
 			gravityCoolDown--;
 		}
 		
+		if(this.gamedata.hero.getPeekTimer() > 1000)
+		{
+			this.camera.setPeeking(this.gamedata.hero.getDirection());
+		}
 	}
 
 	private String greeting = "You've won! Congratulations! Thanks for playing! Enjoy the";
@@ -191,15 +195,23 @@ public class MainGameState extends BasicGameState
 		
 		if(k == Input.KEY_UP)
 		{
+			this.camera.turnOffPeeking();
+			this.gamedata.hero.resetPeekTimer();
 		}
 		if(k == Input.KEY_DOWN)
 		{
+			this.camera.turnOffPeeking();
+			this.gamedata.hero.resetPeekTimer();
 		}
 		if(k == Input.KEY_LEFT)
 		{
+			this.camera.turnOffPeeking();
+			this.gamedata.hero.resetPeekTimer();
 		}
 		if(k == Input.KEY_RIGHT)
 		{
+			this.camera.turnOffPeeking();
+			this.gamedata.hero.resetPeekTimer();
 		}
 		
 		if(k == Input.KEY_E)
