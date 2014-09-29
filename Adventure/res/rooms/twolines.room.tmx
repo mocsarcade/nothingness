@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" width="11" height="9" tilewidth="64" tileheight="64">
- <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64">
-  <image source="../tiles.png" width="192" height="64"/>
- </tileset>
- <tileset firstgid="4" name="thug" tilewidth="48" tileheight="48">
-  <image source="../thug.png" width="48" height="48"/>
- </tileset>
- <tileset firstgid="5" name="key" tilewidth="64" tileheight="32">
-  <image source="../key.png" width="64" height="32"/>
- </tileset>
- <tileset firstgid="6" name="coin" tilewidth="16" tileheight="16">
-  <image source="../coin.png" width="16" height="16"/>
+ <tileset firstgid="1" name="tiled" tilewidth="64" tileheight="64">
+  <image source="../tiled.png" width="256" height="128"/>
  </tileset>
  <layer name="tiles" width="11" height="9">
   <data>
@@ -115,20 +106,4 @@
    <tile gid="1"/>
   </data>
  </layer>
- <objectgroup name="entities" width="11" height="9">
-  <object gid="6" x="617" y="87"/>
-  <object gid="6" x="595" y="86"/>
-  <object gid="6" x="590" y="107"/>
-  <object gid="6" x="613" y="114"/>
-  <object gid="6" x="566" y="93"/>
-  <object gid="6" x="563" y="118"/>
-  <object gid="6" x="588" y="130"/>
-  <object gid="6" x="78" y="500"/>
-  <object gid="6" x="77" y="473"/>
-  <object gid="6" x="98" y="482"/>
-  <object gid="6" x="114" y="503"/>
-  <object gid="5" x="187" y="141"/>
-  <object gid="4" x="81" y="225"/>
-  <object gid="4" x="558" y="495"/>
- </objectgroup>
 </map>

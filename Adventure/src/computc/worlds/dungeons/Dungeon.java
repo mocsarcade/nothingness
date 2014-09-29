@@ -41,10 +41,27 @@ public abstract class Dungeon
 		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/grassy.tileset.xml"));
 		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/icy.tileset.xml"));
 
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/arena.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/blob.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/brackets.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/clamp.room.tmx"));
 		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/corners.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/crumbs.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/diagonals.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/dot.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/fivedots.room.tmx"));
 		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/fourdots.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/grid.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/loop.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/niches.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/oval.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/spiral.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/square.room.tmx"));
 		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/threedots.room.tmx"));
-		this.specialRoomLayouts.put("first room", Game.assets.getRoomLayout("./res/rooms/twodots.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/threelines.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/twodots.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/twolines.room.tmx"));
+		this.specialRoomLayouts.put("first room", Game.assets.getRoomLayout("./res/rooms/empty.room.tmx"));
 		this.specialRoomLayouts.put("last room", Game.assets.getRoomLayout("./res/rooms/clamp.room.tmx"));
 	}
 	

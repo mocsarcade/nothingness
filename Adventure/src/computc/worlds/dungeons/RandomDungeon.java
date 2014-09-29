@@ -95,10 +95,6 @@ public class RandomDungeon extends Dungeon
 					room.makeDoor(direction);
 					segment.addMinorRoom(nextRoom);
 				}
-				else
-				{
-					throw new DungeonException(); //is a dead end.
-				}
 			}
 			
 			//segment.getLastMajorRoom().addDoor(Direction.NORTH);
