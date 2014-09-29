@@ -38,11 +38,14 @@ public abstract class Dungeon
 	public Dungeon()
 	{
 		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/rocky.tileset.xml"));
+		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/grassy.tileset.xml"));
+		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/icy.tileset.xml"));
 
 		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/corners.room.tmx"));
 		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/fourdots.room.tmx"));
+		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/threedots.room.tmx"));
 		this.specialRoomLayouts.put("first room", Game.assets.getRoomLayout("./res/rooms/twodots.room.tmx"));
-		this.specialRoomLayouts.put("last room", Game.assets.getRoomLayout("./res/rooms/twodots.room.tmx"));
+		this.specialRoomLayouts.put("last room", Game.assets.getRoomLayout("./res/rooms/clamp.room.tmx"));
 	}
 	
 	public void initiate()
@@ -172,7 +175,12 @@ public abstract class Dungeon
 		return this.getRoom(rx, ry).getTile(tx, ty);
 	}
 	
-	public TileSet getTileSet()
+	public TileSet getTileSet(int index)
+	{
+		return this.tilesets.get(index);
+	}
+	
+	public TileSet getRandomTileSet()
 	{
 		return this.tilesets.get(Game.random.nextInt(tilesets.size()));
 	}

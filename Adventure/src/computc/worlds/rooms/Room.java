@@ -381,23 +381,104 @@ public class Room
 		return this.getDungeon().getRoom(rx, ry);
 	}
 	
-	public void makeDoor(Direction direction)
+	public Room makeRoomToTheNorth()
+	{
+		int rx = this.getRoomyX();
+		int ry = this.getRoomyY() - 1;
+		
+		return new Room(this.getDungeon(), rx, ry);
+	}
+	
+	public Room makeRoomToTheSouth()
+	{
+		int rx = this.getRoomyX();
+		int ry = this.getRoomyY() + 1;
+		
+		return new Room(this.getDungeon(), rx, ry);
+	}
+	
+	public Room makeRoomToTheEast()
+	{
+		int rx = this.getRoomyX() + 1;
+		int ry = this.getRoomyY();
+		
+		return new Room(this.getDungeon(), rx, ry);
+	}
+	
+	public Room makeRoomToTheWest()
+	{
+		int rx = this.getRoomyX() - 1;
+		int ry = this.getRoomyY();
+		
+		return new Room(this.getDungeon(), rx, ry);
+	}
+	
+	public Room makeRoom(Direction direction)
 	{
 		if(direction == Direction.NORTH)
 		{
-			new Door(this, this.getRoomToTheNorth());
+			return this.makeRoomToTheNorth();
 		}
 		else if(direction == Direction.SOUTH)
 		{
-			new Door(this, this.getRoomToTheSouth());
+			return this.makeRoomToTheSouth();
 		}
 		else if(direction == Direction.EAST)
 		{
-			new Door(this, this.getRoomToTheEast());
+			return this.makeRoomToTheEast();
 		}
 		else if(direction == Direction.WEST)
 		{
-			new Door(this, this.getRoomToTheWest());
+			return this.makeRoomToTheWest();
+		}
+		else
+		{
+			return null;
+		}
+		
+	}
+	
+	public Door makeDoorToTheNorth()
+	{
+		return new Door(this, this.getRoomToTheNorth());
+	}
+	
+	public Door makeDoorToTheSouth()
+	{
+		return new Door(this, this.getRoomToTheSouth());
+	}
+	
+	public Door makeDoorToTheEast()
+	{
+		return new Door(this, this.getRoomToTheEast());
+	}
+	
+	public Door makeDoorToTheWest()
+	{
+		return new Door(this, this.getRoomToTheWest());
+	}
+	
+	public Door makeDoor(Direction direction)
+	{
+		if(direction == Direction.NORTH)
+		{
+			return this.makeDoorToTheNorth();
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			return this.makeDoorToTheSouth();
+		}
+		else if(direction == Direction.EAST)
+		{
+			return this.makeDoorToTheEast();
+		}
+		else if(direction == Direction.WEST)
+		{
+			return this.makeDoorToTheWest();
+		}
+		else
+		{
+			return null;
 		}
 	}
 	

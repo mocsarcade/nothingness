@@ -19,8 +19,8 @@ import computc.worlds.tiles.TileSet;
 
 public class RandomDungeon extends Dungeon
 {
-	private final int ROOMS_PER_SEGMENT = 3;
-	private final int SEGMENTS_PER_DUNGEON = 2;
+	private final int ROOMS_PER_SEGMENT = 4;
+	private final int SEGMENTS_PER_DUNGEON = 3;
 	
 	ArrayList<DungeonSegment> segments = new ArrayList<DungeonSegment>();
 	
@@ -29,26 +29,30 @@ public class RandomDungeon extends Dungeon
 		super();
 		
 		this.firstRoom = new Room(this, 2, 2);
-		//this.firstRoom.setTileSet(this.getTileSet(0));
+		this.firstRoom.setTileSet(this.getTileSet(0));
 		this.firstRoom.setRoomLayout(this.getSpecialRoomLayout("first room"));
 		
-		Room currentRoom = this.firstRoom;
+		Room previousRoom = this.firstRoom;
 		for(int i = 0; i < SEGMENTS_PER_DUNGEON; i++)
 		{
 			DungeonSegment segment = new DungeonSegment();
+			segment.setTileSet(this.getTileSet(i));
 			
 			for(int j = 0; j < ROOMS_PER_SEGMENT; j++)
 			{
-				Direction direction = currentRoom.getRandomDirectionForAnotherRoom();
+				Direction direction = previousRoom.getRandomDirectionForAnotherRoom();
 				
 				if(direction != Direction.NONE)
 				{
-					//currentRoom.addArrowTile(direction);
-					currentRoom.setMajorDirection(direction);
-					//Room instantiatedRoom = currentRoom.instantiateRoom(direction);
+					//previousRoom.addArrowTile(direction);
+					previousRoom.setMajorDirection(direction);
+					Room nextRoom = previousRoom.makeRoom(direction);
+					nextRoom.setTileSet(segment.getTileSet());
+					nextRoom.setRoomLayout(this.getRandomRoomLayout());
+					previousRoom.makeDoor(direction);
 					
-					//segment.addMajorRoom(instantiatedRoom);
-					//currentRoom = instantiatedRoom;
+					segment.addMajorRoom(nextRoom);
+					previousRoom = nextRoom;
 				}
 				else
 				{
@@ -60,13 +64,16 @@ public class RandomDungeon extends Dungeon
 		}
 		
 		{
-			Direction direction = currentRoom.getRandomDirectionForAnotherRoom();
+			Direction direction = previousRoom.getRandomDirectionForAnotherRoom();
 			
 			if(direction != Direction.NONE)
 			{
-				//currentRoom.addArrowTile(direction);
-				currentRoom.setMajorDirection(direction);
-				//this.lastRoom = currentRoom.instantiateRoom(direction);
+				//previousRoom.addArrowTile(direction);
+				previousRoom.setMajorDirection(direction);
+				this.lastRoom = previousRoom.makeRoom(direction);
+				this.lastRoom.setTileSet(this.getTileSet(2));
+				this.lastRoom.setRoomLayout(this.getSpecialRoomLayout("last room"));
+				previousRoom.makeDoor(direction);
 			}
 			else
 			{
@@ -74,16 +81,19 @@ public class RandomDungeon extends Dungeon
 			}
 		}
 		
-		for(DungeonSegment dungeonSegment : this.segments)
+		for(DungeonSegment segment : this.segments)
 		{
-			for(Room room : dungeonSegment.getAllMajorRooms())
+			for(Room room : segment.getAllMajorRooms())
 			{
 				Direction direction = room.getRandomDirectionForAnotherRoom();
 				
 				if(direction != Direction.NONE)
 				{
-					//Room instantiatedRoom = room.instantiateRoom(direction);
-					//dungeonSegment.addMinorRoom(instantiatedRoom);
+					Room nextRoom = room.makeRoom(direction);
+					nextRoom.setTileSet(segment.getTileSet());
+					nextRoom.setRoomLayout(this.getRandomRoomLayout());
+					room.makeDoor(direction);
+					segment.addMinorRoom(nextRoom);
 				}
 				else
 				{
@@ -91,7 +101,6 @@ public class RandomDungeon extends Dungeon
 				}
 			}
 			
-			//for(Room room : segment.getAllRooms()) {room.setTileSet(this.getTileSet(?));}
 			//segment.getLastMajorRoom().addDoor(Direction.NORTH);
 			//segment.getRandomMinorRoom().addKey();
 		}

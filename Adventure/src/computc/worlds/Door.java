@@ -42,8 +42,6 @@ public class Door
 			this.ty = alphaRoom.getTileyY() + alphaRoom.getRandomTileyY();
 		}
 		
-		//check that rooms are adjacent?
-		
 		alphaRoom.addDoor(this);
 		omegaRoom.addDoor(this);
 	}
