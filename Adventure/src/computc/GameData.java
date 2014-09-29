@@ -17,11 +17,12 @@ public class GameData
 	
 	public void instantiate() throws SlickException
 	{
+		this.dungeon = null;
 		while(this.dungeon == null)
 		{
 			try
 			{
-				this.dungeon = new FiveRoomDungeon();
+				this.dungeon = new RandomDungeon();
 			}
 			catch(Exception exception)
 			{

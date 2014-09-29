@@ -339,6 +339,16 @@ public class Room
 		}
 	}
 	
+	public int getRandomTileyX()
+	{
+		return Game.random.nextInt(this.getTileyWidth() - 4) + 2;
+	}
+	
+	public int getRandomTileyY()
+	{
+		return Game.random.nextInt(this.getTileyHeight() - 4) + 2;
+	}
+	
 	public Room getRoomToTheNorth()
 	{
 		int rx = this.getRoomyX();

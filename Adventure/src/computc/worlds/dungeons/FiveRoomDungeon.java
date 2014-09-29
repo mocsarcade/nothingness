@@ -17,7 +17,7 @@ public class FiveRoomDungeon extends Dungeon
 		new Room(this, 2, 1);
 		new Room(this, 3, 2);
 		new Room(this, 1, 2);
-		
+
 		this.firstRoom.makeDoor(Direction.NORTH);
 		this.firstRoom.makeDoor(Direction.SOUTH);
 		this.firstRoom.makeDoor(Direction.EAST);
