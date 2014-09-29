@@ -34,7 +34,7 @@ import computc.worlds.Tile;
 public class MainGameState extends BasicGameState
 {
 	public GameData gamedata;
-	public Camera camera;
+	public RoomFollowingCamera camera;
 	
 	private Animation textBox;
 	
@@ -124,6 +124,7 @@ public class MainGameState extends BasicGameState
 		{
 			gravityCoolDown--;
 		}
+		
 	}
 
 	private String greeting = "You've won! Congratulations! Thanks for playing! Enjoy the";
@@ -199,6 +200,11 @@ public class MainGameState extends BasicGameState
 		}
 		if(k == Input.KEY_RIGHT)
 		{
+		}
+		
+		if(k == Input.KEY_E)
+		{
+			this.camera.setEarthQuake(this.gamedata.hero.getDirection());
 		}
 		
 		if(k == Input.KEY_SPACE)

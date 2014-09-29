@@ -128,7 +128,7 @@ public class Chain
 			for(int i = 0; i < bodies.size(); i++)
 				{
 				
-				if(body.getPosition().x > playerBody.getPosition().x + (bodies.size()))
+				if(body.getPosition().x > playerBody.getPosition().x + (bodies.size() - 1))
 					{
 						body.setType(BodyType.KINEMATIC);
 						Vec2 fixedPosition = new Vec2(playerBody.getPosition().x + i, playerBody.getPosition().y);
@@ -136,7 +136,7 @@ public class Chain
 						body.setType(BodyType.DYNAMIC);
 					}
 				
-				if(body.getPosition().x < playerBody.getPosition().x - (bodies.size()))
+				if(body.getPosition().x < playerBody.getPosition().x - (bodies.size() - 1))
 					{
 						body.setType(BodyType.KINEMATIC);
 						Vec2 fixedPosition = new Vec2(playerBody.getPosition().x - i, playerBody.getPosition().y);
@@ -144,7 +144,7 @@ public class Chain
 						body.setType(BodyType.DYNAMIC);
 					}
 				
-				if(body.getPosition().y > playerBody.getPosition().y + (bodies.size()))
+				if(body.getPosition().y > playerBody.getPosition().y + (bodies.size() - 1))
 					{
 						body.setType(BodyType.KINEMATIC);
 						Vec2 fixedPosition = new Vec2(playerBody.getPosition().x, playerBody.getPosition().y + i);
