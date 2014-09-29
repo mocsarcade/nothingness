@@ -297,7 +297,6 @@ public class Hero extends Entity
 		
 		// the update method for the box2d world
 		world.step(1/60f, 8, 3);
-
 	}
 	
 	// movement method

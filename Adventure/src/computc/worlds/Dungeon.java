@@ -27,6 +27,7 @@ import org.jbox2d.dynamics.World;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Image;
 
+import computc.GameData;
 import computc.cameras.Camera;
 import computc.entities.Coin;
 import computc.entities.Enemy;
@@ -44,6 +45,7 @@ public abstract class Dungeon
 	protected Room firstRoom;
 	public Room lastRoom;
 	public OldMan oldman;
+	public GameData gamedata;
 	
 	public LinkedList<Animation> explosions  = new LinkedList<Animation>();
 	
@@ -58,9 +60,10 @@ public abstract class Dungeon
 	private float explodeY;
 	private float enemyHalfWidth = 24;
 	
-	public Dungeon() throws SlickException
+	public Dungeon(GameData gamedata) throws SlickException
 	{
 		this.explosion = new Image("res/explosion.png");
+		this.gamedata = gamedata;
 	}
 
 	public void update(int delta)

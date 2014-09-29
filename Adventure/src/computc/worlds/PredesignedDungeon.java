@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.tiled.TiledMap;
 
+import computc.GameData;
 import computc.cameras.Camera;
 import computc.entities.BigThug;
 import computc.entities.Enemy;
@@ -30,8 +31,9 @@ public class PredesignedDungeon extends Dungeon
 	public Color textColor = Color.white;
 	private boolean nextLevel = false;
 	
-	public PredesignedDungeon() throws SlickException
+	public PredesignedDungeon(GameData gamedata) throws SlickException
 	{
+		super(gamedata);
 		TiledMap tiled = new TiledMap("./res/dungeons/prototype.dungeon.tmx");
 		
 		int ROOMY_WIDTH = 9;

@@ -23,6 +23,7 @@ import computc.Game;
 import computc.cameras.Camera;
 import computc.entities.Coin;
 import computc.entities.Key;
+import computc.entities.Maniac;
 import computc.entities.OldMan;
 import computc.entities.Thug;
 
@@ -101,7 +102,7 @@ public class Room
 					int x = element.getAttribute("x").getIntValue() + (48 / 2);
 					int y = element.getAttribute("y").getIntValue() - (48 / 2);
 					
-					this.dungeon.enemies.add(new Thug(this.dungeon, this, x, y));
+					this.dungeon.enemies.add(new Maniac(this.dungeon, this, x, y));
 				}
 				else if(element.getAttribute("gid").getIntValue() == 5)
 				{

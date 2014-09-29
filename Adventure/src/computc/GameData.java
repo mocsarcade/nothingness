@@ -23,7 +23,7 @@ public class GameData
 		{
 			try
 			{
-				this.dungeon = new RandomZeldaesqueDungeon();
+				this.dungeon = new RandomZeldaesqueDungeon(this);
 			}
 			catch(DungeonException exception)
 			{

@@ -96,6 +96,7 @@ public class MainGameState extends BasicGameState
 			}
 		}
 		
+		//  makes the chain movement less floaty
 		if(input.isKeyDown(Input.KEY_UP))
 		{
 			this.gamedata.hero.getWorld().setGravity(new Vec2(0, 1f));
@@ -125,6 +126,7 @@ public class MainGameState extends BasicGameState
 			gravityCoolDown--;
 		}
 		
+		// sets the camera to peek into adjacent rooms
 		if(this.gamedata.hero.getPeekTimer() > 1000)
 		{
 			this.camera.setPeeking(this.gamedata.hero.getDirection());
