@@ -130,6 +130,8 @@ public class Thug extends Enemy
 				return;
 			}
 		}
+		graphics.draw(this.surroundingArea);
+		System.out.println("drawing "+this.surroundingArea.getCenterX()+","+this.surroundingArea.getCenterY()+","+this.surroundingArea.getRadius());
 		super.render(graphics, camera);
 	}
 }
