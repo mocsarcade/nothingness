@@ -1,15 +1,23 @@
 package computc.entities;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
 
+import computc.cameras.Camera;
 import computc.worlds.Dungeon;
 import computc.worlds.Room;
 
 public abstract class Enemy extends Entity
 {
+	protected int surroundingAreaRadius;
+	protected Circle surroundingArea;
+
 	public Enemy(Dungeon dungeon, Room room, float x, float y)
 	{
 		super(dungeon, room, x, y);
+		//Arbitrarily create a circle in a place. this actual location will be set during first update loop.
+		this.surroundingArea = new Circle(0,0, 50);
 	}
 
 	protected int health;
@@ -36,6 +44,12 @@ public abstract class Enemy extends Entity
 	public boolean isDead()
 	{
 		return dead;
+	}
+	
+	
+	public void render(Graphics graphics, Camera camera)
+	{
+		super.render(graphics, camera);
 	}
 	
 	public int getDamage() 

@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Point;
 
 import computc.cameras.Camera;
@@ -20,7 +21,8 @@ public class Thug extends Enemy
 		super(dungeon, room, x, y);
 		
 		this.dungeon = dungeon;
-		
+		this.surroundingArea = new Circle(0,0, 50);
+
 		this.image = new Image("res/thug.png");
 		
 		this.damage = 1;
@@ -38,7 +40,8 @@ public class Thug extends Enemy
 		getNextPosition(delta);
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
-		
+		this.surroundingArea.setCenterX(this.x);
+		this.surroundingArea.setCenterY(this.y);
 		// if hits wall change direction
 		if(right && dx == 0)
 		{
