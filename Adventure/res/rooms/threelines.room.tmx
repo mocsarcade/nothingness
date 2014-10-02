@@ -12,6 +12,9 @@
  <tileset firstgid="6" name="coin" tilewidth="16" tileheight="16">
   <image source="../coin.png" width="16" height="16"/>
  </tileset>
+ <tileset firstgid="7" name="Maniac" tilewidth="48" tileheight="48">
+  <image source="../Maniac.png" width="48" height="48"/>
+ </tileset>
  <layer name="tiles" width="11" height="9">
   <data>
    <tile gid="1"/>
@@ -116,10 +119,7 @@
   </data>
  </layer>
  <objectgroup name="entities" width="11" height="9">
-  <object gid="4" x="319" y="239"/>
-  <object gid="5" x="149" y="119"/>
-  <object gid="5" x="518" y="503"/>
-  <object gid="5" x="211" y="373"/>
+  <object gid="5" x="213" y="370"/>
   <object gid="6" x="281" y="358"/>
   <object gid="6" x="327" y="359"/>
   <object gid="6" x="391" y="358"/>

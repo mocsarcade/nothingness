@@ -103,7 +103,7 @@ public class Room
 					int x = element.getAttribute("x").getIntValue() + (48 / 2);
 					int y = element.getAttribute("y").getIntValue() - (48 / 2);
 					
-					this.dungeon.enemies.add(new Loafer(this.dungeon, this, x, y));
+					this.dungeon.enemies.add(new Thug(this.dungeon, this, x, y));
 				}
 				else if(element.getAttribute("gid").getIntValue() == 5)
 				{
@@ -116,6 +116,13 @@ public class Room
 					int y = element.getAttribute("y").getIntValue() - (16 / 2);
 					
 					this.dungeon.coins.add(new Coin(this.dungeon, this, x, y));
+				}
+				else if(element.getAttribute("gid").getIntValue() == 7)
+				{
+					int x = element.getAttribute("x").getIntValue() + (16 / 2);
+					int y = element.getAttribute("y").getIntValue() - (16 / 2);
+					
+					this.dungeon.enemies.add(new Maniac(this.dungeon, this, x, y));
 				}
 			}
 		}

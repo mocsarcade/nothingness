@@ -2,6 +2,7 @@ package computc.cameras;
 
 import org.newdawn.slick.Input;
 
+import computc.Direction;
 import computc.entities.Entity;
 import computc.worlds.Room;
 
@@ -75,6 +76,32 @@ public abstract class Camera
 	public void setSpeed(float speed)
 	{
 		this.speed = speed;
+	}
+	
+	public void setEarthQuake(Direction direction)
+	{
+		if(direction == Direction.NORTH)
+		{
+			earthquakeUp = true;
+		}
+		else if(direction == Direction.SOUTH)
+		{
+			earthquakeDown = true;
+		}
+		
+		else if(direction == Direction.EAST)
+		{
+			earthquakeRight = true;
+		}
+		else if(direction == Direction.WEST)
+		{
+			earthquakeLeft = true;
+		}
+		
+		earthquakeCooldown = 50;
+		earthquakeIntensity = 3;
+		
+		earthquake = true;
 	}
 	
 	public abstract void update(Input input, int delta);

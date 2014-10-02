@@ -4,7 +4,9 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import computc.Direction;
 import computc.cameras.Camera;
+import computc.cameras.RoomFollowingCamera;
 import computc.worlds.Dungeon;
 import computc.worlds.Room;
 
@@ -13,8 +15,10 @@ public class Maniac extends Enemy
 	
 	public static boolean hit = false;
 	
-	private float bullRushSpeed;
+	private float bullRushVelocity;
+	private float maxBullRushVelocity;
 	private int bullRushCoolDown;
+	public Direction direction;
 	
 	
 	private boolean bullRush;
@@ -31,7 +35,8 @@ public class Maniac extends Enemy
 		this.acceleration = 0.03f;
 		this.deacceleration = 0.001f;
 		this.maximumVelocity = 0.03f;
-		this.bullRushSpeed = 0.9f;
+		this.bullRushVelocity = 0.5f;
+		this.maxBullRushVelocity = 1.1f;
 		
 		this.health = this.maximumHealth = 5;
 		
@@ -40,13 +45,16 @@ public class Maniac extends Enemy
 		if(a > 0.5)
 			{
 				right = true; 
+				this.direction = Direction.EAST;
 			}
 			else
 			{
-				down = true;
+				down = true; 
+				this.direction = Direction.SOUTH;
 			}
 		
 		bullRush = false;
+		alreadySmashed = false;
 		bullRushCoolDown = 0;
 	}
 	
@@ -105,72 +113,172 @@ public class Maniac extends Enemy
 		{
 			bullRushCoolDown = 0;
 			bullRush = false;
+			alreadySmashed = false;
 		}
 		
-		if(bullRush && dx == 0 || bullRush && dy == 0)
+		
+		
+		if(bullRush && bullRushCoolDown > 0 && bullRushCoolDown < 2000 && dx == 0 || bullRush && bullRushCoolDown > 0 && bullRushCoolDown < 2000 && dy == 0)
 		{
 			smash = true;
 		}
+		else smash = false;
+		
 		
 		if(this.getRoom() == this.dungeon.gamedata.hero.getRoom())
 			{
-				if(this.dungeon.gamedata.hero.getX() > this.x - this.getHalfWidth() && this.dungeon.gamedata.hero.getX() < this.x + this.getHalfWidth())
+				if(up && this.dungeon.gamedata.hero.getX() > this.x - this.getHalfWidth() && this.dungeon.gamedata.hero.getX() < this.x + this.getHalfWidth() && bullRushCoolDown == 0)
 				{
-					this.maximumVelocity = this.bullRushSpeed;
-					bullRush = true;
-					bullRushCoolDown = 1000;
+					if(this.dungeon.gamedata.hero.getY() < this.y - this.getHalfHeight())
+					{
+						bullRush = true;
+						bullRushCoolDown = 2800;
+					}
+				}
+				else if(down && this.dungeon.gamedata.hero.getX() > this.x - this.getHalfWidth() && this.dungeon.gamedata.hero.getX() < this.x + this.getHalfWidth() && bullRushCoolDown == 0)
+				{
+					if(this.dungeon.gamedata.hero.getY() > this.y + this.getHalfHeight())
+					{
+						bullRush = true;
+						bullRushCoolDown = 2800;
+					}
+				}
+				
+				if(left && this.dungeon.gamedata.hero.getY() > this.y - this.getHalfHeight() && this.dungeon.gamedata.hero.getY() < this.y + this.getHalfHeight() && bullRushCoolDown == 0)
+				{
+					if(this.dungeon.gamedata.hero.getX() < this.x - this.getHalfWidth())
+					{
+						bullRush = true;
+						bullRushCoolDown = 2800;
+					}
+				}
+				else if(right && this.dungeon.gamedata.hero.getY() > this.y - this.getHalfHeight() && this.dungeon.gamedata.hero.getY() < this.y + this.getHalfHeight() && bullRushCoolDown == 0)
+				{
+					if(this.dungeon.gamedata.hero.getX() > this.x + this.getHalfWidth())
+					{
+						bullRush = true;
+						bullRushCoolDown = 2800;
+					}
 				}
 			}
 		
 //		System.out.println("the bullRushCooldown is: " + bullRushCoolDown);
+//		System.out.println("the bullrush is" + bullRush);
+//		System.out.println("right is: " + right);
+//		System.out.println("left is: " + left);
+//		System.out.println("up is: " + up);
+//		System.out.println("down is: " + down);
+//		System.out.println("the smash is: " + smash);
 	
 	}
 	
 	private void getNextPosition(int delta) 
 	{
+		if(!bullRush)
+		{
+			if(left)
+			{
+				this.direction = Direction.WEST;
+				dx -= acceleration;
+				if(dx < -maximumVelocity)
+				{
+					dx = -maximumVelocity;
+				}
+				dx *= delta;
+			}
+		
+			else if(right) 
+			{
+				this.direction = Direction.EAST;
+				dx += acceleration;
+				if(dx > maximumVelocity)
+				{
+					dx = maximumVelocity;
+				}
+			
+				dx *= delta;
+			}
+		
+			if(up) 
+			{
+				this.direction = Direction.NORTH;
+				dy -= acceleration;
+				if(dy < -maximumVelocity)
+				{
+					dy = -maximumVelocity;
+				}
+				dy *= delta;
+			}
+			else if(down) 
+			{
+				this.direction = Direction.SOUTH;
+				dy += acceleration;
+			if(dy > maximumVelocity)
+				{
+				dy = maximumVelocity;
+				}
+			dy *= delta;
+			}	
+		}
+		else if(bullRush && bullRushCoolDown < 2000 && bullRushCoolDown > 0)
+			{
+				bullRush(delta);
+			}
+		else if(bullRush && bullRushCoolDown > 2000)
+		{
+			dx = .00001f;
+			dy = .00001f;
+		}
+	}
+	
+	public void bullRush(int delta)
+	{
 		if(left)
 		{
-			dx -= acceleration;
-			if(dx < -maximumVelocity)
+			this.direction = Direction.WEST;
+			dx -= bullRushVelocity;
+			if(dx < -maxBullRushVelocity)
 			{
-				dx = -maximumVelocity;
+				dx = -maxBullRushVelocity;
 			}
 			dx *= delta;
 		}
-		
 		else if(right) 
 		{
-			dx += acceleration;
-			if(dx > maximumVelocity)
+			this.direction = Direction.EAST;
+			dx += bullRushVelocity;
+			if(dx > maxBullRushVelocity)
 			{
-				dx = maximumVelocity;
+				dx = maxBullRushVelocity;
 			}
-			
+		
 			dx *= delta;
 		}
-		
+	
 		if(up) 
 		{
-			dy -= acceleration;
-			if(dy < -maximumVelocity)
+			this.direction = Direction.NORTH;
+			dy -= bullRushVelocity;
+			if(dy < -maxBullRushVelocity)
 			{
-				dy = -maximumVelocity;
+				dy = -maxBullRushVelocity;
 			}
 			dy *= delta;
 		}
 		else if(down) 
 		{
-			dy += acceleration;
-			if(dy > maximumVelocity)
+			this.direction = Direction.SOUTH;
+			dy += bullRushVelocity;
+		if(dy > maxBullRushVelocity)
 			{
-				dy = maximumVelocity;
+			dy = maxBullRushVelocity;
 			}
-			dy *= delta;
+		dy *= delta;
 		}	
 	}
 	
 	public void render(Graphics graphics, Camera camera)
-	{
+	{			
 		if(blinking) 
 		{
 			if(blinkCooldown % 4 == 0) 
@@ -180,6 +288,11 @@ public class Maniac extends Enemy
 		}
 		super.render(graphics, camera);
 		
+		if(smash && !alreadySmashed)
+		{
+			camera.setEarthQuake(this.direction);
+			alreadySmashed = true;
+		}
 	}
 }
 

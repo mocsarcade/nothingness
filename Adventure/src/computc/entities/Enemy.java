@@ -1,7 +1,9 @@
 package computc.entities;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
+import computc.cameras.Camera;
 import computc.worlds.Dungeon;
 import computc.worlds.Room;
 
@@ -28,7 +30,7 @@ public abstract class Enemy extends Entity
     protected boolean attacking;
     
     protected boolean smash;
-	
+	protected boolean alreadySmashed;
 	public boolean isDead()
 	{
 		return dead;
@@ -64,5 +66,17 @@ public abstract class Enemy extends Entity
 	public boolean getSmash()
 	{
 		return smash;
+	}
+	
+	public void render(Graphics graphics, Camera camera)
+	{
+		if(blinking) 
+		{
+			if(blinkCooldown % 4 == 0) 
+			{
+				return;
+			}
+		}
+		super.render(graphics, camera);
 	}
 }

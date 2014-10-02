@@ -168,32 +168,6 @@ public class RoomFollowingCamera extends Camera
 		return this.speed;
 	}
 	
-	public void setEarthQuake(Direction direction)
-	{
-		if(direction == Direction.NORTH)
-		{
-			earthquakeUp = true;
-		}
-		else if(direction == Direction.SOUTH)
-		{
-			earthquakeDown = true;
-		}
-		
-		else if(direction == Direction.EAST)
-		{
-			earthquakeRight = true;
-		}
-		else if(direction == Direction.WEST)
-		{
-			earthquakeLeft = true;
-		}
-		
-		earthquakeCooldown = 50;
-		earthquakeIntensity = 3;
-		
-		earthquake = true;
-	}
-	
 	public void setPeeking(Direction direction)
 	{
 		if(direction == Direction.NORTH)

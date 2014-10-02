@@ -6,6 +6,9 @@
  <tileset firstgid="4" name="thugs" tilewidth="48" tileheight="48">
   <image source="../thug.png" width="48" height="48"/>
  </tileset>
+ <tileset firstgid="7" name="maniac" tilewidth="48" tileheight="48">
+  <image source="../Maniac.png" width="48" height="48"/>
+ </tileset>
  <layer name="tiles" width="11" height="9">
   <data>
    <tile gid="1"/>
@@ -109,5 +112,7 @@
    <tile gid="1"/>
   </data>
  </layer>
- <objectgroup name="entities" width="11" height="9"/>
+ <objectgroup name="entities" width="11" height="9">
+ <object gid="7" x="213" y="370"/>
+ </objectgroup>
 </map>
