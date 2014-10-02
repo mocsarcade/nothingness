@@ -41,7 +41,14 @@ public class TileSubSet
 	
 	public Image getImage(int index)
 	{
-		return this.images.get(index);
+		if(index < this.images.size())
+		{
+			return this.images.get(index);
+		}
+		else
+		{
+			return this.images.get(this.images.size() - 1);
+		}
 	}
 	
 	public Image getRandomImage()

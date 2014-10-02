@@ -28,7 +28,7 @@ public class Room
 	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
 
 	private DungeonSegment dungeonsegment = null;
-	private TileSet tileset = Game.assets.getTileSet("./res/tilesets/rocky.tileset.xml");
+	private TileSet tileset = Game.assets.getTileSet("./res/tilesets/null.tileset.xml");
 	private RoomLayout roomlayout = Game.assets.getRoomLayout("./res/rooms/empty.room.tmx");
 	
 	public boolean hasVisited = false;
@@ -38,7 +38,7 @@ public class Room
 	{
 		this.rx = rx;
 		this.ry = ry;
-
+		
 		this.dungeon = dungeon;
 		this.dungeon.addRoom(this);
 	}

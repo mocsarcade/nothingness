@@ -88,7 +88,6 @@ public abstract class Entity
 	{
 		this.dungeon = dungeon;
 		
-		System.out.println(room.getRoomyX() + " " + tx + "->" + ((room.getTileyX() + tx) * Tile.SIZE));
 		this.x = (room.getRoomyX() * Room.WIDTH) + ((tx + 0.5f) * Tile.SIZE);
 		this.y = (room.getRoomyY() * Room.HEIGHT) + ((ty + 0.5f) * Tile.SIZE);
 	}
