@@ -41,7 +41,6 @@ public class MainGameState extends BasicGameState
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		Key.IMAGE = new Image("./res/key.png");
 		Coin.IMAGE = new Image("./res/coin.png");
 		
 		this.textBox = new Animation(new SpriteSheet(new Image("res/largeTextBox.png"), 585, 100), 100);
@@ -62,8 +61,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.dungeon.update(delta);
 		
 		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
-		this.gamedata.hero.checkPickup(this.gamedata.dungeon.keys);
-		this.gamedata.hero.checkGetCoin();
+		//this.gamedata.hero.checkPickup(this.gamedata.dungeon.keys);
 		
 		if(this.gamedata.hero.isDead())
 		{
@@ -92,7 +90,6 @@ public class MainGameState extends BasicGameState
 	{
 		this.gamedata.dungeon.render(graphics, this.camera);
 		this.gamedata.hero.render(graphics, this.camera);
-		this.gamedata.dungeon.renderKeys(graphics, camera);
 		//this.gamedata.menu.render(graphics, this.camera);
 		
 		/*if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()

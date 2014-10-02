@@ -13,6 +13,7 @@ import computc.Game;
 import computc.cameras.Camera;
 import computc.entities.Coin;
 import computc.entities.Enemy;
+import computc.entities.Entity;
 import computc.entities.Key;
 import computc.entities.OldMan;
 import computc.worlds.rooms.Room;
@@ -24,9 +25,8 @@ import computc.worlds.tiles.TileSet;
 public abstract class Dungeon
 {
 	protected HashMap<String, Room> rooms = new HashMap<String, Room>();
-	protected LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 	public LinkedList<Key> keys = new LinkedList<Key>();
-	public LinkedList<Coin> coins = new LinkedList<Coin>();
+	public LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 	protected Room firstRoom;
 	public Room lastRoom;
 	public OldMan oldman;
@@ -84,11 +84,6 @@ public abstract class Dungeon
 					i--;
 				}
 		}
-		
-		for(Key key : this.keys)
-		{
-			key.update(delta);
-		}
 	}
 
 	public void render(Graphics graphics, Camera camera)
@@ -98,14 +93,14 @@ public abstract class Dungeon
 			room.render(graphics, camera);
 		}
 
-		for(Coin coin : this.coins)
-		{
-			coin.render(graphics, camera);
-		}
-
 		for(Enemy enemy: this.getAllEnemies())
 		{
 			enemy.render(graphics, camera);
+		}
+		
+		for(Key key : this.keys)
+		{
+			key.render(graphics, camera);
 		}
 		
 		if(this.oldman != null)
@@ -114,24 +109,11 @@ public abstract class Dungeon
 		}
 	}
 	
-	public void renderKeys(Graphics graphics, Camera camera)
-	{
-		for(Key key : this.keys)
-		{
-			key.render(graphics, camera);
-		}
-	}
-	
 	public void renderOnMap(Graphics graphics, Camera camera)
 	{
 		for(Room room : this.getAllRooms())
 		{
 			room.renderOnMap(graphics, camera);
-		}
-		
-		for(Enemy enemy: this.getAllEnemies())
-		{
-			enemy.renderOnMap(graphics, camera);
 		}
 	}
 	

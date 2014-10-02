@@ -1,5 +1,6 @@
 package computc.worlds.rooms;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import org.newdawn.slick.Graphics;
@@ -7,6 +8,8 @@ import org.newdawn.slick.Graphics;
 import computc.Direction;
 import computc.Game;
 import computc.cameras.Camera;
+import computc.entities.Key;
+import computc.entities.Thug;
 import computc.worlds.Door;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.dungeons.DungeonSegment;
@@ -66,7 +69,12 @@ public class Room
 			int tx = (int)(Math.floor(Math.abs(dtx)));
 			int ty = (int)(Math.floor(Math.abs(dty)));
 			
-			this.tiles[tx][ty] = new FloorTile(this, tx, ty);
+			this.tiles[tx][ty] = new DoorTile(this, tx, ty);
+		}
+		
+		for(Point point : this.roomlayout.enemies)
+		{
+			this.dungeon.enemies.add(new Thug(this.dungeon, this, point.x, point.y));
 		}
 	}
 	
@@ -491,4 +499,12 @@ public class Room
 	public final static int TILEY_HEIGHT = 9;
 	public final static int WIDTH = Room.TILEY_WIDTH * Tile.SIZE;
 	public final static int HEIGHT = Room.TILEY_HEIGHT * Tile.SIZE;
+
+	public void addKey()
+	{
+		int tx = this.roomlayout.getKeyX();
+		int ty = this.roomlayout.getKeyY();
+		
+		this.dungeon.keys.add(new Key(dungeon, this, tx, ty));
+	}
 }

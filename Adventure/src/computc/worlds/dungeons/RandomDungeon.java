@@ -19,8 +19,8 @@ import computc.worlds.tiles.TileSet;
 
 public class RandomDungeon extends Dungeon
 {
-	private final int ROOMS_PER_SEGMENT = 4;
-	private final int SEGMENTS_PER_DUNGEON = 3;
+	private final int ROOMS_PER_SEGMENT = 3;
+	private final int SEGMENTS_PER_DUNGEON = 2;
 	
 	ArrayList<DungeonSegment> segments = new ArrayList<DungeonSegment>();
 	
@@ -28,15 +28,16 @@ public class RandomDungeon extends Dungeon
 	{
 		super();
 		
+		int tilesetid = 0;
+		
 		this.firstRoom = new Room(this, 2, 2);
-		this.firstRoom.setTileSet(this.getTileSet(0));
+		this.firstRoom.setTileSet(this.getTileSet(tilesetid));
 		this.firstRoom.setRoomLayout(this.getSpecialRoomLayout("first room"));
 		
 		Room previousRoom = this.firstRoom;
 		for(int i = 0; i < SEGMENTS_PER_DUNGEON; i++)
 		{
 			DungeonSegment segment = new DungeonSegment();
-			segment.setTileSet(this.getTileSet(i));
 			
 			for(int j = 0; j < ROOMS_PER_SEGMENT; j++)
 			{
@@ -47,7 +48,7 @@ public class RandomDungeon extends Dungeon
 					//previousRoom.addArrowTile(direction);
 					previousRoom.setMajorDirection(direction);
 					Room nextRoom = previousRoom.makeRoom(direction);
-					nextRoom.setTileSet(segment.getTileSet());
+					nextRoom.setTileSet(this.getTileSet(tilesetid));
 					nextRoom.setRoomLayout(this.getRandomRoomLayout());
 					previousRoom.makeDoor(direction);
 					
@@ -71,7 +72,7 @@ public class RandomDungeon extends Dungeon
 				//previousRoom.addArrowTile(direction);
 				previousRoom.setMajorDirection(direction);
 				this.lastRoom = previousRoom.makeRoom(direction);
-				this.lastRoom.setTileSet(this.getTileSet(2));
+				this.lastRoom.setTileSet(this.getTileSet(tilesetid));
 				this.lastRoom.setRoomLayout(this.getSpecialRoomLayout("last room"));
 				previousRoom.makeDoor(direction);
 			}
@@ -90,14 +91,14 @@ public class RandomDungeon extends Dungeon
 				if(direction != Direction.NONE)
 				{
 					Room nextRoom = room.makeRoom(direction);
-					nextRoom.setTileSet(segment.getTileSet());
+					nextRoom.setTileSet(this.getTileSet(tilesetid));
 					nextRoom.setRoomLayout(this.getRandomRoomLayout());
 					room.makeDoor(direction);
 					segment.addMinorRoom(nextRoom);
 				}
 			}
 			
-			//segment.getLastMajorRoom().addDoor(Direction.NORTH);
+			//segment.getLastMajorRoom().lockDoor(Direction.NORTH);
 			//segment.getRandomMinorRoom().addKey();
 		}
 	}

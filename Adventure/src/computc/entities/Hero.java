@@ -41,6 +41,8 @@ public class Hero extends Entity
 	private Animation sprite, firingArrow, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle;
 
 	public int coinage;
+
+	private boolean hasKey;
 	
 	public Hero(Dungeon dungeon, int tx, int ty) throws SlickException
 	{
@@ -225,6 +227,16 @@ public class Hero extends Entity
 		}
 	
 		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).hasVisited = true;
+		
+		for(Key key : this.dungeon.keys)
+		{
+			if(this.intersects(key))
+			{
+				key.setX(this.x);
+				key.setY(this.y);
+				this.hasKey = true;
+			}
+		}
 		
 		super.update(delta);
 	}
@@ -445,32 +457,6 @@ public class Hero extends Entity
 	public void setSwinging()
 	{
 		swinging = true;
-	}
-	
-	public void checkPickup(LinkedList<Key> keys)
-	{
-		for(Key key : keys)
-		{
-			if(this.intersects(key) && key.pickedup == false)
-			{
-				key.target = this;
-				this.keys.add(key);
-				key.pickedup = true;
-			}
-		}
-	}
-	
-	public void checkGetCoin()
-	{
-		for(Coin coin : this.dungeon.coins)
-		{
-			if(this.intersects(coin) && coin.pickedup == false)
-			{
-				coin.pickedup = true;
-				this.coinage++;
-				System.out.println(coinage);
-			}
-		}
 	}
 	
 	private float speed = 0.25f;
