@@ -41,27 +41,27 @@ public class Loafer extends Enemy
 		Vec2 distanceToPlayer = new Vec2(this.x - dungeon.gamedata.hero.getX(), this.y - dungeon.gamedata.hero.getY());
 		
 		// if hits wall change direction
-//		if(right && dx == 0)
-//		{
-//			right = false;
-//			left = true;
-//		}
-//		else if(left && dx == 0) 
-//		{
-//			right = true;
-//			left = false;
-//		}
-//		
-//		if(up && dy == 0)
-//		{
-//			up = false;
-//			down = true;
-//		}
-//		else if(down && dy == 0) 
-//		{
-//			up = true;
-//			down = false;
-//		}
+		if(right && dx == 0)
+		{
+			right = false;
+			left = true;
+		}
+		else if(left && dx == 0) 
+		{
+			right = true;
+			left = false;
+		}
+		
+		if(up && dy == 0)
+		{
+			up = false;
+			down = true;
+		}
+		else if(down && dy == 0) 
+		{
+			up = true;
+			down = false;
+		}
 		
 		// check blinking
 		if (blinkCooldown > 0)
@@ -74,29 +74,29 @@ public class Loafer extends Enemy
 			blinking = false;
 		}
 		
-		if(this.getRoom() == this.dungeon.gamedata.hero.getRoom())
-		{
-			if(this.x > this.dungeon.gamedata.hero.getX() && distanceToPlayer.x < 100 && distanceToPlayer.y < 100)
-			{
-				right = true;
-				left = false;
-			}
-			if(this.x < this.dungeon.gamedata.hero.getX() && distanceToPlayer.x < 100 && distanceToPlayer.y < 100)
-			{
-				left = true;
-				right = false;
-			}
-			if(this.y > this.dungeon.gamedata.hero.getY() && distanceToPlayer.x < 100 && distanceToPlayer.y < 100)
-			{
-				down = true;
-				up = false;
-			}
-			if(this.y < this.dungeon.gamedata.hero.getY() && distanceToPlayer.x < 100 && distanceToPlayer.y < 100)
-			{
-				up = true;
-				down = false;
-			}
-		}
+//		if(this.getRoom() == this.dungeon.gamedata.hero.getRoom())
+//		{
+//			if(this.x > this.dungeon.gamedata.hero.getX() && distanceToPlayer.x < 100 && distanceToPlayer.y < 100)
+//			{
+//				right = true;
+//				left = false;
+//			}
+//			if(this.x < this.dungeon.gamedata.hero.getX() && distanceToPlayer.x < 100 && distanceToPlayer.y < 100)
+//			{
+//				left = true;
+//				right = false;
+//			}
+//			if(this.y > this.dungeon.gamedata.hero.getY() && distanceToPlayer.x < 100 && distanceToPlayer.y < 100)
+//			{
+//				down = true;
+//				up = false;
+//			}
+//			if(this.y < this.dungeon.gamedata.hero.getY() && distanceToPlayer.x < 100 && distanceToPlayer.y < 100)
+//			{
+//				up = true;
+//				down = false;
+//			}
+//		}
 	
 	}
 	

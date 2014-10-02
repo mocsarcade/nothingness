@@ -426,7 +426,10 @@ public class Hero extends Entity
 				
 					if(!(this.dx == -maximumVelocity))
 					{
+						if(this.getRoomPositionX()  < Tile.SIZE * 2)
+						{
 						peekTimer += delta;
+						}
 					}
 					else peekTimer = 0;
 				}
@@ -438,7 +441,10 @@ public class Hero extends Entity
 				
 					if(!(this.dx == maximumVelocity))
 					{
+						if(this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 2)
+						{
 						peekTimer += delta;
+						}
 					}
 					else peekTimer = 0;
 				}
