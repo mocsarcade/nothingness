@@ -13,7 +13,43 @@ public class WallTile extends Tile
 		
 		TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("wall");
 		
-		this.image = tilesubset.getRandomImage();
+		if(tx == 0 && ty == 0)
+		{
+			this.image = tilesubset.getImage(4);
+		}
+		else if(tx == 0 && ty == 8)
+		{
+			this.image = tilesubset.getImage(6);
+		}
+		else if(tx == 10 && ty == 0)
+		{
+			this.image = tilesubset.getImage(5);
+		}
+		else if(tx == 10 && ty == 8)
+		{
+			this.image = tilesubset.getImage(7);
+		}
+		else if(ty == 0)
+		{
+			this.image = tilesubset.getImage(0);
+		}
+		else if(ty == 8)
+		{
+			this.image = tilesubset.getImage(1);
+		}
+		else if(tx == 10)
+		{
+			this.image = tilesubset.getImage(2);
+		}
+		else if(tx == 0)
+		{
+			this.image = tilesubset.getImage(3);
+		}
+		else
+		{
+			this.image = tilesubset.getImage(8);
+		}
+		
 		this.color = tilesubset.getColor();
 		
 		this.collideable = true;

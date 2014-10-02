@@ -37,9 +37,7 @@ public abstract class Dungeon
 	
 	public Dungeon()
 	{
-		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/rocky.tileset.xml"));
-		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/grassy.tileset.xml"));
-		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/icy.tileset.xml"));
+		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/caleb.tileset.xml"));
 
 		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/arena.room.tmx"));
 		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/blob.room.tmx"));
