@@ -24,22 +24,22 @@ public class Door
 		if(alphaRoom.getRoomyY() > omegaRoom.getRoomyY())
 		{
 			this.ty = alphaRoom.getTileyY() - 0.5f;
-			this.tx = alphaRoom.getTileyX() + alphaRoom.getRandomTileyY();
+			this.tx = alphaRoom.getTileyX() + (alphaRoom.getTileyWidth() / 2);
 		}
 		else if(alphaRoom.getRoomyY() < omegaRoom.getRoomyY())
 		{
 			this.ty = alphaRoom.getTileyY() + alphaRoom.getTileyHeight() - 1 + 0.5f;
-			this.tx = alphaRoom.getTileyX() + alphaRoom.getRandomTileyY();
+			this.tx = alphaRoom.getTileyX() + (alphaRoom.getTileyWidth() / 2);
 		}
 		else if(alphaRoom.getRoomyX() < omegaRoom.getRoomyX())
 		{
 			this.tx = alphaRoom.getTileyX() + alphaRoom.getTileyWidth() - 1 + 0.5f;
-			this.ty = alphaRoom.getTileyY() + alphaRoom.getRandomTileyY();
+			this.ty = alphaRoom.getTileyY() + (alphaRoom.getTileyHeight() / 2);
 		}
 		else if(alphaRoom.getRoomyX() > omegaRoom.getRoomyX())
 		{
 			this.tx = alphaRoom.getTileyX() - 0.5f;
-			this.ty = alphaRoom.getTileyY() + alphaRoom.getRandomTileyY();
+			this.ty = alphaRoom.getTileyY() + (alphaRoom.getTileyHeight() / 2);
 		}
 		
 		alphaRoom.addDoor(this);
