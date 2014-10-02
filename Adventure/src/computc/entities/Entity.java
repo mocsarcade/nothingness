@@ -10,6 +10,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Point;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.geom.Rectangle;
+import org.jbox2d.dynamics.World;
 
 import computc.Direction;
 import computc.cameras.Camera;
@@ -56,6 +57,11 @@ public abstract class Entity
 	protected int currentHealth;
 	protected int maximumHealth;
 	protected int justHit = 0;
+	
+	// box2d status
+	protected World world;
+	protected boolean newRoom = true;
+	protected boolean roomTransition = true;
 	
 	protected boolean facingRight;
 	protected boolean facingDown;
@@ -198,6 +204,16 @@ public abstract class Entity
 		return (int)(Math.floor(this.y / Room.HEIGHT));
 	}
 	
+	public float getLocalX(Camera camera)
+	{
+		return this.getX() - this.getHalfWidth() - camera.getX();
+	}
+	
+	public float getLocalY(Camera camera)
+	{
+		return this.getY() - this.getHalfHeight() - camera.getY();
+	}
+	
 	public float getRoomPositionX()
 	{
 		return this.x - (Room.WIDTH * this.getRoomyX());
@@ -226,6 +242,11 @@ public abstract class Entity
 	public int getHeight()
 	{
 		return this.image.getHeight();
+	}
+	
+	public World getWorld()
+	{
+		return world;
 	}
 	
 	public Room getRoom()
@@ -277,7 +298,7 @@ public abstract class Entity
 		   int leftColumn = (int)(x - getHitboxWidth()/ 2);
 		   int rightColumn = (int)(x + getHitboxWidth()/ 2 - 1);
 		   int topRow = (int)(y - getHitboxHeight()/ 2);
-		   int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1);
+		   int bottomRow = (int)(y + getHitboxHeight()/ 2 - 1); 
 		   
 		   topLeft = dungeon.getTile(leftColumn, topRow);
 		   topRight = dungeon.getTile(rightColumn, topRow);

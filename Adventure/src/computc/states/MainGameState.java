@@ -1,6 +1,12 @@
 
 package computc.states;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
+import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -18,6 +24,7 @@ import computc.Menu;
 import computc.cameras.Camera;
 import computc.cameras.RoomFollowingCamera;
 import computc.entities.Arrow;
+import computc.entities.Chain;
 import computc.entities.Coin;
 import computc.entities.Hero;
 import computc.entities.Key;
@@ -31,8 +38,9 @@ public class MainGameState extends BasicGameState
 	public GameData gamedata;
 	public Camera camera;
 	
-	
 	private Animation textBox;
+	
+	private int gravityCoolDown;
 	
 	public MainGameState(GameData gamedata)
 	{
@@ -80,6 +88,38 @@ public class MainGameState extends BasicGameState
 				counter2 += delta * 0.025;
 			}
 		}*/
+		
+		if(input.isKeyDown(Input.KEY_UP))
+		{
+			this.gamedata.hero.getWorld().setGravity(new Vec2(0, 1f));
+			
+		}
+		else if(input.isKeyDown(Input.KEY_DOWN))
+		{
+			this.gamedata.hero.getWorld().setGravity(new Vec2(0, -1f));
+		}
+
+		if(input.isKeyDown(Input.KEY_LEFT))
+		{
+			this.gamedata.hero.getWorld().setGravity(new Vec2(1f, 0));
+		}
+		else if(input.isKeyDown(Input.KEY_RIGHT))
+		{
+			this.gamedata.hero.getWorld().setGravity(new Vec2(-1f, 0));
+		}
+		
+		Hero hero = this.gamedata.hero;
+		Chain chain = hero.chain;
+		Set<Body> bodies = chain.bodies;
+		for(Body body: bodies)
+		{
+			body.setLinearDamping(10);
+		}
+		
+		if(gravityCoolDown != 0)
+		{
+			gravityCoolDown--;
+		}
 	}
 
 	private String greeting = "You've won! Congratulations! Thanks for playing! Enjoy the";
@@ -117,7 +157,27 @@ public class MainGameState extends BasicGameState
 		{
 			this.gamedata.hero.setSwinging();
 		}
+		
+		// prepare swinging chain attack
+		if(k == Input.KEY_W)
+		{
+			if(Mouse.getX() > this.gamedata.hero.getRoomPositionX())
+			{
+			  Vec2 mousePosition = new Vec2(Mouse.getX() + 10000, Mouse.getY()).mul(0.5f).mul(1/30f);
+			  Vec2 playerPosition = new Vec2(this.gamedata.hero.chain.playerBody.getPosition());
+			  Vec2 force = mousePosition.sub(playerPosition);
+			  this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
+			}
+			else
+			{
+				Vec2 mousePosition = new Vec2(Mouse.getX() - 10000, Mouse.getY()).mul(0.5f).mul(1/30f);
+				Vec2 playerPosition = new Vec2(this.gamedata.hero.chain.playerBody.getPosition());
+				Vec2 force = mousePosition.sub(playerPosition);
+				this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
+			}
+		}
 	}
+	
 	
 	@Override
 	public void keyReleased(int k, char c)
@@ -154,6 +214,28 @@ public class MainGameState extends BasicGameState
 				
 			}
 		}
+		
+		// swinging chain attack
+		if(k == Input.KEY_W)
+		{
+			this.gamedata.hero.setChainAttack();
+			
+			if(Mouse.getX() > this.gamedata.hero.getRoomPositionX())
+			{
+			  Vec2 mousePosition = new Vec2(Mouse.getX() - 1000000, Mouse.getY()).mul(0.5f).mul(1/30f);
+			  Vec2 playerPosition = new Vec2(this.gamedata.hero.chain.playerBody.getPosition());
+			  Vec2 force = mousePosition.sub(playerPosition);
+			  this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
+			}
+			else
+			{
+				Vec2 mousePosition = new Vec2(Mouse.getX() + 1000000, Mouse.getY()).mul(0.5f).mul(1/30f);
+				Vec2 playerPosition = new Vec2(this.gamedata.hero.chain.playerBody.getPosition());
+				Vec2 force = mousePosition.sub(playerPosition);
+				this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
+			}
+		}
+		
 	}
 	
 	public int getID()

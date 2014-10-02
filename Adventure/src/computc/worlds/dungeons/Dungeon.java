@@ -1,9 +1,20 @@
 package computc.worlds.dungeons;
 
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.glPushMatrix;
+import static org.lwjgl.opengl.GL11.glRectd;
+import static org.lwjgl.opengl.GL11.glRotated;
+import static org.lwjgl.opengl.GL11.glTranslatef;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Set;
 
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
@@ -34,6 +45,8 @@ public abstract class Dungeon
 	ArrayList<TileSet> tilesets = new ArrayList<TileSet>();
 	LinkedList<RoomLayout> randomRoomLayouts = new LinkedList<RoomLayout>();
 	HashMap<String, RoomLayout> specialRoomLayouts = new HashMap<String, RoomLayout>();
+	private boolean debug;
+	public boolean chainEnabled = true;
 	
 	public Dungeon()
 	{
@@ -194,4 +207,51 @@ public abstract class Dungeon
 	{
 		return this.specialRoomLayouts.get(type);
 	}
+	
+	// debug mode for viewing box2d physics
+		public void rigidBodyDebugDraw(Set<Body> bodies, Set<Body> staticBodies) 
+		{
+			glClear(GL_COLOR_BUFFER_BIT);
+			
+			for(Body body: bodies)
+			{
+					glPushMatrix();
+					Vec2 bodyPosition = body.getPosition().mul(30);
+					glTranslatef(bodyPosition.x, bodyPosition.y, 0);
+					glRotated(Math.toDegrees(body.getAngle()), 0, 0, 1);
+					glRectd(-0.5f * 30, -0.060f * 30, 0.5f * 30, 0.060f * 30);
+		//			System.out.println("the actual box 2d position of the body is: "  + body.getPosition().x + " , " + body.getPosition().y);
+					glPopMatrix();
+			}
+			
+			for(Body body: staticBodies)
+			{
+					glPushMatrix();
+					Vec2 staticBodyPosition = body.getPosition().mul(30);
+					glTranslatef(staticBodyPosition.x, staticBodyPosition.y, 0);
+					glRectd(-1f * 30, -1f * 30, 1f * 30, 1f * 30);
+					glPopMatrix();
+			}
+		}
+		
+		public boolean toggleDebugDraw()
+		{
+			return debug = !debug;
+		}
+		
+		public boolean getDebugDraw()
+		{
+			return debug;
+		}
+		
+		// if you want turn chain off
+		public void disableChain()
+		{
+			chainEnabled = false;
+		}
+		
+		public void enableChain()
+		{
+			chainEnabled = true;
+		}
 }
