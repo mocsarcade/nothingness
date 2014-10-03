@@ -16,6 +16,7 @@ import org.newdawn.slick.SpriteSheet;
 
 import computc.cameras.Camera;
 import computc.Direction;
+import computc.Game;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.rooms.Room;
 import computc.worlds.tiles.Tile;
@@ -52,13 +53,18 @@ public class Hero extends Entity
 	protected boolean swinging;
 	private int meleeDamage;
 	private int meleeRange;
+	private Image heroLeft;
+	private Image heroRight;
+	private Image heroDown;
+	private Image heroUp;
+	private Image heroIdle;
 	
 	private int peekTimer;
 	
 	private Image swingRight, swingLeft, swingUp, swingDown;
 	
 	// actions 
-	private Animation sprite, firingArrow, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle;
+	private Animation sprite, firingArrow, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle,walkingLeft, walkingDown, walkingUp, walkingRight;
 
 	public int coinage;
 
@@ -72,6 +78,12 @@ public class Hero extends Entity
 		this.acceleration = 0.06f;
 		this.deacceleration = 0.02f;
 		this.maximumVelocity = 3f;
+		
+		this.heroLeft = Game.assets.getImage("res/heroSideViewLeft.png");
+		this.heroRight = Game.assets.getImage("res/heroSideView.png");
+		this.heroUp = Game.assets.getImage("res/heroBack.png");
+		this.heroDown = Game.assets.getImage("res/heroFrontView.png");
+		this.heroIdle = heroDown.getSubImage(1, 1, 63, 63);
 		
 		facingRight = true; 
 		facingDown = true;
@@ -89,11 +101,19 @@ public class Hero extends Entity
 		
 		sprite = idle;
 		
-		this.image = new Image("res/hero.png"); 
+		this.image = new Image("res/blankHero.png"); 
 		this.swingRight = new Image("res/heroMeleeRight.png");
 		this.swingLeft = new Image("res/heroMeleeLeft.png");
 		this.swingUp = new Image("res/heroMeleeUp.png");
 		this.swingDown = new Image("res/heroMeleeDown.png");
+		
+		this.walkingRight = new Animation(new SpriteSheet(heroRight, 63, 63), 300);
+		this.walkingLeft = new Animation(new SpriteSheet(heroLeft, 63, 63), 300);
+		this.walkingUp = new Animation(new SpriteSheet(heroUp, 63, 63), 300);
+		this.walkingDown = new Animation(new SpriteSheet(heroDown, 63, 63), 300);
+		
+
+		
 		
 		this.meleeRight = new Animation(new SpriteSheet(swingRight, 96, 48), 300);
 		this.meleeLeft = new Animation(new SpriteSheet(swingLeft, 96, 48), 300);
@@ -158,6 +178,28 @@ public class Hero extends Entity
 		{
 			meleeSwing = meleeLeft;
 		}
+		
+		if(sprite == walkingUp)
+		{
+			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if(sprite == walkingDown)
+		{
+			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if(sprite == walkingRight)
+		{
+			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if(sprite == walkingLeft)
+		{
+			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if(sprite == idle)
+		{
+			heroIdle.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		
 		
 		
 		if(swinging)
@@ -316,6 +358,7 @@ public class Hero extends Entity
 	{
 		if(input.isKeyDown(Input.KEY_UP)) 
 		{
+			sprite = walkingUp;
 			this.direction = Direction.NORTH;
 			
 			dy -= acceleration * delta;
@@ -326,6 +369,8 @@ public class Hero extends Entity
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
+			sprite = walkingDown;
+			
 			this.direction = Direction.SOUTH;
 			
 			dy += acceleration * delta;
@@ -358,6 +403,7 @@ public class Hero extends Entity
 
 		 if(input.isKeyDown(Input.KEY_RIGHT))
 		{
+			 sprite = walkingRight;
 			 this.direction = Direction.EAST;
 			 
 			dx += acceleration * delta;
@@ -400,6 +446,7 @@ public class Hero extends Entity
 		
 			if(input.isKeyDown(Input.KEY_UP))
 				{
+				sprite = walkingUp;
 				this.direction = Direction.NORTH;
 				facingDown = false;
 				
@@ -415,6 +462,7 @@ public class Hero extends Entity
 				}
 			else if(input.isKeyDown(Input.KEY_DOWN))
 				{
+				sprite = walkingDown;
 				this.direction = Direction.SOUTH;
 				facingDown = true;
 //				this.y += step;
@@ -432,6 +480,7 @@ public class Hero extends Entity
 		
 			if(input.isKeyDown(Input.KEY_LEFT))
 				{
+				sprite = walkingLeft;
 				this.direction = Direction.WEST;
 				facingRight = false;
 //				this.x -= step;
@@ -447,6 +496,7 @@ public class Hero extends Entity
 				}
 			else if(input.isKeyDown(Input.KEY_RIGHT))
 				{
+				sprite = walkingRight;
 				this.direction = Direction.EAST;
 				facingRight = true;
 //				this.x += step;
