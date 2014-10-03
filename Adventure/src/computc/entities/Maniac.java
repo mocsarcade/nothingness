@@ -7,8 +7,8 @@ import org.newdawn.slick.SlickException;
 import computc.Direction;
 import computc.cameras.Camera;
 import computc.cameras.RoomFollowingCamera;
-import computc.worlds.Dungeon;
-import computc.worlds.Room;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
 
 public class Maniac extends Enemy
 {
@@ -23,7 +23,7 @@ public class Maniac extends Enemy
 	
 	private boolean bullRush;
 	
-	public Maniac(Dungeon dungeon, Room room, float x, float y) throws SlickException 
+	public Maniac(Dungeon dungeon, Room room, int x, int  y) throws SlickException 
 	{
 		super(dungeon, room, x, y);
 		

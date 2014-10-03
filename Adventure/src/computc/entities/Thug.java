@@ -7,21 +7,24 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Point;
 
+import computc.Game;
 import computc.cameras.Camera;
-import computc.worlds.Dungeon;
-import computc.worlds.Room;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
 
 public class Thug extends Enemy	
 {
 	public static boolean hit = false;
 	
-	public Thug(Dungeon dungeon, Room room, float x, float y) throws SlickException 
+	public Thug(Dungeon dungeon, Room room, int tx, int ty)
 	{
-		super(dungeon, room, x, y);
+		super(dungeon, room, tx, ty);
+		//System.out.println(room.getTileyX() + "->" + x);
+		//System.out.println(this.getTileyX());
 		
 		this.dungeon = dungeon;
 		
-		this.image = new Image("res/thug.png");
+		this.image = Game.assets.getImage("res/thug.png");
 		
 		this.damage = 1;
 		this.acceleration = 0.03f;

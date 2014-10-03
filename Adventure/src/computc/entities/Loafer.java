@@ -6,15 +6,15 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import computc.cameras.Camera;
-import computc.worlds.Dungeon;
-import computc.worlds.Room;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
 
 public class Loafer extends Enemy
 {
 	
 	public static boolean hit = false;
 	
-	public Loafer(Dungeon dungeon, Room room, float x, float y) throws SlickException 
+	public Loafer(Dungeon dungeon, Room room, int x, int y) throws SlickException 
 	{
 		super(dungeon, room, x, y);
 		

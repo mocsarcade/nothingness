@@ -4,7 +4,7 @@ import org.newdawn.slick.Input;
 
 import computc.Direction;
 import computc.entities.Entity;
-import computc.worlds.Room;
+import computc.worlds.rooms.Room;
 
 public abstract class Camera
 {

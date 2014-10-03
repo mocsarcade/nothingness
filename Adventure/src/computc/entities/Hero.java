@@ -16,9 +16,9 @@ import org.newdawn.slick.SpriteSheet;
 
 import computc.cameras.Camera;
 import computc.Direction;
-import computc.worlds.Dungeon;
-import computc.worlds.Room;
-import computc.worlds.Tile;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
+import computc.worlds.tiles.Tile;
 
 public class Hero extends Entity
 {
@@ -61,6 +61,8 @@ public class Hero extends Entity
 	private Animation sprite, firingArrow, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle;
 
 	public int coinage;
+
+	private boolean hasKey;
 	
 	public Hero(Dungeon dungeon, int tx, int ty) throws SlickException
 	{
@@ -108,9 +110,9 @@ public class Hero extends Entity
 				
 		if(this.dungeon.chainEnabled)
 		{
-		this.chain = new Chain(this.world, this);
-		this.chain.playerBody.setTransform(box2dPlayerPosition, 0);
-		this.ball = new ChainEnd(this.dungeon, this.getTileyX(), this.getTileyY(), this.direction, this.chain, this);
+			this.chain = new Chain(this.world, this);
+			this.chain.playerBody.setTransform(box2dPlayerPosition, 0);
+			this.ball = new ChainEnd(this.dungeon, this.getTileyX(), this.getTileyY(), this.direction, this.chain, this);
 		}
 	}
 	
@@ -129,8 +131,8 @@ public class Hero extends Entity
 		// draw chain
 		if(this.dungeon.chainEnabled)
 		{
-		this.chain.render(graphics, camera);
-		ironBall.draw(this.chain.lastLinkBody.getPosition().x * 30, (this.chain.lastLinkBody.getPosition().y * 30));
+			this.chain.render(graphics, camera);
+			ironBall.draw(this.chain.lastLinkBody.getPosition().x * 30, (this.chain.lastLinkBody.getPosition().y * 30));
 		}
 		
 		// draw arrows
@@ -291,7 +293,17 @@ public class Hero extends Entity
 			if(this.direction == Direction.WEST) facingRight = false;
 		}
 	
-		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).visited = true;
+		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).hasVisited = true;
+		
+		for(Key key : this.dungeon.keys)
+		{
+			if(this.intersects(key))
+			{
+				key.setX(this.x);
+				key.setY(this.y);
+				this.hasKey = true;
+			}
+		}
 		
 		super.update(delta);
 		
@@ -592,7 +604,7 @@ public class Hero extends Entity
 	
 	public void checkPickup(LinkedList<Key> keys)
 	{
-		for(Key key : keys)
+		/*for(Key key : keys)
 		{
 			if(this.intersects(key) && key.pickedup == false)
 			{
@@ -600,12 +612,12 @@ public class Hero extends Entity
 				this.keys.add(key);
 				key.pickedup = true;
 			}
-		}
+		}*/
 	}
 	
 	public void checkGetCoin()
 	{
-		for(Coin coin : this.dungeon.coins)
+		/*for(Coin coin : this.dungeon.coins)
 		{
 			if(this.intersects(coin) && coin.pickedup == false)
 			{
@@ -613,7 +625,7 @@ public class Hero extends Entity
 				this.coinage++;
 				System.out.println(coinage);
 			}
-		}
+		}*/
 	}
 	
 	private float speed = 0.25f;

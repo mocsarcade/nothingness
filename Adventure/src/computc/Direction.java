@@ -6,33 +6,31 @@ public enum Direction
 {
 	NORTH, SOUTH, EAST, WEST, NONE;
 	
-	public static Direction getRandom()
+	public static Direction getRandomDirection()
 	{
 		Direction[] directions = Direction.values();
-		return directions[Game.randomness.nextInt(directions.length)];
+		return directions[Game.random.nextInt(directions.length)];
 	}
 
-	public static Direction getOpposite(Direction direction)
+	public static Direction getOppositeDirection(Direction direction)
 	{
 		if(direction == NORTH)
 		{
 			return SOUTH;
 		}
-		else if(direction == SOUTH)
+		if(direction == SOUTH)
 		{
 			return NORTH;
 		}
-		else if(direction == EAST)
+		if(direction == EAST)
 		{
 			return WEST;
 		}
-		else if(direction == WEST)
+		if(direction == WEST)
 		{
 			return EAST;
 		}
-		else
-		{
-			return NONE;
-		}
+		
+		return NONE;
 	}
 }
