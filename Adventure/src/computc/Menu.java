@@ -84,6 +84,13 @@ public class Menu
 					graphics.setColor(Color.darkGray);
 					graphics.fillRoundRect(x, y, UNIT, UNIT, 3);
 				}
+				
+				if(rx == this.dungeon.lastRoom.getRoomyX()
+				&& ry == this.dungeon.lastRoom.getRoomyY())
+				{
+					graphics.setColor(new Color(0, 0, this.dungeon.lastRoom.blueness));
+					graphics.fillOval(x + (UNIT / 2) - (MARKER / 2), y + (UNIT / 2) - (MARKER / 2), MARKER, MARKER);
+				}
 			}
 		}
 		

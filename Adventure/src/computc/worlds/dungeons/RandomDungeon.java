@@ -76,6 +76,8 @@ public class RandomDungeon extends Dungeon
 				this.lastRoom.setTileSet(this.getTileSet(tilesetid));
 				this.lastRoom.setRoomLayout(this.getSpecialRoomLayout("last room"));
 				previousRoom.makeDoor(direction);
+				
+				this.oldman = new OldMan(this, this.lastRoom, 5, 3);
 			}
 			else
 			{

@@ -76,7 +76,7 @@ public class MainGameState extends BasicGameState
 			this.gamedata.instantiate();
 		}
 		
-		/*if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
+		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
 		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
 		{
 			if((int)(counter) < greeting.length())
@@ -87,7 +87,7 @@ public class MainGameState extends BasicGameState
 			{
 				counter2 += delta * 0.025;
 			}
-		}*/
+		}
 		
 		//  makes the chain movement less floaty
 		if(input.isKeyDown(Input.KEY_UP))
@@ -126,8 +126,8 @@ public class MainGameState extends BasicGameState
 		}
 	}
 
-	private String greeting = "You've won! Congratulations! Thanks for playing! Enjoy the";
-	private String greeting2 = "donuts, and join us at our next party! Your score was ";
+	private String greeting = "You made it to the end! I hope you enjoyed the game; we've";
+	private String greeting2 = "worked very hard on it. Follow us at mocsarcade.tumblr.com!";
 	private float counter, counter2;
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
@@ -137,7 +137,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.menu.render(graphics, camera);
 		//this.gamedata.menu.render(graphics, this.camera);
 		
-		/*if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
+		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
 		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
 		{
 			textBox.draw(Room.WIDTH/11, Room.HEIGHT/11);
@@ -148,11 +148,11 @@ public class MainGameState extends BasicGameState
 			int xCoord2 = (int) (Room.WIDTH/11 + 12);
 			int yCoord2 = (int) (Room.HEIGHT/11 + 32);
 			
-			String greeting2temp = greeting2 + this.gamedata.hero.coinage + ".";
+			String greeting2temp = greeting2;
 			graphics.setColor(Color.white);
 			graphics.drawString(greeting.substring(0, (int)(Math.min(counter, greeting.length()))), xCoord, yCoord);
 			graphics.drawString(greeting2temp.substring(0, (int)(Math.min(counter2, greeting2temp.length()))), xCoord2, yCoord2);
-		}*/
+		}
 	}
 	
 	@Override
