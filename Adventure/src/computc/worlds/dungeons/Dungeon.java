@@ -42,7 +42,7 @@ public abstract class Dungeon
 	protected HashMap<String, Room> rooms = new HashMap<String, Room>();
 	public LinkedList<Key> keys = new LinkedList<Key>();
 	public LinkedList<Enemy> enemies = new LinkedList<Enemy>();
-	protected Room firstRoom;
+	public Room firstRoom;
 	public Room lastRoom;
 	public OldMan oldman;
 	public GameData gamedata;
