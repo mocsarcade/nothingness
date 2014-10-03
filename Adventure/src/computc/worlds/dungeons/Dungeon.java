@@ -18,8 +18,10 @@ import org.jbox2d.dynamics.Body;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.SpriteSheet;
 
 import computc.GameData;
 import computc.Game;
@@ -50,7 +52,11 @@ public abstract class Dungeon
 	HashMap<String, RoomLayout> specialRoomLayouts = new HashMap<String, RoomLayout>();
 	private boolean debug;
 	public boolean chainEnabled = true;
+	public LinkedList<Animation> explosions = new LinkedList<Animation>();
 	private Image explosion;
+	private float explodeX;
+	private float explodeY;
+	private float enemyHalfWidth = 24;
 
 	public Dungeon(GameData gamedata) 
 	{
@@ -101,6 +107,9 @@ public abstract class Dungeon
 				if(e.isDead())
 				{
 					enemies.remove(i);
+					this.explodeX = e.getX();
+					this.explodeY = e.getY();
+					explosions.add(new Animation(new SpriteSheet(explosion, 30, 30), 200));
 					i--;
 				}
 		}
@@ -126,6 +135,20 @@ public abstract class Dungeon
 		if(this.oldman != null)
 		{
 			this.oldman.render(graphics, camera);
+		}
+		
+		for(int i = 0; i < explosions.size(); i++)
+		{
+			Animation explode = explosions.get(i);
+			
+			explode.draw(explodeX - enemyHalfWidth - camera.getX(), explodeY - enemyHalfWidth - camera.getY());
+			
+			explode.setLooping(false);
+			
+				if(explode.isStopped())
+				{
+				explosions.remove(i);
+				}
 		}
 	}
 	
