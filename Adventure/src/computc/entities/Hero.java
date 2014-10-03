@@ -53,18 +53,15 @@ public class Hero extends Entity
 	protected boolean swinging;
 	private int meleeDamage;
 	private int meleeRange;
-	private Image heroLeft;
-	private Image heroRight;
-	private Image heroDown;
-	private Image heroUp;
-	private Image heroIdle;
+	private Image heroLeft, heroRight, heroDown, heroUp, heroIdle;
+
 	
 	private int peekTimer;
 	
 	private Image swingRight, swingLeft, swingUp, swingDown;
 	
 	// actions 
-	private Animation sprite, firingArrow, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle,walkingLeft, walkingDown, walkingUp, walkingRight;
+	private Animation sprite, firingArrow, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle, idleLeft, idleRight, idleUp, walkingLeft, walkingDown, walkingUp, walkingRight;
 
 	public int coinage;
 
@@ -84,7 +81,7 @@ public class Hero extends Entity
 		this.heroUp = Game.assets.getImage("res/heroBack.png");
 		this.heroDown = Game.assets.getImage("res/heroFrontView.png");
 		this.heroIdle = heroDown.getSubImage(1, 1, 63, 63);
-		
+
 		facingRight = true; 
 		facingDown = true;
 		
@@ -356,6 +353,7 @@ public class Hero extends Entity
 	// movement method
 	private void getNextPosition(Input input, int delta)
 	{
+	
 		if(input.isKeyDown(Input.KEY_UP)) 
 		{
 			sprite = walkingUp;

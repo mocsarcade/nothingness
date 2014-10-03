@@ -63,7 +63,7 @@ public abstract class Dungeon
 		this.explosion = Game.assets.getImage("res/explosion.png");
 		this.gamedata = gamedata;
 		
-		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/stoney.tileset.xml"));
+		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/dirty.tileset.xml"));
 		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/snowy.tileset.xml"));
 		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/dirty.tileset.xml"));
 		
