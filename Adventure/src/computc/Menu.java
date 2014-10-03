@@ -88,7 +88,7 @@ public class Menu
 				if(rx == this.dungeon.lastRoom.getRoomyX()
 				&& ry == this.dungeon.lastRoom.getRoomyY())
 				{
-					graphics.setColor(Color.blue);
+					graphics.setColor(new Color(0, 0, this.dungeon.lastRoom.blueness));
 					graphics.fillOval(x + (UNIT / 2) - (MARKER / 2), y + (UNIT / 2) - (MARKER / 2), MARKER, MARKER);
 				}
 			}

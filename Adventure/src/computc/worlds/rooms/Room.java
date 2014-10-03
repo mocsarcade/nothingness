@@ -100,7 +100,12 @@ public class Room
 				this.getTile(tx, ty).render(graphics, camera);
 			}
 		}
+		
+		blueness += 10;
+		if(blueness > 255) {blueness = 50;}
 	}
+	
+	public int blueness = 50;
 	
 	public void renderOnMap(Graphics graphics, Camera camera)
 	{
@@ -117,13 +122,16 @@ public class Room
 		
 		if(this == this.dungeon.lastRoom)
 		{
-			final int UNIT = Tile.SIZE / 8;
+			blueness += 10;
+			if(blueness > 255) {blueness = 50;}
+			
+			final int UNIT = Tile.SIZE / 2;
 			
 			int x = ((this.getX() + (this.getWidth() / 2)) / 8) - camera.getX() - (UNIT / 2);
 			int y = ((this.getY() + (this.getHeight() / 2)) / 8) - camera.getY() - (UNIT / 2);
 			
-			graphics.setColor(Color.blue);
-			graphics.fillRect(x, y, UNIT, UNIT);
+			graphics.setColor(new Color(0, 0, blueness));
+			graphics.fillRoundRect(x, y, UNIT, UNIT, 5);
 		}
 	}
 	
