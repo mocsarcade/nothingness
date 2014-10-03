@@ -3,6 +3,7 @@ package computc.worlds.rooms;
 import java.awt.Point;
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 
 import computc.Direction;
@@ -99,7 +100,12 @@ public class Room
 				this.getTile(tx, ty).render(graphics, camera);
 			}
 		}
+		
+		blueness += 10;
+		if(blueness > 255) {blueness = 50;}
 	}
+	
+	public int blueness = 50;
 	
 	public void renderOnMap(Graphics graphics, Camera camera)
 	{
@@ -107,8 +113,25 @@ public class Room
 		{
 			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
-				this.getTile(tx, ty).renderOnMap(graphics, camera);
+				if(this.hasVisited)
+				{
+					this.getTile(tx, ty).renderOnMap(graphics, camera);
+				}
 			}
+		}
+		
+		if(this == this.dungeon.lastRoom)
+		{
+			blueness += 10;
+			if(blueness > 255) {blueness = 50;}
+			
+			final int UNIT = Tile.SIZE / 2;
+			
+			int x = ((this.getX() + (this.getWidth() / 2)) / 8) - camera.getX() - (UNIT / 2);
+			int y = ((this.getY() + (this.getHeight() / 2)) / 8) - camera.getY() - (UNIT / 2);
+			
+			graphics.setColor(new Color(0, 0, blueness));
+			graphics.fillRoundRect(x, y, UNIT, UNIT, 5);
 		}
 	}
 	

@@ -6,6 +6,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
+import computc.Game;
 import computc.cameras.Camera;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.rooms.Room;
@@ -15,11 +16,11 @@ public class OldMan extends Entity
 {
 	private Animation animation;
 	
-	public OldMan(Dungeon dungeon, Room room, float x, float y) throws SlickException
+	public OldMan(Dungeon dungeon, Room room, int x, int y)
 	{
 		super(dungeon, room, x, y);
 		
-		this.image = new Image("res/ancient.png").getSubImage(1, 1, 240, 104);
+		this.image = Game.assets.getImage("res/ancient.png").getSubImage(1, 1, 240, 104);
 		this.animation =  new Animation(new SpriteSheet(this.image, 60, 104), 300);
 	}
 	
