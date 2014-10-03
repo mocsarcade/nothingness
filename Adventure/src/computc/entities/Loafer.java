@@ -16,8 +16,8 @@ public class Loafer extends Enemy
 	public static boolean hit = false;
 	
 	public boolean angry;
-	private int mood;
 	private int pursuitCooldown;
+	private int stuckCoolDown;
 	
 	public Loafer(Dungeon dungeon, Room room, int x, int y)
 	{
@@ -32,9 +32,10 @@ public class Loafer extends Enemy
 		this.deacceleration = 0.001f;
 		this.maximumVelocity = 0.03f;
 		
-		this.health = this.maximumHealth = 5;
+		this.health = this.maximumHealth = 8;
 		
 		right = true;
+		stuckCoolDown = 0;
 		mood = 1;
 	}
 	
@@ -73,8 +74,12 @@ public class Loafer extends Enemy
 			}
 			break;
 			
-		case 2: 
+		case 2: // this is when the Loafer is in pursuit
 			
+			this.acceleration = .1f;
+			this.maximumVelocity = .1f;
+			if(this.getRoom() == this.dungeon.gamedata.hero.getRoom())
+			{
 				if(this.x < this.dungeon.gamedata.hero.getX())
 				{
 					dx = .0001f; dy = .0001f;
@@ -100,8 +105,95 @@ public class Loafer extends Enemy
 					up = true;
 					down = false;
 				}
+			}
+			else
+			{
+				if(this.dungeon.gamedata.hero.getRoom().getX() == this.getRoom().getX() - Room.WIDTH)
+				{
+					dx = .0001f; dy = .0001f;
+					left = true;
+					right = false;
+					
+					if(this.getRoomPositionY() < Room.HEIGHT/2)
+					{
+						dx = .0001f; dy = .0001f;
+						down = true;
+						up = false;
+					}
+					else if(this.getRoomPositionY() > Room.HEIGHT/2)
+					{
+						dx = .0001f; dy = .0001f;
+						up = true;
+						down = false;
+					}
+				}
+				
+				if(this.dungeon.gamedata.hero.getRoom().getX() == this.getRoom().getX() + Room.WIDTH)
+				{
+					dx = .0001f; dy = .0001f;
+					right = true;
+					left = false;
+					
+					if(this.getRoomPositionY() < Room.HEIGHT/2)
+					{
+						dx = .0001f; dy = .0001f;
+						down = true;
+						up = false;
+					}
+					else if(this.getRoomPositionY() > Room.HEIGHT/2)
+					{
+						dx = .0001f; dy = .0001f;
+						up = true;
+						down = false;
+					}
+				}
+				
+				if(this.dungeon.gamedata.hero.getRoom().getY() == this.getRoom().getY() + Room.HEIGHT)
+				{
+					dx = .0001f; dy = .0001f;
+					down = true;
+					up = false;
+					
+					if(this.getRoomPositionX() < Room.WIDTH/2)
+					{
+						dx = .0001f; dy = .0001f;
+						right = true;
+						left = false;
+					}
+					else if(this.getRoomPositionX() > Room.WIDTH/2)
+					{
+						dx = .0001f; dy = .0001f;
+						left = true;
+						right = false;
+					}
+				}
+				
+				if(this.dungeon.gamedata.hero.getRoom().getY() == this.getRoom().getY() - Room.HEIGHT)
+				{
+					dx = .0001f; dy = .0001f;
+					up = true;
+					down = false;
+					
+					if(this.getRoomPositionX() < Room.WIDTH/2)
+					{
+						dx = .0001f; dy = .0001f;
+						right = true;
+						left = false;
+					}
+					else if(this.getRoomPositionX() > Room.WIDTH/2)
+					{
+						dx = .0001f; dy = .0001f;
+						left = true;
+						right = false;
+					}
+				}
+			}
 			
 			break;
+			
+		case 3:
+			 System.out.println("the loafer is stuck");
+			 break;
 		}
 		
 		
@@ -120,7 +212,7 @@ public class Loafer extends Enemy
 		if(blinking)
 		{
 			mood = 2;
-		}	
+		}
 		
 	}
 	

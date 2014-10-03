@@ -76,7 +76,7 @@ public class Hero extends Entity
 		facingRight = true; 
 		facingDown = true;
 		
-		this.arrowCount = this.maxArrows = 300;
+		this.arrowCount = this.maxArrows = 30;
 		arrowDamage = 2;
 		arrows = new ArrayList<Arrow>();
 		
@@ -535,6 +535,7 @@ public class Hero extends Entity
 			{
 				hit(e.getDamage());
 				e.maximumVelocity = .3f;
+				e.mood = 2;
 			}
 			
 			for(int j = 0; j < arrows.size(); j++) 

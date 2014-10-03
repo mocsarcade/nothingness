@@ -81,6 +81,11 @@ public class Room
 		
 		for(Point point : this.roomlayout.maniacs)
 		{
+			this.dungeon.enemies.add(new Maniac(this.dungeon, this, point.x, point.y));
+		}
+		
+		for(Point point : this.roomlayout.loafers)
+		{
 			this.dungeon.enemies.add(new Loafer(this.dungeon, this, point.x, point.y));
 		}
 	}
