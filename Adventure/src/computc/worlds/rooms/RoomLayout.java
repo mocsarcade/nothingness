@@ -14,7 +14,8 @@ import org.jdom2.DataConversionException;
 public class RoomLayout
 {
 	private int[][] tileGIDs = new int[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
-	public ArrayList<Point> enemies = new ArrayList<Point>();
+	public ArrayList<Point> thugs = new ArrayList<Point>();
+	public ArrayList<Point> maniacs = new ArrayList<Point>();
 	
 	public RoomLayout(String roomSource) throws IOException, JDOMException
 	{
@@ -49,7 +50,8 @@ public class RoomLayout
 					{
 						Element tileElement = tileElements.get(ty * Room.TILEY_WIDTH + tx);
 						int gid = tileElement.getAttribute("gid").getIntValue();
-						if(gid == 3) this.enemies.add(new Point(tx, ty));
+						if(gid == 3) this.thugs.add(new Point(tx, ty));
+						if(gid == 7) this.maniacs.add(new Point(tx, ty));
 					}
 				}
 			}

@@ -5,6 +5,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
+import computc.Game;
 import computc.cameras.Camera;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.rooms.Room;
@@ -14,13 +15,17 @@ public class Loafer extends Enemy
 	
 	public static boolean hit = false;
 	
-	public Loafer(Dungeon dungeon, Room room, int x, int y) throws SlickException 
+	public boolean angry;
+	private int mood;
+	private int pursuitCooldown;
+	
+	public Loafer(Dungeon dungeon, Room room, int x, int y)
 	{
 		super(dungeon, room, x, y);
 		
 		this.dungeon = dungeon;
 		
-		this.image = new Image("res/Loafer.png");
+		this.image = Game.assets.getImage("res/Loafer.png");
 		
 		this.damage = 1;
 		this.acceleration = 0.03f;
@@ -29,7 +34,8 @@ public class Loafer extends Enemy
 		
 		this.health = this.maximumHealth = 5;
 		
-		right = true; down = true;
+		right = true;
+		mood = 1;
 	}
 	
 	public void update(int delta)
@@ -40,28 +46,65 @@ public class Loafer extends Enemy
 		
 		Vec2 distanceToPlayer = new Vec2(this.x - dungeon.gamedata.hero.getX(), this.y - dungeon.gamedata.hero.getY());
 		
-		// if hits wall change direction
-		if(right && dx == 0)
+		switch(mood)
 		{
-			right = false;
-			left = true;
-		}
-		else if(left && dx == 0) 
-		{
-			right = true;
-			left = false;
+		case 1:
+			// if hits wall change direction
+			if(right && dx == 0)
+			{
+				right = false;
+				left = true;
+			}
+			else if(left && dx == 0) 
+			{
+				right = true;
+				left = false;
+			}
+			
+			if(up && dy == 0)
+			{
+				up = false;
+				down = true;
+			}
+			else if(down && dy == 0) 
+			{
+				up = true;
+				down = false;
+			}
+			break;
+			
+		case 2: 
+			
+				if(this.x < this.dungeon.gamedata.hero.getX())
+				{
+					dx = .0001f; dy = .0001f;
+					right = true;
+					left = false;
+				}
+				else if (this.x > this.dungeon.gamedata.hero.getX())
+				{
+					dx = .0001f; dy = .0001f;
+					left = true;
+					right = false;
+				}
+		
+				if(this.y < this.dungeon.gamedata.hero.getY())
+				{
+					dx = .0001f; dy = .0001f;
+					down = true;
+					up = false;
+				}
+				else if(this.y > this.dungeon.gamedata.hero.getY())
+				{
+					dx = .0001f; dy = .0001f;
+					up = true;
+					down = false;
+				}
+			
+			break;
 		}
 		
-		if(up && dy == 0)
-		{
-			up = false;
-			down = true;
-		}
-		else if(down && dy == 0) 
-		{
-			up = true;
-			down = false;
-		}
+		
 		
 		// check blinking
 		if (blinkCooldown > 0)
@@ -74,30 +117,11 @@ public class Loafer extends Enemy
 			blinking = false;
 		}
 		
-//		if(this.getRoom() == this.dungeon.gamedata.hero.getRoom())
-//		{
-//			if(this.x > this.dungeon.gamedata.hero.getX() && distanceToPlayer.x < 100 && distanceToPlayer.y < 100)
-//			{
-//				right = true;
-//				left = false;
-//			}
-//			if(this.x < this.dungeon.gamedata.hero.getX() && distanceToPlayer.x < 100 && distanceToPlayer.y < 100)
-//			{
-//				left = true;
-//				right = false;
-//			}
-//			if(this.y > this.dungeon.gamedata.hero.getY() && distanceToPlayer.x < 100 && distanceToPlayer.y < 100)
-//			{
-//				down = true;
-//				up = false;
-//			}
-//			if(this.y < this.dungeon.gamedata.hero.getY() && distanceToPlayer.x < 100 && distanceToPlayer.y < 100)
-//			{
-//				up = true;
-//				down = false;
-//			}
-//		}
-	
+		if(blinking)
+		{
+			mood = 2;
+		}	
+		
 	}
 	
 	private void getNextPosition(int delta) 
