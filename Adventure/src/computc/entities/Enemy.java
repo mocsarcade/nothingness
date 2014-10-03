@@ -2,12 +2,12 @@ package computc.entities;
 
 import org.newdawn.slick.SlickException;
 
-import computc.worlds.Dungeon;
-import computc.worlds.Room;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
 
 public abstract class Enemy extends Entity
 {
-	public Enemy(Dungeon dungeon, Room room, float x, float y)
+	public Enemy(Dungeon dungeon, Room room, int x, int y)
 	{
 		super(dungeon, room, x, y);
 	}

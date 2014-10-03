@@ -1,6 +1,9 @@
 
 package computc.states;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.lwjgl.input.Mouse;
@@ -21,15 +24,14 @@ import computc.Menu;
 import computc.cameras.Camera;
 import computc.cameras.RoomFollowingCamera;
 import computc.entities.Arrow;
+import computc.entities.Chain;
 import computc.entities.Coin;
 import computc.entities.Hero;
 import computc.entities.Key;
 import computc.entities.OldMan;
-import computc.worlds.Dungeon;
-import computc.worlds.PredesignedDungeon;
-import computc.worlds.RandomRoguelikeDungeon;
-import computc.worlds.Room;
-import computc.worlds.Tile;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
+import computc.worlds.tiles.Tile;
 
 public class MainGameState extends BasicGameState
 {
@@ -47,14 +49,6 @@ public class MainGameState extends BasicGameState
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		Tile.images.put("wall", new Image("./res/wall.png"));
-		Tile.images.put("floor", new Image("./res/floor.png"));
-		Tile.images.put("northern arrow", new Image("./res/north.png"));
-		Tile.images.put("southern arrow", new Image("./res/south.png"));
-		Tile.images.put("eastern arrow", new Image("./res/east.png"));
-		Tile.images.put("western arrow", new Image("./res/west.png"));
-		Tile.images.put("door", new Image("./res/door.png"));
-		Key.IMAGE = new Image("./res/key.png");
 		Coin.IMAGE = new Image("./res/coin.png");
 		
 		this.textBox = new Animation(new SpriteSheet(new Image("res/largeTextBox.png"), 585, 100), 100);
@@ -75,15 +69,14 @@ public class MainGameState extends BasicGameState
 		this.gamedata.dungeon.update(delta);
 		
 		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
-		this.gamedata.hero.checkPickup(this.gamedata.dungeon.keys);
-		this.gamedata.hero.checkGetCoin();
+		//this.gamedata.hero.checkPickup(this.gamedata.dungeon.keys);
 		
 		if(this.gamedata.hero.isDead())
 		{
 			this.gamedata.instantiate();
 		}
 		
-		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
+		/*if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
 		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
 		{
 			if((int)(counter) < greeting.length())
@@ -94,7 +87,7 @@ public class MainGameState extends BasicGameState
 			{
 				counter2 += delta * 0.025;
 			}
-		}
+		}*/
 		
 		if(input.isKeyDown(Input.KEY_UP))
 		{
@@ -115,7 +108,10 @@ public class MainGameState extends BasicGameState
 			this.gamedata.hero.getWorld().setGravity(new Vec2(-1f, 0));
 		}
 		
-		else for(Body body: this.gamedata.hero.chain.bodies)
+		Hero hero = this.gamedata.hero;
+		Chain chain = hero.chain;
+		Set<Body> bodies = chain.bodies;
+		for(Body body: bodies)
 		{
 			body.setLinearDamping(10);
 		}
@@ -134,10 +130,9 @@ public class MainGameState extends BasicGameState
 	{
 		this.gamedata.dungeon.render(graphics, this.camera);
 		this.gamedata.hero.render(graphics, this.camera);
-		this.gamedata.dungeon.renderKeys(graphics, camera);
-		this.gamedata.menu.render(graphics, this.camera);
+		//this.gamedata.menu.render(graphics, this.camera);
 		
-		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
+		/*if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
 		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
 		{
 			textBox.draw(Room.WIDTH/11, Room.HEIGHT/11);
@@ -152,7 +147,7 @@ public class MainGameState extends BasicGameState
 			graphics.setColor(Color.white);
 			graphics.drawString(greeting.substring(0, (int)(Math.min(counter, greeting.length()))), xCoord, yCoord);
 			graphics.drawString(greeting2temp.substring(0, (int)(Math.min(counter2, greeting2temp.length()))), xCoord2, yCoord2);
-		}
+		}*/
 	}
 	
 	@Override

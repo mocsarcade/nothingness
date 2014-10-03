@@ -3,12 +3,11 @@ package computc;
 import org.newdawn.slick.SlickException;
 
 import computc.entities.Hero;
-import computc.worlds.Dungeon;
-import computc.worlds.DungeonException;
-import computc.worlds.OneRoomDungeon;
-import computc.worlds.FiveRoomDungeon;
-import computc.worlds.RandomRoguelikeDungeon;
-import computc.worlds.RandomZeldaesqueDungeon;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.dungeons.DungeonException;
+import computc.worlds.dungeons.FiveRoomDungeon;
+import computc.worlds.dungeons.OneRoomDungeon;
+import computc.worlds.dungeons.RandomDungeon;
 
 public class GameData
 {
@@ -23,15 +22,17 @@ public class GameData
 		{
 			try
 			{
-				this.dungeon = new RandomZeldaesqueDungeon();
+				this.dungeon = new RandomDungeon();
 			}
-			catch(DungeonException exception)
+			catch(Exception exception)
 			{
 				exception.printStackTrace();
 			}
 		}
 		
-		this.hero = new Hero(dungeon, 5, 4);
+		this.dungeon.initiate();
+		
+		this.hero = new Hero(this.dungeon, 5, 4);
 		this.menu = new Menu(this.dungeon, this.hero);
 	}
 }

@@ -14,9 +14,9 @@ import org.jbox2d.dynamics.World;
 
 import computc.Direction;
 import computc.cameras.Camera;
-import computc.worlds.Dungeon;
-import computc.worlds.Room;
-import computc.worlds.Tile;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
+import computc.worlds.tiles.Tile;
 
 public abstract class Entity
 {
@@ -318,23 +318,9 @@ public abstract class Entity
 		   
 		   if(dy < 0) 
 		   {
-			   if(topLeft.isBlocked || topRight.isBlocked) 
+			   if(!topLeft.canMoveHere() || !topRight.canMoveHere()) 
 			   {
 				   dy = 0;
-					if(topLeft.locked && this.keys.size() > 0)
-					{
-						Key key = this.keys.pop();
-						this.dungeon.keys.remove(key);
-						
-						topLeft.unlock();
-					}
-					if(topRight.locked && this.keys.size() > 0)
-					{
-						Key key = this.keys.pop();
-						this.dungeon.keys.remove(key);
-						
-						topRight.unlock();
-					}
 			   }
 			   else {
 				   ytemp += dy;
@@ -343,23 +329,8 @@ public abstract class Entity
 			   
 			if(dy > 0) 
 			{
-				if(bottomLeft.isBlocked || bottomRight.isBlocked)
+				if(!bottomLeft.canMoveHere() || !bottomRight.canMoveHere())
 				{
-					if(bottomLeft.locked && this.keys.size() > 0)
-					{
-						Key key = this.keys.pop();
-						this.dungeon.keys.remove(key);
-						
-						bottomLeft.unlock();
-					}
-					if(bottomRight.locked && this.keys.size() > 0)
-					{
-						Key key = this.keys.pop();
-						this.dungeon.keys.remove(key);
-						
-						bottomRight.unlock();
-					}
-					
 					dy = 0;
 				}
 				else 
@@ -371,23 +342,9 @@ public abstract class Entity
 			calculateCorners(xdest, y);
 			
 			if(dx < 0) {
-				if(topLeft.isBlocked || bottomLeft.isBlocked) 
+				if(!topLeft.canMoveHere() || !bottomLeft.canMoveHere()) 
 				{
 					dx = 0;
-					if(topLeft.locked && this.keys.size() > 0)
-					{
-						Key key = this.keys.pop();
-						this.dungeon.keys.remove(key);
-						
-						topLeft.unlock();
-					}
-					if(bottomLeft.locked && this.keys.size() > 0)
-					{
-						Key key = this.keys.pop();
-						this.dungeon.keys.remove(key);
-						
-						bottomLeft.unlock();
-					}
 				}
 				else 
 				{
@@ -396,23 +353,9 @@ public abstract class Entity
 			}
 				
 			if(dx > 0) {
-				if(topRight.isBlocked || bottomRight.isBlocked) 
+				if(!topRight.canMoveHere() || !bottomRight.canMoveHere()) 
 				{
 					dx = 0;
-					if(topRight.locked && this.keys.size() > 0)
-					{
-						Key key = this.keys.pop();
-						this.dungeon.keys.remove(key);
-						
-						topRight.unlock();
-					}
-					if(bottomRight.locked && this.keys.size() > 0)
-					{
-						Key key = this.keys.pop();
-						this.dungeon.keys.remove(key);
-						
-						bottomRight.unlock();
-					}
 				}
 				else 
 				{

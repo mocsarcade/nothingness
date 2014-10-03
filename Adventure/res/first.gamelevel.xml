@@ -1,0 +1,7 @@
+<gamelevel>
+	<dungeon type="zeldaesque" length="3"/>
+	<room source="./res/rooms/fourdots.room.tmx"/>
+	<room source="./res/rooms/corners.room.tmx"/>
+	<tileset source="./res/tilesets/cave1.tileset.xml"/>
+	<tileset source="./res/tilesets/cave2.tileset.xml"/>
+</gamelevel>

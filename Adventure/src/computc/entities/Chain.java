@@ -19,7 +19,7 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 
 import computc.cameras.Camera;
-import computc.worlds.Room;
+import computc.worlds.rooms.Room;
 
 public class Chain 
 {
@@ -246,7 +246,7 @@ public class Chain
 		{
 			for(int j = 0; j < Room.TILEY_HEIGHT; j++) 
 			{
-				if(entity.getRoom().getTile((float)64*i, (float)64*j).isBlocked)
+				if(!entity.getRoom().getTile((float)64*i, (float)64*j).canMoveHere())
 				{
 				wallBodyDef = new BodyDef();
 				wallBodyDef.type = BodyType.STATIC;
