@@ -293,6 +293,18 @@ public abstract class Entity
 		}
 	}
 	
+	public float getdx()
+	{
+		return this.dx;
+	}
+	
+	public float getdy()
+	{
+		return this.dy;
+	}
+	
+	
+	
 	public void calculateCorners(float x, float y) 
 	{
 		   int leftColumn = (int)(x - getHitboxWidth()/ 2);

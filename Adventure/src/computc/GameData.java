@@ -22,7 +22,10 @@ public class GameData
 		{
 			try
 			{
-				this.dungeon = new RandomDungeon();
+
+				this.dungeon = new RandomDungeon(this);
+
+
 			}
 			catch(Exception exception)
 			{

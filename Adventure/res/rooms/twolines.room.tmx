@@ -209,4 +209,18 @@
    <tile gid="0"/>
   </data>
  </layer>
+ <objectgroup name="entities" width="11" height="9">
+  <object gid="6" x="617" y="87"/>
+  <object gid="6" x="595" y="86"/>
+  <object gid="6" x="590" y="107"/>
+  <object gid="6" x="613" y="114"/>
+  <object gid="6" x="566" y="93"/>
+  <object gid="6" x="563" y="118"/>
+  <object gid="6" x="588" y="130"/>
+  <object gid="6" x="78" y="500"/>
+  <object gid="6" x="77" y="473"/>
+  <object gid="6" x="98" y="482"/>
+  <object gid="6" x="114" y="503"/>
+  <object gid="5" x="187" y="141"/>
+ </objectgroup>
 </map>

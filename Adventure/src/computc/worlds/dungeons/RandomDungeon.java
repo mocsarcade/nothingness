@@ -11,6 +11,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import computc.Direction;
+import computc.GameData;
 import computc.cameras.Camera;
 import computc.entities.Key;
 import computc.entities.OldMan;
@@ -24,9 +25,9 @@ public class RandomDungeon extends Dungeon
 	
 	ArrayList<DungeonSegment> segments = new ArrayList<DungeonSegment>();
 	
-	public RandomDungeon()
+	public RandomDungeon(GameData gamedata)
 	{
-		super();
+		super(gamedata);
 		
 		int tilesetid = 0;
 		

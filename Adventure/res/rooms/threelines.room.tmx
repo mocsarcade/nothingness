@@ -3,6 +3,9 @@
  <tileset firstgid="1" name="tiled" tilewidth="64" tileheight="64">
   <image source="../tiled.png" width="256" height="128"/>
  </tileset>
+ <tileset firstgid="7" name="Maniac" tilewidth="48" tileheight="48">
+  <image source="../Maniac.png" width="48" height="48"/>
+ </tileset>
  <layer name="tiles" width="11" height="9">
   <data>
    <tile gid="1"/>
@@ -209,4 +212,21 @@
    <tile gid="0"/>
   </data>
  </layer>
+ <objectgroup name="entities" width="11" height="9">
+  <object gid="5" x="213" y="370"/>
+  <object gid="6" x="281" y="358"/>
+  <object gid="6" x="327" y="359"/>
+  <object gid="6" x="391" y="358"/>
+  <object gid="6" x="458" y="362"/>
+  <object gid="6" x="526" y="363"/>
+  <object gid="6" x="531" y="232"/>
+  <object gid="6" x="486" y="234"/>
+  <object gid="6" x="419" y="230"/>
+  <object gid="6" x="393" y="233"/>
+  <object gid="6" x="280" y="231"/>
+  <object gid="6" x="217" y="231"/>
+  <object gid="6" x="163" y="234"/>
+  <object gid="6" x="155" y="352"/>
+  <object gid="6" x="193" y="356"/>
+ </objectgroup>
 </map>

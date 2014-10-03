@@ -53,6 +53,8 @@ public class Hero extends Entity
 	private int meleeDamage;
 	private int meleeRange;
 	
+	private int peekTimer;
+	
 	private Image swingRight, swingLeft, swingUp, swingDown;
 	
 	// actions 
@@ -400,6 +402,15 @@ public class Hero extends Entity
 				{
 				this.direction = Direction.NORTH;
 				facingDown = false;
+				
+					if(!(this.dy == -maximumVelocity))
+					{
+						if(this.getRoomPositionY() < Tile.SIZE * 2)
+						{
+							peekTimer += delta;
+						}
+					}
+					else peekTimer = 0;
 //				this.y -= step;
 				}
 			else if(input.isKeyDown(Input.KEY_DOWN))
@@ -407,20 +418,50 @@ public class Hero extends Entity
 				this.direction = Direction.SOUTH;
 				facingDown = true;
 //				this.y += step;
+				
+					if(!(this.dy == maximumVelocity))
+					{
+						if(this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2)
+						{
+							peekTimer += delta;
+						}
+					}
+					else peekTimer = 0;
 				}
+			
 		
 			if(input.isKeyDown(Input.KEY_LEFT))
 				{
 				this.direction = Direction.WEST;
 				facingRight = false;
 //				this.x -= step;
+				
+					if(!(this.dx == -maximumVelocity))
+					{
+						if(this.getRoomPositionX()  < Tile.SIZE * 2)
+						{
+						peekTimer += delta;
+						}
+					}
+					else peekTimer = 0;
 				}
 			else if(input.isKeyDown(Input.KEY_RIGHT))
 				{
 				this.direction = Direction.EAST;
 				facingRight = true;
 //				this.x += step;
+				
+					if(!(this.dx == maximumVelocity))
+					{
+						if(this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 2)
+						{
+						peekTimer += delta;
+						}
+					}
+					else peekTimer = 0;
 				}
+			
+			
 			
 			if(input.isKeyDown(Input.KEY_D))
 			{
@@ -549,6 +590,16 @@ public class Hero extends Entity
 	public boolean getChainAttack()
 	{
 		return chainAttack;
+	}
+	
+	public int getPeekTimer()
+	{
+		return this.peekTimer;
+	}
+	
+	public void resetPeekTimer()
+	{
+		peekTimer = 0;
 	}
 	
 	public void checkPickup(LinkedList<Key> keys)

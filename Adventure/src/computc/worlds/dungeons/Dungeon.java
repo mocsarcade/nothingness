@@ -19,7 +19,9 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
+import computc.GameData;
 import computc.Game;
 import computc.cameras.Camera;
 import computc.entities.Coin;
@@ -41,15 +43,20 @@ public abstract class Dungeon
 	protected Room firstRoom;
 	public Room lastRoom;
 	public OldMan oldman;
+	public GameData gamedata;
 	
 	ArrayList<TileSet> tilesets = new ArrayList<TileSet>();
 	LinkedList<RoomLayout> randomRoomLayouts = new LinkedList<RoomLayout>();
 	HashMap<String, RoomLayout> specialRoomLayouts = new HashMap<String, RoomLayout>();
 	private boolean debug;
 	public boolean chainEnabled = true;
-	
-	public Dungeon()
+	private Image explosion;
+
+	public Dungeon(GameData gamedata) 
 	{
+		this.explosion = Game.assets.getImage("res/explosion.png");
+		this.gamedata = gamedata;
+		
 		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/stoney.tileset.xml"));
 		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/snowy.tileset.xml"));
 		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/dirty.tileset.xml"));

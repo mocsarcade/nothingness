@@ -36,7 +36,7 @@ import computc.worlds.tiles.Tile;
 public class MainGameState extends BasicGameState
 {
 	public GameData gamedata;
-	public Camera camera;
+	public RoomFollowingCamera camera;
 	
 	private Animation textBox;
 	
@@ -89,6 +89,7 @@ public class MainGameState extends BasicGameState
 			}
 		}*/
 		
+		//  makes the chain movement less floaty
 		if(input.isKeyDown(Input.KEY_UP))
 		{
 			this.gamedata.hero.getWorld().setGravity(new Vec2(0, 1f));
@@ -119,6 +120,12 @@ public class MainGameState extends BasicGameState
 		if(gravityCoolDown != 0)
 		{
 			gravityCoolDown--;
+		}
+		
+		// sets the camera to peek into adjacent rooms
+		if(this.gamedata.hero.getPeekTimer() > 1000)
+		{
+			this.camera.setPeeking(this.gamedata.hero.getDirection());
 		}
 	}
 
@@ -185,15 +192,28 @@ public class MainGameState extends BasicGameState
 		
 		if(k == Input.KEY_UP)
 		{
+			this.camera.turnOffPeeking();
+			this.gamedata.hero.resetPeekTimer();
 		}
 		if(k == Input.KEY_DOWN)
 		{
+			this.camera.turnOffPeeking();
+			this.gamedata.hero.resetPeekTimer();
 		}
 		if(k == Input.KEY_LEFT)
 		{
+			this.camera.turnOffPeeking();
+			this.gamedata.hero.resetPeekTimer();
 		}
 		if(k == Input.KEY_RIGHT)
 		{
+			this.camera.turnOffPeeking();
+			this.gamedata.hero.resetPeekTimer();
+		}
+		
+		if(k == Input.KEY_E)
+		{
+			this.camera.setEarthQuake(this.gamedata.hero.getDirection());
 		}
 		
 		if(k == Input.KEY_SPACE)

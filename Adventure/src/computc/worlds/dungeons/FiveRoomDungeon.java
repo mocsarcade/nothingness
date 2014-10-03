@@ -1,15 +1,16 @@
 package computc.worlds.dungeons;
 
 import computc.Direction;
+import computc.GameData;
 import computc.worlds.Door;
 import computc.worlds.rooms.Room;
 import computc.worlds.tiles.TileSet;
 
 public class FiveRoomDungeon extends Dungeon
 {
-	public FiveRoomDungeon()
+	public FiveRoomDungeon(GameData gamedata)
 	{
-		super();
+		super(gamedata);
 		
 		this.firstRoom = new Room(this, 2, 2);
 
