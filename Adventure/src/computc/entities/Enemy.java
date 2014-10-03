@@ -21,6 +21,8 @@ public abstract class Enemy extends Entity
 	protected boolean dead;
 	protected int damage;
 	
+	public int mood;
+	
 	protected boolean blinkTimer;
 	protected int blinkCooldown;
 	

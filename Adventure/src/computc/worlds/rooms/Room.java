@@ -9,6 +9,8 @@ import computc.Direction;
 import computc.Game;
 import computc.cameras.Camera;
 import computc.entities.Key;
+import computc.entities.Loafer;
+import computc.entities.Maniac;
 import computc.entities.Thug;
 import computc.worlds.Door;
 import computc.worlds.dungeons.Dungeon;
@@ -72,9 +74,19 @@ public class Room
 			this.tiles[tx][ty] = new DoorTile(this, tx, ty);
 		}
 		
-		for(Point point : this.roomlayout.enemies)
+		for(Point point : this.roomlayout.thugs)
 		{
 			this.dungeon.enemies.add(new Thug(this.dungeon, this, point.x, point.y));
+		}
+		
+		for(Point point : this.roomlayout.maniacs)
+		{
+			this.dungeon.enemies.add(new Maniac(this.dungeon, this, point.x, point.y));
+		}
+		
+		for(Point point : this.roomlayout.loafers)
+		{
+			this.dungeon.enemies.add(new Loafer(this.dungeon, this, point.x, point.y));
 		}
 	}
 	

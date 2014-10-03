@@ -109,10 +109,7 @@ public class MainGameState extends BasicGameState
 			this.gamedata.hero.getWorld().setGravity(new Vec2(-1f, 0));
 		}
 		
-		Hero hero = this.gamedata.hero;
-		Chain chain = hero.chain;
-		Set<Body> bodies = chain.bodies;
-		for(Body body: bodies)
+		for(Body body: this.gamedata.hero.chain.bodies)
 		{
 			body.setLinearDamping(10);
 		}
@@ -137,6 +134,7 @@ public class MainGameState extends BasicGameState
 	{
 		this.gamedata.dungeon.render(graphics, this.camera);
 		this.gamedata.hero.render(graphics, this.camera);
+		this.gamedata.menu.render(graphics, camera);
 		//this.gamedata.menu.render(graphics, this.camera);
 		
 		/*if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()

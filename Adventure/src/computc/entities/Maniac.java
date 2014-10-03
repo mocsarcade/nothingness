@@ -5,6 +5,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 import computc.Direction;
+import computc.Game;
 import computc.cameras.Camera;
 import computc.cameras.RoomFollowingCamera;
 import computc.worlds.dungeons.Dungeon;
@@ -23,13 +24,13 @@ public class Maniac extends Enemy
 	
 	private boolean bullRush;
 	
-	public Maniac(Dungeon dungeon, Room room, int x, int  y) throws SlickException 
+	public Maniac(Dungeon dungeon, Room room, int x, int  y)
 	{
 		super(dungeon, room, x, y);
 		
 		this.dungeon = dungeon;
 		
-		this.image = new Image("res/Maniac.png");
+		this.image = Game.assets.getImage("res/Maniac.png");
 		
 		this.damage = 1;
 		this.acceleration = 0.03f;
@@ -56,6 +57,7 @@ public class Maniac extends Enemy
 		bullRush = false;
 		alreadySmashed = false;
 		bullRushCoolDown = 0;
+		
 	}
 	
 	public void update(int delta)
