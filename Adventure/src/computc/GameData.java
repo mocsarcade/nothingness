@@ -13,29 +13,25 @@ public class GameData
 {
 	public Hero hero;
 	public Dungeon dungeon;
-	public Menu menu;
 	
 	public void instantiate() throws SlickException
 	{
 		this.dungeon = null;
+		
 		while(this.dungeon == null)
 		{
 			try
 			{
-
 				this.dungeon = new RandomDungeon(this);
-
-
 			}
-			catch(Exception exception)
+			catch(DungeonException exception)
 			{
-				exception.printStackTrace();
+				//code goes here.
 			}
 		}
 		
 		this.dungeon.initiate();
 		
 		this.hero = new Hero(this.dungeon, 5, 4);
-		this.menu = new Menu(this.dungeon, this.hero);
 	}
 }

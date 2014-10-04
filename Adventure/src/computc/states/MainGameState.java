@@ -36,16 +36,18 @@ import computc.worlds.tiles.Tile;
 public class MainGameState extends BasicGameState
 {
 	public GameData gamedata;
+	
+	public Menu menu;
 	public RoomFollowingCamera camera;
 	
-	private Animation textBox;
-	
-	private int gravityCoolDown;
+	private int gravityCoolDown; //chain
 	
 	public MainGameState(GameData gamedata)
 	{
 		this.gamedata = gamedata;
 	}
+	
+	private Animation textBox;
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
@@ -56,6 +58,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.instantiate();
 		
 		this.camera = new RoomFollowingCamera(this.gamedata);
+		this.menu = new Menu(gamedata);
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
@@ -63,13 +66,17 @@ public class MainGameState extends BasicGameState
 		Input input = container.getInput();
 		
 		this.gamedata.hero.update(input, delta);
-		this.gamedata.menu.update(input, game);
 		this.camera.update(input, delta);
 		
 		this.gamedata.dungeon.update(delta);
 		
 		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
 		//this.gamedata.hero.checkPickup(this.gamedata.dungeon.keys);
+		
+		if(input.isKeyDown(Input.KEY_M))
+		{
+			game.enterState(1);
+		}
 		
 		if(this.gamedata.hero.isDead())
 		{
@@ -134,8 +141,7 @@ public class MainGameState extends BasicGameState
 	{
 		this.gamedata.dungeon.render(graphics, this.camera);
 		this.gamedata.hero.render(graphics, this.camera);
-		this.gamedata.menu.render(graphics, camera);
-		//this.gamedata.menu.render(graphics, this.camera);
+		this.menu.render(graphics, camera);
 		
 		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
 		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
