@@ -9,100 +9,71 @@ import computc.worlds.rooms.Room;
 
 public class RoomFollowingCamera extends Camera
 {
-	protected GameData gamedata;
+	private GameData gamedata;
+	
+	private Direction peekingDirection = Direction.NONE;
+	
+	private int shakingDuration = 0;
+	private Direction shakingDirection = Direction.NONE;
 	
 	public RoomFollowingCamera(GameData gamedata)
 	{
 		this.gamedata = gamedata;
-		
-		this.x = this.getTargetX();
-		this.y = this.getTargetY();
+
+		this.setToTargetX();
+		this.setToTargetY();
 	}
 	
 	public void update(Input input, int delta)
 	{
-		
 		if(this.getX() < this.getTargetX())
 		{
-			if(earthquake)
-			{
-				this.increaseX(delta + 10);
-			}
-			
 			this.increaseX(delta);
 			
-			if(!earthquake)
+			if(this.getX() > this.getTargetX())
 			{
-				if(this.getX() > this.getTargetX())
-				{
-					this.setToTargetX();
-				}
+				this.setToTargetX();
 			}
 		}
 		else if(this.getX() > this.getTargetX())
 		{
 			this.decreaseX(delta);
 			
-			if(!earthquake)
+			if(this.getX() < this.getTargetX())
 			{
-				if(this.getX() < this.getTargetX())
-				{
-					this.setToTargetX();
-				}
+				this.setToTargetX();
 			}
 		}
 		
 		if(this.getY() < this.getTargetY())
 		{
-			if(earthquake)
-			{
-				this.increaseY(delta + 10);
-			}
-			
 			this.increaseY(delta);
 			
-			if(!earthquake)
-			{			
-				if(this.getY() > this.getTargetY())
-				{
-					this.setToTargetY();
-				}
+			if(this.getY() > this.getTargetY())
+			{
+				this.setToTargetY();
 			}
 		}
 		else if(this.getY() > this.getTargetY())
 		{
 			this.decreaseY(delta);
 			
-			if(!earthquake)
+			if(this.getY() < this.getTargetY())
 			{
-				if(this.getY() < this.getTargetY())
-				{
-					this.setToTargetY();
-				}
+				this.setToTargetY();
 			}
 		}
-		
-		if(earthquake)
+
+		if(this.shakingDuration > 0)
 		{
-			earthquakeCooldown--;
+			this.shakingDuration -= 1;
+			this.shakingDirection = Direction.getOppositeDirection(this.shakingDirection);
 		}
-		
-		if(earthquakeIntensity > 0)
-		{
-			earthquakeIntensity--;
-		}
-		
-		if(earthquakeCooldown <= 0)
-		{
-			earthquakeCooldown = 0;
-			earthquake = false; earthquakeLeft = false; earthquakeRight = false; earthquakeUp = false; earthquakeDown = false;
-		}
-		
 	}
 	
 	public void setToTargetX()
 	{
-		this.x = this.getTargetX(); 
+		this.x = this.getTargetX();
 	}
 	
 	public void setToTargetY()
@@ -117,49 +88,59 @@ public class RoomFollowingCamera extends Camera
 	
 	public int getTargetX()
 	{
-		if(earthquakeLeft && !(earthquakeIntensity == 0))
-		{
-		return this.getTarget().getRoomyX() - 1 * Room.WIDTH;
-		}
-		else if (earthquakeRight && !(earthquakeIntensity == 0))
-		{
-		return (this.getTarget().getRoomyX() + 1) * Room.WIDTH;
-		}
-		else if(peekerLeft)
-		{
-			return (this.getTarget().getRoomyX() * Room.WIDTH) - Room.WIDTH/2;
-		}
-		else if(peekerRight)
-		{
-			return (this.getTarget().getRoomyX() * Room.WIDTH) + Room.WIDTH/2;
-		}
-		else
-		{
-		return this.getTarget().getRoomyX() * Room.WIDTH;
-		}
+		return (this.getTarget().getRoomyX() * Room.WIDTH) + this.getOffsetX();
 	}
 	
 	public int getTargetY()
 	{
-		if(earthquakeUp && !(earthquakeIntensity == 0))
+		return (this.getTarget().getRoomyY() * Room.HEIGHT) + this.getOffsetY();
+	}
+	
+	public int getOffsetX()
+	{
+		if(this.peekingDirection == Direction.EAST)
 		{
-			return this.getTarget().getRoomyY() - 1 * Room.HEIGHT;
+			return Room.WIDTH / 2;
 		}
-		else if(earthquakeDown && !(earthquakeIntensity == 0))
+		else if(this.peekingDirection == Direction.WEST)
 		{
-			return (this.getTarget().getRoomyY() + 1) * Room.HEIGHT;
+			return Room.WIDTH / 2 * -1;
 		}
-		else if(peekerUp)
+		else if(this.shakingDirection == Direction.EAST)
 		{
-			return (this.getTarget().getRoomyY() * Room.HEIGHT) - Room.HEIGHT/2;
+			return this.shakingDuration / 10 * -1;
 		}
-		else if(peekerDown)
+		else if(this.shakingDirection == Direction.WEST)
 		{
-			return (this.getTarget().getRoomyY() * Room.HEIGHT) + Room.HEIGHT/2;
+			return this.shakingDuration / 10;
 		}
 		else
 		{
-		return this.getTarget().getRoomyY() * Room.HEIGHT;
+			return 0;
+		}
+	}
+	
+	public int getOffsetY()
+	{
+		if(this.peekingDirection == Direction.NORTH)
+		{
+			return Room.HEIGHT / 2;
+		}
+		else if(this.peekingDirection == Direction.SOUTH)
+		{
+			return Room.HEIGHT / 2 * -1;
+		}
+		else if(this.shakingDirection == Direction.NORTH)
+		{
+			return this.shakingDuration / 10 * -1;
+		}
+		else if(this.shakingDirection == Direction.SOUTH)
+		{
+			return this.shakingDuration / 10;
+		}
+		else
+		{
+			return 0;
 		}
 	}
 	
@@ -170,37 +151,17 @@ public class RoomFollowingCamera extends Camera
 	
 	public void setPeeking(Direction direction)
 	{
-		if(direction == Direction.NORTH)
-		{
-			peekerUp = true;
-		}
-		if(direction == Direction.SOUTH)
-		{
-			peekerDown = true;
-		}
-		if(direction == Direction.EAST)
-		{
-			peekerRight = true;
-		}
-		if(direction == Direction.WEST)
-		{
-			peekerLeft = true;
-		}
-		
-		peekerCooldown = 100;
-		
+		this.peekingDirection = direction;
 	}
 	
-	public void turnOffPeeking()
+	public void resetPeeking()
 	{
-		peekerLeft = false;
-		peekerRight = false;
-		peekerUp = false;
-		peekerDown = false;
+		this.peekingDirection = Direction.NONE;
 	}
 	
-	public boolean getEarthquake()
+	public void setShaking(Direction direction, int duration)
 	{
-		return earthquake;
+		this.shakingDirection = direction;		
+		this.shakingDuration = duration;
 	}
 }

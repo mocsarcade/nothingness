@@ -14,29 +14,19 @@ import computc.worlds.rooms.Room;
 
 public class Menu
 {
-	private Hero hero;
-	private Dungeon dungeon;
+	private GameData gamedata;
 	
 	private Image heart;
 	private Image arrow = new Image("res/arrowSpriteSheet.png");
 	private Image arrowGuiPic;
 	
 	
-	public Menu(Dungeon dungeon, Hero hero) throws SlickException
+	public Menu(GameData gamedata) throws SlickException
 	{
-		this.hero = hero;
-		this.dungeon = dungeon;
+		this.gamedata = gamedata;
 		
-		this.heart = new Image("res/heart.png");
+		this.heart = Game.assets.getImage("res/heart.png");
 		arrowGuiPic = arrow.getSubImage(1, 33, 63, 63);
-	}
-	
-	public void update(Input input, StateBasedGame game)
-	{
-		if(input.isKeyDown(Input.KEY_M))
-		{
-			game.enterState(1);
-		}
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -51,8 +41,8 @@ public class Menu
 		{
 			for(int j = 0; j < MAP_HEIGHT; j++)
 			{
-				int dx = (int)(Math.floor((float)(this.hero.getRoomyX()) / MAP_WIDTH));
-				int dy = (int)(Math.floor((float)(this.hero.getRoomyY()) / MAP_HEIGHT));
+				int dx = (int)(Math.floor((float)(this.gamedata.hero.getRoomyX()) / MAP_WIDTH));
+				int dy = (int)(Math.floor((float)(this.gamedata.hero.getRoomyY()) / MAP_HEIGHT));
 				
 				int rx = (dx * MAP_WIDTH) + i;
 				int ry = (dy * MAP_HEIGHT) + j;
@@ -60,7 +50,7 @@ public class Menu
 				int x = OFFSET + MARGIN + (i * (UNIT + MARGIN));
 				int y = OFFSET + MARGIN + (j * (UNIT + MARGIN));
 				
-				Room room = this.dungeon.getRoom(rx, ry);
+				Room room = this.gamedata.dungeon.getRoom(rx, ry);
 				
 				if(room != null && room.hasVisited)
 				{
@@ -72,8 +62,8 @@ public class Menu
 					if(room.hasEasternRoom()) {graphics.fillRect(x + UNIT, y + (UNIT / 2) - 1, MARGIN, MARGIN);}
 					if(room.hasWesternRoom()) {graphics.fillRect(x - MARGIN, y + (UNIT / 2) - 1, MARGIN, MARGIN);}*/
 					
-					if(rx == this.hero.getRoomyX()
-					&& ry == this.hero.getRoomyY())
+					if(rx == this.gamedata.hero.getRoomyX()
+					&& ry == this.gamedata.hero.getRoomyY())
 					{
 						graphics.setColor(Color.white);
 						graphics.fillOval(x + (UNIT / 2) - (MARKER / 2), y + (UNIT / 2) - (MARKER / 2), MARKER, MARKER);
@@ -85,16 +75,16 @@ public class Menu
 					graphics.fillRoundRect(x, y, UNIT, UNIT, 3);
 				}
 				
-				if(rx == this.dungeon.lastRoom.getRoomyX()
-				&& ry == this.dungeon.lastRoom.getRoomyY())
+				if(rx == this.gamedata.dungeon.lastRoom.getRoomyX()
+				&& ry == this.gamedata.dungeon.lastRoom.getRoomyY())
 				{
-					graphics.setColor(new Color(0, 0, this.dungeon.lastRoom.blueness));
+					graphics.setColor(new Color(0, 0, this.gamedata.dungeon.lastRoom.blueness));
 					graphics.fillOval(x + (UNIT / 2) - (MARKER / 2), y + (UNIT / 2) - (MARKER / 2), MARKER, MARKER);
 				}
 			}
 		}
 		
-		for(int h = 0; h < hero.getHealth(); h++)
+		for(int h = 0; h < this.gamedata.hero.getHealth(); h++)
 		{
 			heart.draw(540 + (40 * h), 30);
 		}
@@ -103,10 +93,10 @@ public class Menu
 		
 			arrowGuiPic.draw(15, 480);
 		
-		graphics.drawString(String.valueOf(hero.arrowCount), 30, 540);
+		graphics.drawString(String.valueOf(this.gamedata.hero.arrowCount), 30, 540);
 		
 		graphics.setColor(Color.yellow);
-		graphics.drawString(String.valueOf(hero.coinage), 665, 540);
+		graphics.drawString(String.valueOf(this.gamedata.hero.coinage), 665, 540);
 	}
 	
 	public static final int HEIGHT = 128;
