@@ -60,9 +60,4 @@ public abstract class Camera
 	{
 		this.speed = speed;
 	}
-	
-	public void update(Input input, int delta)
-	{
-		//code goes here.
-	}
 }

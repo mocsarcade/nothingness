@@ -26,8 +26,6 @@ public class RoomFollowingCamera extends Camera
 	
 	public void update(Input input, int delta)
 	{
-		super.update(input, delta);
-		
 		if(this.getX() < this.getTargetX())
 		{
 			this.increaseX(delta);
