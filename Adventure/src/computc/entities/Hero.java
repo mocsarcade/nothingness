@@ -53,7 +53,7 @@ public class Hero extends Entity
 	protected boolean swinging;
 	private int meleeDamage;
 	private int meleeRange;
-	private Image heroLeft, heroRight, heroDown, heroUp, heroIdle;
+	private Image heroLeft, heroRight, heroDown, heroUp, heroIdleDown, heroIdleRight, heroIdleLeft, heroIdleUp;
 
 	
 	private int peekTimer;
@@ -61,7 +61,7 @@ public class Hero extends Entity
 	private Image swingRight, swingLeft, swingUp, swingDown;
 	
 	// actions 
-	private Animation sprite, firingArrow, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle, idleLeft, idleRight, idleUp, walkingLeft, walkingDown, walkingUp, walkingRight;
+	private Animation sprite, firingArrow, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle, idleDown, idleUp, idleRight, idleLeft, walkingLeft, walkingDown, walkingUp, walkingRight;
 
 	public int coinage;
 
@@ -74,13 +74,16 @@ public class Hero extends Entity
 		this.dungeon = dungeon;
 		this.acceleration = 0.06f;
 		this.deacceleration = 0.02f;
-		this.maximumVelocity = 3f;
+		this.maximumVelocity = 1f;
 		
 		this.heroLeft = Game.assets.getImage("res/heroSideViewLeft.png");
 		this.heroRight = Game.assets.getImage("res/heroSideView.png");
 		this.heroUp = Game.assets.getImage("res/heroBack.png");
 		this.heroDown = Game.assets.getImage("res/heroFrontView.png");
-		this.heroIdle = heroDown.getSubImage(1, 1, 63, 63);
+		this.heroIdleDown = heroDown.getSubImage(1, 1, 63, 63);
+		this.heroIdleRight = heroRight.getSubImage(1, 1, 63, 63);
+		this.heroIdleLeft = heroLeft.getSubImage(1, 1, 63, 63);
+		this.heroIdleUp = heroUp.getSubImage(1, 1, 63, 63);
 
 		facingRight = true; 
 		facingDown = true;
@@ -96,28 +99,29 @@ public class Hero extends Entity
 		meleeDamage = 3;
 		meleeRange = 96;
 		
-		sprite = idle;
-		
 		this.image = new Image("res/blankHero.png"); 
 		this.swingRight = new Image("res/heroMeleeRight.png");
 		this.swingLeft = new Image("res/heroMeleeLeft.png");
 		this.swingUp = new Image("res/heroMeleeUp.png");
 		this.swingDown = new Image("res/heroMeleeDown.png");
 		
-		this.walkingRight = new Animation(new SpriteSheet(heroRight, 63, 63), 300);
-		this.walkingLeft = new Animation(new SpriteSheet(heroLeft, 63, 63), 300);
-		this.walkingUp = new Animation(new SpriteSheet(heroUp, 63, 63), 300);
-		this.walkingDown = new Animation(new SpriteSheet(heroDown, 63, 63), 300);
-		
-
-		
+		this.walkingRight = new Animation(new SpriteSheet(heroRight, 63, 63), 200);
+		this.walkingLeft = new Animation(new SpriteSheet(heroLeft, 63, 63), 200);
+		this.walkingUp = new Animation(new SpriteSheet(heroUp, 63, 63), 200);
+		this.walkingDown = new Animation(new SpriteSheet(heroDown, 63, 63), 200);
 		
 		this.meleeRight = new Animation(new SpriteSheet(swingRight, 96, 48), 300);
 		this.meleeLeft = new Animation(new SpriteSheet(swingLeft, 96, 48), 300);
 		this.meleeDown = new Animation(new SpriteSheet(swingDown, 48, 96), 300);
 		this.meleeUp = new Animation(new SpriteSheet(swingUp, 48, 96), 300);
 		
+		this.idleDown = new Animation(new SpriteSheet(heroIdleDown, 63, 63), 10000);
+		this.idleUp = new Animation(new SpriteSheet(heroIdleUp, 63, 63), 10000);
+		this.idleRight = new Animation(new SpriteSheet(heroIdleRight, 63, 63), 10000);
+		this.idleLeft = new Animation(new SpriteSheet(heroIdleLeft, 63, 63), 10000);
+		
 		this.direction = Direction.SOUTH;
+		idle = idleDown;
 		
 		// box2d stuff (chain)
 		this.world = new World(gravity);
@@ -159,6 +163,7 @@ public class Hero extends Entity
 		}
 				
 		
+		// Setting sprite animation
 		if(this.direction == Direction.NORTH)
 		{
 			meleeSwing = meleeUp;
@@ -176,6 +181,7 @@ public class Hero extends Entity
 			meleeSwing = meleeLeft;
 		}
 		
+		// Drawing animations
 		if(sprite == walkingUp)
 		{
 			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
@@ -192,11 +198,22 @@ public class Hero extends Entity
 		{
 			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
 		}
-		else if(sprite == idle)
+		else if(sprite == idle && (this.direction == Direction.SOUTH || this.direction == Direction.NONE))
 		{
-			heroIdle.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			idleDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
 		}
-		
+		else if(sprite == idle && this.direction == Direction.NORTH)
+		{
+			idleUp.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if(sprite == idle && this.direction == Direction.EAST)
+		{
+			idleRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if(sprite == idle && this.direction == Direction.WEST)
+		{
+			idleLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
 		
 		
 		if(swinging)
@@ -214,6 +231,7 @@ public class Hero extends Entity
 			meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
 			}
 		}
+		
 		// converts box2d position to hero's position on screen
 		box2dPlayerPosition = new Vec2(this.getLocalX(camera)/30, this.getLocalY(camera)/30);
 	}
@@ -233,17 +251,18 @@ public class Hero extends Entity
 	{
 //		System.out.println("the ball at the end of the chain's x & y are: " + this.ball.x + " , " + this.ball.y);
 		
+		
 		getNextPosition(input, delta);
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
 		if(input.isKeyDown(Input.KEY_Z))
 		{
-			maximumVelocity = 6f;
+			maximumVelocity = 3f;
 		}
 		else
 		{
-			maximumVelocity = 3f;
+			maximumVelocity = 2f;
 		}
 		
 		// Check if the attack has stopped
@@ -356,9 +375,6 @@ public class Hero extends Entity
 	
 		if(input.isKeyDown(Input.KEY_UP)) 
 		{
-			sprite = walkingUp;
-			this.direction = Direction.NORTH;
-			
 			dy -= acceleration * delta;
 			if(dy < -maximumVelocity)
 			{
@@ -367,10 +383,6 @@ public class Hero extends Entity
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
-			sprite = walkingDown;
-			
-			this.direction = Direction.SOUTH;
-			
 			dy += acceleration * delta;
 			
 			if(dy > maximumVelocity)
@@ -401,9 +413,6 @@ public class Hero extends Entity
 
 		 if(input.isKeyDown(Input.KEY_RIGHT))
 		{
-			 sprite = walkingRight;
-			 this.direction = Direction.EAST;
-			 
 			dx += acceleration * delta;
 			if(dx > maximumVelocity) 
 			{
@@ -412,8 +421,6 @@ public class Hero extends Entity
 		}
 		 else if(input.isKeyDown(Input.KEY_LEFT)) 
 		{
-			 this.direction = Direction.WEST;
-			 
 			dx -= acceleration * delta;
 			if(dx < -maximumVelocity)
 			{
@@ -509,6 +516,10 @@ public class Hero extends Entity
 					else peekTimer = 0;
 				}
 			
+			if(!(input.isKeyDown(Input.KEY_UP)) && !(input.isKeyDown(Input.KEY_DOWN))  && !(input.isKeyDown(Input.KEY_RIGHT)) && !(input.isKeyDown(Input.KEY_LEFT)))
+			{
+				sprite = idle;
+			}
 			
 			
 			if(input.isKeyDown(Input.KEY_D))
