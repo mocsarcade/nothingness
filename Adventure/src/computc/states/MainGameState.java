@@ -196,28 +196,28 @@ public class MainGameState extends BasicGameState
 		
 		if(k == Input.KEY_UP)
 		{
-			this.camera.turnOffPeeking();
+			this.camera.resetPeeking();
 			this.gamedata.hero.resetPeekTimer();
 		}
 		if(k == Input.KEY_DOWN)
 		{
-			this.camera.turnOffPeeking();
+			this.camera.resetPeeking();
 			this.gamedata.hero.resetPeekTimer();
 		}
 		if(k == Input.KEY_LEFT)
 		{
-			this.camera.turnOffPeeking();
+			this.camera.resetPeeking();
 			this.gamedata.hero.resetPeekTimer();
 		}
 		if(k == Input.KEY_RIGHT)
 		{
-			this.camera.turnOffPeeking();
+			this.camera.resetPeeking();
 			this.gamedata.hero.resetPeekTimer();
 		}
 		
 		if(k == Input.KEY_E)
 		{
-			this.camera.setEarthQuake(this.gamedata.hero.getDirection());
+			this.camera.setShaking(this.gamedata.hero.getDirection(), 50);
 		}
 		
 		if(k == Input.KEY_SPACE)

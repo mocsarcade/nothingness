@@ -11,23 +11,6 @@ public abstract class Camera
 	protected float x, y;
 	protected float speed = 1f;
 	
-	public boolean earthquake;
-	public boolean earthquakeLeft;
-	public boolean earthquakeRight;
-	public boolean earthquakeUp;
-	public boolean earthquakeDown;
-	
-	public boolean peeker;
-	public boolean peekerLeft;
-	public boolean peekerRight;
-	public boolean peekerUp;
-	public boolean peekerDown;
-	
-	public int peekerCooldown;
-	
-	public int earthquakeCooldown;
-	public int earthquakeIntensity;
-	
 	public int getX()
 	{
 		return (int)(this.x);
@@ -78,31 +61,8 @@ public abstract class Camera
 		this.speed = speed;
 	}
 	
-	public void setEarthQuake(Direction direction)
+	public void update(Input input, int delta)
 	{
-		if(direction == Direction.NORTH)
-		{
-			earthquakeUp = true;
-		}
-		else if(direction == Direction.SOUTH)
-		{
-			earthquakeDown = true;
-		}
-		
-		else if(direction == Direction.EAST)
-		{
-			earthquakeRight = true;
-		}
-		else if(direction == Direction.WEST)
-		{
-			earthquakeLeft = true;
-		}
-		
-		earthquakeCooldown = 50;
-		earthquakeIntensity = 3;
-		
-		earthquake = true;
+		//code goes here.
 	}
-	
-	public abstract void update(Input input, int delta);
 }
