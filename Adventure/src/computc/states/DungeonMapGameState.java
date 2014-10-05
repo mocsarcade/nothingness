@@ -20,7 +20,7 @@ import computc.worlds.rooms.Room;
 public class DungeonMapGameState extends BasicGameState
 {
 	public GameData gamedata;
-	public Camera camera;
+	public InputPollingCamera camera;
 	
 	public DungeonMapGameState(GameData gamedata)
 	{

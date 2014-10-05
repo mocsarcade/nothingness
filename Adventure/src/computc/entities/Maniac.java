@@ -288,13 +288,15 @@ public class Maniac extends Enemy
 				return;
 			}
 		}
-		super.render(graphics, camera);
 		
 		if(smash && !alreadySmashed)
 		{
-			camera.setEarthQuake(this.direction);
+			RoomFollowingCamera cam = (RoomFollowingCamera)camera;
+			cam.setShaking(this.direction, 50);
 			alreadySmashed = true;
 		}
+		
+		super.render(graphics, camera);
 	}
 }
 
