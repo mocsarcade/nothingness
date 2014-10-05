@@ -264,8 +264,18 @@ public abstract class Dungeon
 			}
 		}
 		
-		public boolean toggleDebugDraw()
+		public boolean toggleDebugDraw(Graphics graphics)
 		{
+			if(debug)
+			{
+				graphics.setDrawMode(1);
+			}
+			
+			if(!debug)
+			{
+				graphics.setDrawMode(4);
+			}
+			
 			return debug = !debug;
 		}
 		

@@ -24,6 +24,7 @@ import computc.worlds.tiles.Tile;
 public class Hero extends Entity
 {
 	private boolean dead = false;
+	private Graphics graphics;
 	
 	protected boolean chainAttack;
 	protected int chainAttackCooldown;
@@ -138,7 +139,9 @@ public class Hero extends Entity
 	}
 	
 	public void render(Graphics graphics, Camera camera)
-	{	
+	{
+		this.graphics = graphics;
+		
 		if(blinking) 
 		{
 			if(blinkCooldown % 4 == 0) 
@@ -524,7 +527,7 @@ public class Hero extends Entity
 			
 			if(input.isKeyDown(Input.KEY_D))
 			{
-				this.dungeon.toggleDebugDraw();
+				this.dungeon.toggleDebugDraw(this.graphics);
 			}	
 	}
 	
