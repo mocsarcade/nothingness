@@ -108,11 +108,11 @@ public class RoomFollowingCamera extends Camera
 		}
 		else if(this.shakingDirection == Direction.EAST)
 		{
-			return this.shakingDuration / 10 * -1;
+			return this.shakingDuration * -1;
 		}
 		else if(this.shakingDirection == Direction.WEST)
 		{
-			return this.shakingDuration / 10;
+			return this.shakingDuration ;
 		}
 		else
 		{
@@ -122,21 +122,21 @@ public class RoomFollowingCamera extends Camera
 	
 	public int getOffsetY()
 	{
-		if(this.peekingDirection == Direction.NORTH)
+		if(this.peekingDirection == Direction.SOUTH)
 		{
 			return Room.HEIGHT / 2;
 		}
-		else if(this.peekingDirection == Direction.SOUTH)
+		else if(this.peekingDirection == Direction.NORTH)
 		{
 			return Room.HEIGHT / 2 * -1;
 		}
 		else if(this.shakingDirection == Direction.NORTH)
 		{
-			return this.shakingDuration / 10 * -1;
+			return this.shakingDuration * -1;
 		}
 		else if(this.shakingDirection == Direction.SOUTH)
 		{
-			return this.shakingDuration / 10;
+			return this.shakingDuration;
 		}
 		else
 		{

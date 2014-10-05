@@ -163,14 +163,6 @@ public class Maniac extends Enemy
 					}
 				}
 			}
-		
-//		System.out.println("the bullRushCooldown is: " + bullRushCoolDown);
-//		System.out.println("the bullrush is" + bullRush);
-//		System.out.println("right is: " + right);
-//		System.out.println("left is: " + left);
-//		System.out.println("up is: " + up);
-//		System.out.println("down is: " + down);
-//		System.out.println("the smash is: " + smash);
 	
 	}
 	
