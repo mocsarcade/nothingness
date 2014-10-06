@@ -1,8 +1,10 @@
 package computc.entities;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
 import computc.Direction;
 import computc.Game;
@@ -21,6 +23,14 @@ public class Maniac extends Enemy
 	private int bullRushCoolDown;
 	public Direction direction;
 	
+	private Image spriteSheet = Game.assets.getImage("res/Maniac.png");
+	private Image walkDown = spriteSheet.getSubImage(1, 1, 68, 136);
+	private Image walkUp = spriteSheet.getSubImage(69, 1, 68, 136);
+	private Image walkLeft = spriteSheet.getSubImage(137, 1, 68, 136);
+	private Image walkRight = spriteSheet.getSubImage(204, 1, 68, 136);
+	
+	Animation sprite, walkingDown, walkingUp, walkingLeft, walkingRight;
+	
 	
 	private boolean bullRush;
 	
@@ -30,7 +40,12 @@ public class Maniac extends Enemy
 		
 		this.dungeon = dungeon;
 		
-		this.image = Game.assets.getImage("res/Maniac.png");
+		this.image = Game.assets.getImage("res/Maniac.png").getSubImage(1, 1, 64, 64);
+		
+		walkingDown = new Animation(new SpriteSheet(walkDown, 68, 68), 400);
+		walkingUp = new Animation(new SpriteSheet(walkUp, 68, 68), 400);
+		walkingLeft = new Animation(new SpriteSheet(walkLeft, 68, 68), 400);
+		walkingRight = new Animation(new SpriteSheet(walkRight, 68, 68), 400);
 		
 		this.damage = 1;
 		this.acceleration = 0.03f;
@@ -173,6 +188,7 @@ public class Maniac extends Enemy
 			if(left)
 			{
 				this.direction = Direction.WEST;
+				sprite = walkingLeft;
 				dx -= acceleration;
 				if(dx < -maximumVelocity)
 				{
@@ -184,6 +200,7 @@ public class Maniac extends Enemy
 			else if(right) 
 			{
 				this.direction = Direction.EAST;
+				sprite = walkingRight;
 				dx += acceleration;
 				if(dx > maximumVelocity)
 				{
@@ -196,6 +213,7 @@ public class Maniac extends Enemy
 			if(up) 
 			{
 				this.direction = Direction.NORTH;
+				sprite = walkingUp;
 				dy -= acceleration;
 				if(dy < -maximumVelocity)
 				{
@@ -206,6 +224,7 @@ public class Maniac extends Enemy
 			else if(down) 
 			{
 				this.direction = Direction.SOUTH;
+				sprite = walkingDown;
 				dy += acceleration;
 			if(dy > maximumVelocity)
 				{
@@ -288,7 +307,24 @@ public class Maniac extends Enemy
 			alreadySmashed = true;
 		}
 		
-		super.render(graphics, camera);
+//		super.render(graphics, camera);
+		
+		if(this.direction == Direction.NORTH)
+		{
+			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if (this.direction == Direction.SOUTH)
+		{
+			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if (this.direction == Direction.EAST)
+		{
+			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if (this.direction == Direction.WEST)
+		{
+			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
 	}
 }
 

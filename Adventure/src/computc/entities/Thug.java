@@ -1,12 +1,15 @@
 
 package computc.entities;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 
+import computc.Direction;
 import computc.Game;
 import computc.cameras.Camera;
 import computc.worlds.dungeons.Dungeon;
@@ -16,6 +19,14 @@ public class Thug extends Enemy
 {
 	public static boolean hit = false;
 	
+	private Image spriteSheet = Game.assets.getImage("res/Droggon.png");
+	private Image walkDown = spriteSheet.getSubImage(1, 1, 64, 128);
+	private Image walkUp = spriteSheet.getSubImage(65, 1, 64, 128);
+	private Image walkLeft = spriteSheet.getSubImage(129, 1, 64, 128);
+	private Image walkRight = spriteSheet.getSubImage(192, 1, 64, 128);
+	
+	Animation sprite, walkingDown, walkingUp, walkingLeft, walkingRight;
+	
 	public Thug(Dungeon dungeon, Room room, int tx, int ty)
 	{
 		super(dungeon, room, tx, ty);
@@ -24,7 +35,12 @@ public class Thug extends Enemy
 		
 		this.dungeon = dungeon;
 		
-		this.image = Game.assets.getImage("res/thug.png");
+		this.image = Game.assets.getImage("res/Droggon.png").getSubImage(1, 1, 64, 64);
+		
+		walkingDown = new Animation(new SpriteSheet(walkDown, 64, 64), 400);
+		walkingUp = new Animation(new SpriteSheet(walkUp, 64, 64), 400);
+		walkingLeft = new Animation(new SpriteSheet(walkLeft, 64, 64), 400);
+		walkingRight = new Animation(new SpriteSheet(walkRight, 64, 64), 400);
 		
 		this.damage = 1;
 		this.acceleration = 0.03f;
@@ -82,6 +98,8 @@ public class Thug extends Enemy
 	{
 		if(left)
 		{
+			this.direction = Direction.WEST;
+			sprite = walkingLeft;
 			dx -= acceleration;
 			if(dx < -maximumVelocity)
 			{
@@ -92,6 +110,8 @@ public class Thug extends Enemy
 		
 		else if(right) 
 		{
+			this.direction = Direction.EAST;
+			sprite = walkingRight;
 			dx += acceleration;
 			if(dx > maximumVelocity)
 			{
@@ -103,6 +123,8 @@ public class Thug extends Enemy
 		
 		if(up) 
 		{
+			this.direction = Direction.NORTH;
+			sprite = walkingUp;
 			dy -= acceleration;
 			if(dy < -maximumVelocity)
 			{
@@ -112,6 +134,8 @@ public class Thug extends Enemy
 		}
 		else if(down) 
 		{
+			this.direction = Direction.SOUTH;
+			sprite = walkingDown;
 			dy += acceleration;
 			if(dy > maximumVelocity)
 			{
@@ -130,6 +154,23 @@ public class Thug extends Enemy
 				return;
 			}
 		}
-		super.render(graphics, camera);
+//		super.render(graphics, camera);
+		
+		if(this.direction == Direction.NORTH)
+		{
+			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if (this.direction == Direction.SOUTH)
+		{
+			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if (this.direction == Direction.EAST)
+		{
+			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if (this.direction == Direction.WEST)
+		{
+			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
 	}
 }
