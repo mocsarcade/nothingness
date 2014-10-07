@@ -63,8 +63,10 @@ public abstract class Dungeon
 	private float explodeX;
 	private float explodeY;
 	private float enemyHalfWidth = 24;
-	private double cameraZoomWidth;
-	private double cameraZoomHeight;
+	private double cameraZoomLeft;
+	private double cameraZoomRight;
+	private double cameraZoomBottom;
+	private double cameraZoomTop;
 	private double cameraLocation;
 
 	public Dungeon(GameData gamedata) 
@@ -98,8 +100,8 @@ public abstract class Dungeon
 		this.specialRoomLayouts.put("first room", Game.assets.getRoomLayout("./res/rooms/empty.room.tmx"));
 		this.specialRoomLayouts.put("last room", Game.assets.getRoomLayout("./res/rooms/clamp.room.tmx"));
 		
-		this.cameraZoomHeight = Room.HEIGHT;
-		this.cameraZoomWidth = Room.WIDTH;
+		this.cameraZoomRight = Room.HEIGHT;
+		this.cameraZoomBottom = Room.WIDTH;
 	}
 	
 	public void initiate()
@@ -128,8 +130,10 @@ public abstract class Dungeon
 		
 		if(input.isKeyDown(Input.KEY_P))
 		{
-			this.cameraZoomWidth -= 10;
-			this.cameraZoomHeight -= 10;
+			
+			this.cameraZoomRight -= 10;
+			this.cameraZoomBottom -= 10;
+			
 			
 			if(this.cameraLocation < this.gamedata.hero.getRoomPositionX())
 			{
@@ -138,18 +142,20 @@ public abstract class Dungeon
 			
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			glOrtho(cameraLocation, cameraZoomWidth, cameraZoomHeight, 0, -1, 1);
+			glOrtho(cameraZoomLeft, cameraZoomRight, cameraZoomBottom, cameraZoomTop, -1, 1);
 			glMatrixMode(GL_MODELVIEW);
 		}
 		
 		if(input.isKeyDown(Input.KEY_O))
 		{
-			this.cameraZoomWidth += 10;
-			this.cameraZoomHeight += 10;
+			this.cameraZoomLeft += 10;
+			this.cameraZoomRight += 10;
+			this.cameraZoomBottom += 10;
+			this.cameraZoomTop += 10;
 			
 			glMatrixMode(GL_PROJECTION);
 			glLoadIdentity();
-			glOrtho(cameraLocation, cameraZoomWidth, cameraZoomHeight, 0, -1, 1);
+			glOrtho(cameraZoomLeft, cameraZoomRight, cameraZoomBottom, cameraZoomTop, -1, 1);
 			glMatrixMode(GL_MODELVIEW);
 		}
 		
