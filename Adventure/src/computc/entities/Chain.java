@@ -49,7 +49,7 @@ public class Chain
 	 
 	public Entity entity;
 	
-	Image chainLink = new Image("res/links2.png");
+	Image chainLink = new Image("res/singleChainLink.png");
 	
 	public Chain(World world, Entity entity) throws SlickException
 	{
@@ -86,8 +86,12 @@ public class Chain
 		}
 		
 		// draw debug mode
-		else this.entity.dungeon.rigidBodyDebugDraw(bodies, staticBodies);
+		else 
+			{
+				this.entity.dungeon.rigidBodyDebugDraw(bodies, staticBodies);
+			}
 		
+		// for smooth room transition when dragging chain
 		if(camera.getX() != this.entity.getRoom().getX() || camera.getY() != this.entity.getRoom().getY())
 		{
 			if(roomLoadingCooldown <= 0)
@@ -108,6 +112,7 @@ public class Chain
 			lastLinkBody.setType(BodyType.DYNAMIC);
 			
 		}
+		
 		// converts box2d position to hero's position on screen
 		box2dPlayerPosition = new Vec2(this.entity.getLocalX(camera)/30, this.entity.getLocalY(camera)/30);	
 	}

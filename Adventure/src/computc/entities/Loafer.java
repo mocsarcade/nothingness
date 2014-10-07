@@ -76,8 +76,8 @@ public class Loafer extends Enemy
 			
 		case 2: // this is when the Loafer is in pursuit
 			
-			this.acceleration = .1f;
-			this.maximumVelocity = .1f;
+			this.acceleration = .06f;
+			this.maximumVelocity = .06f;
 			if(this.getRoom() == this.dungeon.gamedata.hero.getRoom())
 			{
 				if(this.x < this.dungeon.gamedata.hero.getX())

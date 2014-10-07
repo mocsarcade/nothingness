@@ -140,8 +140,8 @@ public class MainGameState extends BasicGameState
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
 		this.gamedata.dungeon.render(graphics, this.camera);
-		this.gamedata.hero.render(graphics, this.camera);
 		this.menu.render(graphics, camera);
+		this.gamedata.hero.render(graphics, this.camera);
 		
 		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
 		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())

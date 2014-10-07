@@ -63,7 +63,7 @@ public abstract class Dungeon
 		this.explosion = Game.assets.getImage("res/explosion.png");
 		this.gamedata = gamedata;
 		
-		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/stoney.tileset.xml"));
+		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/dirty.tileset.xml"));
 		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/snowy.tileset.xml"));
 		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/dirty.tileset.xml"));
 		
@@ -264,8 +264,18 @@ public abstract class Dungeon
 			}
 		}
 		
-		public boolean toggleDebugDraw()
+		public boolean toggleDebugDraw(Graphics graphics)
 		{
+			if(debug)
+			{
+				graphics.setDrawMode(1);
+			}
+			
+			if(!debug)
+			{
+				graphics.setDrawMode(4);
+			}
+			
 			return debug = !debug;
 		}
 		
