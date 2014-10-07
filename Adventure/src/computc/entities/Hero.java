@@ -54,12 +54,18 @@ public class Hero extends Entity
 	protected boolean swinging;
 	private int meleeDamage;
 	private int meleeRange;
-	private Image heroLeft, heroRight, heroDown, heroUp, heroIdleDown, heroIdleRight, heroIdleLeft, heroIdleUp;
+	
 
 	
 	private int peekTimer;
 	
 	private Image swingRight, swingLeft, swingUp, swingDown;
+	private Image spriteSheet = Game.assets.getImage("res/heroSpriteSheet.png");
+	private Image walkRight = spriteSheet.getSubImage(1, 1, 156, 62);
+	private Image walkLeft = spriteSheet.getSubImage(1, 63, 156, 62);
+	private Image walkDown = spriteSheet.getSubImage(1, 125, 156, 62);
+	private Image walkUp = spriteSheet.getSubImage(1, 186, 156, 62);
+	private Image heroIdleDown, heroIdleRight, heroIdleLeft, heroIdleUp;
 	
 	// actions 
 	private Animation sprite, firingArrow, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle, idleDown, idleUp, idleRight, idleLeft, walkingLeft, walkingDown, walkingUp, walkingRight;
@@ -77,14 +83,10 @@ public class Hero extends Entity
 		this.deacceleration = 0.02f;
 		this.maximumVelocity = 1f;
 		
-		this.heroLeft = Game.assets.getImage("res/heroSideViewLeft.png");
-		this.heroRight = Game.assets.getImage("res/heroSideView.png");
-		this.heroUp = Game.assets.getImage("res/heroBack.png");
-		this.heroDown = Game.assets.getImage("res/heroFrontView.png");
-		this.heroIdleDown = heroDown.getSubImage(1, 1, 63, 63);
-		this.heroIdleRight = heroRight.getSubImage(1, 1, 63, 63);
-		this.heroIdleLeft = heroLeft.getSubImage(1, 1, 63, 63);
-		this.heroIdleUp = heroUp.getSubImage(1, 1, 63, 63);
+		this.heroIdleDown = walkDown.getSubImage(1, 1, 62, 62);
+		this.heroIdleRight = walkRight.getSubImage(1, 1, 62, 62);
+		this.heroIdleLeft = walkLeft.getSubImage(39, 1, 62, 62);
+		this.heroIdleUp = walkUp.getSubImage(1, 1, 62, 62);
 
 		facingRight = true; 
 		facingDown = true;
@@ -100,26 +102,26 @@ public class Hero extends Entity
 		meleeDamage = 3;
 		meleeRange = 96;
 		
-		this.image = new Image("res/blankHero.png"); 
+		this.image = walkRight.getSubImage(1, 1, 39, 60); 
 		this.swingRight = new Image("res/heroMeleeRight.png");
 		this.swingLeft = new Image("res/heroMeleeLeft.png");
 		this.swingUp = new Image("res/heroMeleeUp.png");
 		this.swingDown = new Image("res/heroMeleeDown.png");
 		
-		this.walkingRight = new Animation(new SpriteSheet(heroRight, 63, 63), 200);
-		this.walkingLeft = new Animation(new SpriteSheet(heroLeft, 63, 63), 200);
-		this.walkingUp = new Animation(new SpriteSheet(heroUp, 63, 63), 200);
-		this.walkingDown = new Animation(new SpriteSheet(heroDown, 63, 63), 200);
+		this.walkingRight = new Animation(new SpriteSheet(walkRight, 39, 62), 200);
+		this.walkingLeft = new Animation(new SpriteSheet(walkLeft, 39, 62), 200);
+		this.walkingUp = new Animation(new SpriteSheet(walkUp, 39, 62), 200);
+		this.walkingDown = new Animation(new SpriteSheet(walkDown, 39, 62), 200);
 		
 		this.meleeRight = new Animation(new SpriteSheet(swingRight, 96, 48), 300);
 		this.meleeLeft = new Animation(new SpriteSheet(swingLeft, 96, 48), 300);
 		this.meleeDown = new Animation(new SpriteSheet(swingDown, 48, 96), 300);
 		this.meleeUp = new Animation(new SpriteSheet(swingUp, 48, 96), 300);
 		
-		this.idleDown = new Animation(new SpriteSheet(heroIdleDown, 63, 63), 10000);
-		this.idleUp = new Animation(new SpriteSheet(heroIdleUp, 63, 63), 10000);
-		this.idleRight = new Animation(new SpriteSheet(heroIdleRight, 63, 63), 10000);
-		this.idleLeft = new Animation(new SpriteSheet(heroIdleLeft, 63, 63), 10000);
+		this.idleDown = new Animation(new SpriteSheet(heroIdleDown, 39, 62), 10000);
+		this.idleUp = new Animation(new SpriteSheet(heroIdleUp, 39, 62), 10000);
+		this.idleRight = new Animation(new SpriteSheet(heroIdleRight, 39, 62), 10000);
+		this.idleLeft = new Animation(new SpriteSheet(heroIdleLeft, 39, 62), 10000);
 		
 		this.direction = Direction.SOUTH;
 		idle = idleDown;
@@ -150,13 +152,13 @@ public class Hero extends Entity
 			}
 		}
 		
-		super.render(graphics, camera);
+//		super.render(graphics, camera);
 		
 		// draw chain
 		if(this.dungeon.chainEnabled)
 		{
-			this.chain.render(graphics, camera);
-			ironBall.draw(this.chain.lastLinkBody.getPosition().x * 30, (this.chain.lastLinkBody.getPosition().y * 30));
+//			this.chain.render(graphics, camera);
+//			ironBall.draw(this.chain.lastLinkBody.getPosition().x * 30, (this.chain.lastLinkBody.getPosition().y * 30));
 		}
 		
 		// draw arrows

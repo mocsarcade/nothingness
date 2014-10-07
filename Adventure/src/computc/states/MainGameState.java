@@ -68,7 +68,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.hero.update(input, delta);
 		this.camera.update(input, delta);
 		
-		this.gamedata.dungeon.update(delta);
+		this.gamedata.dungeon.update(delta, input);
 		
 		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
 		//this.gamedata.hero.checkPickup(this.gamedata.dungeon.keys);
