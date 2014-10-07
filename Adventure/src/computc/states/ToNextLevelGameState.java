@@ -33,6 +33,10 @@ public class ToNextLevelGameState extends BasicGameState
 		
 		if(input.isKeyDown(Input.KEY_SPACE))
 		{
+			MainGameState maingame = (MainGameState) game.getState(MainGameState.ID);
+			maingame.camera.setToTargetX();
+			maingame.camera.setToTargetY();
+			
 			game.enterState(0, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
 		}
 	}

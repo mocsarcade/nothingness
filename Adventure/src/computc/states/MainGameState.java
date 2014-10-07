@@ -126,7 +126,6 @@ public class MainGameState extends BasicGameState
 		{
 			game.enterState(ToNextLevelGameState.ID, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 1000));
 		}
-		
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
