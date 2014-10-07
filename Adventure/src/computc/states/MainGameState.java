@@ -83,19 +83,6 @@ public class MainGameState extends BasicGameState
 			this.gamedata.instantiate();
 		}
 		
-		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
-		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
-		{
-			if((int)(counter) < greeting.length())
-			{
-				counter += delta * 0.025;
-			}
-			else
-			{
-				counter2 += delta * 0.025;
-			}
-		}
-		
 		//  makes the chain movement less floaty
 		if(input.isKeyDown(Input.KEY_UP))
 		{
@@ -131,34 +118,18 @@ public class MainGameState extends BasicGameState
 		{
 			this.camera.setPeeking(this.gamedata.hero.getDirection());
 		}
+		
+		if(this.gamedata.hero.collidesWith(this.gamedata.dungeon.ladder))
+		{
+			this.gamedata.instantiate();
+		}
 	}
-
-	private String greeting = "You made it to the end! I hope you enjoyed the game; we've";
-	private String greeting2 = "worked very hard on it. Follow us at mocsarcade.tumblr.com!";
-	private float counter, counter2;
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
 		this.gamedata.dungeon.render(graphics, this.camera);
 		this.menu.render(graphics, camera);
 		this.gamedata.hero.render(graphics, this.camera);
-		
-		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.lastRoom.getRoomyX()
-		&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.lastRoom.getRoomyY())
-		{
-			textBox.draw(Room.WIDTH/11, Room.HEIGHT/11);
-			textBox.setLooping(false);
-			
-			int xCoord = (int) (Room.WIDTH/11 + 12);
-			int yCoord = (int) (Room.HEIGHT/11 + 12);
-			int xCoord2 = (int) (Room.WIDTH/11 + 12);
-			int yCoord2 = (int) (Room.HEIGHT/11 + 32);
-			
-			String greeting2temp = greeting2;
-			graphics.setColor(Color.white);
-			graphics.drawString(greeting.substring(0, (int)(Math.min(counter, greeting.length()))), xCoord, yCoord);
-			graphics.drawString(greeting2temp.substring(0, (int)(Math.min(counter2, greeting2temp.length()))), xCoord2, yCoord2);
-		}
 	}
 	
 	@Override
