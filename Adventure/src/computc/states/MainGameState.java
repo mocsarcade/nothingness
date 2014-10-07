@@ -17,6 +17,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
+import org.newdawn.slick.state.transition.FadeInTransition;
+import org.newdawn.slick.state.transition.FadeOutTransition;
+import org.newdawn.slick.state.transition.RotateTransition;
 
 import computc.Game;
 import computc.GameData;
@@ -75,7 +78,7 @@ public class MainGameState extends BasicGameState
 		
 		if(input.isKeyDown(Input.KEY_M))
 		{
-			game.enterState(1);
+			game.enterState(1, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
 		}
 		
 		if(this.gamedata.hero.isDead())
@@ -121,8 +124,9 @@ public class MainGameState extends BasicGameState
 		
 		if(this.gamedata.hero.collidesWith(this.gamedata.dungeon.ladder))
 		{
-			this.gamedata.instantiate();
+			game.enterState(ToNextLevelGameState.ID, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 1000));
 		}
+		
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException

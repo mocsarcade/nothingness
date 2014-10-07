@@ -10,6 +10,7 @@ import org.newdawn.slick.SlickException;
 import computc.worlds.rooms.Room;
 import computc.states.MainGameState;
 import computc.states.DungeonMapGameState;
+import computc.states.ToNextLevelGameState;
 
 public class Game extends StateBasedGame
 {
@@ -26,6 +27,7 @@ public class Game extends StateBasedGame
 		
         this.addState(new MainGameState(gamedata));
         this.addState(new DungeonMapGameState(gamedata));
+        this.addState(new ToNextLevelGameState(gamedata));
 	}
 	
 	public static void main(String[] args) throws SlickException
