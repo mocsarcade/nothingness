@@ -20,8 +20,8 @@ import computc.worlds.tiles.TileSet;
 
 public class RandomDungeon extends Dungeon
 {
-	private final int ROOMS_PER_SEGMENT = 3;
-	private final int SEGMENTS_PER_DUNGEON = 2;
+	private final int ROOMS_PER_SEGMENT = 1;
+	private final int SEGMENTS_PER_DUNGEON = 1;
 	
 	ArrayList<DungeonSegment> segments = new ArrayList<DungeonSegment>();
 	
@@ -85,7 +85,7 @@ public class RandomDungeon extends Dungeon
 			}
 		}
 		
-		for(DungeonSegment segment : this.segments)
+		/*for(DungeonSegment segment : this.segments)
 		{
 			for(Room room : segment.getAllMajorRooms())
 			{
@@ -103,6 +103,6 @@ public class RandomDungeon extends Dungeon
 			
 			//segment.getLastMajorRoom().lockDoor(Direction.NORTH);
 			//segment.getRandomMinorRoom().addKey();
-		}
+		}*/
 	}
 }
