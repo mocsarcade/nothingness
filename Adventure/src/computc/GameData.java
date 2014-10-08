@@ -14,6 +14,8 @@ public class GameData
 	public Hero hero;
 	public Dungeon dungeon;
 	
+	public int level = 0;
+	
 	public void instantiate() throws SlickException
 	{
 		this.dungeon = null;

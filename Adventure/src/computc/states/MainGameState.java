@@ -124,7 +124,17 @@ public class MainGameState extends BasicGameState
 		
 		if(this.gamedata.hero.collidesWith(this.gamedata.dungeon.ladder))
 		{
-			game.enterState(ToNextLevelGameState.ID, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 1000));
+			this.gamedata.level++;
+			System.out.println(this.gamedata.level);
+			
+			if(this.gamedata.level < 4)
+			{
+				game.enterState(ToNextLevelGameState.ID, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 1000));
+			}
+			else
+			{
+				game.enterState(YouWonGameState.ID, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
+			}
 		}
 	}
 	
