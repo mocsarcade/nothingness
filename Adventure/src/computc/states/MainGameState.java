@@ -139,6 +139,8 @@ public class MainGameState extends BasicGameState
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
+		Input input = container.getInput();
+		
 		this.gamedata.dungeon.render(graphics, this.camera);
 		this.menu.render(graphics, camera);
 		this.gamedata.hero.render(graphics, this.camera);
@@ -158,6 +160,13 @@ public class MainGameState extends BasicGameState
 			graphics.setColor(Color.white);
 			graphics.drawString(greeting.substring(0, (int)(Math.min(counter, greeting.length()))), xCoord, yCoord);
 			graphics.drawString(greeting2temp.substring(0, (int)(Math.min(counter2, greeting2temp.length()))), xCoord2, yCoord2);
+		}
+		
+		if(input.isKeyDown(Input.KEY_SPACE) && this.gamedata.hero.getArrowCooldown() <= 0)
+		{
+			Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
+			
+			 tempArrow.getImage().draw(this.gamedata.hero.getX() - this.gamedata.hero.getHalfWidth() - this.camera.getX() + 5, this.gamedata.hero.getY() - this.gamedata.hero.getHalfHeight() - this.camera.getY() + 15);
 		}
 	}
 	
@@ -186,6 +195,13 @@ public class MainGameState extends BasicGameState
 				Vec2 force = mousePosition.sub(playerPosition);
 				this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
 			}
+		}
+		
+		if(k == Input.KEY_SPACE)
+		{
+			Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
+			
+			 tempArrow.getImage().draw(200, 200);
 		}
 	}
 	
@@ -226,14 +242,13 @@ public class MainGameState extends BasicGameState
 			{
 				this.gamedata.hero.arrowCount -= 1;
 				Arrow arrow;
-				try 
+				
+				if(this.gamedata.hero.getArrowCooldown() <= 0)
 				{
 					arrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
 					arrow.setPosition(this.gamedata.hero.getX(), this.gamedata.hero.getY());
 					this.gamedata.hero.arrows.add(arrow);
-				} catch (SlickException e) 
-				{
-					e.printStackTrace();
+					this.gamedata.hero.startArrowCooldown();
 				}
 				
 			}

@@ -42,7 +42,7 @@ public class Hero extends Entity
 	private ChainEnd ball;
 	private int ballDamage;
 	
-	private int projectileCooldown = 0;
+	private int arrowCooldown = 0;
 	
 	public int arrowCount;
 	private int maxArrows;
@@ -321,7 +321,14 @@ public class Hero extends Entity
 		// update arrows
 		for (int i = 0; i < arrows.size(); i++) 
 			{
-				arrows.get(i).update();
+				arrows.get(i).update(delta);
+				
+				if(this.intersects(arrows.get(i)) && arrows.get(i).getArrowCooldown() > 0)
+				{
+					arrows.get(i).setRemove();
+					this.arrowCount += 1;
+				}
+				
 				if(arrows.get(i).shouldRemove()) 
 				{
 					arrows.remove(i);
@@ -329,8 +336,8 @@ public class Hero extends Entity
 				}
 			}
 		
-		if(projectileCooldown > 0){
-			projectileCooldown -= delta;
+		if(arrowCooldown > 0){
+			arrowCooldown -= delta;
 		}
 		
 		// set Animation
@@ -604,7 +611,8 @@ public class Hero extends Entity
 			
 			for(int j = 0; j < arrows.size(); j++) 
 			{
-				if(arrows.get(j).intersects(e)) {
+				if(arrows.get(j).intersects(e)) 
+				{
 					e.hit(arrowDamage);
 					arrows.get(j).setHit();
 					break;
@@ -625,6 +633,16 @@ public class Hero extends Entity
 	public int getHealth()
 	{
 		return currentHealth;
+	}
+	
+	public int getArrowCooldown()
+	{
+		return this.arrowCooldown;
+	}
+	
+	public void startArrowCooldown()
+	{
+		this.arrowCooldown = 800;
 	}
 	
 	public boolean isDead()
