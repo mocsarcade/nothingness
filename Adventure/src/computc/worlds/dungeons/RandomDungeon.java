@@ -21,8 +21,8 @@ import computc.worlds.tiles.TileSet;
 
 public class RandomDungeon extends Dungeon
 {
-	private final int ROOMS_PER_SEGMENT = 1;
-	private final int SEGMENTS_PER_DUNGEON = 1;
+	private final int ROOMS_PER_SEGMENT = 3;
+	private final int SEGMENTS_PER_DUNGEON = 2;
 	
 	ArrayList<DungeonSegment> segments = new ArrayList<DungeonSegment>();
 	

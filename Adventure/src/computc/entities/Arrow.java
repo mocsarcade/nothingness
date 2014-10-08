@@ -7,6 +7,7 @@ import org.newdawn.slick.SlickException;
 
 import computc.cameras.Camera;
 import computc.Direction;
+import computc.Game;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.rooms.Room;
 
@@ -20,9 +21,12 @@ public class Arrow extends Entity
     protected boolean up;
     protected boolean down;
     
-    Image arrows = new Image("res/arrowSpriteSheet.png");
+    protected boolean stuck;
+    private int stickCooldown;
+    
+    Image arrows = Game.assets.getImage("res/arrowSpriteSheet.png");
 	
-	public Arrow(Dungeon dungeon, Room room, int tx, int ty, Direction direction) throws SlickException
+	public Arrow(Dungeon dungeon, Room room, int tx, int ty, Direction direction) 
 	{
 		super(dungeon, room, tx, ty);
 		
@@ -53,11 +57,9 @@ public class Arrow extends Entity
 			this.image = arrows.getSubImage(161, 1, 30, 30);
 		}
 		
-		
-		
 	}
 	
-	public void update()
+	public void update(int delta)
 	{
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
@@ -74,8 +76,35 @@ public class Arrow extends Entity
 		
 		if(hit)
 		{
+			stuck = true;
+		}
+		
+		if(stuck && stickCooldown == 0)
+		{
+			stickCooldown = 5000;
+		}
+		
+		if(stickCooldown < 100 && stickCooldown > 0)
+		{
 			remove = true;
 		}
+		
+		if(stickCooldown > 0)
+		{
+			stickCooldown -= delta;
+		}
+		
+		if(stickCooldown < 0)
+		{
+			stickCooldown = 0;
+		}
+
+	}
+	
+	public void render(Graphics graphics, Camera camera)
+	{
+		super.render(graphics, camera);
+		
 	}
 	
 	public void setHit() 
@@ -85,6 +114,7 @@ public class Arrow extends Entity
 		
 		hit = true;
 		dx = 0; dy = 0;
+		
 	}
 	
 	public boolean shouldRemove()
@@ -105,6 +135,16 @@ public class Arrow extends Entity
 	public Image getImage()
 	{
 		return this.image;
+	}
+	
+	public int getArrowCooldown()
+	{
+		return stickCooldown;
+	}
+	
+	public void setRemove()
+	{
+		remove = true;
 	}
 
 }

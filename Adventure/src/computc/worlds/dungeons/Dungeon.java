@@ -7,6 +7,11 @@ import static org.lwjgl.opengl.GL11.glPushMatrix;
 import static org.lwjgl.opengl.GL11.glRectd;
 import static org.lwjgl.opengl.GL11.glRotated;
 import static org.lwjgl.opengl.GL11.glTranslatef;
+import static org.lwjgl.opengl.GL11.glLoadIdentity;
+import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.GL_PROJECTION;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -21,6 +26,7 @@ import org.jdom2.input.SAXBuilder;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SpriteSheet;
 
 import computc.GameData;
@@ -58,6 +64,11 @@ public abstract class Dungeon
 	private float explodeX;
 	private float explodeY;
 	private float enemyHalfWidth = 24;
+	private double cameraZoomLeft;
+	private double cameraZoomRight;
+	private double cameraZoomBottom;
+	private double cameraZoomTop;
+	private double cameraLocation;
 
 	public Dungeon(GameData gamedata) 
 	{
@@ -89,6 +100,9 @@ public abstract class Dungeon
 		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/twolines.room.tmx"));
 		this.specialRoomLayouts.put("first room", Game.assets.getRoomLayout("./res/rooms/empty.room.tmx"));
 		this.specialRoomLayouts.put("last room", Game.assets.getRoomLayout("./res/rooms/clamp.room.tmx"));
+		
+		this.cameraZoomRight = Room.HEIGHT;
+		this.cameraZoomBottom = Room.WIDTH;
 	}
 	
 	public void initiate()
@@ -99,7 +113,7 @@ public abstract class Dungeon
 		}
 	}
 	
-	public void update(int delta)
+	public void update(int delta, Input input)
 	{
 		for(int i = 0; i < enemies.size(); i++)
 		{
@@ -114,6 +128,39 @@ public abstract class Dungeon
 					i--;
 				}
 		}
+		
+		if(input.isKeyDown(Input.KEY_P))
+		{
+			
+			this.cameraZoomRight -= 10;
+			this.cameraZoomBottom -= 10;
+			
+			
+			if(this.cameraLocation < this.gamedata.hero.getRoomPositionX())
+			{
+				cameraLocation ++;
+			}
+			
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(cameraZoomLeft, cameraZoomRight, cameraZoomBottom, cameraZoomTop, -1, 1);
+			glMatrixMode(GL_MODELVIEW);
+		}
+		
+		if(input.isKeyDown(Input.KEY_O))
+		{
+			this.cameraZoomLeft += 10;
+			this.cameraZoomRight += 10;
+			this.cameraZoomBottom += 10;
+			this.cameraZoomTop += 10;
+			
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(cameraZoomLeft, cameraZoomRight, cameraZoomBottom, cameraZoomTop, -1, 1);
+			glMatrixMode(GL_MODELVIEW);
+		}
+		
+		
 	}
 
 	public void render(Graphics graphics, Camera camera)

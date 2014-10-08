@@ -75,7 +75,6 @@ public class Room
 			this.tiles[tx][ty] = new DoorTile(this, tx, ty);
 		}
 		
-		/*
 		for(Point point : this.roomlayout.thugs)
 		{
 			this.dungeon.enemies.add(new Thug(this.dungeon, this, point.x, point.y));
@@ -90,7 +89,7 @@ public class Room
 		{
 			this.dungeon.enemies.add(new Loafer(this.dungeon, this, point.x, point.y));
 		}
-		*/
+		
 	}
 	
 	public void render(Graphics graphics, Camera camera)

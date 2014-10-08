@@ -1,10 +1,13 @@
 package computc.entities;
 
 import org.jbox2d.common.Vec2;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.SpriteSheet;
 
+import computc.Direction;
 import computc.Game;
 import computc.cameras.Camera;
 import computc.worlds.dungeons.Dungeon;
@@ -17,7 +20,13 @@ public class Loafer extends Enemy
 	
 	public boolean angry;
 	private int pursuitCooldown;
-	private int stuckCoolDown;
+	private Image spriteSheet = Game.assets.getImage("res/WolfLoafer.png");
+	private Image walkDown = spriteSheet.getSubImage(1, 1, 57, 128);
+	private Image walkUp = spriteSheet.getSubImage(57, 1, 57, 128);
+	private Image walkLeft = spriteSheet.getSubImage(116, 1, 57, 128);
+	private Image walkRight = spriteSheet.getSubImage(171, 1, 57, 128);
+	
+	Animation sprite, walkingDown, walkingUp, walkingLeft, walkingRight;
 	
 	public Loafer(Dungeon dungeon, Room room, int x, int y)
 	{
@@ -25,7 +34,13 @@ public class Loafer extends Enemy
 		
 		this.dungeon = dungeon;
 		
-		this.image = Game.assets.getImage("res/Loafer.png");
+		this.image = Game.assets.getImage("res/WolfLoafer.png").getSubImage(1, 1, 55, 61);
+		
+		
+		walkingDown = new Animation(new SpriteSheet(walkDown, 57, 64), 200);
+		walkingUp = new Animation(new SpriteSheet(walkUp, 57, 64), 200);
+		walkingLeft = new Animation(new SpriteSheet(walkLeft, 57, 64), 200);
+		walkingRight = new Animation(new SpriteSheet(walkRight, 57, 64), 200);
 		
 		this.damage = 1;
 		this.acceleration = 0.03f;
@@ -35,7 +50,6 @@ public class Loafer extends Enemy
 		this.health = this.maximumHealth = 8;
 		
 		right = true;
-		stuckCoolDown = 0;
 		mood = 1;
 	}
 	
@@ -220,6 +234,8 @@ public class Loafer extends Enemy
 	{
 		if(left)
 		{
+			this.direction = Direction.WEST;
+			sprite = walkingLeft;
 			dx -= acceleration;
 			if(dx < -maximumVelocity)
 			{
@@ -230,6 +246,8 @@ public class Loafer extends Enemy
 		
 		else if(right) 
 		{
+			this.direction = Direction.EAST;
+			sprite = walkingRight;
 			dx += acceleration;
 			if(dx > maximumVelocity)
 			{
@@ -241,6 +259,8 @@ public class Loafer extends Enemy
 		
 		if(up) 
 		{
+			this.direction = Direction.NORTH;
+			sprite = walkingUp;
 			dy -= acceleration;
 			if(dy < -maximumVelocity)
 			{
@@ -250,6 +270,8 @@ public class Loafer extends Enemy
 		}
 		else if(down) 
 		{
+			this.direction = Direction.SOUTH;
+			sprite = walkingDown;
 			dy += acceleration;
 			if(dy > maximumVelocity)
 			{
@@ -268,7 +290,24 @@ public class Loafer extends Enemy
 				return;
 			}
 		}
-		super.render(graphics, camera);
+//		super.render(graphics, camera);
+		
+		if(this.direction == Direction.NORTH)
+		{
+			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if (this.direction == Direction.SOUTH)
+		{
+			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if (this.direction == Direction.EAST)
+		{
+			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if (this.direction == Direction.WEST)
+		{
+			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
 	}
 }
 
