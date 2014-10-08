@@ -19,7 +19,7 @@ public class RoomFollowingCamera extends Camera
 	public RoomFollowingCamera(GameData gamedata)
 	{
 		this.gamedata = gamedata;
-
+		
 		this.setToTargetX();
 		this.setToTargetY();
 	}

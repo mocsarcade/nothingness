@@ -711,5 +711,10 @@ public class Hero extends Entity
 		}*/
 	}
 	
+	public boolean collidesWith(Entity entity)
+	{
+		return this.intersects(entity);
+	}
+	
 	private float speed = 0.25f;
 }

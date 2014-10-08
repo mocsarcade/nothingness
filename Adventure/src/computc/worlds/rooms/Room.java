@@ -89,6 +89,7 @@ public class Room
 		{
 			this.dungeon.enemies.add(new Loafer(this.dungeon, this, point.x, point.y));
 		}
+		
 	}
 	
 	public void render(Graphics graphics, Camera camera)
