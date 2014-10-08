@@ -30,6 +30,7 @@ import computc.entities.Coin;
 import computc.entities.Enemy;
 import computc.entities.Entity;
 import computc.entities.Key;
+import computc.entities.Ladder;
 import computc.entities.OldMan;
 import computc.worlds.rooms.Room;
 import computc.worlds.rooms.RoomLayout;
@@ -44,7 +45,7 @@ public abstract class Dungeon
 	public LinkedList<Enemy> enemies = new LinkedList<Enemy>();
 	public Room firstRoom;
 	public Room lastRoom;
-	public OldMan oldman;
+	public Ladder ladder;
 	public GameData gamedata;
 	
 	ArrayList<TileSet> tilesets = new ArrayList<TileSet>();
@@ -132,9 +133,9 @@ public abstract class Dungeon
 			key.render(graphics, camera);
 		}
 		
-		if(this.oldman != null)
+		if(this.ladder != null)
 		{
-			this.oldman.render(graphics, camera);
+			this.ladder.render(graphics, camera);
 		}
 		
 		for(int i = 0; i < explosions.size(); i++)

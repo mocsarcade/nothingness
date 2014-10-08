@@ -14,14 +14,15 @@ import computc.Direction;
 import computc.GameData;
 import computc.cameras.Camera;
 import computc.entities.Key;
+import computc.entities.Ladder;
 import computc.entities.OldMan;
 import computc.worlds.rooms.Room;
 import computc.worlds.tiles.TileSet;
 
 public class RandomDungeon extends Dungeon
 {
-	private final int ROOMS_PER_SEGMENT = 3;
-	private final int SEGMENTS_PER_DUNGEON = 2;
+	private final int ROOMS_PER_SEGMENT = 1;
+	private final int SEGMENTS_PER_DUNGEON = 1;
 	
 	ArrayList<DungeonSegment> segments = new ArrayList<DungeonSegment>();
 	
@@ -77,7 +78,7 @@ public class RandomDungeon extends Dungeon
 				this.lastRoom.setRoomLayout(this.getSpecialRoomLayout("last room"));
 				previousRoom.makeDoor(direction);
 				
-				this.oldman = new OldMan(this, this.lastRoom, 5, 3);
+				this.ladder = new Ladder(this, this.lastRoom, 5, 4);
 			}
 			else
 			{
@@ -85,7 +86,7 @@ public class RandomDungeon extends Dungeon
 			}
 		}
 		
-		for(DungeonSegment segment : this.segments)
+		/*for(DungeonSegment segment : this.segments)
 		{
 			for(Room room : segment.getAllMajorRooms())
 			{
@@ -103,6 +104,6 @@ public class RandomDungeon extends Dungeon
 			
 			//segment.getLastMajorRoom().lockDoor(Direction.NORTH);
 			//segment.getRandomMinorRoom().addKey();
-		}
+		}*/
 	}
 }
