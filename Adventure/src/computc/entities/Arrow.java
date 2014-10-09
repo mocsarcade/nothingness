@@ -4,6 +4,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 
 import computc.cameras.Camera;
 import computc.Direction;
@@ -24,6 +25,8 @@ public class Arrow extends Entity
     protected boolean stuck;
     private int stickCooldown;
     
+    public int arrowDamage;
+    
     Image arrows = Game.assets.getImage("res/arrowSpriteSheet.png");
 	
 	public Arrow(Dungeon dungeon, Room room, int tx, int ty, Direction direction) 
@@ -35,6 +38,8 @@ public class Arrow extends Entity
 		this.dungeon = dungeon;
 		
 		this.acceleration = 7f;
+		
+		this.arrowDamage = 2;
 		
 		if(direction == Direction.NORTH)
 		{
@@ -89,6 +94,11 @@ public class Arrow extends Entity
 			remove = true;
 		}
 		
+		if(!(this.getMostRecentCollision() == null) && this.getMostRecentCollision().isDead())
+		{
+			remove = true;
+		}
+		
 		if(stickCooldown > 0)
 		{
 			stickCooldown -= delta;
@@ -97,6 +107,18 @@ public class Arrow extends Entity
 		if(stickCooldown < 0)
 		{
 			stickCooldown = 0;
+		}
+		
+		if(stuck && this.getMostRecentCollision() instanceof Enemy)
+		{
+			this.x = this.getMostRecentCollision().getX();
+			this.y = this.getMostRecentCollision().getY();
+			this.arrowDamage = 0;
+			
+			if(stickCooldown > 2500)
+			{
+				stickCooldown = 2500;
+			}
 		}
 
 	}
@@ -115,6 +137,21 @@ public class Arrow extends Entity
 		hit = true;
 		dx = 0; dy = 0;
 		
+	}
+	
+	public boolean intersects(Entity that)
+	{
+		Rectangle r1 = this.getHitbox();
+		Rectangle r2 = that.getHitbox();
+		
+		
+		
+		if(that instanceof Enemy && r1.intersects(r2) == true)
+		{
+			this.mostRecentCollision = that;
+		}
+		
+		return r1.intersects(r2);
 	}
 	
 	public boolean shouldRemove()

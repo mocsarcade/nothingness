@@ -66,6 +66,8 @@ public abstract class Entity
 	protected boolean facingRight;
 	protected boolean facingDown;
 	
+	protected Entity mostRecentCollision;
+	
 	protected LinkedList<Key> keys = new LinkedList<Key>();
 	
 	public Entity(Dungeon dungeon, float x, float y)
@@ -143,6 +145,13 @@ public abstract class Entity
 	{
 		Rectangle r1 = this.getHitbox();
 		Rectangle r2 = that.getHitbox();
+		
+		this.mostRecentCollision = that;
+		
+		if(this instanceof Hero && that instanceof Enemy && r1.intersects(r2) == true)
+		{
+//			System.out.println(" the entity you collided with is: " + this.mostRecentCollision);
+		}
 		
 		return r1.intersects(r2);
 	}
@@ -276,7 +285,7 @@ public abstract class Entity
 	
 	public boolean isDead() 
 	{
-		return this.currentHealth < 0;
+		return this.currentHealth <= 0;
 	}
 	
 	public boolean wasJustHit()
@@ -303,6 +312,10 @@ public abstract class Entity
 		return this.dy;
 	}
 	
+	public Entity getMostRecentCollision()
+	{
+		return this.mostRecentCollision;
+	}
 	
 	
 	public void calculateCorners(float x, float y) 

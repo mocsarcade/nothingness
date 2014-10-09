@@ -47,7 +47,7 @@ public class Hero extends Entity
 	public int arrowCount;
 	private int maxArrows;
 	
-	private int arrowDamage;
+	
 	public ArrayList<Arrow> arrows;
 	
 	protected boolean firing;
@@ -92,7 +92,6 @@ public class Hero extends Entity
 		facingDown = true;
 		
 		this.arrowCount = this.maxArrows = 30;
-		arrowDamage = 2;
 		arrows = new ArrayList<Arrow>();
 		
 		this.ballDamage = 2;
@@ -102,7 +101,7 @@ public class Hero extends Entity
 		meleeDamage = 3;
 		meleeRange = 96;
 		
-		this.image = walkRight.getSubImage(1, 1, 39, 60); 
+		this.image = walkRight.getSubImage(1, 1, 39, 55); 
 		this.swingRight = new Image("res/heroMeleeRight.png");
 		this.swingLeft = new Image("res/heroMeleeLeft.png");
 		this.swingUp = new Image("res/heroMeleeUp.png");
@@ -157,8 +156,8 @@ public class Hero extends Entity
 		// draw chain
 		if(this.dungeon.chainEnabled)
 		{
-//			this.chain.render(graphics, camera);
-//			ironBall.draw(this.chain.lastLinkBody.getPosition().x * 30, (this.chain.lastLinkBody.getPosition().y * 30));
+			this.chain.render(graphics, camera);
+			ironBall.draw(this.chain.lastLinkBody.getPosition().x * 30, (this.chain.lastLinkBody.getPosition().y * 30));
 		}
 		
 		// draw arrows
@@ -613,7 +612,7 @@ public class Hero extends Entity
 			{
 				if(arrows.get(j).intersects(e)) 
 				{
-					e.hit(arrowDamage);
+					e.hit(arrows.get(j).arrowDamage);
 					arrows.get(j).setHit();
 					break;
 				}
