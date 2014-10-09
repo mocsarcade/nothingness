@@ -23,6 +23,7 @@ public class Arrow extends Entity
     protected boolean down;
     
     protected boolean stuck;
+    protected boolean inert;
     private int stickCooldown;
     
     public int arrowDamage;
@@ -109,6 +110,11 @@ public class Arrow extends Entity
 			stickCooldown = 0;
 		}
 		
+		if(stuck && this.getMostRecentCollision() == null)
+		{
+			inert = true;
+		}
+		
 		if(stuck && this.getMostRecentCollision() instanceof Enemy)
 		{
 			this.x = this.getMostRecentCollision().getX();
@@ -149,6 +155,11 @@ public class Arrow extends Entity
 		if(that instanceof Enemy && r1.intersects(r2) == true)
 		{
 			this.mostRecentCollision = that;
+		}
+		
+		if(inert)
+		{
+			return false;
 		}
 		
 		return r1.intersects(r2);
