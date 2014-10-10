@@ -137,6 +137,7 @@ public class Hero extends Entity
 			this.chain.playerBody.setTransform(box2dPlayerPosition, 0);
 			this.ball = new ChainEnd(this.dungeon, this.getTileyX(), this.getTileyY(), this.direction, this.chain, this);
 		}
+		
 	}
 	
 	public void render(Graphics graphics, Camera camera)
@@ -684,7 +685,7 @@ public class Hero extends Entity
 		peekTimer = 0;
 	}
 	
-	public void checkPickup(LinkedList<Key> keys)
+	public void checkPickup(LinkedList<Commodity> commodities)
 	{
 		/*for(Key key : keys)
 		{
@@ -695,6 +696,15 @@ public class Hero extends Entity
 				key.pickedup = true;
 			}
 		}*/
+		
+		for(Commodity commodity: commodities)
+		{
+			if(this.intersects(commodity) && commodity.getType() == 2)
+			{
+				this.arrowCount += 5;
+				commodities.remove(commodity);
+			}
+		}
 	}
 	
 	public void checkGetCoin()

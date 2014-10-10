@@ -74,7 +74,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.dungeon.update(delta, input);
 		
 		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
-		//this.gamedata.hero.checkPickup(this.gamedata.dungeon.keys);
+		this.gamedata.hero.checkPickup(this.gamedata.dungeon.commodities);
 		
 		if(input.isKeyDown(Input.KEY_M))
 		{
@@ -106,9 +106,12 @@ public class MainGameState extends BasicGameState
 			this.gamedata.hero.getWorld().setGravity(new Vec2(-1f, 0));
 		}
 		
-		for(Body body: this.gamedata.hero.chain.bodies)
+		if(this.gamedata.dungeon.chainEnabled)
 		{
-			body.setLinearDamping(10);
+			for(Body body: this.gamedata.hero.chain.bodies)
+			{
+				body.setLinearDamping(10);
+			}
 		}
 		
 		if(gravityCoolDown != 0)

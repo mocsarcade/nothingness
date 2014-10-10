@@ -132,7 +132,6 @@ public class Arrow extends Entity
 	public void render(Graphics graphics, Camera camera)
 	{
 		super.render(graphics, camera);
-		
 	}
 	
 	public void setHit() 
