@@ -35,6 +35,7 @@ public abstract class Enemy extends Entity
     
     protected boolean smash;
 	protected boolean alreadySmashed;
+	
 	public boolean isDead()
 	{
 		return dead;

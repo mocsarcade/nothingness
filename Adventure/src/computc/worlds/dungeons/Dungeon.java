@@ -16,6 +16,7 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Random;
 import java.util.Set;
 
 import org.jbox2d.common.Vec2;
@@ -33,6 +34,7 @@ import computc.GameData;
 import computc.Game;
 import computc.cameras.Camera;
 import computc.entities.Coin;
+import computc.entities.Commodity;
 import computc.entities.Enemy;
 import computc.entities.Entity;
 import computc.entities.Key;
@@ -49,6 +51,7 @@ public abstract class Dungeon
 	protected HashMap<String, Room> rooms = new HashMap<String, Room>();
 	public LinkedList<Key> keys = new LinkedList<Key>();
 	public LinkedList<Enemy> enemies = new LinkedList<Enemy>();
+	public LinkedList<Commodity> commodities = new LinkedList<Commodity>();
 	public Room firstRoom;
 	public Room lastRoom;
 	public Ladder ladder;
@@ -58,17 +61,15 @@ public abstract class Dungeon
 	LinkedList<RoomLayout> randomRoomLayouts = new LinkedList<RoomLayout>();
 	HashMap<String, RoomLayout> specialRoomLayouts = new HashMap<String, RoomLayout>();
 	private boolean debug;
-	public boolean chainEnabled = true;
+	public boolean chainEnabled = false;
 	public LinkedList<Animation> explosions = new LinkedList<Animation>();
+	
 	private Image explosion;
 	private float explodeX;
 	private float explodeY;
 	private float enemyHalfWidth = 24;
-	private double cameraZoomLeft;
-	private double cameraZoomRight;
-	private double cameraZoomBottom;
-	private double cameraZoomTop;
-	private double cameraLocation;
+	private Random random;
+
 
 	public Dungeon(GameData gamedata) 
 	{
@@ -101,8 +102,7 @@ public abstract class Dungeon
 		this.specialRoomLayouts.put("first room", Game.assets.getRoomLayout("./res/rooms/empty.room.tmx"));
 		this.specialRoomLayouts.put("last room", Game.assets.getRoomLayout("./res/rooms/clamp.room.tmx"));
 		
-		this.cameraZoomRight = Room.HEIGHT;
-		this.cameraZoomBottom = Room.WIDTH;
+		this.random = new Random();
 	}
 	
 	public void initiate()
@@ -125,41 +125,10 @@ public abstract class Dungeon
 					this.explodeX = e.getX();
 					this.explodeY = e.getY();
 					explosions.add(new Animation(new SpriteSheet(explosion, 30, 30), 200));
-					i--;
+					commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(3)));
+					i--;		
 				}
 		}
-		
-		if(input.isKeyDown(Input.KEY_P))
-		{
-			
-			this.cameraZoomRight -= 10;
-			this.cameraZoomBottom -= 10;
-			
-			
-			if(this.cameraLocation < this.gamedata.hero.getRoomPositionX())
-			{
-				cameraLocation ++;
-			}
-			
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			glOrtho(cameraZoomLeft, cameraZoomRight, cameraZoomBottom, cameraZoomTop, -1, 1);
-			glMatrixMode(GL_MODELVIEW);
-		}
-		
-		if(input.isKeyDown(Input.KEY_O))
-		{
-			this.cameraZoomLeft += 10;
-			this.cameraZoomRight += 10;
-			this.cameraZoomBottom += 10;
-			this.cameraZoomTop += 10;
-			
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			glOrtho(cameraZoomLeft, cameraZoomRight, cameraZoomBottom, cameraZoomTop, -1, 1);
-			glMatrixMode(GL_MODELVIEW);
-		}
-		
 		
 	}
 
@@ -178,6 +147,11 @@ public abstract class Dungeon
 		for(Key key : this.keys)
 		{
 			key.render(graphics, camera);
+		}
+		
+		for(Commodity commodity: this.commodities)
+		{
+			commodity.render(graphics, camera);
 		}
 		
 		if(this.ladder != null)
