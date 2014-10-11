@@ -125,7 +125,13 @@ public abstract class Dungeon
 					this.explodeX = e.getX();
 					this.explodeY = e.getY();
 					explosions.add(new Animation(new SpriteSheet(explosion, 30, 30), 200));
-					commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(3)));
+					
+					double a = Math.random();					
+					if(a > 0.5)
+					{
+						commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(3)));
+					}
+					
 					i--;		
 				}
 		}
