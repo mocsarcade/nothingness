@@ -1,10 +1,14 @@
 package computc;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.util.ResourceLoader;
 
 import computc.worlds.rooms.RoomLayout;
 import computc.worlds.tiles.Tile;
@@ -16,7 +20,12 @@ public class AssetManager
 	private HashMap<String, Image> loadedImages = new HashMap<String, Image>();
 	private HashMap<String, TileSet> loadedTileSets = new HashMap<String, TileSet>();
 	private HashMap<String, RoomLayout> loadedRoomLayouts = new HashMap<String, RoomLayout>();
+	private Audio backgroundMusic;
 	
+	public AssetManager()
+	{
+		initAudio();
+	}
 	public Image getImage(String source)
 	{
 		try
@@ -66,5 +75,17 @@ public class AssetManager
 		}
 		
 		return this.loadedTileSets.get(source);
+	}
+	public void initAudio()
+	{
+		try 
+		{
+			backgroundMusic = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/audio/bg.ogg"));
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		backgroundMusic.playAsMusic(1.0f, 1.0f, true);
 	}
 }
