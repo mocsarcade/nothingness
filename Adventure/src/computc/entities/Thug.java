@@ -9,8 +9,8 @@ import org.newdawn.slick.geom.Circle;
 import org.newdawn.slick.geom.Point;
 
 import computc.cameras.Camera;
-import computc.worlds.Dungeon;
-import computc.worlds.Room;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
 
 public class Thug extends Enemy	
 {

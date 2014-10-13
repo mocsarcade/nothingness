@@ -59,6 +59,8 @@ public class Hero extends Entity
 	
 	private int peekTimer;
 	
+	//Not sure if this is supposed to be int -- it was missing but referenced?
+	
 	private Image swingRight, swingLeft, swingUp, swingDown;
 	private Image spriteSheet = Game.assets.getImage("res/heroSpriteSheet.png");
 	private Image walkRight = spriteSheet.getSubImage(1, 1, 156, 62);

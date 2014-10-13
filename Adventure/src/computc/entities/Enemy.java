@@ -5,8 +5,8 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
 
 import computc.cameras.Camera;
-import computc.worlds.Dungeon;
-import computc.worlds.Room;
+import computc.worlds.dungeons.Dungeon;
+import computc.worlds.rooms.Room;
 
 public abstract class Enemy extends Entity
 {
@@ -24,6 +24,8 @@ public abstract class Enemy extends Entity
 	protected int maxHealth;
 	protected boolean dead;
 	protected int damage;
+	protected int mood; 
+
 	
 	protected boolean blinkTimer;
 	protected int blinkCooldown;

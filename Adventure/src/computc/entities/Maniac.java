@@ -33,6 +33,8 @@ public class Maniac extends Enemy
 	
 	
 	private boolean bullRush;
+	private boolean alreadySmashed;
+	private boolean smash;
 	
 	public Maniac(Dungeon dungeon, Room room, int x, int  y)
 	{

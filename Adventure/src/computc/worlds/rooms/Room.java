@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import computc.Direction;
 import computc.Game;
@@ -46,7 +47,7 @@ public class Room
 		this.dungeon.addRoom(this);
 	}
 	
-	public void initiate()
+	public void initiate() throws SlickException
 	{
 		for(int tx = 0; tx < this.getTileyWidth(); tx++)
 		{

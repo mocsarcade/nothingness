@@ -28,6 +28,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import computc.GameData;
@@ -109,7 +110,14 @@ public abstract class Dungeon
 	{
 		for(Room room : this.getAllRooms())
 		{
-			room.initiate();
+			try 
+			{
+				room.initiate();
+			} 
+			catch (SlickException e) 
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 	
