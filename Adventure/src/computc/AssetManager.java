@@ -78,14 +78,15 @@ public class AssetManager
 	}
 	public void initAudio()
 	{
-		try 
+		try
 		{
 			backgroundMusic = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/audio/bg.ogg"));
-		} 
-		catch (IOException e) 
+		}
+		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
+		//Play song at +1 pitch, +1 gain, and on repeat
 		backgroundMusic.playAsMusic(1.0f, 1.0f, true);
 	}
 }
