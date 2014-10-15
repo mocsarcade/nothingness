@@ -11,5 +11,7 @@
 	<classpathentry kind="lib" path="lib/jars/jdom.jar"/>
 	<classpathentry kind="lib" path="lib/jars/jbox2d-library-2.2.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/jars/jbox2d-testbed-2.2.1.1-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="lib/jars/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="lib/jars/jorbis-0.0.15.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
