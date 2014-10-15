@@ -99,7 +99,7 @@ public class Hero extends Entity
 		
 		this.ballDamage = 2;
 		
-		this.currentHealth = this.maximumHealth = 3;
+		this.currentHealth = this.maximumHealth = 15;
 		
 		meleeDamage = 3;
 		meleeRange = 96;
@@ -584,6 +584,7 @@ public class Hero extends Entity
 					if(e.getX() > x && e.getX() < x + meleeRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
 					{
 						e.hit(meleeDamage);
+						e.dx +=  delta * .01f;	
 					}
 				}
 				else 
@@ -591,6 +592,7 @@ public class Hero extends Entity
 					if( e.getX() < x && e.getX() > x - meleeRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
 					{
 						e.hit(meleeDamage);
+						e.dx -=  delta * .01f;
 					}
 				}
 				
@@ -599,6 +601,7 @@ public class Hero extends Entity
 					if(e.getY() > y && e.getY() < y + meleeRange && e.getX() > x - getHalfHeight() && e.getX() < x + getHalfHeight()) 
 					{
 						e.hit(meleeDamage);
+						e.dy +=  delta * .01f;
 					}
 				}
 				
@@ -607,6 +610,7 @@ public class Hero extends Entity
 					if( e.getY() < y && e.getY() > y - meleeRange && e.getX() > x - getHalfHeight() && e.getX() < x + getHalfHeight()) 
 					{
 						e.hit(meleeDamage);
+						this.dy -=  delta * .01f;
 					}
 				}
 			}
@@ -619,22 +623,22 @@ public class Hero extends Entity
 				
 				if(!(e instanceof Thug) && distanceToEnemy.x > e.getHalfWidth())
 				{
-					this.x -=  delta * 2f;
+					this.dx -=  delta * .5f;
 				}
 				
 				else if(!(e instanceof Thug) && distanceToEnemy.x < - e.getHalfWidth())
 				{
-					this.x +=  delta * 2f;
+					this.dx +=  delta * .5f;
 				}
 				
 				else if(!(e instanceof Thug) && distanceToEnemy.y > e.getHalfHeight())
 				{
-					this.y -=  delta * 2f;
+					this.dy -=  delta * .5f;
 				}
 				
 				else if(!(e instanceof Thug) && distanceToEnemy.y < - e.getHalfHeight())
 				{
-					this.y +=  delta * 2f;
+					this.dy +=  delta * .5f;
 				}
 			}
 			
