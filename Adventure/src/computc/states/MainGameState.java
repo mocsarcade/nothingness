@@ -73,7 +73,7 @@ public class MainGameState extends BasicGameState
 		
 		this.gamedata.dungeon.update(delta, input);
 		
-		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies());
+		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies(), delta);
 		this.gamedata.hero.checkPickup(this.gamedata.dungeon.commodities);
 		
 		if(input.isKeyDown(Input.KEY_M))
@@ -269,6 +269,6 @@ public class MainGameState extends BasicGameState
 		return MainGameState.ID;
 	}
 	
-	public static final int ID = 0;
+	public static final int ID = 1;
 
 }

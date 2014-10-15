@@ -37,7 +37,7 @@ public class ToNextLevelGameState extends BasicGameState
 			maingame.camera.setToTargetX();
 			maingame.camera.setToTargetY();
 			
-			game.enterState(0, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+			game.enterState(1, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
 		}
 	}
 	
@@ -52,5 +52,5 @@ public class ToNextLevelGameState extends BasicGameState
 		return ToNextLevelGameState.ID;
 	}
 	
-	public static final int ID = 2;
+	public static final int ID = 3;
 }

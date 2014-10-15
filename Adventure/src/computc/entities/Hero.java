@@ -13,6 +13,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Vector2f;
 
 import computc.cameras.Camera;
 import computc.Direction;
@@ -73,6 +74,8 @@ public class Hero extends Entity
 	public int coinage;
 
 	private boolean hasKey;
+	
+	public Vector2f distanceToEnemy;
 	
 	public Hero(Dungeon dungeon, int tx, int ty) throws SlickException
 	{
@@ -263,7 +266,7 @@ public class Hero extends Entity
 		
 		if(input.isKeyDown(Input.KEY_Z))
 		{
-			maximumVelocity = 3f;
+			maximumVelocity = 4f;
 		}
 		else
 		{
@@ -280,7 +283,6 @@ public class Hero extends Entity
 				meleeSwing.restart();
 			}
 		}
-		
 
 		if (blinkCooldown > 0)
 		{
@@ -362,6 +364,7 @@ public class Hero extends Entity
 			if(this.direction == Direction.EAST) facingRight = true;
 			if(this.direction == Direction.WEST) facingRight = false;
 		}
+		
 	
 		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).hasVisited = true;
 		
@@ -563,11 +566,16 @@ public class Hero extends Entity
 		blinkCooldown = 100;
 	}
 	
-	public void checkAttack(LinkedList<Enemy> enemies)
+	public void checkAttack(LinkedList<Enemy> enemies, int delta)
 	{
 		for(int i = 0; i < enemies.size(); i++)
 		{
 			Enemy e = enemies.get(i);
+			
+			if(this.getRoom() == e.getRoom())
+			{
+				this.distanceToEnemy = new Vector2f(e.getX() - this.getX(), e.getY() - this.getY());
+			}
 			
 			if(swinging) 
 			{
@@ -593,6 +601,7 @@ public class Hero extends Entity
 						e.hit(meleeDamage);
 					}
 				}
+				
 				else 
 				{
 					if( e.getY() < y && e.getY() > y - meleeRange && e.getX() > x - getHalfHeight() && e.getX() < x + getHalfHeight()) 
@@ -607,6 +616,26 @@ public class Hero extends Entity
 				hit(e.getDamage());
 				e.maximumVelocity = .3f;
 				e.mood = 2;
+				
+				if(!(e instanceof Thug) && distanceToEnemy.x > e.getHalfWidth())
+				{
+					this.x -=  delta * 2f;
+				}
+				
+				else if(!(e instanceof Thug) && distanceToEnemy.x < - e.getHalfWidth())
+				{
+					this.x +=  delta * 2f;
+				}
+				
+				else if(!(e instanceof Thug) && distanceToEnemy.y > e.getHalfHeight())
+				{
+					this.y -=  delta * 2f;
+				}
+				
+				else if(!(e instanceof Thug) && distanceToEnemy.y < - e.getHalfHeight())
+				{
+					this.y +=  delta * 2f;
+				}
 			}
 			
 			for(int j = 0; j < arrows.size(); j++) 
