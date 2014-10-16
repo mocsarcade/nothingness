@@ -138,15 +138,13 @@ public class Loafer extends Enemy
 				{
 					forceDrawLeft = true;
 				}
-				else if(this.y > this.dungeon.gamedata.hero.getY() - Tile.SIZE && this.y < this.dungeon.gamedata.hero.getY() + Tile.SIZE && this.x < this.dungeon.gamedata.hero.getX())
+				else forceDrawLeft = false;
+				
+				if(this.y > this.dungeon.gamedata.hero.getY() - Tile.SIZE && this.y < this.dungeon.gamedata.hero.getY() + Tile.SIZE && this.x < this.dungeon.gamedata.hero.getX())
 				{
 					forceDrawRight = true;
 				}
-				else 
-					{
-					forceDrawLeft = false; 
-					forceDrawRight = false;
-					}
+				else forceDrawRight = false;
 			}
 			else
 			{

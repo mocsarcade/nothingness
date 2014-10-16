@@ -78,7 +78,7 @@ public class MainGameState extends BasicGameState
 		
 		if(input.isKeyDown(Input.KEY_M))
 		{
-			game.enterState(1, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
+			game.enterState(2, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
 		}
 		
 		if(this.gamedata.hero.isDead())

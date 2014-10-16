@@ -29,6 +29,7 @@ public class Hero extends Entity
 	
 	protected boolean chainAttack;
 	protected int chainAttackCooldown;
+	protected int bounceCooldown;
 	
 	Image ironBall = new Image("res/ironball.png");
 	
@@ -56,7 +57,7 @@ public class Hero extends Entity
 	private int meleeDamage;
 	private int meleeRange;
 	
-
+	private double actualEnemySeparation;
 	
 	private int peekTimer;
 	
@@ -76,6 +77,7 @@ public class Hero extends Entity
 	private boolean hasKey;
 	
 	public Vector2f distanceToEnemy;
+	public Enemy closestEnemy;
 	
 	public Hero(Dungeon dungeon, int tx, int ty) throws SlickException
 	{
@@ -338,8 +340,14 @@ public class Hero extends Entity
 				}
 			}
 		
-		if(arrowCooldown > 0){
+		if(arrowCooldown > 0)
+		{
 			arrowCooldown -= delta;
+		}
+		
+		if(bounceCooldown > 0)
+		{
+			bounceCooldown -= delta;
 		}
 		
 		// set Animation
@@ -572,11 +580,18 @@ public class Hero extends Entity
 		{
 			Enemy e = enemies.get(i);
 			
-			if(this.getRoom() == e.getRoom())
-			{
-				this.distanceToEnemy = new Vector2f(e.getX() - this.getX(), e.getY() - this.getY());
-			}
-			
+			this.distanceToEnemy = new Vector2f(e.getX() - this.getX(), e.getY() - this.getY());
+			actualEnemySeparation = Math.sqrt(distanceToEnemy.x * distanceToEnemy.x + distanceToEnemy.y * distanceToEnemy.y);
+			e.distanceToHero = actualEnemySeparation;
+		
+				if(this.closestEnemy == null)
+				{
+					this.closestEnemy = e;
+				}
+				else if(e.getDistanceToHero() < closestEnemy.getDistanceToHero())
+				{
+					this.closestEnemy = e;
+				}		
 			if(swinging) 
 			{
 				if(facingRight) 
@@ -621,24 +636,29 @@ public class Hero extends Entity
 				e.maximumVelocity = .3f;
 				e.mood = 2;
 				
-				if(!(e instanceof Thug) && distanceToEnemy.x > e.getHalfWidth())
+				if(!(e instanceof Thug) && distanceToEnemy.x > e.getHalfWidth() && bounceCooldown <= 0)
 				{
-					this.dx -=  delta * .5f;
+					this.dx -=  delta * .3f;
+					bounceCooldown = 200;
 				}
 				
-				else if(!(e instanceof Thug) && distanceToEnemy.x < - e.getHalfWidth())
+				else if(!(e instanceof Thug) && distanceToEnemy.x < - e.getHalfWidth() && bounceCooldown <= 0)
 				{
-					this.dx +=  delta * .5f;
+					this.dx +=  delta * .3f;
+					bounceCooldown = 200;
+
 				}
 				
-				else if(!(e instanceof Thug) && distanceToEnemy.y > e.getHalfHeight())
+				else if(!(e instanceof Thug) && distanceToEnemy.y > e.getHalfHeight() && bounceCooldown <= 0)
 				{
-					this.dy -=  delta * .5f;
+					this.dy -=  delta * .3f;
+					bounceCooldown = 200;
 				}
 				
-				else if(!(e instanceof Thug) && distanceToEnemy.y < - e.getHalfHeight())
+				else if(!(e instanceof Thug) && distanceToEnemy.y < - e.getHalfHeight() && bounceCooldown <= 0)
 				{
-					this.dy +=  delta * .5f;
+					this.dy +=  delta * .3f;
+					bounceCooldown = 200;
 				}
 			}
 			
@@ -756,6 +776,11 @@ public class Hero extends Entity
 	public boolean collidesWith(Entity entity)
 	{
 		return this.intersects(entity);
+	}
+	
+	public Enemy getClosestEnemy()
+	{
+		return this.closestEnemy;
 	}
 	
 	private float speed = 0.25f;
