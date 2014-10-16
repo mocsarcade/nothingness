@@ -20,6 +20,7 @@ public class Loafer extends Enemy
 	public static boolean hit = false;
 	
 	public boolean angry;
+	private int angryCooldown;
 	private boolean forceDrawRight, forceDrawLeft;
 	
 	private int pursuitCooldown;
@@ -249,9 +250,22 @@ public class Loafer extends Enemy
 			blinking = false;
 		}
 		
+		if (angryCooldown > 0)
+		{
+			angryCooldown -= delta;
+		}
+		
 		if(blinking)
 		{
 			mood = 2;
+			angryCooldown = 15000;
+		}
+		
+		if(angryCooldown <= 0)
+		{
+			up = false; 
+			down = false;
+			mood = 1;
 		}
 		
 	}
