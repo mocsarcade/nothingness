@@ -35,8 +35,7 @@ public class Commodity extends Entity
 		
 		this.image = Game.assets.getImage(collectibles.get(type));
 		
-		System.out.println("this happened");
-		
+		System.out.println("item dropped");
 	}
 	
 	public void render(Graphics graphics, Camera camera)
