@@ -26,6 +26,8 @@ public abstract class Enemy extends Entity
 	protected boolean blinkTimer;
 	protected int blinkCooldown;
 	
+	protected double distanceToHero;
+	
 	protected boolean left;
     protected boolean right;
     protected boolean up;
@@ -83,5 +85,10 @@ public abstract class Enemy extends Entity
 			}
 		}
 		super.render(graphics, camera);
+	}
+	
+	public double getDistanceToHero()
+	{
+		return distanceToHero;
 	}
 }

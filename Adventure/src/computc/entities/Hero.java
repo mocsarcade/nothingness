@@ -13,6 +13,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
+import org.newdawn.slick.geom.Vector2f;
 
 import computc.cameras.Camera;
 import computc.Direction;
@@ -28,6 +29,7 @@ public class Hero extends Entity
 	
 	protected boolean chainAttack;
 	protected int chainAttackCooldown;
+	protected int bounceCooldown;
 	
 	Image ironBall = new Image("res/ironball.png");
 	
@@ -55,7 +57,7 @@ public class Hero extends Entity
 	private int meleeDamage;
 	private int meleeRange;
 	
-
+	private double actualEnemySeparation;
 	
 	private int peekTimer;
 	
@@ -73,6 +75,9 @@ public class Hero extends Entity
 	public int coinage;
 
 	private boolean hasKey;
+	
+	public Vector2f distanceToEnemy;
+	public Enemy closestEnemy;
 	
 	public Hero(Dungeon dungeon, int tx, int ty) throws SlickException
 	{
@@ -96,7 +101,7 @@ public class Hero extends Entity
 		
 		this.ballDamage = 2;
 		
-		this.currentHealth = this.maximumHealth = 3;
+		this.currentHealth = this.maximumHealth = 15;
 		
 		meleeDamage = 3;
 		meleeRange = 96;
@@ -263,7 +268,7 @@ public class Hero extends Entity
 		
 		if(input.isKeyDown(Input.KEY_Z))
 		{
-			maximumVelocity = 3f;
+			maximumVelocity = 4f;
 		}
 		else
 		{
@@ -280,7 +285,6 @@ public class Hero extends Entity
 				meleeSwing.restart();
 			}
 		}
-		
 
 		if (blinkCooldown > 0)
 		{
@@ -336,8 +340,14 @@ public class Hero extends Entity
 				}
 			}
 		
-		if(arrowCooldown > 0){
+		if(arrowCooldown > 0)
+		{
 			arrowCooldown -= delta;
+		}
+		
+		if(bounceCooldown > 0)
+		{
+			bounceCooldown -= delta;
 		}
 		
 		// set Animation
@@ -362,6 +372,7 @@ public class Hero extends Entity
 			if(this.direction == Direction.EAST) facingRight = true;
 			if(this.direction == Direction.WEST) facingRight = false;
 		}
+		
 	
 		this.dungeon.getRoom(this.getRoomyX(), this.getRoomyY()).hasVisited = true;
 		
@@ -563,12 +574,24 @@ public class Hero extends Entity
 		blinkCooldown = 100;
 	}
 	
-	public void checkAttack(LinkedList<Enemy> enemies)
+	public void checkAttack(LinkedList<Enemy> enemies, int delta)
 	{
 		for(int i = 0; i < enemies.size(); i++)
 		{
 			Enemy e = enemies.get(i);
 			
+			this.distanceToEnemy = new Vector2f(e.getX() - this.getX(), e.getY() - this.getY());
+			actualEnemySeparation = Math.sqrt(distanceToEnemy.x * distanceToEnemy.x + distanceToEnemy.y * distanceToEnemy.y);
+			e.distanceToHero = actualEnemySeparation;
+		
+				if(this.closestEnemy == null)
+				{
+					this.closestEnemy = e;
+				}
+				else if(e.getDistanceToHero() < closestEnemy.getDistanceToHero())
+				{
+					this.closestEnemy = e;
+				}		
 			if(swinging) 
 			{
 				if(facingRight) 
@@ -576,6 +599,7 @@ public class Hero extends Entity
 					if(e.getX() > x && e.getX() < x + meleeRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
 					{
 						e.hit(meleeDamage);
+						e.dx +=  delta * .01f;	
 					}
 				}
 				else 
@@ -583,6 +607,7 @@ public class Hero extends Entity
 					if( e.getX() < x && e.getX() > x - meleeRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
 					{
 						e.hit(meleeDamage);
+						e.dx -=  delta * .01f;
 					}
 				}
 				
@@ -591,13 +616,16 @@ public class Hero extends Entity
 					if(e.getY() > y && e.getY() < y + meleeRange && e.getX() > x - getHalfHeight() && e.getX() < x + getHalfHeight()) 
 					{
 						e.hit(meleeDamage);
+						e.dy +=  delta * .01f;
 					}
 				}
+				
 				else 
 				{
 					if( e.getY() < y && e.getY() > y - meleeRange && e.getX() > x - getHalfHeight() && e.getX() < x + getHalfHeight()) 
 					{
 						e.hit(meleeDamage);
+						this.dy -=  delta * .01f;
 					}
 				}
 			}
@@ -607,6 +635,31 @@ public class Hero extends Entity
 				hit(e.getDamage());
 				e.maximumVelocity = .3f;
 				e.mood = 2;
+				
+				if(!(e instanceof Thug) && distanceToEnemy.x > e.getHalfWidth() && bounceCooldown <= 0)
+				{
+					this.dx -=  delta * .3f;
+					bounceCooldown = 200;
+				}
+				
+				else if(!(e instanceof Thug) && distanceToEnemy.x < - e.getHalfWidth() && bounceCooldown <= 0)
+				{
+					this.dx +=  delta * .3f;
+					bounceCooldown = 200;
+
+				}
+				
+				else if(!(e instanceof Thug) && distanceToEnemy.y > e.getHalfHeight() && bounceCooldown <= 0)
+				{
+					this.dy -=  delta * .3f;
+					bounceCooldown = 200;
+				}
+				
+				else if(!(e instanceof Thug) && distanceToEnemy.y < - e.getHalfHeight() && bounceCooldown <= 0)
+				{
+					this.dy +=  delta * .3f;
+					bounceCooldown = 200;
+				}
 			}
 			
 			for(int j = 0; j < arrows.size(); j++) 
@@ -723,6 +776,11 @@ public class Hero extends Entity
 	public boolean collidesWith(Entity entity)
 	{
 		return this.intersects(entity);
+	}
+	
+	public Enemy getClosestEnemy()
+	{
+		return this.closestEnemy;
 	}
 	
 	private float speed = 0.25f;
