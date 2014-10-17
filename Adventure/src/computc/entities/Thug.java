@@ -14,10 +14,13 @@ import computc.Game;
 import computc.cameras.Camera;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.rooms.Room;
+import computc.worlds.tiles.Tile;
 
 public class Thug extends Enemy	
 {
 	public static boolean hit = false;
+	
+	private int angryCooldown;
 	
 	private Image spriteSheet = Game.assets.getImage("res/Droggon.png");
 	private Image walkDown = spriteSheet.getSubImage(1, 1, 64, 128);
@@ -91,7 +94,22 @@ public class Thug extends Enemy
 		{
 			blinking = false;
 		}
-	
+		
+		if(angryCooldown > 0 && angryCooldown < 100)
+		{
+			this.maximumVelocity = .03f;
+		}
+		
+		if(angryCooldown > 0)
+		{
+			angryCooldown -= delta;
+		}
+		
+		if(this.maximumVelocity > .03f && angryCooldown <= 0)
+		{
+			angryCooldown = 5000;
+		}
+
 	}
 	
 	private void getNextPosition(int delta) 
@@ -172,5 +190,63 @@ public class Thug extends Enemy
 		{
 			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
 		}
+	}
+	
+	public void checkTileMapCollision() 
+	{	   
+		   xdest = x + dx;
+		   ydest = y + dy;
+		   
+		   xtemp = x;
+		   ytemp = y;
+		   
+		   calculateCorners(x, ydest);
+		   
+		   if(dy < 0) 
+		   {
+			   if((!topLeft.canMoveHere() || !topRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 1.5 || this.getRoomPositionY() < Tile.SIZE * 1.5 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 1.5)) 
+			   {
+				   dy = 0;
+			   }
+			   else {
+				   ytemp += dy;
+			   }
+		   }
+			   
+			if(dy > 0) 
+			{
+				if((!bottomLeft.canMoveHere() || !bottomRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 1.5 || this.getRoomPositionY() < Tile.SIZE * 1.5 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 1.5))
+				{
+					dy = 0;
+				}
+				else 
+				{
+					ytemp += dy;
+				}
+			}
+			
+			calculateCorners(xdest, y);
+			
+			if(dx < 0) {
+				if((!topLeft.canMoveHere() || !bottomLeft.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 1.5 || this.getRoomPositionY() < Tile.SIZE * 1.5 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 1.5)) 
+				{
+					dx = 0;
+				}
+				else 
+				{
+					xtemp += dx;
+				}
+			}
+				
+			if(dx > 0) {
+				if((!topRight.canMoveHere() || !bottomRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 1.5 || this.getRoomPositionY() < Tile.SIZE * 1.5 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 1.5 )) 
+				{
+					dx = 0;
+				}
+				else 
+				{
+					xtemp += dx;
+				}
+			}
 	}
 }
