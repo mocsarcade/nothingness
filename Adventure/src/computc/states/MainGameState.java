@@ -120,7 +120,7 @@ public class MainGameState extends BasicGameState
 		}
 		
 		// sets the camera to peek into adjacent rooms
-		if(this.gamedata.hero.getPeekTimer() > 1000)
+		if(this.gamedata.hero.getPeekTimer() > 850)
 		{
 			this.camera.setPeeking(this.gamedata.hero.getDirection());
 		}
@@ -155,6 +155,7 @@ public class MainGameState extends BasicGameState
 			
 			 tempArrow.getImage().draw(this.gamedata.hero.getX() - this.gamedata.hero.getHalfWidth() - this.camera.getX() + 5, this.gamedata.hero.getY() - this.gamedata.hero.getHalfHeight() - this.camera.getY() + 15);
 		}
+
 	}
 	
 	@Override

@@ -1,6 +1,7 @@
 package computc.entities;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -18,6 +19,7 @@ public class Maniac extends Enemy
 	
 	public static boolean hit = false;
 	
+	
 	private float bullRushVelocity;
 	private float maxBullRushVelocity;
 	private int bullRushCoolDown;
@@ -33,6 +35,7 @@ public class Maniac extends Enemy
 	
 	
 	private boolean bullRush;
+	private boolean filterSwitch = false;
 	
 	public Maniac(Dungeon dungeon, Room room, int x, int  y)
 	{
@@ -55,6 +58,9 @@ public class Maniac extends Enemy
 		this.maxBullRushVelocity = 1.1f;
 		
 		this.health = this.maximumHealth = 5;
+		
+		this.myFilter = new Color(redFilter, greenFilter, blueFilter, 1f);
+		
 		
 		double a = Math.random();
 		
@@ -108,6 +114,8 @@ public class Maniac extends Enemy
 				down = false;
 			}
 		}
+		
+		myFilter = new Color(redFilter, greenFilter, blueFilter, this.filterAlpha);
 			
 		// check blinking
 		if (blinkCooldown > 0)
@@ -133,6 +141,43 @@ public class Maniac extends Enemy
 			alreadySmashed = false;
 		}
 		
+		if(bullRushCoolDown > 0)
+		{
+			
+			if(!filterSwitch)
+			{
+				this.greenFilter -= .1f;
+				this.blueFilter -= .1f;
+				
+				System.out.println("filter is decrementing");
+				
+				if(greenFilter < .2f || blueFilter < .2f)
+				{
+					filterSwitch = true;
+				}
+			}
+			
+			if(filterSwitch)
+			{
+				this.greenFilter += .1f;
+				this.blueFilter += .1f;
+				System.out.println("filter is incrementing");
+				
+				if(this.greenFilter > .9f || this.blueFilter > .9f)
+				{
+					filterSwitch = false;
+				}
+			}
+			 
+		}
+		else 
+		{
+			this.greenFilter = 1f; this.blueFilter = 1f;
+		}
+		
+		if(this.getRoom() == this.dungeon.gamedata.hero.getRoom())
+		System.out.println("the filters are:" + greenFilter + " , " + blueFilter);
+			
 		
 		
 		if(bullRush && bullRushCoolDown > 0 && bullRushCoolDown < 2000 && dx == 0 || bullRush && bullRushCoolDown > 0 && bullRushCoolDown < 2000 && dy == 0)
@@ -311,19 +356,19 @@ public class Maniac extends Enemy
 		
 		if(this.direction == Direction.NORTH)
 		{
-			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY(), myFilter);
 		}
 		else if (this.direction == Direction.SOUTH)
 		{
-			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY(), myFilter);
 		}
 		else if (this.direction == Direction.EAST)
 		{
-			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY(), myFilter);
 		}
 		else if (this.direction == Direction.WEST)
 		{
-			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY(), myFilter);
 		}
 	}
 }

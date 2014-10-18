@@ -109,7 +109,6 @@ public class Thug extends Enemy
 		{
 			angryCooldown = 5000;
 		}
-
 	}
 	
 	private void getNextPosition(int delta) 
