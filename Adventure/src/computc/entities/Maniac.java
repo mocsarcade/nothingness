@@ -360,7 +360,7 @@ public class Maniac extends Enemy
 		}
 		
 //		super.render(graphics, camera);
-		if(bullRushCoolDown > 0 && this.direction == Direction.SOUTH)
+		if(bullRushCoolDown > 2000 && this.direction == Direction.SOUTH)
 		{
 			flame.draw(this.getX() - this.getHalfWidth() - camera.getX(), (this.getY() - this.getHalfHeight() - camera.getY()) - this.getHalfHeight(), flameFilter);
 		}
@@ -382,11 +382,11 @@ public class Maniac extends Enemy
 			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY(), myFilter);
 		}
 		
-		if(bullRushCoolDown > 0 && (this.direction == Direction.EAST || this.direction == Direction.NORTH))
+		if(bullRushCoolDown > 2000 && (this.direction == Direction.EAST || this.direction == Direction.NORTH))
 		{
 			flame.draw(this.getX() - this.getHalfWidth() - camera.getX(), (this.getY() - this.getHalfHeight() - camera.getY()) - this.getHalfHeight(), flameFilter);
 		}
-		else if(bullRushCoolDown > 0 && this.direction == Direction.WEST)
+		else if(bullRushCoolDown > 2000 && this.direction == Direction.WEST)
 		{
 			flame.draw(this.getX() - this.getHalfWidth() - camera.getX() + 20, (this.getY() - this.getHalfHeight() - camera.getY()) - this.getHalfHeight(), flameFilter);
 		}

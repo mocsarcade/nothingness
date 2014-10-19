@@ -101,7 +101,7 @@ public class Hero extends Entity
 		
 		this.ballDamage = 2;
 		
-		this.currentHealth = this.maximumHealth = 15;
+		this.currentHealth = this.maximumHealth = 3;
 		
 		meleeDamage = 3;
 		meleeRange = 96;
@@ -755,6 +755,12 @@ public class Hero extends Entity
 			if(this.intersects(commodity) && commodity.getType() == 2)
 			{
 				this.arrowCount += 5;
+				commodities.remove(commodity);
+			}
+			
+			if(this.intersects(commodity) && commodity.getType() == 3)
+			{
+				this.currentHealth += 1;
 				commodities.remove(commodity);
 			}
 		}
