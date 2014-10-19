@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.SlickException;
 
 import computc.Direction;
 import computc.Game;
@@ -82,7 +83,14 @@ public class Room
 		
 		for(Point point : this.roomlayout.maniacs)
 		{
-			this.dungeon.enemies.add(new Maniac(this.dungeon, this, point.x, point.y));
+			try{
+				this.dungeon.enemies.add(new Maniac(this.dungeon, this, point.x, point.y));
+			}
+			catch(SlickException e)
+			{
+				e.printStackTrace();
+			}
+			
 		}
 		
 		for(Point point : this.roomlayout.loafers)
