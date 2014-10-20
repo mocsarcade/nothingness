@@ -2,33 +2,31 @@ package computc.entities;
 
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Circle;
+
 
 import computc.cameras.Camera;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.rooms.Room;
 
+
 public abstract class Enemy extends Entity
 {
-	protected int surroundingAreaRadius;
-	protected Circle surroundingArea;
-
-	public Enemy(Dungeon dungeon, Room room, float x, float y)
+	public Enemy(Dungeon dungeon, Room room, int x, int y)
 	{
 		super(dungeon, room, x, y);
-		//Arbitrarily create a circle in a place. this actual location will be set during first update loop.
-		this.surroundingArea = new Circle(0,0, 50);
 	}
 
 	protected int health;
 	protected int maxHealth;
 	protected boolean dead;
 	protected int damage;
-	protected int mood; 
-
+	
+	public int mood;
 	
 	protected boolean blinkTimer;
 	protected int blinkCooldown;
+	
+	protected double distanceToHero;
 	
 	protected boolean left;
     protected boolean right;
@@ -37,21 +35,12 @@ public abstract class Enemy extends Entity
     
     protected boolean attacking;
     
-    public enum State 
-    {
-    	PATROL, ACTIVE
-    }
-    protected State aiState;
+    protected boolean smash;
+	protected boolean alreadySmashed;
 	
 	public boolean isDead()
 	{
 		return dead;
-	}
-	
-	
-	public void render(Graphics graphics, Camera camera)
-	{
-		super.render(graphics, camera);
 	}
 	
 	public int getDamage() 
@@ -79,5 +68,27 @@ public abstract class Enemy extends Entity
 	public int getHealth()
 	{
 		return health;
+	}
+	
+	public boolean getSmash()
+	{
+		return smash;
+	}
+	
+	public void render(Graphics graphics, Camera camera)
+	{
+		if(blinking) 
+		{
+			if(blinkCooldown % 4 == 0) 
+			{
+				return;
+			}
+		}
+		super.render(graphics, camera);
+	}
+	
+	public double getDistanceToHero()
+	{
+		return distanceToHero;
 	}
 }

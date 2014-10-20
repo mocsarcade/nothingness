@@ -12,6 +12,7 @@ import computc.Game;
 import computc.cameras.Camera;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.rooms.Room;
+import computc.worlds.tiles.Tile;
 
 public class Loafer extends Enemy
 {
@@ -19,6 +20,9 @@ public class Loafer extends Enemy
 	public static boolean hit = false;
 	
 	public boolean angry;
+	private int angryCooldown;
+	private boolean forceDrawRight, forceDrawLeft;
+	
 	private int pursuitCooldown;
 	private Image spriteSheet = Game.assets.getImage("res/WolfLoafer.png");
 	private Image walkDown = spriteSheet.getSubImage(1, 1, 57, 128);
@@ -26,7 +30,13 @@ public class Loafer extends Enemy
 	private Image walkLeft = spriteSheet.getSubImage(116, 1, 57, 128);
 	private Image walkRight = spriteSheet.getSubImage(171, 1, 57, 128);
 	
-	Animation sprite, walkingDown, walkingUp, walkingLeft, walkingRight;
+	private Image spriteSheetAngry = Game.assets.getImage("res/WolfLoaferAngry.png");
+	private Image walkDownAngry = spriteSheetAngry.getSubImage(1, 1, 57, 128);
+	private Image walkUpAngry = spriteSheetAngry.getSubImage(57, 1, 57, 128);
+	private Image walkLeftAngry = spriteSheetAngry.getSubImage(116, 1, 57, 128);
+	private Image walkRightAngry = spriteSheetAngry.getSubImage(171, 1, 57, 128);
+	
+	Animation sprite, walkingDown, walkingUp, walkingLeft, walkingRight, angryDown, angryUp, angryLeft, angryRight;
 	
 	public Loafer(Dungeon dungeon, Room room, int x, int y)
 	{
@@ -41,6 +51,11 @@ public class Loafer extends Enemy
 		walkingUp = new Animation(new SpriteSheet(walkUp, 57, 64), 200);
 		walkingLeft = new Animation(new SpriteSheet(walkLeft, 57, 64), 200);
 		walkingRight = new Animation(new SpriteSheet(walkRight, 57, 64), 200);
+		
+		angryDown = new Animation(new SpriteSheet(walkDownAngry, 57, 64), 175);
+		angryUp = new Animation(new SpriteSheet(walkUpAngry, 57, 64), 175);
+		angryLeft = new Animation(new SpriteSheet(walkLeftAngry, 57, 64), 175);
+		angryRight = new Animation(new SpriteSheet(walkRightAngry, 57, 64), 175);
 		
 		this.damage = 1;
 		this.acceleration = 0.03f;
@@ -119,6 +134,18 @@ public class Loafer extends Enemy
 					up = true;
 					down = false;
 				}
+				
+				if(this.y > this.dungeon.gamedata.hero.getY() - Tile.SIZE && this.y < this.dungeon.gamedata.hero.getY() + Tile.SIZE && this.x > this.dungeon.gamedata.hero.getX())
+				{
+					forceDrawLeft = true;
+				}
+				else forceDrawLeft = false;
+				
+				if(this.y > this.dungeon.gamedata.hero.getY() - Tile.SIZE && this.y < this.dungeon.gamedata.hero.getY() + Tile.SIZE && this.x < this.dungeon.gamedata.hero.getX())
+				{
+					forceDrawRight = true;
+				}
+				else forceDrawRight = false;
 			}
 			else
 			{
@@ -223,9 +250,22 @@ public class Loafer extends Enemy
 			blinking = false;
 		}
 		
+		if (angryCooldown > 0)
+		{
+			angryCooldown -= delta;
+		}
+		
 		if(blinking)
 		{
 			mood = 2;
+			angryCooldown = 15000;
+		}
+		
+		if(angryCooldown <= 0)
+		{
+			up = false; 
+			down = false;
+			mood = 1;
 		}
 		
 	}
@@ -291,22 +331,56 @@ public class Loafer extends Enemy
 			}
 		}
 //		super.render(graphics, camera);
+		if(mood == 1)
+		{
+			if(this.direction == Direction.NORTH)
+			{
+				walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			}
+			else if (this.direction == Direction.SOUTH)
+			{
+				walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			}
+			else if (this.direction == Direction.EAST)
+			{
+				walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			}
+			else if (this.direction == Direction.WEST)
+			{
+				walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			}
+		}
 		
-		if(this.direction == Direction.NORTH)
+		else if (mood == 2)
 		{
-			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
-		}
-		else if (this.direction == Direction.SOUTH)
-		{
-			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
-		}
-		else if (this.direction == Direction.EAST)
-		{
-			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
-		}
-		else if (this.direction == Direction.WEST)
-		{
-			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			if(this.direction == Direction.NORTH)
+			{
+				if(!(forceDrawLeft || forceDrawRight))
+				angryUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			}
+			else if (this.direction == Direction.SOUTH && (!forceDrawLeft || !forceDrawRight))
+			{
+				if(!(forceDrawLeft || forceDrawRight))
+				angryDown.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			}
+			if (this.direction == Direction.EAST)
+			{
+				angryRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			}
+			else if (this.direction == Direction.WEST)
+			{
+				angryLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			}
+			
+			if(forceDrawLeft)
+			{
+				angryLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			}
+			
+			if(forceDrawRight)
+			{
+				angryRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			}
 		}
 	}
 }

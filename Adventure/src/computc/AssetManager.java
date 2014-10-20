@@ -80,7 +80,7 @@ public class AssetManager
 	{
 		try
 		{
-			backgroundMusic = AudioLoader.getAudio("OGG", ResourceLoader.getResourceAsStream("res/audio/bg.ogg"));
+			backgroundMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/audio/wack.wav"));
 		}
 		catch(IOException e)
 		{

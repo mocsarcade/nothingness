@@ -1,29 +1,49 @@
 
 package computc.entities;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
-import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Point;
 
+import computc.Direction;
+import computc.Game;
 import computc.cameras.Camera;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.rooms.Room;
+import computc.worlds.tiles.Tile;
 
 public class Thug extends Enemy	
 {
 	public static boolean hit = false;
 	
-	public Thug(Dungeon dungeon, Room room, float x, float y) throws SlickException 
+	private int angryCooldown;
+	
+	private Image spriteSheet = Game.assets.getImage("res/Droggon.png");
+	private Image walkDown = spriteSheet.getSubImage(1, 1, 64, 128);
+	private Image walkUp = spriteSheet.getSubImage(65, 1, 64, 128);
+	private Image walkLeft = spriteSheet.getSubImage(129, 1, 64, 128);
+	private Image walkRight = spriteSheet.getSubImage(192, 1, 64, 128);
+	
+	Animation sprite, walkingDown, walkingUp, walkingLeft, walkingRight;
+	
+	public Thug(Dungeon dungeon, Room room, int tx, int ty)
 	{
-		super(dungeon, room, x, y);
+		super(dungeon, room, tx, ty);
+		//System.out.println(room.getTileyX() + "->" + x);
+		//System.out.println(this.getTileyX());
 		
 		this.dungeon = dungeon;
-		this.surroundingArea = new Circle(0,0, 50);
-
-		this.image = new Image("res/thug.png");
+		
+		this.image = Game.assets.getImage("res/Droggon.png").getSubImage(1, 1, 64, 64);
+		
+		walkingDown = new Animation(new SpriteSheet(walkDown, 64, 64), 400);
+		walkingUp = new Animation(new SpriteSheet(walkUp, 64, 64), 400);
+		walkingLeft = new Animation(new SpriteSheet(walkLeft, 64, 64), 400);
+		walkingRight = new Animation(new SpriteSheet(walkRight, 64, 64), 400);
 		
 		this.damage = 1;
 		this.acceleration = 0.03f;
@@ -40,8 +60,7 @@ public class Thug extends Enemy
 		getNextPosition(delta);
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
-		this.surroundingArea.setCenterX(this.x);
-		this.surroundingArea.setCenterY(this.y);
+		
 		// if hits wall change direction
 		if(right && dx == 0)
 		{
@@ -75,13 +94,30 @@ public class Thug extends Enemy
 		{
 			blinking = false;
 		}
-	
+		
+		if(angryCooldown > 0 && angryCooldown < 100)
+		{
+			this.maximumVelocity = .03f;
+		}
+		
+		if(angryCooldown > 0)
+		{
+			angryCooldown -= delta;
+		}
+		
+		if(this.maximumVelocity > .03f && angryCooldown <= 0)
+		{
+			angryCooldown = 5000;
+		}
+
 	}
 	
 	private void getNextPosition(int delta) 
 	{
 		if(left)
 		{
+			this.direction = Direction.WEST;
+			sprite = walkingLeft;
 			dx -= acceleration;
 			if(dx < -maximumVelocity)
 			{
@@ -92,6 +128,8 @@ public class Thug extends Enemy
 		
 		else if(right) 
 		{
+			this.direction = Direction.EAST;
+			sprite = walkingRight;
 			dx += acceleration;
 			if(dx > maximumVelocity)
 			{
@@ -103,6 +141,8 @@ public class Thug extends Enemy
 		
 		if(up) 
 		{
+			this.direction = Direction.NORTH;
+			sprite = walkingUp;
 			dy -= acceleration;
 			if(dy < -maximumVelocity)
 			{
@@ -112,6 +152,8 @@ public class Thug extends Enemy
 		}
 		else if(down) 
 		{
+			this.direction = Direction.SOUTH;
+			sprite = walkingDown;
 			dy += acceleration;
 			if(dy > maximumVelocity)
 			{
@@ -130,8 +172,81 @@ public class Thug extends Enemy
 				return;
 			}
 		}
-		graphics.draw(this.surroundingArea);
-		System.out.println("drawing "+this.surroundingArea.getCenterX()+","+this.surroundingArea.getCenterY()+","+this.surroundingArea.getRadius());
-		super.render(graphics, camera);
+//		super.render(graphics, camera);
+		
+		if(this.direction == Direction.NORTH)
+		{
+			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if (this.direction == Direction.SOUTH)
+		{
+			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if (this.direction == Direction.EAST)
+		{
+			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if (this.direction == Direction.WEST)
+		{
+			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+		}
+	}
+	
+	public void checkTileMapCollision() 
+	{	   
+		   xdest = x + dx;
+		   ydest = y + dy;
+		   
+		   xtemp = x;
+		   ytemp = y;
+		   
+		   calculateCorners(x, ydest);
+		   
+		   if(dy < 0) 
+		   {
+			   if((!topLeft.canMoveHere() || !topRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 1.5 || this.getRoomPositionY() < Tile.SIZE * 1.5 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 1.5)) 
+			   {
+				   dy = 0;
+			   }
+			   else {
+				   ytemp += dy;
+			   }
+		   }
+			   
+			if(dy > 0) 
+			{
+				if((!bottomLeft.canMoveHere() || !bottomRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 1.5 || this.getRoomPositionY() < Tile.SIZE * 1.5 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 1.5))
+				{
+					dy = 0;
+				}
+				else 
+				{
+					ytemp += dy;
+				}
+			}
+			
+			calculateCorners(xdest, y);
+			
+			if(dx < 0) {
+				if((!topLeft.canMoveHere() || !bottomLeft.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 1.5 || this.getRoomPositionY() < Tile.SIZE * 1.5 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 1.5)) 
+				{
+					dx = 0;
+				}
+				else 
+				{
+					xtemp += dx;
+				}
+			}
+				
+			if(dx > 0) {
+				if((!topRight.canMoveHere() || !bottomRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 1.5 || this.getRoomPositionY() < Tile.SIZE * 1.5 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 1.5 )) 
+				{
+					dx = 0;
+				}
+				else 
+				{
+					xtemp += dx;
+				}
+			}
 	}
 }

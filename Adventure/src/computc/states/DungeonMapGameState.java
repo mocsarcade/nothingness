@@ -44,7 +44,7 @@ public class DungeonMapGameState extends BasicGameState
 
 		if(input.isKeyDown(Input.KEY_ESCAPE))
 		{
-			game.enterState(0, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
+			game.enterState(1, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
 		}
 
 		if(input.isKeyDown(Input.KEY_R))
@@ -64,5 +64,5 @@ public class DungeonMapGameState extends BasicGameState
 		return DungeonMapGameState.ID;
 	}
 	
-	public static final int ID = 1;
+	public static final int ID = 2;
 }
