@@ -69,10 +69,10 @@ public class Hero extends Entity
 	private Image walkUp = spriteSheet.getSubImage(1, 186, 156, 62);
 	
 	private Image arrowShotSpriteSheet = Game.assets.getImage("res/heroArrowShotSpriteSheet.png");	
-	private Image fireRight = arrowShotSpriteSheet.getSubImage(1, 1, 208, 62);
-	private Image fireLeft = arrowShotSpriteSheet.getSubImage(1, 63, 208, 62);
-	private Image fireUp = arrowShotSpriteSheet.getSubImage(1, 125, 208, 62);
-	private Image fireDown = arrowShotSpriteSheet.getSubImage(1, 186, 208, 62);
+	private Image fireRight = arrowShotSpriteSheet.getSubImage(1, 1, 248, 74);
+	private Image fireLeft = arrowShotSpriteSheet.getSubImage(1, 75, 248, 74);
+	private Image fireDown = arrowShotSpriteSheet.getSubImage(1, 150, 248, 74);
+	private Image fireUp = arrowShotSpriteSheet.getSubImage(1, 222, 248, 74);
 	private Image heroIdleDown, heroIdleRight, heroIdleLeft, heroIdleUp;
 	
 	// actions 
@@ -128,10 +128,10 @@ public class Hero extends Entity
 		this.meleeDown = new Animation(new SpriteSheet(swingDown, 48, 96), 300);
 		this.meleeUp = new Animation(new SpriteSheet(swingUp, 48, 96), 300);
 		
-		this.firingArrowRight = new Animation(new SpriteSheet(fireRight, 52, 62), 200);
-		this.firingArrowLeft = new Animation(new SpriteSheet(fireRight, 52, 62), 200);
-		this.firingArrowUp = new Animation(new SpriteSheet(fireRight, 52, 62), 200);
-		this.firingArrowDown = new Animation(new SpriteSheet(fireRight, 52, 62), 200);
+		this.firingArrowRight = new Animation(new SpriteSheet(fireRight, 62, 74), 200);
+		this.firingArrowLeft = new Animation(new SpriteSheet(fireLeft, 62, 74), 200);
+		this.firingArrowUp = new Animation(new SpriteSheet(fireUp, 62, 74), 200);
+		this.firingArrowDown = new Animation(new SpriteSheet(fireDown, 62, 74), 200);
 		
 		this.idleDown = new Animation(new SpriteSheet(heroIdleDown, 39, 62), 10000);
 		this.idleUp = new Animation(new SpriteSheet(heroIdleUp, 39, 62), 10000);
@@ -261,11 +261,11 @@ public class Hero extends Entity
 		{
 			if(firingArrow == firingArrowLeft)
 			{
-				firingArrowLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+				firingArrowLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() - 10 , this.getY() - this.getHalfHeight() - camera.getY() - 10);
 			}
 			else if(firingArrow == firingArrowRight)
 			{
-				firingArrowRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+				firingArrowRight.draw(this.getX() - this.getHalfWidth() - camera.getX() - 10, this.getY() - this.getHalfHeight() - camera.getY() - 10);
 			}
 			else if(firingArrow == firingArrowUp)
 			{
@@ -297,6 +297,7 @@ public class Hero extends Entity
 //		System.out.println("the ball at the end of the chain's x & y are: " + this.ball.x + " , " + this.ball.y);
 		
 		System.out.println("firing is: " + firing);
+		System.out.println("arrowCooldown is: " + arrowCooldown);
 		
 		getNextPosition(input, delta);
 		checkTileMapCollision();
@@ -325,11 +326,23 @@ public class Hero extends Entity
 		if(firing)
 		{
 			firingArrow.setLooping(false);
-			if(firingArrow.isStopped())
+			
+			if(firingArrow.getFrame() >= 2 && input.isKeyDown(Input.KEY_SPACE))
 			{
-//				firing = false;
+				firingArrow.stopAt(2);
+			}
+			
+			if(!(input.isKeyDown(Input.KEY_SPACE)))
+			{
+				firingArrow.setCurrentFrame(3);
+			}
+			
+			if(firingArrow.getFrame() == 3 && arrowCooldown <= 0)
+			{
+				firingArrow.restart();
 			}
 		}
+		
 
 		if (blinkCooldown > 0)
 		{
@@ -589,10 +602,17 @@ public class Hero extends Entity
 				sprite = idle;
 			}
 			
-			if(input.isKeyDown(Input.KEY_SPACE))
+			if(input.isKeyDown(Input.KEY_SPACE) || this.arrowCooldown > 0)
 			{
 				firing = true;
+				
+				if(arrowCooldown > 300)
+				{
+					this.dx = 0; this.dy = 0;
+				}
 			}
+			
+			else firing = false;
 			
 			if(input.isKeyDown(Input.KEY_D))
 			{

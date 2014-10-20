@@ -149,12 +149,12 @@ public class MainGameState extends BasicGameState
 		this.menu.render(graphics, camera);
 		this.gamedata.hero.render(graphics, this.camera);
 		
-		if(input.isKeyDown(Input.KEY_SPACE) && this.gamedata.hero.getArrowCooldown() <= 0)
-		{
-			Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
-			
-			 tempArrow.getImage().draw(this.gamedata.hero.getX() - this.gamedata.hero.getHalfWidth() - this.camera.getX() + 5, this.gamedata.hero.getY() - this.gamedata.hero.getHalfHeight() - this.camera.getY() + 15);
-		}
+//		if(input.isKeyDown(Input.KEY_SPACE) && this.gamedata.hero.getArrowCooldown() <= 0)
+//		{
+//			Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
+//			
+//			 tempArrow.getImage().draw(this.gamedata.hero.getX() - this.gamedata.hero.getHalfWidth() - this.camera.getX() + 5, this.gamedata.hero.getY() - this.gamedata.hero.getHalfHeight() - this.camera.getY() + 15);
+//		}
 
 	}
 	
@@ -188,8 +188,6 @@ public class MainGameState extends BasicGameState
 		if(k == Input.KEY_SPACE)
 		{
 			Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
-			
-			 tempArrow.getImage().draw(200, 200);
 		}
 	}
 	
