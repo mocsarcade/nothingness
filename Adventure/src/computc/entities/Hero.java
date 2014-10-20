@@ -67,10 +67,16 @@ public class Hero extends Entity
 	private Image walkLeft = spriteSheet.getSubImage(1, 63, 156, 62);
 	private Image walkDown = spriteSheet.getSubImage(1, 125, 156, 62);
 	private Image walkUp = spriteSheet.getSubImage(1, 186, 156, 62);
+	
+	private Image arrowShotSpriteSheet = Game.assets.getImage("res/heroArrowShotSpriteSheet.png");	
+	private Image fireRight = arrowShotSpriteSheet.getSubImage(1, 1, 208, 62);
+	private Image fireLeft = arrowShotSpriteSheet.getSubImage(1, 63, 208, 62);
+	private Image fireUp = arrowShotSpriteSheet.getSubImage(1, 125, 208, 62);
+	private Image fireDown = arrowShotSpriteSheet.getSubImage(1, 186, 208, 62);
 	private Image heroIdleDown, heroIdleRight, heroIdleLeft, heroIdleUp;
 	
 	// actions 
-	private Animation sprite, firingArrow, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle, idleDown, idleUp, idleRight, idleLeft, walkingLeft, walkingDown, walkingUp, walkingRight;
+	private Animation sprite, firingArrow, firingArrowRight, firingArrowLeft, firingArrowUp, firingArrowDown, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle, idleDown, idleUp, idleRight, idleLeft, walkingLeft, walkingDown, walkingUp, walkingRight;
 
 	public int coinage;
 
@@ -121,6 +127,11 @@ public class Hero extends Entity
 		this.meleeLeft = new Animation(new SpriteSheet(swingLeft, 96, 48), 300);
 		this.meleeDown = new Animation(new SpriteSheet(swingDown, 48, 96), 300);
 		this.meleeUp = new Animation(new SpriteSheet(swingUp, 48, 96), 300);
+		
+		this.firingArrowRight = new Animation(new SpriteSheet(fireRight, 52, 62), 200);
+		this.firingArrowLeft = new Animation(new SpriteSheet(fireRight, 52, 62), 200);
+		this.firingArrowUp = new Animation(new SpriteSheet(fireRight, 52, 62), 200);
+		this.firingArrowDown = new Animation(new SpriteSheet(fireRight, 52, 62), 200);
 		
 		this.idleDown = new Animation(new SpriteSheet(heroIdleDown, 39, 62), 10000);
 		this.idleUp = new Animation(new SpriteSheet(heroIdleUp, 39, 62), 10000);
@@ -177,18 +188,22 @@ public class Hero extends Entity
 		if(this.direction == Direction.NORTH)
 		{
 			meleeSwing = meleeUp;
+			firingArrow = firingArrowUp;
 		}
 		if(this.direction == Direction.SOUTH)
 		{
 			meleeSwing = meleeDown;
+			firingArrow = firingArrowDown;
 		}
 		if(this.direction == Direction.EAST)
 		{
 			meleeSwing = meleeRight;
+			firingArrow = firingArrowRight;
 		}
 		if(this.direction == Direction.WEST)
 		{
 			meleeSwing = meleeLeft;
+			firingArrow = firingArrowLeft;
 		}
 		
 		// Drawing animations
@@ -242,6 +257,26 @@ public class Hero extends Entity
 			}
 		}
 		
+		if(firing)
+		{
+			if(firingArrow == firingArrowLeft)
+			{
+				firingArrowLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			}
+			else if(firingArrow == firingArrowRight)
+			{
+				firingArrowRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			}
+			else if(firingArrow == firingArrowUp)
+			{
+				firingArrowUp.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			}
+			else if(firingArrow == firingArrowDown)
+			{
+				firingArrowDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			}
+		}
+		
 		// converts box2d position to hero's position on screen
 		box2dPlayerPosition = new Vec2(this.getLocalX(camera)/30, this.getLocalY(camera)/30);
 	}
@@ -261,6 +296,7 @@ public class Hero extends Entity
 	{
 //		System.out.println("the ball at the end of the chain's x & y are: " + this.ball.x + " , " + this.ball.y);
 		
+		System.out.println("firing is: " + firing);
 		
 		getNextPosition(input, delta);
 		checkTileMapCollision();
@@ -283,6 +319,15 @@ public class Hero extends Entity
 			{
 				swinging = false;
 				meleeSwing.restart();
+			}
+		}
+		
+		if(firing)
+		{
+			firingArrow.setLooping(false);
+			if(firingArrow.isStopped())
+			{
+//				firing = false;
 			}
 		}
 
@@ -544,6 +589,10 @@ public class Hero extends Entity
 				sprite = idle;
 			}
 			
+			if(input.isKeyDown(Input.KEY_SPACE))
+			{
+				firing = true;
+			}
 			
 			if(input.isKeyDown(Input.KEY_D))
 			{
