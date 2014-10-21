@@ -158,9 +158,8 @@ public class MainGameState extends BasicGameState
 			if(input.isKeyDown(Input.KEY_SPACE) && this.gamedata.hero.getArrowCooldown() <= 0)
 			{
 				Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
-			
-				tempArrow.getImage().draw(this.gamedata.hero.getX() - this.gamedata.hero.getHalfWidth() - this.camera.getX() + 5, this.gamedata.hero.getY() - this.gamedata.hero.getHalfHeight() - this.camera.getY() + 15);
-			
+				tempArrow.setPowerCharge();
+				tempArrow.getImage().draw(this.gamedata.hero.getX() - this.gamedata.hero.getHalfWidth() - this.camera.getX() + 5, this.gamedata.hero.getY() - this.gamedata.hero.getHalfHeight() - this.camera.getY() + 5, tempArrow.getFilter());
 			}
 		}
 
@@ -235,6 +234,7 @@ public class MainGameState extends BasicGameState
 				{
 					arrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
 					arrow.setPosition(this.gamedata.hero.getX(), this.gamedata.hero.getY());
+					arrow.setPowerCharge();
 					this.gamedata.hero.arrowCount -= 1;
 					this.gamedata.hero.arrows.add(arrow);
 					this.gamedata.hero.startArrowCooldown();

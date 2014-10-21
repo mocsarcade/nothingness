@@ -28,6 +28,9 @@ public class Arrow extends Entity
     protected boolean inert;
     private int stickCooldown;
     
+    private boolean filterSwitch;
+    private boolean powerCharge;
+    
     public int arrowDamage;
     
     Image arrows = Game.assets.getImage("res/arrowSpriteSheet.png");
@@ -71,6 +74,8 @@ public class Arrow extends Entity
 	
 	public void update(int delta)
 	{
+		System.out.println("the power charge is: " + this.powerCharge);
+		
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
@@ -134,12 +139,37 @@ public class Arrow extends Entity
 		}
 		
 		myFilter = new Color(redFilter, greenFilter, blueFilter, this.filterAlpha);
+		
+		if(this.powerCharge)
+		{
+			this.setPowerUp();
+			
+			if(this.direction == Direction.SOUTH)
+			{
+				this.dy += 1f;
+			}
+			if(this.direction == Direction.NORTH)
+			{
+				this.dy -= 1f;
+			}
+			if(this.direction == Direction.EAST)
+			{
+				this.dx += 1f;
+			}
+			if(this.direction == Direction.WEST)
+			{
+				this.dx -= 1f;
+			}
+		}
 
 	}
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		super.render(graphics, camera);
+		int x = (int)this.getX() - this.getHalfWidth() - camera.getX();
+		int y = (int)this.getY() - this.getHalfHeight() - camera.getY();
+		
+		this.image.draw(x, y, myFilter);
 	}
 	
 	public void setHit() 
@@ -205,6 +235,41 @@ public class Arrow extends Entity
 	public void setArrowNotched()
 	{
 		arrowNotched = true;
+	}
+	
+	public void setPowerCharge()
+	{
+		powerCharge = true;
+	}
+	
+	public void setPowerUp()
+	{
+		if(!filterSwitch)
+		{
+			this.greenFilter -= .1f;
+			this.blueFilter -= .1f;
+			
+			if(greenFilter < .2f || blueFilter < .2f)
+			{
+				filterSwitch = true;
+			}
+		}
+		
+		if(filterSwitch)
+		{
+			this.greenFilter += .1f;
+			this.blueFilter += .1f;
+			
+			if(this.greenFilter > .9f || this.blueFilter > .9f)
+			{
+				filterSwitch = false;
+			}
+		}
+	}
+	
+	public Color getFilter()
+	{
+		return this.myFilter;
 	}
 
 }

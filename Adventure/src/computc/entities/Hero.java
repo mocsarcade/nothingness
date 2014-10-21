@@ -299,8 +299,6 @@ public class Hero extends Entity
 	{
 //		System.out.println("the ball at the end of the chain's x & y are: " + this.ball.x + " , " + this.ball.y);
 		
-		System.out.println("the arrow power up is: " + this.arrowPowerUp);
-		
 		getNextPosition(input, delta);
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
