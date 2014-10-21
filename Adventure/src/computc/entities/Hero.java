@@ -618,7 +618,8 @@ public class Hero extends Entity
 					if(e.getX() > x && e.getX() < x + meleeRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
 					{
 						e.hit(meleeDamage);
-						e.dx +=  delta * .01f;	
+						e.dx +=  delta * .01f;
+						Game.assets.playSoundEffectWithoutRepeat("swordStrikesEnemy");
 					}
 				}
 				else 
@@ -627,6 +628,8 @@ public class Hero extends Entity
 					{
 						e.hit(meleeDamage);
 						e.dx -=  delta * .01f;
+						Game.assets.playSoundEffectWithoutRepeat("swordStrikesEnemy");
+
 					}
 				}
 				
@@ -636,6 +639,8 @@ public class Hero extends Entity
 					{
 						e.hit(meleeDamage);
 						e.dy +=  delta * .01f;
+						Game.assets.playSoundEffectWithoutRepeat("swordStrikesEnemy");
+
 					}
 				}
 				
@@ -645,6 +650,8 @@ public class Hero extends Entity
 					{
 						e.hit(meleeDamage);
 						this.dy -=  delta * .01f;
+						Game.assets.playSoundEffectWithoutRepeat("swordStrikesEnemy");
+
 					}
 				}
 			}
