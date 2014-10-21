@@ -52,6 +52,7 @@ public class Hero extends Entity
 	
 	
 	public ArrayList<Arrow> arrows;
+	public Arrow tempArrow;
 	
 	protected boolean firing;
 	protected boolean swinging;
@@ -59,6 +60,7 @@ public class Hero extends Entity
 	
 	private int meleeDamage;
 	private int meleeRange;
+	
 	
 	private double actualEnemySeparation;
 	

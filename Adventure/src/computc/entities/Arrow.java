@@ -23,6 +23,7 @@ public class Arrow extends Entity
     protected boolean up;
     protected boolean down;
     protected boolean arrowNotched;
+    protected boolean tempArrow;
     
     protected boolean stuck;
     protected boolean inert;
@@ -38,6 +39,8 @@ public class Arrow extends Entity
 	public Arrow(Dungeon dungeon, Room room, int tx, int ty, Direction direction) 
 	{
 		super(dungeon, room, tx, ty);
+		
+		this.myFilter = new Color(redFilter, greenFilter, blueFilter, 1f);
 		
 		this.direction = direction;
 		
@@ -68,13 +71,10 @@ public class Arrow extends Entity
 			this.image = arrows.getSubImage(161, 1, 30, 30);
 		}
 		
-		this.myFilter = new Color(redFilter, greenFilter, blueFilter, 1f);
-		
 	}
 	
 	public void update(int delta)
 	{
-		System.out.println("the power charge is: " + this.powerCharge);
 		
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
@@ -142,7 +142,6 @@ public class Arrow extends Entity
 		
 		if(this.powerCharge)
 		{
-			this.setPowerUp();
 			
 			if(this.direction == Direction.SOUTH)
 			{
@@ -166,10 +165,22 @@ public class Arrow extends Entity
 	
 	public void render(Graphics graphics, Camera camera)
 	{
+		if(this.powerCharge)
+		{
+			this.setPowerUp();
+		}
+		
+		myFilter = new Color(redFilter, greenFilter, blueFilter, this.filterAlpha);
+		
 		int x = (int)this.getX() - this.getHalfWidth() - camera.getX();
 		int y = (int)this.getY() - this.getHalfHeight() - camera.getY();
 		
 		this.image.draw(x, y, myFilter);
+		
+		if(this.tempArrow)
+		{
+			this.image.draw(this.dungeon.gamedata.hero.getX() - this.dungeon.gamedata.hero.getHalfWidth() - camera.getX() + 5, this.dungeon.gamedata.hero.getY() - this.dungeon.gamedata.hero.getHalfHeight() - camera.getY() + 5, myFilter);
+		}
 	}
 	
 	public void setHit() 
@@ -186,8 +197,6 @@ public class Arrow extends Entity
 	{
 		Rectangle r1 = this.getHitbox();
 		Rectangle r2 = that.getHitbox();
-		
-		
 		
 		if(that instanceof Enemy && r1.intersects(r2) == true)
 		{
@@ -267,9 +276,9 @@ public class Arrow extends Entity
 		}
 	}
 	
-	public Color getFilter()
+	public void setTempArrow()
 	{
-		return this.myFilter;
+		tempArrow = true;
 	}
-
+	
 }

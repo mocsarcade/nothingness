@@ -155,11 +155,16 @@ public class MainGameState extends BasicGameState
 		
 		if(this.gamedata.hero.getArrowPowerUp() > 1000)
 		{
-			if(input.isKeyDown(Input.KEY_SPACE) && this.gamedata.hero.getArrowCooldown() <= 0)
+			if(this.gamedata.hero.getArrowCooldown() <= 0)
 			{
+				if(this.gamedata.hero.getArrowPowerUp() < 1100)
+				{
 				Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
-				tempArrow.setPowerCharge();
-				tempArrow.getImage().draw(this.gamedata.hero.getX() - this.gamedata.hero.getHalfWidth() - this.camera.getX() + 5, this.gamedata.hero.getY() - this.gamedata.hero.getHalfHeight() - this.camera.getY() + 5, tempArrow.getFilter());
+				this.gamedata.hero.tempArrow = tempArrow;
+				}
+				this.gamedata.hero.tempArrow.setPowerCharge();
+				this.gamedata.hero.tempArrow.setTempArrow();
+				this.gamedata.hero.tempArrow.render(graphics, camera);
 			}
 		}
 
