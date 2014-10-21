@@ -179,7 +179,19 @@ public class Arrow extends Entity
 		
 		if(this.tempArrow)
 		{
-			this.image.draw(this.dungeon.gamedata.hero.getX() - this.dungeon.gamedata.hero.getHalfWidth() - camera.getX() + 5, this.dungeon.gamedata.hero.getY() - this.dungeon.gamedata.hero.getHalfHeight() - camera.getY() + 5, myFilter);
+			if(this.direction == Direction.WEST)
+			{
+				this.image.draw(this.dungeon.gamedata.hero.getX() - this.dungeon.gamedata.hero.getHalfWidth() - camera.getX() + 5, this.dungeon.gamedata.hero.getY() - this.dungeon.gamedata.hero.getHalfHeight() - camera.getY() + 5, myFilter);
+			}
+			else if(this.direction == Direction.EAST)
+			{
+				this.image.draw(this.dungeon.gamedata.hero.getX() - this.dungeon.gamedata.hero.getHalfWidth() - camera.getX() + 8, this.dungeon.gamedata.hero.getY() - this.dungeon.gamedata.hero.getHalfHeight() - camera.getY() + 5, myFilter);
+
+			}	
+			else if(this.direction == Direction.SOUTH)
+			{
+				this.image.draw(this.dungeon.gamedata.hero.getX() - this.dungeon.gamedata.hero.getHalfWidth() - camera.getX() + 12, this.dungeon.gamedata.hero.getY() - this.dungeon.gamedata.hero.getHalfHeight() - camera.getY() + 20, myFilter);
+			}
 		}
 	}
 	

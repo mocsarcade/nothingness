@@ -153,11 +153,11 @@ public class MainGameState extends BasicGameState
 		this.gamedata.hero.render(graphics, this.camera);
 		
 		
-		if(this.gamedata.hero.getArrowPowerUp() > 1000)
+		if(this.gamedata.hero.getArrowPowerUp() > 2000 && this.gamedata.hero.arrowCount != 0)
 		{
 			if(this.gamedata.hero.getArrowCooldown() <= 0)
 			{
-				if(this.gamedata.hero.getArrowPowerUp() < 1100)
+				if(this.gamedata.hero.getArrowPowerUp() < 2100)
 				{
 				Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
 				this.gamedata.hero.tempArrow = tempArrow;
@@ -239,10 +239,14 @@ public class MainGameState extends BasicGameState
 				{
 					arrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
 					arrow.setPosition(this.gamedata.hero.getX(), this.gamedata.hero.getY());
-					arrow.setPowerCharge();
 					this.gamedata.hero.arrowCount -= 1;
 					this.gamedata.hero.arrows.add(arrow);
 					this.gamedata.hero.startArrowCooldown();
+					
+					if(this.gamedata.hero.getArrowPowerUp() > 2000)
+					{
+						arrow.setPowerCharge();
+					}
 				}
 				else
 				{
