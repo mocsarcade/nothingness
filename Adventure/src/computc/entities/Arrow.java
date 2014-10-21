@@ -63,8 +63,6 @@ public class Arrow extends Entity
 			this.image = arrows.getSubImage(161, 1, 30, 30);
 		}
 		
-		Game.assets.playSoundEffectWithoutRepeat("arrowFire");
-		
 	}
 	
 	public void update(int delta)

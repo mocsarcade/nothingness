@@ -192,75 +192,75 @@ public class Hero extends Entity
 		}
 		
 		// Drawing animations
-				if(sprite == walkingUp)
-				{
-					walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
-					playFootstepSound();
-				}
-				else if(sprite == walkingDown)
-				{
-					walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-					playFootstepSound();
-				}
-				else if(sprite == walkingRight)
-				{
-					walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-					playFootstepSound();
-				}
-				else if(sprite == walkingLeft)
-				{
-					walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-					playFootstepSound();
-				}
-				else if(sprite == idle && (this.direction == Direction.SOUTH || this.direction == Direction.NONE))
-				{
-					idleDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-				}
-				else if(sprite == idle && this.direction == Direction.NORTH)
-				{
-					idleUp.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-				}
-				else if(sprite == idle && this.direction == Direction.EAST)
-				{
-					idleRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-				}
-				else if(sprite == idle && this.direction == Direction.WEST)
-				{
-					idleLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-				}
-				
-				
-				if(swinging)
-				{
-					if(meleeSwing == meleeLeft)
-					{
-						meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX() - 48, this.getY() - this.getHalfHeight() - camera.getY());	
-					}
-					else if(meleeSwing == meleeUp)
-					{
-						meleeSwing.draw((this.getX() - this.getHalfWidth() - camera.getX()), (this.getY() - this.getHalfHeight() - camera.getY()) - 48);	
-					}
-					else
-					{
-					meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
-					}
-				}
-				
-				// converts box2d position to hero's position on screen
-				box2dPlayerPosition = new Vec2(this.getLocalX(camera)/30, this.getLocalY(camera)/30);
-			}
-			
-			private int framesSinceLastFootstep = 0;
-			private void playFootstepSound()
+		if(sprite == walkingUp)
+		{
+			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			playFootstepSound();
+		}
+		else if(sprite == walkingDown)
+		{
+			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			playFootstepSound();
+		}
+		else if(sprite == walkingRight)
+		{
+			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			playFootstepSound();
+		}
+		else if(sprite == walkingLeft)
+		{
+			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			playFootstepSound();
+		}
+		else if(sprite == idle && (this.direction == Direction.SOUTH || this.direction == Direction.NONE))
+		{
+			idleDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if(sprite == idle && this.direction == Direction.NORTH)
+		{
+			idleUp.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if(sprite == idle && this.direction == Direction.EAST)
+		{
+			idleRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if(sprite == idle && this.direction == Direction.WEST)
+		{
+			idleLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		
+		
+		if(swinging)
+		{
+			if(meleeSwing == meleeLeft)
 			{
-				framesSinceLastFootstep++;
-				if(framesSinceLastFootstep > 20)
-				{
-					Game.assets.playSoundEffectWithoutRepeat("footstep");
-					framesSinceLastFootstep= 0;
-				}
-				
+				meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX() - 48, this.getY() - this.getHalfHeight() - camera.getY());	
 			}
+			else if(meleeSwing == meleeUp)
+			{
+				meleeSwing.draw((this.getX() - this.getHalfWidth() - camera.getX()), (this.getY() - this.getHalfHeight() - camera.getY()) - 48);	
+			}
+			else
+			{
+			meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			}
+		}
+		
+			// converts box2d position to hero's position on screen
+			box2dPlayerPosition = new Vec2(this.getLocalX(camera)/30, this.getLocalY(camera)/30);
+	}
+			
+	private int framesSinceLastFootstep = 0;
+	private void playFootstepSound()
+	{
+		framesSinceLastFootstep++;
+		if(framesSinceLastFootstep > 20)
+		{
+			Game.assets.playSoundEffectWithoutRepeat("footstep");
+			framesSinceLastFootstep= 0;
+		}
+		
+	}
 	
 	public void renderOnMap(Graphics graphics, Camera camera)
 	{

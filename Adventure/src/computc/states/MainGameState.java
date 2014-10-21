@@ -235,6 +235,7 @@ public class MainGameState extends BasicGameState
 					arrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
 					arrow.setPosition(this.gamedata.hero.getX(), this.gamedata.hero.getY());
 					this.gamedata.hero.arrowCount -= 1;
+					Game.assets.playSoundEffectWithoutRepeat("arrowFire");
 					this.gamedata.hero.arrows.add(arrow);
 					this.gamedata.hero.startArrowCooldown();
 				}
