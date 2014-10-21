@@ -4,6 +4,8 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
 
 
+
+import computc.Game;
 import computc.cameras.Camera;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.rooms.Room;
@@ -63,6 +65,7 @@ public abstract class Enemy extends Entity
 		
 		blinking = true;
 		blinkCooldown = 50;
+		Game.assets.playSoundEffectWithoutRepeat("swordStrikesEnemy");
 	}
 	
 	public int getHealth()
