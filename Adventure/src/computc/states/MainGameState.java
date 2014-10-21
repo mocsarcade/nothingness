@@ -20,6 +20,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.state.transition.RotateTransition;
+import static org.lwjgl.opengl.GL11.*;
 
 import computc.Game;
 import computc.GameData;
@@ -45,9 +46,20 @@ public class MainGameState extends BasicGameState
 	
 	private int gravityCoolDown; //chain
 	
+	private double cameraZoomLeft;
+	private double cameraZoomRight;
+	private double cameraZoomBottom;
+	private double cameraZoomTop;
+	private double cameraLocation;
+
+	
+	
 	public MainGameState(GameData gamedata)
 	{
 		this.gamedata = gamedata;
+		
+		this.cameraZoomRight = Room.HEIGHT;
+		this.cameraZoomBottom = Room.WIDTH;
 	}
 	
 	private Animation textBox;
@@ -138,6 +150,37 @@ public class MainGameState extends BasicGameState
 			{
 				game.enterState(YouWonGameState.ID, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
 			}
+		}
+		
+		if(input.isKeyDown(Input.KEY_P))
+		{
+			
+			this.cameraZoomRight -= 10;
+			this.cameraZoomBottom -= 10;
+			
+			
+			if(this.cameraLocation < this.gamedata.hero.getRoomPositionX())
+			{
+				cameraLocation ++;
+			}
+			
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(cameraZoomLeft, cameraZoomRight, cameraZoomBottom, cameraZoomTop, -1, 1);
+			glMatrixMode(GL_MODELVIEW);
+		}
+		
+		if(input.isKeyDown(Input.KEY_O))
+		{
+			this.cameraZoomLeft += 10;
+			this.cameraZoomRight += 10;
+			this.cameraZoomBottom += 10;
+			this.cameraZoomTop += 10;
+			
+			glMatrixMode(GL_PROJECTION);
+			glLoadIdentity();
+			glOrtho(cameraZoomLeft, cameraZoomRight, cameraZoomBottom, cameraZoomTop, -1, 1);
+			glMatrixMode(GL_MODELVIEW);
 		}
 	}
 	
