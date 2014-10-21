@@ -142,7 +142,8 @@ public class Arrow extends Entity
 		
 		hit = true;
 		dx = 0; dy = 0;
-		
+		Game.assets.playSoundEffectWithoutRepeat("arrowInWall");
+
 	}
 	
 	public boolean intersects(Entity that)

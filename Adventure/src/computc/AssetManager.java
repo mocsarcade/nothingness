@@ -89,8 +89,11 @@ public class AssetManager
 	{
 		HashMap<String, String> sounds = new HashMap<String, String>();
 		//sounds.put("res/audio/wack.wav", "backgroundMusic");
+		sounds.put("res/audio/chirps/arrowNotched.wav", "arrowNotched");
 		sounds.put("res/audio/chirps/arrowFire.wav", "arrowFire");
 		sounds.put("res/audio/chirps/arrowInEnemy.wav", "arrowInEnemy");
+		sounds.put("res/audio/chirps/arrowInWall.wav", "arrowInWall");
+		sounds.put("res/audio/chirps/arrowPickup.wav", "arrowPickup");
 		sounds.put("res/audio/chirps/wallsShaking.wav", "wallsShaking");
 		sounds.put("res/audio/chirps/footstep.wav","footstep");
 		sounds.put("res/audio/chirps/openMap.wav","openMap");
@@ -99,8 +102,12 @@ public class AssetManager
 		sounds.put("res/audio/chirps/swordStrikesAir.wav","swordStrikesAir");
 		sounds.put("res/audio/chirps/swordStrikesEnemy.wav","swordStrikesEnemy");
 		sounds.put("res/audio/chirps/swordStrikesMetal.wav","swordStrikesMetal");
+		sounds.put("res/audio/chirps/keyDrop.wav","keyDrop");
 		sounds.put("res/audio/chimes/enemyDying.wav","enemyDying");
 		sounds.put("res/audio/chimes/levelComplete.wav","levelComplete");
+		//sounds.put("res/audio/chimes/coinDrop.wav","coinDrop");
+		//sounds.put("res/audio/chimes/arrowDrop.wav","arrowDrop");
+
 		
 		try
 		{			
@@ -115,7 +122,7 @@ public class AssetManager
 		{
 			e.printStackTrace();
 		}
-            backgroundMusic.play(1.0f, volume);;
+            //backgroundMusic.play(1.0f, volume);
 	}
 	
 	public void playMusicWithRepeat(String id)

@@ -347,6 +347,7 @@ public class Hero extends Entity
 				{
 					arrows.get(i).setRemove();
 					this.arrowCount += 1;
+					Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
 				}
 				
 				if(arrows.get(i).shouldRemove()) 
@@ -771,6 +772,7 @@ public class Hero extends Entity
 			if(this.intersects(commodity) && commodity.getType() == 2)
 			{
 				this.arrowCount += 5;
+				Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
 				commodities.remove(commodity);
 			}
 		}
