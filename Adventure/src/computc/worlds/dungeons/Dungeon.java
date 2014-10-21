@@ -189,6 +189,11 @@ public abstract class Dungeon
 		{
 			room.renderOnMap(graphics, camera);
 		}
+		
+		for(Key key : this.keys)
+		{
+			key.renderOnMap(graphics, camera);
+		}
 	}
 	
 	public LinkedList<Enemy> getAllEnemies()
