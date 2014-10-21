@@ -197,6 +197,7 @@ public class Hero extends Entity
 		if(sprite == walkingUp)
 		{
 			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			Game.assets.playSoundEffectWithoutRepeat("footstep");
 		}
 		else if(sprite == walkingDown)
 		{
@@ -489,6 +490,7 @@ public class Hero extends Entity
 					}
 					else peekTimer = 0;
 //				this.y -= step;
+				
 				}
 			else if(input.isKeyDown(Input.KEY_DOWN))
 				{
