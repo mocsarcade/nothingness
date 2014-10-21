@@ -63,6 +63,8 @@ public class Arrow extends Entity
 			this.image = arrows.getSubImage(161, 1, 30, 30);
 		}
 		
+		Game.assets.playSoundEffectWithoutRepeat("arrowFire");
+		
 	}
 	
 	public void update(int delta)
@@ -148,8 +150,6 @@ public class Arrow extends Entity
 	{
 		Rectangle r1 = this.getHitbox();
 		Rectangle r2 = that.getHitbox();
-		
-		
 		
 		if(that instanceof Enemy && r1.intersects(r2) == true)
 		{
