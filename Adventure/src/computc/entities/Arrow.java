@@ -126,6 +126,8 @@ public class Arrow extends Entity
 			{
 				stickCooldown = 2500;
 			}
+			
+			inert = true;
 		}
 
 	}
