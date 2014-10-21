@@ -35,6 +35,18 @@ public class Commodity extends Entity
 		
 		this.image = Game.assets.getImage(collectibles.get(type));
 		
+		if(type==0)
+		{
+			Game.assets.playSoundEffectWithoutRepeat("keyDrop");
+		}
+		else if(type==1)
+		{
+			//Game.assets.playSoundEffectWithoutRepeat("coinPickup");
+		}
+		else if(type==2)
+		{
+			//Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
+		}
 		System.out.println("item dropped");
 	}
 	

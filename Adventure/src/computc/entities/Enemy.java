@@ -61,6 +61,7 @@ public abstract class Enemy extends Entity
 		if(health <= 0)
 		{
 			dead = true;
+			Game.assets.playSoundEffectWithoutRepeat("enemyDying");
 		}
 		
 		blinking = true;

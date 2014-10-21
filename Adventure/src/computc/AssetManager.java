@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Music;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.openal.Audio;
@@ -23,7 +24,8 @@ public class AssetManager
 	private HashMap<String, TileSet> loadedTileSets = new HashMap<String, TileSet>();
 	private HashMap<String, RoomLayout> loadedRoomLayouts = new HashMap<String, RoomLayout>();
 	private HashMap<String, Audio> loadedSounds = new HashMap<String, Audio>();
-	private Audio backgroundMusic;
+	private Music backgroundMusic;
+	public float volume = 1.0f;
 	
 	public AssetManager()
 	{
@@ -86,9 +88,12 @@ public class AssetManager
 	public void initAudio()
 	{
 		HashMap<String, String> sounds = new HashMap<String, String>();
-		sounds.put("res/audio/wack.wav", "backgroundMusic");
+		//sounds.put("res/audio/wack.wav", "backgroundMusic");
+		sounds.put("res/audio/chirps/arrowNotched.wav", "arrowNotched");
 		sounds.put("res/audio/chirps/arrowFire.wav", "arrowFire");
 		sounds.put("res/audio/chirps/arrowInEnemy.wav", "arrowInEnemy");
+		sounds.put("res/audio/chirps/arrowInWall.wav", "arrowInWall");
+		sounds.put("res/audio/chirps/arrowPickup.wav", "arrowPickup");
 		sounds.put("res/audio/chirps/wallsShaking.wav", "wallsShaking");
 		sounds.put("res/audio/chirps/footstep.wav","footstep");
 		sounds.put("res/audio/chirps/openMap.wav","openMap");
@@ -97,6 +102,13 @@ public class AssetManager
 		sounds.put("res/audio/chirps/swordStrikesAir.wav","swordStrikesAir");
 		sounds.put("res/audio/chirps/swordStrikesEnemy.wav","swordStrikesEnemy");
 		sounds.put("res/audio/chirps/swordStrikesMetal.wav","swordStrikesMetal");
+		sounds.put("res/audio/chirps/keyDrop.wav","keyDrop");
+		sounds.put("res/audio/chimes/enemyDying.wav","enemyDying");
+		sounds.put("res/audio/chimes/levelComplete.wav","levelComplete");
+		//sounds.put("res/audio/chimes/coinDrop.wav","coinDrop");
+		//sounds.put("res/audio/chimes/arrowDrop.wav","arrowDrop");
+
+		
 		try
 		{			
 			for(Entry<String, String> sound:sounds.entrySet())
@@ -104,13 +116,13 @@ public class AssetManager
 				Audio audio = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream(sound.getKey()));
 				loadedSounds.put(sound.getValue(), audio);
 			}
+			backgroundMusic = new Music("res/audio/wack.wav");
 		}
-		catch(IOException e)
+		catch(IOException | SlickException e)
 		{
 			e.printStackTrace();
 		}
-		//Play song at +1 pitch, +1 gain, and on repeat
-		playMusicWithRepeat("backgroundMusic");
+            backgroundMusic.play(1.0f, volume);
 	}
 	
 	public void playMusicWithRepeat(String id)
@@ -124,5 +136,22 @@ public class AssetManager
 	public void playSoundEffectWithoutRepeat(String id)
 	{
 		loadedSounds.get(id).playAsSoundEffect(1.0f, 1.0f, false);
+	}
+	
+	// Fades music to prevent jarring stop
+	public void fadeMusicOut()
+	{
+		for(int i = 0; i < 100; i++)
+		{
+			backgroundMusic.setVolume((float) (backgroundMusic.getVolume()-.01));
+		}
+	}
+	// Fades music to prevent jarring stop
+	public void fadeMusicIn()
+	{
+		for(int i = 0; i < 1000; i++)
+		{
+			backgroundMusic.setVolume((float) (backgroundMusic.getVolume()+.01));
+		}
 	}
 }
