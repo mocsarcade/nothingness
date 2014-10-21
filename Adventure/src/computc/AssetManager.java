@@ -110,7 +110,7 @@ public class AssetManager
 			e.printStackTrace();
 		}
 		//Play song at +1 pitch, +1 gain, and on repeat
-		playMusicWithRepeat("backgroundMusic");
+		//playMusicWithRepeat("backgroundMusic");
 	}
 	
 	public void playMusicWithRepeat(String id)
