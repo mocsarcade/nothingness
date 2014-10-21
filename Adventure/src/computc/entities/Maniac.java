@@ -33,6 +33,8 @@ public class Maniac extends Enemy
 	
 	
 	private boolean bullRush;
+	private boolean alreadySmashed;
+	private boolean smash;
 	
 	public Maniac(Dungeon dungeon, Room room, int x, int  y)
 	{
@@ -148,16 +150,14 @@ public class Maniac extends Enemy
 				{
 					if(this.dungeon.gamedata.hero.getY() < this.y - this.getHalfHeight())
 					{
-						bullRush = true;
-						bullRushCoolDown = 2800;
+						startBullRush();
 					}
 				}
 				else if(down && this.dungeon.gamedata.hero.getX() > this.x - this.getHalfWidth() && this.dungeon.gamedata.hero.getX() < this.x + this.getHalfWidth() && bullRushCoolDown == 0)
 				{
 					if(this.dungeon.gamedata.hero.getY() > this.y + this.getHalfHeight())
 					{
-						bullRush = true;
-						bullRushCoolDown = 2800;
+						startBullRush();
 					}
 				}
 				
@@ -165,20 +165,24 @@ public class Maniac extends Enemy
 				{
 					if(this.dungeon.gamedata.hero.getX() < this.x - this.getHalfWidth())
 					{
-						bullRush = true;
-						bullRushCoolDown = 2800;
+						startBullRush();
 					}
 				}
 				else if(right && this.dungeon.gamedata.hero.getY() > this.y - this.getHalfHeight() && this.dungeon.gamedata.hero.getY() < this.y + this.getHalfHeight() && bullRushCoolDown == 0)
 				{
 					if(this.dungeon.gamedata.hero.getX() > this.x + this.getHalfWidth())
 					{
-						bullRush = true;
-						bullRushCoolDown = 2800;
+						startBullRush();
 					}
 				}
 			}
 	
+	}
+	
+	private void startBullRush()
+	{
+		bullRush = true;
+		bullRushCoolDown = 2800;
 	}
 	
 	private void getNextPosition(int delta) 
@@ -305,6 +309,7 @@ public class Maniac extends Enemy
 			RoomFollowingCamera cam = (RoomFollowingCamera)camera;
 			cam.setShaking(this.direction, 50);
 			alreadySmashed = true;
+			Game.assets.playSoundEffectWithoutRepeat("wallsShaking");
 		}
 		
 //		super.render(graphics, camera);

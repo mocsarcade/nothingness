@@ -124,6 +124,7 @@ public class Arrow extends Entity
 			if(stickCooldown > 2500)
 			{
 				stickCooldown = 2500;
+				Game.assets.playSoundEffectWithoutRepeat("arrowInEnemy");
 			}
 		}
 
@@ -141,15 +142,14 @@ public class Arrow extends Entity
 		
 		hit = true;
 		dx = 0; dy = 0;
-		
+		Game.assets.playSoundEffectWithoutRepeat("arrowInWall");
+
 	}
 	
 	public boolean intersects(Entity that)
 	{
 		Rectangle r1 = this.getHitbox();
 		Rectangle r2 = that.getHitbox();
-		
-		
 		
 		if(that instanceof Enemy && r1.intersects(r2) == true)
 		{

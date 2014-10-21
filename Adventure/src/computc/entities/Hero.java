@@ -195,18 +195,22 @@ public class Hero extends Entity
 		if(sprite == walkingUp)
 		{
 			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			playFootstepSound();
 		}
 		else if(sprite == walkingDown)
 		{
 			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			playFootstepSound();
 		}
 		else if(sprite == walkingRight)
 		{
 			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			playFootstepSound();
 		}
 		else if(sprite == walkingLeft)
 		{
 			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			playFootstepSound();
 		}
 		else if(sprite == idle && (this.direction == Direction.SOUTH || this.direction == Direction.NONE))
 		{
@@ -242,8 +246,20 @@ public class Hero extends Entity
 			}
 		}
 		
-		// converts box2d position to hero's position on screen
-		box2dPlayerPosition = new Vec2(this.getLocalX(camera)/30, this.getLocalY(camera)/30);
+			// converts box2d position to hero's position on screen
+			box2dPlayerPosition = new Vec2(this.getLocalX(camera)/30, this.getLocalY(camera)/30);
+	}
+			
+	private int framesSinceLastFootstep = 0;
+	private void playFootstepSound()
+	{
+		framesSinceLastFootstep++;
+		if(framesSinceLastFootstep > 20)
+		{
+			Game.assets.playSoundEffectWithoutRepeat("footstep");
+			framesSinceLastFootstep= 0;
+		}
+		
 	}
 	
 	public void renderOnMap(Graphics graphics, Camera camera)
@@ -331,6 +347,7 @@ public class Hero extends Entity
 				{
 					arrows.get(i).setRemove();
 					this.arrowCount += 1;
+					Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
 				}
 				
 				if(arrows.get(i).shouldRemove()) 
@@ -755,6 +772,7 @@ public class Hero extends Entity
 			if(this.intersects(commodity) && commodity.getType() == 2)
 			{
 				this.arrowCount += 5;
+				Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
 				commodities.remove(commodity);
 			}
 		}

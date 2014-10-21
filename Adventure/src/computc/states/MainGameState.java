@@ -79,6 +79,7 @@ public class MainGameState extends BasicGameState
 		if(input.isKeyDown(Input.KEY_M))
 		{
 			game.enterState(2, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
+			Game.assets.playSoundEffectWithoutRepeat("openMap");
 		}
 		
 		if(this.gamedata.hero.isDead())
@@ -132,7 +133,10 @@ public class MainGameState extends BasicGameState
 			
 			if(this.gamedata.level < 4)
 			{
+				Game.assets.fadeMusicOut();
+				Game.assets.playSoundEffectWithoutRepeat("levelComplete");
 				game.enterState(ToNextLevelGameState.ID, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 1000));
+				Game.assets.fadeMusicIn();
 			}
 			else
 			{
@@ -234,6 +238,7 @@ public class MainGameState extends BasicGameState
 					arrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
 					arrow.setPosition(this.gamedata.hero.getX(), this.gamedata.hero.getY());
 					this.gamedata.hero.arrowCount -= 1;
+					Game.assets.playSoundEffectWithoutRepeat("arrowFire");
 					this.gamedata.hero.arrows.add(arrow);
 					this.gamedata.hero.startArrowCooldown();
 				}
