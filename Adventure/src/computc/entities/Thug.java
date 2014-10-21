@@ -20,6 +20,8 @@ public class Thug extends Enemy
 {
 	public static boolean hit = false;
 	
+	private boolean forceDrawLeft, forceDrawRight;
+	
 	private int angryCooldown;
 	
 	private Image spriteSheet = Game.assets.getImage("res/Droggon.png");
@@ -109,6 +111,29 @@ public class Thug extends Enemy
 		{
 			angryCooldown = 5000;
 		}
+		
+		// this fixes the edge of the room animation glitch
+		if(this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2 && left)
+		{
+			forceDrawLeft = true;
+		}
+		else if(this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2 && right)
+		{
+			forceDrawRight = true;
+		}
+		else
+			{
+				forceDrawRight = false; forceDrawLeft = false;
+			}
+		
+		if(this.getRoomPositionY() < Tile.SIZE * 2 && left)
+		{
+			forceDrawLeft = true;
+		}
+		else if(this.getRoomPositionY()< Tile.SIZE * 2 && right)
+		{
+			forceDrawRight = true;
+		}
 	}
 	
 	private void getNextPosition(int delta) 
@@ -173,22 +198,24 @@ public class Thug extends Enemy
 		}
 //		super.render(graphics, camera);
 		
-		if(this.direction == Direction.NORTH)
+		if(this.direction == Direction.NORTH && !(forceDrawLeft || forceDrawRight))
 		{
 			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
 		}
-		else if (this.direction == Direction.SOUTH)
+		else if (this.direction == Direction.SOUTH && !(forceDrawLeft || forceDrawRight))
 		{
 			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
 		}
-		else if (this.direction == Direction.EAST)
+		
+		if (forceDrawRight)
 		{
 			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
 		}
-		else if (this.direction == Direction.WEST)
+		else if (forceDrawLeft)
 		{
 			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
 		}
+		
 	}
 	
 	public void checkTileMapCollision() 
