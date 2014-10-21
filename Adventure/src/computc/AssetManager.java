@@ -2,6 +2,8 @@ package computc;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -83,16 +85,18 @@ public class AssetManager
 	 */
 	public void initAudio()
 	{
+		HashMap<String, String> sounds = new HashMap<String, String>();
+		sounds.put("res/audio/wack.wav", "backgroundMusic");
+		sounds.put("res/audio/chirps/arrowFire.wav", "arrowFire");
+		sounds.put("res/audio/chirps/wallsShaking.wav", "wallsShaking");
+		sounds.put("res/audio/chirps/footstep.wav","footstep");
 		try
 		{			
-			Audio audio = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/audio/wack.wav"));
-			loadedSounds.put("backgroundMusic", audio);
-			
-			audio = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/audio/chirps/arrowFire.wav"));
-			loadedSounds.put("arrowFire", audio);
-			
-			audio = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/audio/chirps/wallsShaking.wav"));
-			loadedSounds.put("wallsShaking", audio);
+			for(Entry<String, String> sound:sounds.entrySet())
+			{
+				Audio audio = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream(sound.getKey()));
+				loadedSounds.put(sound.getValue(), audio);
+			}
 		}
 		catch(IOException e)
 		{
