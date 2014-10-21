@@ -20,6 +20,7 @@ public class AssetManager
 	private HashMap<String, Image> loadedImages = new HashMap<String, Image>();
 	private HashMap<String, TileSet> loadedTileSets = new HashMap<String, TileSet>();
 	private HashMap<String, RoomLayout> loadedRoomLayouts = new HashMap<String, RoomLayout>();
+	private HashMap<String, Audio> loadedSounds = new HashMap<String, Audio>();
 	private Audio backgroundMusic;
 	
 	public AssetManager()
@@ -76,17 +77,41 @@ public class AssetManager
 		
 		return this.loadedTileSets.get(source);
 	}
+	/**
+	 * Eventually, this should read from an XML file with filenames of all 
+	 * sounds and their game names. Until then, this will be ugly.
+	 */
 	public void initAudio()
 	{
 		try
-		{
-			backgroundMusic = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/audio/wack.wav"));
+		{			
+			Audio audio = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/audio/wack.wav"));
+			loadedSounds.put("backgroundMusic", audio);
+			
+			audio = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/audio/chirps/arrowFire.wav"));
+			loadedSounds.put("arrowFire", audio);
+			
+			audio = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/audio/chirps/wallsShaking.wav"));
+			loadedSounds.put("wallsShaking", audio);
 		}
 		catch(IOException e)
 		{
 			e.printStackTrace();
 		}
 		//Play song at +1 pitch, +1 gain, and on repeat
-		backgroundMusic.playAsMusic(1.0f, 1.0f, true);
+		playMusicWithRepeat("backgroundMusic");
+	}
+	
+	public void playMusicWithRepeat(String id)
+	{
+		loadedSounds.get(id).playAsMusic(1.0f, 1.0f, true);
+	}
+	public void playSoundEffectWithRepeat(String id)
+	{
+		loadedSounds.get(id).playAsSoundEffect(1.0f, 1.0f, true);
+	}
+	public void playSoundEffectWithoutRepeat(String id)
+	{
+		loadedSounds.get(id).playAsSoundEffect(1.0f, 1.0f, false);
 	}
 }
