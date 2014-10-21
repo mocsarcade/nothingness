@@ -45,6 +45,7 @@ public class Hero extends Entity
 	private int ballDamage;
 	
 	private int arrowCooldown = 0;
+	private int arrowPowerUp;
 	
 	public int arrowCount;
 	private int maxArrows;
@@ -297,6 +298,8 @@ public class Hero extends Entity
 	public void update(Input input, int delta) throws SlickException
 	{
 //		System.out.println("the ball at the end of the chain's x & y are: " + this.ball.x + " , " + this.ball.y);
+		
+		System.out.println("the arrow power up is: " + this.arrowPowerUp);
 		
 		getNextPosition(input, delta);
 		checkTileMapCollision();
@@ -629,6 +632,8 @@ public class Hero extends Entity
 			if(input.isKeyDown(Input.KEY_SPACE) || this.arrowCooldown > 500)
 			{
 				firing = true;
+				
+				arrowPowerUp += delta;
 			}
 			
 			else firing = false;
@@ -835,6 +840,16 @@ public class Hero extends Entity
 	public void resetPeekTimer()
 	{
 		peekTimer = 0;
+	}
+	
+	public int getArrowPowerUp()
+	{
+		return this.arrowPowerUp;
+	}
+	
+	public void resetArrowPowerUp()
+	{
+		arrowPowerUp = 0;
 	}
 	
 	public void checkPickup(LinkedList<Commodity> commodities)

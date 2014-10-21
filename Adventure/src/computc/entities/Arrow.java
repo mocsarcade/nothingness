@@ -1,6 +1,7 @@
 package computc.entities;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -63,6 +64,8 @@ public class Arrow extends Entity
 			dx = -acceleration;
 			this.image = arrows.getSubImage(161, 1, 30, 30);
 		}
+		
+		this.myFilter = new Color(redFilter, greenFilter, blueFilter, 1f);
 		
 	}
 	
@@ -129,6 +132,8 @@ public class Arrow extends Entity
 			
 			inert = true;
 		}
+		
+		myFilter = new Color(redFilter, greenFilter, blueFilter, this.filterAlpha);
 
 	}
 	
