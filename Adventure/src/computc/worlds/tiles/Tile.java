@@ -28,6 +28,8 @@ public class Tile
 	protected Image image;
 	public Color color;
 	
+	public boolean locked = false;
+	
 	protected boolean collideable;
 	
 	public Tile(Room room, int tx, int ty)
@@ -154,4 +156,13 @@ public class Tile
 	}
 	
 	public final static int SIZE = 64;
+
+	public void lock()
+	{
+		this.locked = true;
+	}
+	public void unlock()
+	{
+		this.locked = false;
+	}
 }

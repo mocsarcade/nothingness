@@ -104,7 +104,7 @@ public class RandomDungeon extends Dungeon
 				}
 			}
 			
-			//segment.getLastMajorRoom().getCritDoor();
+			segment.getLastMajorRoom().getCritDoor();
 			segment.getRandomMinorRoom().addKey();
 		}
 		

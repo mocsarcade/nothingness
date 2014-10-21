@@ -12,6 +12,8 @@ import computc.worlds.rooms.Room;
 public class Key extends Entity
 {
 	private float speed = 1f;
+	public boolean pickedup;
+	public Hero target;
 
 	public Key(Dungeon dungeon, Room room, int tx, int ty)
 	{

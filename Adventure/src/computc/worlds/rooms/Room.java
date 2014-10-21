@@ -100,7 +100,7 @@ public class Room
 			
 			this.tiles[tx][ty] = doortile;
 			
-			if(door.lock)
+			if(door.lock && this.critdir == door.critdir)
 			{
 				doortile.lock();
 			}
