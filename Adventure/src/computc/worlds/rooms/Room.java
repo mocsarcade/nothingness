@@ -72,7 +72,14 @@ public class Room
 			int tx = (int)(Math.floor(Math.abs(dtx)));
 			int ty = (int)(Math.floor(Math.abs(dty)));
 			
-			this.tiles[tx][ty] = new DoorTile(this, tx, ty);
+			if(door.critdir == Direction.NONE)
+			{
+				this.tiles[tx][ty] = new FloorTile(this, tx, ty);
+			}
+			else
+			{
+				this.tiles[tx][ty] = new DoorTile(this, tx, ty);
+			}
 		}
 		
 		for(Point point : this.roomlayout.thugs)
