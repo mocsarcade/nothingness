@@ -126,6 +126,7 @@ public class Arrow extends Entity
 			if(stickCooldown > 2500)
 			{
 				stickCooldown = 2500;
+				Game.assets.playSoundEffectWithoutRepeat("arrowInEnemy");
 			}
 		}
 

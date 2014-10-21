@@ -88,8 +88,15 @@ public class AssetManager
 		HashMap<String, String> sounds = new HashMap<String, String>();
 		sounds.put("res/audio/wack.wav", "backgroundMusic");
 		sounds.put("res/audio/chirps/arrowFire.wav", "arrowFire");
+		sounds.put("res/audio/chirps/arrowInEnemy.wav", "arrowInEnemy");
 		sounds.put("res/audio/chirps/wallsShaking.wav", "wallsShaking");
 		sounds.put("res/audio/chirps/footstep.wav","footstep");
+		sounds.put("res/audio/chirps/openMap.wav","openMap");
+		sounds.put("res/audio/chirps/closeMap.wav","closeMap");
+		sounds.put("res/audio/chirps/swordStrikesStone.wav","swordStrikesStone");
+		sounds.put("res/audio/chirps/swordStrikesAir.wav","swordStrikesAir");
+		sounds.put("res/audio/chirps/swordStrikesEnemy.wav","swordStrikesEnemy");
+		sounds.put("res/audio/chirps/swordStrikesMetal.wav","swordStrikesMetal");
 		try
 		{			
 			for(Entry<String, String> sound:sounds.entrySet())
