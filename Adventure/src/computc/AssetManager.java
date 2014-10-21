@@ -87,6 +87,6 @@ public class AssetManager
 			e.printStackTrace();
 		}
 		//Play song at +1 pitch, +1 gain, and on repeat
-//		backgroundMusic.playAsMusic(1.0f, 1.0f, true);
+		backgroundMusic.playAsMusic(1.0f, 1.0f, true);
 	}
 }

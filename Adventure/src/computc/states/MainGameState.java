@@ -20,7 +20,6 @@ import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
 import org.newdawn.slick.state.transition.RotateTransition;
-import static org.lwjgl.opengl.GL11.*;
 
 import computc.Game;
 import computc.GameData;
@@ -151,37 +150,6 @@ public class MainGameState extends BasicGameState
 				game.enterState(YouWonGameState.ID, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 250));
 			}
 		}
-		
-		if(input.isKeyDown(Input.KEY_P))
-		{
-			
-			this.cameraZoomRight -= 10;
-			this.cameraZoomBottom -= 10;
-			
-			
-			if(this.cameraLocation < this.gamedata.hero.getRoomPositionX())
-			{
-				cameraLocation ++;
-			}
-			
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			glOrtho(cameraZoomLeft, cameraZoomRight, cameraZoomBottom, cameraZoomTop, -1, 1);
-			glMatrixMode(GL_MODELVIEW);
-		}
-		
-		if(input.isKeyDown(Input.KEY_O))
-		{
-			this.cameraZoomLeft += 10;
-			this.cameraZoomRight += 10;
-			this.cameraZoomBottom += 10;
-			this.cameraZoomTop += 10;
-			
-			glMatrixMode(GL_PROJECTION);
-			glLoadIdentity();
-			glOrtho(cameraZoomLeft, cameraZoomRight, cameraZoomBottom, cameraZoomTop, -1, 1);
-			glMatrixMode(GL_MODELVIEW);
-		}
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
@@ -227,11 +195,6 @@ public class MainGameState extends BasicGameState
 				this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
 			}
 		}
-		
-		if(k == Input.KEY_SPACE)
-		{
-			Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
-		}
 	}
 	
 	
@@ -271,13 +234,17 @@ public class MainGameState extends BasicGameState
 			{
 				Arrow arrow;
 				
-				if(this.gamedata.hero.getArrowCooldown() <= 0)
+				if(this.gamedata.hero.getArrowCooldown() <= 0 && this.gamedata.hero.getFiringArrowFrame() == 2)
 				{
 					arrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
 					arrow.setPosition(this.gamedata.hero.getX(), this.gamedata.hero.getY());
 					this.gamedata.hero.arrowCount -= 1;
 					this.gamedata.hero.arrows.add(arrow);
 					this.gamedata.hero.startArrowCooldown();
+				}
+				else
+				{
+					this.gamedata.hero.restartFiringArrow();
 				}
 				
 			}

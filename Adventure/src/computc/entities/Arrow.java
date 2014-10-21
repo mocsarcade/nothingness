@@ -21,6 +21,7 @@ public class Arrow extends Entity
     protected boolean right;
     protected boolean up;
     protected boolean down;
+    protected boolean arrowNotched;
     
     protected boolean stuck;
     protected boolean inert;
@@ -192,6 +193,11 @@ public class Arrow extends Entity
 	public void setRemove()
 	{
 		remove = true;
+	}
+	
+	public void setArrowNotched()
+	{
+		arrowNotched = true;
 	}
 
 }

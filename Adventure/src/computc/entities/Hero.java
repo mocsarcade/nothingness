@@ -54,6 +54,8 @@ public class Hero extends Entity
 	
 	protected boolean firing;
 	protected boolean swinging;
+	protected boolean freezePosition;
+	
 	private int meleeDamage;
 	private int meleeRange;
 	
@@ -128,10 +130,10 @@ public class Hero extends Entity
 		this.meleeDown = new Animation(new SpriteSheet(swingDown, 48, 96), 300);
 		this.meleeUp = new Animation(new SpriteSheet(swingUp, 48, 96), 300);
 		
-		this.firingArrowRight = new Animation(new SpriteSheet(fireRight, 62, 74), 200);
-		this.firingArrowLeft = new Animation(new SpriteSheet(fireLeft, 62, 74), 200);
-		this.firingArrowUp = new Animation(new SpriteSheet(fireUp, 62, 74), 200);
-		this.firingArrowDown = new Animation(new SpriteSheet(fireDown, 62, 74), 200);
+		this.firingArrowRight = new Animation(new SpriteSheet(fireRight, 62, 74), 150);
+		this.firingArrowLeft = new Animation(new SpriteSheet(fireLeft, 62, 74), 150);
+		this.firingArrowUp = new Animation(new SpriteSheet(fireUp, 62, 74), 150);
+		this.firingArrowDown = new Animation(new SpriteSheet(fireDown, 62, 74), 150);
 		
 		this.idleDown = new Animation(new SpriteSheet(heroIdleDown, 39, 62), 10000);
 		this.idleUp = new Animation(new SpriteSheet(heroIdleUp, 39, 62), 10000);
@@ -296,9 +298,6 @@ public class Hero extends Entity
 	{
 //		System.out.println("the ball at the end of the chain's x & y are: " + this.ball.x + " , " + this.ball.y);
 		
-		System.out.println("firing is: " + firing);
-		System.out.println("arrowCooldown is: " + arrowCooldown);
-		
 		getNextPosition(input, delta);
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
@@ -312,7 +311,7 @@ public class Hero extends Entity
 			maximumVelocity = 2f;
 		}
 		
-		// Check if the attack has stopped
+		// Check if the melee attack has stopped
 		if(swinging) 
 		{
 			meleeSwing.setLooping(false);
@@ -321,8 +320,12 @@ public class Hero extends Entity
 				swinging = false;
 				meleeSwing.restart();
 			}
-		}
+			
+			freezePosition = true;
+		} 
+		else freezePosition = false;
 		
+		// aligning the arrow shot animation sequence
 		if(firing)
 		{
 			firingArrow.setLooping(false);
@@ -330,6 +333,7 @@ public class Hero extends Entity
 			if(firingArrow.getFrame() >= 2 && input.isKeyDown(Input.KEY_SPACE))
 			{
 				firingArrow.stopAt(2);
+				freezePosition = true;
 			}
 			
 			if(!(input.isKeyDown(Input.KEY_SPACE)))
@@ -341,9 +345,8 @@ public class Hero extends Entity
 			{
 				firingArrow.restart();
 			}
-		}
-		
-
+		} 
+	
 		if (blinkCooldown > 0)
 		{
 			blinkCooldown --;
@@ -461,6 +464,11 @@ public class Hero extends Entity
 			{
 				dy = -maximumVelocity;
 			}
+			
+			if(freezePosition || arrowCooldown > 500)
+			{
+				dy = 0;
+			}
 		}
 		else if(input.isKeyDown(Input.KEY_DOWN))
 		{
@@ -469,6 +477,11 @@ public class Hero extends Entity
 			if(dy > maximumVelocity)
 			{
 				dy = maximumVelocity;
+			}
+			
+			if(freezePosition || arrowCooldown > 500)
+			{
+				dy = 0;
 			}
 		}
 		
@@ -499,6 +512,12 @@ public class Hero extends Entity
 			{
 				dx = maximumVelocity;
 			}
+			
+			if(freezePosition || arrowCooldown > 500)
+			{
+				dx = 0;
+			}
+			
 		}
 		 else if(input.isKeyDown(Input.KEY_LEFT)) 
 		{
@@ -506,6 +525,11 @@ public class Hero extends Entity
 			if(dx < -maximumVelocity)
 			{
 				dx = -maximumVelocity;
+			}
+			
+			if(freezePosition || arrowCooldown > 500)
+			{
+				dx = 0;
 			}
 		}
 		else //if neither KEY_RIGHT nor KEY_LEFT
@@ -602,14 +626,9 @@ public class Hero extends Entity
 				sprite = idle;
 			}
 			
-			if(input.isKeyDown(Input.KEY_SPACE) || this.arrowCooldown > 0)
+			if(input.isKeyDown(Input.KEY_SPACE) || this.arrowCooldown > 500)
 			{
 				firing = true;
-				
-				if(arrowCooldown > 300)
-				{
-					this.dx = 0; this.dy = 0;
-				}
 			}
 			
 			else firing = false;
@@ -661,6 +680,7 @@ public class Hero extends Entity
 				{
 					this.closestEnemy = e;
 				}		
+				
 			if(swinging) 
 			{
 				if(facingRight) 
@@ -760,6 +780,16 @@ public class Hero extends Entity
 	public int getArrowCooldown()
 	{
 		return this.arrowCooldown;
+	}
+	
+	public int getFiringArrowFrame()
+	{
+		return firingArrow.getFrame();
+	}
+	
+	public void restartFiringArrow()
+	{
+		firingArrow.restart();
 	}
 	
 	public void startArrowCooldown()
