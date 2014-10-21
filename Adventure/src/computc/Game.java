@@ -17,6 +17,7 @@ import computc.states.YouWonGameState;
 public class Game extends StateBasedGame
 {
 	public static boolean reset;
+	public static boolean devmode = false;
 	
 	public Game()
 	{
@@ -27,7 +28,11 @@ public class Game extends StateBasedGame
 	{
 		GameData gamedata = new GameData();
 		
-		this.addState(new TitleScreen(gamedata));
+		if(!Game.devmode)
+		{
+			this.addState(new TitleScreen(gamedata));
+		}
+		
         this.addState(new MainGameState(gamedata));
         this.addState(new DungeonMapGameState(gamedata));
         this.addState(new ToNextLevelGameState(gamedata));
@@ -36,6 +41,12 @@ public class Game extends StateBasedGame
 	
 	public static void main(String[] args) throws SlickException
 	{
+		if(args.length > 0 && args[0].equals("devmode"))
+		{
+			System.out.println("entering devmode");
+			Game.devmode = true;
+		}
+		
 		AppGameContainer container = new AppGameContainer(new Game());
 		container.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
 		container.setTargetFrameRate(60);

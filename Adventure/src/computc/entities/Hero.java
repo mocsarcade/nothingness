@@ -61,8 +61,6 @@ public class Hero extends Entity
 	
 	private int peekTimer;
 	
-	//Not sure if this is supposed to be int -- it was missing but referenced?
-	
 	private Image swingRight, swingLeft, swingUp, swingDown;
 	private Image spriteSheet = Game.assets.getImage("res/heroSpriteSheet.png");
 	private Image walkRight = spriteSheet.getSubImage(1, 1, 156, 62);
@@ -197,22 +195,18 @@ public class Hero extends Entity
 		if(sprite == walkingUp)
 		{
 			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
-			playFootstepSound();
 		}
 		else if(sprite == walkingDown)
 		{
 			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-			playFootstepSound();
 		}
 		else if(sprite == walkingRight)
 		{
 			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-			playFootstepSound();
 		}
 		else if(sprite == walkingLeft)
 		{
 			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-			playFootstepSound();
 		}
 		else if(sprite == idle && (this.direction == Direction.SOUTH || this.direction == Direction.NONE))
 		{
@@ -250,18 +244,6 @@ public class Hero extends Entity
 		
 		// converts box2d position to hero's position on screen
 		box2dPlayerPosition = new Vec2(this.getLocalX(camera)/30, this.getLocalY(camera)/30);
-	}
-	
-	private int framesSinceLastFootstep = 0;
-	private void playFootstepSound()
-	{
-		framesSinceLastFootstep++;
-		if(framesSinceLastFootstep > 20)
-		{
-			Game.assets.playSoundEffectWithoutRepeat("footstep");
-			framesSinceLastFootstep= 0;
-		}
-		
 	}
 	
 	public void renderOnMap(Graphics graphics, Camera camera)
@@ -505,7 +487,6 @@ public class Hero extends Entity
 					}
 					else peekTimer = 0;
 //				this.y -= step;
-				
 				}
 			else if(input.isKeyDown(Input.KEY_DOWN))
 				{
@@ -618,8 +599,7 @@ public class Hero extends Entity
 					if(e.getX() > x && e.getX() < x + meleeRange && e.getY() > y - getHalfHeight() && e.getY() < y + getHalfHeight()) 
 					{
 						e.hit(meleeDamage);
-						e.dx +=  delta * .01f;
-						Game.assets.playSoundEffectWithoutRepeat("swordStrikesEnemy");
+						e.dx +=  delta * .01f;	
 					}
 				}
 				else 
@@ -628,8 +608,6 @@ public class Hero extends Entity
 					{
 						e.hit(meleeDamage);
 						e.dx -=  delta * .01f;
-						Game.assets.playSoundEffectWithoutRepeat("swordStrikesEnemy");
-
 					}
 				}
 				
@@ -639,8 +617,6 @@ public class Hero extends Entity
 					{
 						e.hit(meleeDamage);
 						e.dy +=  delta * .01f;
-						Game.assets.playSoundEffectWithoutRepeat("swordStrikesEnemy");
-
 					}
 				}
 				
@@ -650,8 +626,6 @@ public class Hero extends Entity
 					{
 						e.hit(meleeDamage);
 						this.dy -=  delta * .01f;
-						Game.assets.playSoundEffectWithoutRepeat("swordStrikesEnemy");
-
 					}
 				}
 			}
