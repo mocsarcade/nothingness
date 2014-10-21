@@ -72,14 +72,7 @@ public class Room
 			int tx = (int)(Math.floor(Math.abs(dtx)));
 			int ty = (int)(Math.floor(Math.abs(dty)));
 			
-			if(door.critdir == Direction.NONE)
-			{
-				this.tiles[tx][ty] = new FloorTile(this, tx, ty);
-			}
-			else
-			{
-				this.tiles[tx][ty] = new DoorTile(this, tx, ty);
-			}
+			this.tiles[tx][ty] = new DoorTile(this, tx, ty, door.critdir);
 		}
 		
 		for(Point point : this.roomlayout.thugs)
@@ -121,7 +114,7 @@ public class Room
 		{
 			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
-				if(this.hasVisited)
+				//if(this.hasVisited)
 				{
 					this.getTile(tx, ty).renderOnMap(graphics, camera);
 				}
@@ -489,43 +482,71 @@ public class Room
 		
 	}
 	
-	public Door makeDoorToTheNorth()
+	public Door makeDoorToTheNorth(boolean critpath)
 	{
-		return new Door(this, this.getRoomToTheNorth());
+		if(critpath)
+		{
+			return new Door(this, this.getRoomToTheNorth(), Direction.NORTH);
+		}
+		else
+		{
+			return new Door(this, this.getRoomToTheNorth(), Direction.NONE);
+		}
 	}
 	
-	public Door makeDoorToTheSouth()
+	public Door makeDoorToTheSouth(boolean critpath)
 	{
-		return new Door(this, this.getRoomToTheSouth());
+		if(critpath)
+		{
+			return new Door(this, this.getRoomToTheSouth(), Direction.SOUTH);
+		}
+		else
+		{
+			return new Door(this, this.getRoomToTheSouth(), Direction.NONE);
+		}
 	}
 	
-	public Door makeDoorToTheEast()
+	public Door makeDoorToTheEast(boolean critpath)
 	{
-		return new Door(this, this.getRoomToTheEast());
+		if(critpath)
+		{
+			return new Door(this, this.getRoomToTheEast(), Direction.EAST);
+		}
+		else
+		{
+			return new Door(this, this.getRoomToTheEast(), Direction.NONE);
+		}
 	}
 	
-	public Door makeDoorToTheWest()
+	public Door makeDoorToTheWest(boolean critpath)
 	{
-		return new Door(this, this.getRoomToTheWest());
+		if(critpath)
+		{
+			return new Door(this, this.getRoomToTheWest(), Direction.WEST);
+		}
+		else
+		{
+			return new Door(this, this.getRoomToTheWest(), Direction.NONE);
+		}
 	}
 	
-	public Door makeDoor(Direction direction)
+	public Door makeDoor(Direction direction, boolean critpath)
 	{
 		if(direction == Direction.NORTH)
 		{
-			return this.makeDoorToTheNorth();
+			return this.makeDoorToTheNorth(critpath);
 		}
 		else if(direction == Direction.SOUTH)
 		{
-			return this.makeDoorToTheSouth();
+			return this.makeDoorToTheSouth(critpath);
 		}
 		else if(direction == Direction.EAST)
 		{
-			return this.makeDoorToTheEast();
+			return this.makeDoorToTheEast(critpath);
 		}
 		else if(direction == Direction.WEST)
 		{
-			return this.makeDoorToTheWest();
+			return this.makeDoorToTheWest(critpath);
 		}
 		else
 		{
