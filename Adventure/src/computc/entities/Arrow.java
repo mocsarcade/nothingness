@@ -30,7 +30,7 @@ public class Arrow extends Entity
     private int stickCooldown;
     
     private boolean filterSwitch;
-    private boolean powerCharge;
+    public boolean powerCharge;
     
     public int arrowDamage;
     
@@ -104,7 +104,12 @@ public class Arrow extends Entity
 			remove = true;
 		}
 		
-		if(!(this.getMostRecentCollision() == null) && this.getMostRecentCollision().isDead())
+		if(stickCooldown < 2500 && stickCooldown > 0 && this.powerCharge)
+		{
+			remove = true;
+		}
+		
+		if(!(this.getMostRecentCollision() == null) && this.getMostRecentCollision().isDead() && !this.powerCharge)
 		{
 			remove = true;
 		}
@@ -124,7 +129,7 @@ public class Arrow extends Entity
 			inert = true;
 		}
 		
-		if(stuck && this.getMostRecentCollision() instanceof Enemy)
+		if(stuck && this.getMostRecentCollision() instanceof Enemy && !this.powerCharge)
 		{
 			this.x = this.getMostRecentCollision().getX();
 			this.y = this.getMostRecentCollision().getY();
@@ -159,6 +164,8 @@ public class Arrow extends Entity
 			{
 				this.dx -= 1f;
 			}
+			
+			this.arrowDamage = 6;
 		}
 
 	}

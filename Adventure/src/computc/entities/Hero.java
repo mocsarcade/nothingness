@@ -393,8 +393,11 @@ public class Hero extends Entity
 				
 				if(this.intersects(arrows.get(i)) && arrows.get(i).getArrowCooldown() > 0)
 				{
+					if(!arrows.get(i).powerCharge)
+					{
 					arrows.get(i).setRemove();
 					this.arrowCount += 1;
+					}
 				}
 				
 				if(arrows.get(i).shouldRemove()) 
