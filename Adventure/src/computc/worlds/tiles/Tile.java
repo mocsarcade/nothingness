@@ -26,7 +26,7 @@ public class Tile
 	protected int ty;
 	
 	protected Image image;
-	protected Color color;
+	public Color color;
 	
 	protected boolean collideable;
 	

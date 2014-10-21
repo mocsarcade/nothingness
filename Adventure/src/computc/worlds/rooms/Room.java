@@ -39,7 +39,7 @@ public class Room
 	public boolean hasVisited = false;
 	private Direction majorDirection = Direction.NONE;
 
-	private DoorTile northDoorTile;
+	public DoorTile northDoorTile;
 	private DoorTile southDoorTile;
 	private DoorTile eastDoorTile;
 	private DoorTile westDoorTile;
@@ -99,6 +99,11 @@ public class Room
 			}
 			
 			this.tiles[tx][ty] = doortile;
+			
+			if(door.lock)
+			{
+				doortile.lock();
+			}
 		}
 		
 		for(Point point : this.roomlayout.thugs)
@@ -585,31 +590,20 @@ public class Room
 		this.doors.add(door);
 	}
 
-	public DoorTile getDoor(Direction direction)
+	public Door getDoor(Direction direction)
 	{
-		if(direction == Direction.NORTH)
+		for(Door door : this.doors)
 		{
-			return this.northDoorTile;
+			if(door.critdir == direction)
+			{
+				return door;
+			}
 		}
-		else if(direction == Direction.SOUTH)
-		{
-			return this.southDoorTile;
-		}
-		else if(direction == Direction.EAST)
-		{
-			return this.eastDoorTile;
-		}
-		else if(direction == Direction.WEST)
-		{
-			return this.westDoorTile;
-		}
-		else
-		{
-			return null;
-		}
+		
+		return null;
 	}
 
-	public DoorTile getCritDoor()
+	public Door getCritDoor()
 	{
 		return this.getDoor(this.critdir);
 	}
