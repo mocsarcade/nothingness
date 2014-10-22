@@ -350,6 +350,21 @@ public abstract class Entity
 		   {
 			   if(!topLeft.canMoveHere() || !topRight.canMoveHere()) 
 			   {
+				   if(topLeft.locked && this.keys.size() > 0)
+				   {
+					   topLeft.unlock();
+					   Key key = this.keys.get(0);
+					   this.keys.remove(key);
+					   this.dungeon.keys.remove(key);
+				   }
+				   else if(topRight.locked && this.keys.size() > 0)
+				   {
+					   topRight.unlock();
+					   Key key = this.keys.get(0);
+					   this.keys.remove(key);
+					   this.dungeon.keys.remove(key);
+				   }
+				   
 				   dy = 0;
 			   }
 			   else {
@@ -361,6 +376,20 @@ public abstract class Entity
 			{
 				if(!bottomLeft.canMoveHere() || !bottomRight.canMoveHere())
 				{
+					   if(bottomLeft.locked && this.keys.size() > 0)
+					   {
+						   bottomLeft.unlock();
+						   Key key = this.keys.get(0);
+						   this.keys.remove(key);
+						   this.dungeon.keys.remove(key);
+					   }
+					   else if(bottomRight.locked && this.keys.size() > 0)
+					   {
+						   bottomRight.unlock();
+						   Key key = this.keys.get(0);
+						   this.keys.remove(key);
+						   this.dungeon.keys.remove(key);
+					   }
 					dy = 0;
 				}
 				else 
@@ -374,6 +403,20 @@ public abstract class Entity
 			if(dx < 0) {
 				if(!topLeft.canMoveHere() || !bottomLeft.canMoveHere()) 
 				{
+				   if(topLeft.locked && this.keys.size() > 0)
+				   {
+					   topLeft.unlock();
+					   Key key = this.keys.get(0);
+					   this.keys.remove(key);
+					   this.dungeon.keys.remove(key);
+				   }
+				   else if(bottomLeft.locked && this.keys.size() > 0)
+				   {
+					   bottomLeft.unlock();
+					   Key key = this.keys.get(0);
+					   this.keys.remove(key);
+					   this.dungeon.keys.remove(key);
+				   }
 					dx = 0;
 				}
 				else 
@@ -385,6 +428,21 @@ public abstract class Entity
 			if(dx > 0) {
 				if(!topRight.canMoveHere() || !bottomRight.canMoveHere()) 
 				{
+
+				   if(topRight.locked && this.keys.size() > 0)
+				   {
+					   topRight.unlock();
+					   Key key = this.keys.get(0);
+					   this.keys.remove(key);
+					   this.dungeon.keys.remove(key);
+				   }
+				   else if(bottomRight.locked && this.keys.size() > 0)
+				   {
+					   bottomRight.unlock();
+					   Key key = this.keys.get(0);
+					   this.keys.remove(key);
+					   this.dungeon.keys.remove(key);
+				   }
 					dx = 0;
 				}
 				else 

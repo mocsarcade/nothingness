@@ -44,6 +44,7 @@ public class DungeonMapGameState extends BasicGameState
 
 		if(input.isKeyDown(Input.KEY_ESCAPE))
 		{
+			Game.assets.playSoundEffectWithoutRepeat("closeMap");
 			game.enterState(1, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
 		}
 

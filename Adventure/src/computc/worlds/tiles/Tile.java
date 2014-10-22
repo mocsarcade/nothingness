@@ -26,7 +26,9 @@ public class Tile
 	protected int ty;
 	
 	protected Image image;
-	protected Color color;
+	public Color color;
+	
+	public boolean locked = false;
 	
 	protected boolean collideable;
 	
@@ -154,4 +156,13 @@ public class Tile
 	}
 	
 	public final static int SIZE = 64;
+
+	public void lock()
+	{
+		this.locked = true;
+	}
+	public void unlock()
+	{
+		this.locked = false;
+	}
 }

@@ -18,6 +18,7 @@ import computc.worlds.tiles.Tile;
 
 public class Thug extends Enemy	
 {
+
 	public static boolean hit = false;
 	
 	private int angryCooldown;
@@ -28,7 +29,7 @@ public class Thug extends Enemy
 	private Image walkUp = spriteSheet.getSubImage(65, 1, 64, 128);
 	private Image walkLeft = spriteSheet.getSubImage(129, 1, 64, 128);
 	private Image walkRight = spriteSheet.getSubImage(192, 1, 64, 128);
-	
+
 	Animation sprite, walkingDown, walkingUp, walkingLeft, walkingRight;
 	
 	public Thug(Dungeon dungeon, Room room, int tx, int ty)
@@ -110,6 +111,21 @@ public class Thug extends Enemy
 		if(shiftCooldown > 0)
 		{
 			shiftCooldown -= delta;
+		}
+		
+		if(this.maximumVelocity > .03f && angryCooldown <= 0)
+		{
+			angryCooldown = 5000;
+		}
+		
+		if(angryCooldown > 0 && angryCooldown < 100)
+		{
+			this.maximumVelocity = .03f;
+		}
+		
+		if(angryCooldown > 0)
+		{
+			angryCooldown -= delta;
 		}
 		
 		if(this.maximumVelocity > .03f && angryCooldown <= 0)

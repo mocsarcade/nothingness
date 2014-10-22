@@ -88,6 +88,7 @@ public class Hero extends Entity
 	private boolean hasKey;
 	
 	public Vector2f distanceToEnemy;
+
 	public Enemy closestEnemy;
 	
 	public Hero(Dungeon dungeon, int tx, int ty) throws SlickException
@@ -124,6 +125,7 @@ public class Hero extends Entity
 		this.swingDown = new Image("res/heroMeleeDown.png");
 		
 		this.walkingRight = new Animation(new SpriteSheet(walkRight, 39, 62), 200);
+
 		this.walkingLeft = new Animation(new SpriteSheet(walkLeft, 39, 62), 200);
 		this.walkingUp = new Animation(new SpriteSheet(walkUp, 39, 62), 200);
 		this.walkingDown = new Animation(new SpriteSheet(walkDown, 39, 62), 200);
@@ -158,6 +160,36 @@ public class Hero extends Entity
 			this.chain.playerBody.setTransform(box2dPlayerPosition, 0);
 			this.ball = new ChainEnd(this.dungeon, this.getTileyX(), this.getTileyY(), this.direction, this.chain, this);
 		}
+
+		this.walkingLeft = new Animation(new SpriteSheet(walkLeft, 39, 62), 200);
+		this.walkingUp = new Animation(new SpriteSheet(walkUp, 39, 62), 200);
+		this.walkingDown = new Animation(new SpriteSheet(walkDown, 39, 62), 200);
+		
+		this.meleeRight = new Animation(new SpriteSheet(swingRight, 96, 48), 300);
+		this.meleeLeft = new Animation(new SpriteSheet(swingLeft, 96, 48), 300);
+		this.meleeDown = new Animation(new SpriteSheet(swingDown, 48, 96), 300);
+		this.meleeUp = new Animation(new SpriteSheet(swingUp, 48, 96), 300);
+		
+		this.idleDown = new Animation(new SpriteSheet(heroIdleDown, 39, 62), 10000);
+		this.idleUp = new Animation(new SpriteSheet(heroIdleUp, 39, 62), 10000);
+		this.idleRight = new Animation(new SpriteSheet(heroIdleRight, 39, 62), 10000);
+		this.idleLeft = new Animation(new SpriteSheet(heroIdleLeft, 39, 62), 10000);
+		
+		this.direction = Direction.SOUTH;
+		idle = idleDown;
+		
+		// box2d stuff (chain)
+		this.world = new World(gravity);
+				
+		// converts box2d position to hero's position on screen
+		box2dPlayerPosition = new Vec2(this.getRoomPositionX()/30, this.getRoomPositionY()/30);
+				
+		if(this.dungeon.chainEnabled)
+		{
+			this.chain = new Chain(this.world, this);
+			this.chain.playerBody.setTransform(box2dPlayerPosition, 0);
+			this.ball = new ChainEnd(this.dungeon, this.getTileyX(), this.getTileyY(), this.direction, this.chain, this);
+		}
 		
 	}
 	
@@ -171,6 +203,7 @@ public class Hero extends Entity
 			{
 				return;
 			}
+
 		}
 		
 //		super.render(graphics, camera);
@@ -244,7 +277,80 @@ public class Hero extends Entity
 		{
 			idleLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
 		}
+
+
 		
+//		super.render(graphics, camera);
+		
+		// draw chain
+		if(this.dungeon.chainEnabled)
+		{
+			this.chain.render(graphics, camera);
+			ironBall.draw(this.chain.lastLinkBody.getPosition().x * 30, (this.chain.lastLinkBody.getPosition().y * 30));
+		}
+		
+		// draw arrows
+		for(int i = 0; i < arrows.size(); i++)
+		{
+			arrows.get(i).render(graphics, camera);
+		}
+				
+		
+		// Setting sprite animation
+		if(this.direction == Direction.NORTH)
+		{
+			meleeSwing = meleeUp;
+		}
+		if(this.direction == Direction.SOUTH)
+		{
+			meleeSwing = meleeDown;
+		}
+		if(this.direction == Direction.EAST)
+		{
+			meleeSwing = meleeRight;
+		}
+		if(this.direction == Direction.WEST)
+		{
+			meleeSwing = meleeLeft;
+		}
+		
+		// Drawing animations
+		if(sprite == walkingUp)
+		{
+			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			playFootstepSound();
+		}
+		else if(sprite == walkingDown)
+		{
+			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			playFootstepSound();
+		}
+		else if(sprite == walkingRight)
+		{
+			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			playFootstepSound();
+		}
+		else if(sprite == walkingLeft)
+		{
+			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			playFootstepSound();
+		}
+		else if(sprite == idle && (this.direction == Direction.SOUTH || this.direction == Direction.NONE))
+		{
+			idleDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if(sprite == idle && this.direction == Direction.NORTH)
+		{
+			idleUp.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if(sprite == idle && this.direction == Direction.EAST)
+		{
+			idleRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
+		else if(sprite == idle && this.direction == Direction.WEST)
+		{
+			idleLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+		}
 		
 		if(swinging)
 		{
@@ -284,6 +390,18 @@ public class Hero extends Entity
 		
 		// converts box2d position to hero's position on screen
 		box2dPlayerPosition = new Vec2(this.getLocalX(camera)/30, this.getLocalY(camera)/30);
+	}
+			
+	private int framesSinceLastFootstep = 0;
+	private void playFootstepSound()
+	{
+		framesSinceLastFootstep++;
+		if(framesSinceLastFootstep > 20)
+		{
+			Game.assets.playSoundEffectWithoutRepeat("footstep");
+			framesSinceLastFootstep= 0;
+		}
+		
 	}
 	
 	public void renderOnMap(Graphics graphics, Camera camera)
@@ -398,6 +516,15 @@ public class Hero extends Entity
 					arrows.get(i).setRemove();
 					this.arrowCount += 1;
 					}
+				}
+				
+				arrows.get(i).update(delta);
+				
+				if(this.intersects(arrows.get(i)) && arrows.get(i).getArrowCooldown() > 0)
+				{
+					arrows.get(i).setRemove();
+					this.arrowCount += 1;
+					Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
 				}
 				
 				if(arrows.get(i).shouldRemove()) 
@@ -625,6 +752,7 @@ public class Hero extends Entity
 						}
 					}
 					else peekTimer = 0;
+
 				}
 			
 			if(!(input.isKeyDown(Input.KEY_UP)) && !(input.isKeyDown(Input.KEY_DOWN))  && !(input.isKeyDown(Input.KEY_RIGHT)) && !(input.isKeyDown(Input.KEY_LEFT)))
@@ -640,6 +768,17 @@ public class Hero extends Entity
 			}
 			
 			else firing = false;
+			
+			if(input.isKeyDown(Input.KEY_D))
+			{
+				this.dungeon.toggleDebugDraw(this.graphics);
+				}
+			
+			if(!(input.isKeyDown(Input.KEY_UP)) && !(input.isKeyDown(Input.KEY_DOWN))  && !(input.isKeyDown(Input.KEY_RIGHT)) && !(input.isKeyDown(Input.KEY_LEFT)))
+			{
+				sprite = idle;
+			}
+			
 			
 			if(input.isKeyDown(Input.KEY_D))
 			{
@@ -688,7 +827,20 @@ public class Hero extends Entity
 				{
 					this.closestEnemy = e;
 				}		
-				
+			
+			this.distanceToEnemy = new Vector2f(e.getX() - this.getX(), e.getY() - this.getY());
+			actualEnemySeparation = Math.sqrt(distanceToEnemy.x * distanceToEnemy.x + distanceToEnemy.y * distanceToEnemy.y);
+			e.distanceToHero = actualEnemySeparation;
+		
+				if(this.closestEnemy == null)
+				{
+					this.closestEnemy = e;
+				}
+				else if(e.getDistanceToHero() < closestEnemy.getDistanceToHero())
+				{
+					this.closestEnemy = e;
+				}		
+
 			if(swinging) 
 			{
 				if(facingRight) 
@@ -804,7 +956,7 @@ public class Hero extends Entity
 	{
 		this.arrowCooldown = 800;
 	}
-	
+		
 	public boolean isDead()
 	{
 		return dead;
@@ -828,21 +980,6 @@ public class Hero extends Entity
 	{
 		chainAttack = true;
 		chainAttackCooldown = 200;
-	}
-	
-	public boolean getChainAttack()
-	{
-		return chainAttack;
-	}
-	
-	public int getPeekTimer()
-	{
-		return this.peekTimer;
-	}
-	
-	public void resetPeekTimer()
-	{
-		peekTimer = 0;
 	}
 	
 	public int getArrowPowerUp()
@@ -904,6 +1041,56 @@ public class Hero extends Entity
 	public Enemy getClosestEnemy()
 	{
 		return this.closestEnemy;
+	}
+	
+	public boolean getChainAttack()
+	{
+		return chainAttack;
+	}
+	
+	public int getPeekTimer()
+	{
+		return this.peekTimer;
+	}
+	
+	public void resetPeekTimer()
+	{
+		peekTimer = 0;
+	}
+	
+	public void checkPickup(LinkedList<Commodity> commodities, LinkedList<Key> keys)
+	{
+		for(Key key : keys)
+		{
+			if(this.intersects(key) && key.pickedup == false)
+			{
+				key.target = this;
+				this.keys.add(key);
+				key.pickedup = true;
+			}
+		}
+		
+		for(Commodity commodity: commodities)
+		{
+			if(this.intersects(commodity) && commodity.getType() == 2)
+			{
+				this.arrowCount += 5;
+				Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
+				commodities.remove(commodity);
+			}
+			
+			if(this.intersects(commodity) && commodity.getType() == 3)
+			{
+				this.currentHealth += 1;
+				commodities.remove(commodity);
+			}
+			
+			if(this.intersects(commodity) && commodity.getType() == 1)
+			{
+				this.coinage += 1;
+				commodities.remove(commodity);
+			}
+		}
 	}
 	
 	private float speed = 0.25f;

@@ -28,6 +28,8 @@ public class Room
 	private int rx, ry;
 	private Dungeon dungeon;
 	
+	public Direction critdir;
+	
 	private ArrayList<Door> doors = new ArrayList<Door>();
 	private Tile[][] tiles = new Tile[Room.TILEY_WIDTH][Room.TILEY_HEIGHT];
 
@@ -37,6 +39,11 @@ public class Room
 	
 	public boolean hasVisited = false;
 	private Direction majorDirection = Direction.NONE;
+
+	public DoorTile northDoorTile;
+	private DoorTile southDoorTile;
+	private DoorTile eastDoorTile;
+	private DoorTile westDoorTile;
 	
 	public Room(Dungeon dungeon, int rx, int ry)
 	{
@@ -47,7 +54,7 @@ public class Room
 		this.dungeon.addRoom(this);
 	}
 	
-	public void initiate()
+	public void initiate() throws SlickException
 	{
 		for(int tx = 0; tx < this.getTileyWidth(); tx++)
 		{
@@ -73,7 +80,31 @@ public class Room
 			int tx = (int)(Math.floor(Math.abs(dtx)));
 			int ty = (int)(Math.floor(Math.abs(dty)));
 			
-			this.tiles[tx][ty] = new DoorTile(this, tx, ty);
+			DoorTile doortile = new DoorTile(this, tx, ty, door.critdir);
+			
+			if(ty == 0)
+			{
+				this.northDoorTile = doortile;
+			}
+			else if(ty == 8)
+			{
+				this.southDoorTile = doortile;
+			}
+			else if(tx == 10)
+			{
+				this.eastDoorTile = doortile;
+			}
+			else if(tx == 0)
+			{
+				this.westDoorTile = doortile;
+			}
+			
+			this.tiles[tx][ty] = doortile;
+			
+			if(door.lock && this.critdir == door.critdir)
+			{
+				doortile.lock();
+			}
 		}
 		
 		for(Point point : this.roomlayout.thugs)
@@ -122,7 +153,7 @@ public class Room
 		{
 			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
-				if(this.hasVisited)
+				//if(this.hasVisited)
 				{
 					this.getTile(tx, ty).renderOnMap(graphics, camera);
 				}
@@ -490,43 +521,71 @@ public class Room
 		
 	}
 	
-	public Door makeDoorToTheNorth()
+	public Door makeDoorToTheNorth(boolean critpath)
 	{
-		return new Door(this, this.getRoomToTheNorth());
+		if(critpath)
+		{
+			return new Door(this, this.getRoomToTheNorth(), Direction.NORTH);
+		}
+		else
+		{
+			return new Door(this, this.getRoomToTheNorth(), Direction.NONE);
+		}
 	}
 	
-	public Door makeDoorToTheSouth()
+	public Door makeDoorToTheSouth(boolean critpath)
 	{
-		return new Door(this, this.getRoomToTheSouth());
+		if(critpath)
+		{
+			return new Door(this, this.getRoomToTheSouth(), Direction.SOUTH);
+		}
+		else
+		{
+			return new Door(this, this.getRoomToTheSouth(), Direction.NONE);
+		}
 	}
 	
-	public Door makeDoorToTheEast()
+	public Door makeDoorToTheEast(boolean critpath)
 	{
-		return new Door(this, this.getRoomToTheEast());
+		if(critpath)
+		{
+			return new Door(this, this.getRoomToTheEast(), Direction.EAST);
+		}
+		else
+		{
+			return new Door(this, this.getRoomToTheEast(), Direction.NONE);
+		}
 	}
 	
-	public Door makeDoorToTheWest()
+	public Door makeDoorToTheWest(boolean critpath)
 	{
-		return new Door(this, this.getRoomToTheWest());
+		if(critpath)
+		{
+			return new Door(this, this.getRoomToTheWest(), Direction.WEST);
+		}
+		else
+		{
+			return new Door(this, this.getRoomToTheWest(), Direction.NONE);
+		}
 	}
 	
-	public Door makeDoor(Direction direction)
+	public Door makeDoor(Direction direction, boolean critpath)
 	{
 		if(direction == Direction.NORTH)
 		{
-			return this.makeDoorToTheNorth();
+			return this.makeDoorToTheNorth(critpath);
 		}
 		else if(direction == Direction.SOUTH)
 		{
-			return this.makeDoorToTheSouth();
+			return this.makeDoorToTheSouth(critpath);
 		}
 		else if(direction == Direction.EAST)
 		{
-			return this.makeDoorToTheEast();
+			return this.makeDoorToTheEast(critpath);
 		}
 		else if(direction == Direction.WEST)
 		{
-			return this.makeDoorToTheWest();
+			return this.makeDoorToTheWest(critpath);
 		}
 		else
 		{
@@ -538,16 +597,36 @@ public class Room
 	{
 		this.doors.add(door);
 	}
+
+	public Door getDoor(Direction direction)
+	{
+		for(Door door : this.doors)
+		{
+			if(door.critdir == direction)
+			{
+				return door;
+			}
+		}
+		
+		return null;
+	}
+
+	public Door getCritDoor()
+	{
+		return this.getDoor(this.critdir);
+	}
 	
 	public final static int TILEY_WIDTH = 11;
 	public final static int TILEY_HEIGHT = 9;
 	public final static int WIDTH = Room.TILEY_WIDTH * Tile.SIZE;
 	public final static int HEIGHT = Room.TILEY_HEIGHT * Tile.SIZE;
-
+	
 	public void addKey()
 	{
 		int tx = this.roomlayout.getKeyX();
 		int ty = this.roomlayout.getKeyY();
+		
+		//joey put code here
 		
 		this.dungeon.keys.add(new Key(dungeon, this, tx, ty));
 	}

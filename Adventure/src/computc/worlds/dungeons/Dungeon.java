@@ -14,6 +14,7 @@ import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
@@ -28,6 +29,7 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 
 import computc.GameData;
@@ -102,6 +104,8 @@ public abstract class Dungeon
 		this.specialRoomLayouts.put("first room", Game.assets.getRoomLayout("./res/rooms/empty.room.tmx"));
 		this.specialRoomLayouts.put("last room", Game.assets.getRoomLayout("./res/rooms/clamp.room.tmx"));
 		
+		Collections.shuffle(this.randomRoomLayouts);
+		
 		this.random = new Random();
 	}
 	
@@ -109,7 +113,14 @@ public abstract class Dungeon
 	{
 		for(Room room : this.getAllRooms())
 		{
-			room.initiate();
+			try 
+			{
+				room.initiate();
+			} 
+			catch (SlickException e) 
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -185,6 +196,11 @@ public abstract class Dungeon
 		for(Room room : this.getAllRooms())
 		{
 			room.renderOnMap(graphics, camera);
+		}
+		
+		for(Key key : this.keys)
+		{
+			key.renderOnMap(graphics, camera);
 		}
 	}
 	
