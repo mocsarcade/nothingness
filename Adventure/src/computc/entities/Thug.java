@@ -20,9 +20,8 @@ public class Thug extends Enemy
 {
 	public static boolean hit = false;
 	
-	private boolean forceDrawLeft, forceDrawRight;
-	
 	private int angryCooldown;
+	private int shiftCooldown;
 	
 	private Image spriteSheet = Game.assets.getImage("res/Droggon.png");
 	private Image walkDown = spriteSheet.getSubImage(1, 1, 64, 128);
@@ -77,6 +76,7 @@ public class Thug extends Enemy
 		
 		if(up && dy == 0)
 		{
+			shiftCooldown = 500;
 			up = false;
 			down = true;
 		}
@@ -107,32 +107,14 @@ public class Thug extends Enemy
 			angryCooldown -= delta;
 		}
 		
+		if(shiftCooldown > 0)
+		{
+			shiftCooldown -= delta;
+		}
+		
 		if(this.maximumVelocity > .03f && angryCooldown <= 0)
 		{
 			angryCooldown = 5000;
-		}
-		
-		// this fixes the edge of the room animation glitch
-		if(this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2 && left)
-		{
-			forceDrawLeft = true;
-		}
-		else if(this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2 && right)
-		{
-			forceDrawRight = true;
-		}
-		else
-			{
-				forceDrawRight = false; forceDrawLeft = false;
-			}
-		
-		if(this.getRoomPositionY() < Tile.SIZE * 2 && left)
-		{
-			forceDrawLeft = true;
-		}
-		else if(this.getRoomPositionY()< Tile.SIZE * 2 && right)
-		{
-			forceDrawRight = true;
 		}
 	}
 	
@@ -198,24 +180,14 @@ public class Thug extends Enemy
 		}
 //		super.render(graphics, camera);
 		
-		if(this.direction == Direction.NORTH && !(forceDrawLeft || forceDrawRight))
+		if(this.direction == Direction.NORTH && shiftCooldown <= 0)
 		{
 			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
 		}
-		else if (this.direction == Direction.SOUTH && !(forceDrawLeft || forceDrawRight))
+		else if (this.direction == Direction.SOUTH || shiftCooldown > 0)
 		{
 			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
 		}
-		
-		if (forceDrawRight)
-		{
-			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
-		}
-		else if (forceDrawLeft)
-		{
-			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
-		}
-		
 	}
 	
 	public void checkTileMapCollision() 
