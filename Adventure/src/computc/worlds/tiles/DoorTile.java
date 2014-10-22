@@ -8,9 +8,12 @@ import computc.worlds.rooms.Room;
 
 public class DoorTile extends Tile
 {
+	private Direction critdir;
+
 	public DoorTile(Room room, int tx, int ty, Direction critdir)
 	{
 		super(room, tx, ty);
+		this.critdir = critdir;
 		
 		TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("arrow");
 		
@@ -47,33 +50,43 @@ public class DoorTile extends Tile
 		TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("door");
 		this.image = tilesubset.getRandomImage();
 		this.collideable = true;
+		super.lock();
 	}
 	
 	public void unlock()
 	{
-		TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("arrow");
-		
-		if(ty == 0)
+		if(critdir == Direction.NORTH)
 		{
+			TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("arrow");
 			this.image = tilesubset.getImage(0);
 			this.color = tilesubset.getColor();
 		}
-		else if(ty == room.getHeight() - 1)
+		else if(critdir == Direction.SOUTH)
 		{
+			TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("arrow");
 			this.image = tilesubset.getImage(1);
 			this.color = tilesubset.getColor();
 		}
-		else if(tx == room.getWidth() - 1)
+		else if(critdir == Direction.EAST)
 		{
+			TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("arrow");
 			this.image = tilesubset.getImage(2);
 			this.color = tilesubset.getColor();
 		}
-		else if(tx == 0)
+		else if(critdir == Direction.WEST)
 		{
+			TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("arrow");
 			this.image = tilesubset.getImage(3);
+			this.color = tilesubset.getColor();
+		}
+		else
+		{
+			TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("floor");
+			this.image = tilesubset.getRandomImage();
 			this.color = tilesubset.getColor();
 		}
 		
 		this.collideable = false;
+		super.unlock();
 	}
 }

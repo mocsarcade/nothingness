@@ -755,9 +755,9 @@ public class Hero extends Entity
 		peekTimer = 0;
 	}
 	
-	public void checkPickup(LinkedList<Commodity> commodities)
+	public void checkPickup(LinkedList<Commodity> commodities, LinkedList<Key> keys)
 	{
-		/*for(Key key : keys)
+		for(Key key : keys)
 		{
 			if(this.intersects(key) && key.pickedup == false)
 			{
@@ -765,7 +765,7 @@ public class Hero extends Entity
 				this.keys.add(key);
 				key.pickedup = true;
 			}
-		}*/
+		}
 		
 		for(Commodity commodity: commodities)
 		{

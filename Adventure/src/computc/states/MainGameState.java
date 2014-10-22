@@ -74,7 +74,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.dungeon.update(delta, input);
 		
 		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies(), delta);
-		this.gamedata.hero.checkPickup(this.gamedata.dungeon.commodities);
+		this.gamedata.hero.checkPickup(this.gamedata.dungeon.commodities, this.gamedata.dungeon.keys);
 		
 		if(input.isKeyDown(Input.KEY_M))
 		{

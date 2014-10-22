@@ -59,4 +59,11 @@ public class Door
 	{
 		return this.ty;
 	}
+
+	public boolean lock = false;
+	
+	public void lock()
+	{
+		this.lock = true;
+	}
 }
