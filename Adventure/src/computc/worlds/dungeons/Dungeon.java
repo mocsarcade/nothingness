@@ -138,9 +138,9 @@ public abstract class Dungeon
 					explosions.add(new Animation(new SpriteSheet(explosion, 30, 30), 200));
 					
 					double a = Math.random();					
-					if(a > 0.5)
+					if(a > 0.2)
 					{
-						commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(3)));
+						commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(4)));
 					}
 					
 					i--;		

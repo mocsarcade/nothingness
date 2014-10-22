@@ -114,7 +114,14 @@ public class Room
 		
 		for(Point point : this.roomlayout.maniacs)
 		{
-			this.dungeon.enemies.add(new Maniac(this.dungeon, this, point.x, point.y));
+			try{
+				this.dungeon.enemies.add(new Maniac(this.dungeon, this, point.x, point.y));
+			}
+			catch(SlickException e)
+			{
+				e.printStackTrace();
+			}
+			
 		}
 		
 		for(Point point : this.roomlayout.loafers)

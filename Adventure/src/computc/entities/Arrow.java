@@ -1,6 +1,7 @@
 package computc.entities;
 
 import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
@@ -21,10 +22,15 @@ public class Arrow extends Entity
     protected boolean right;
     protected boolean up;
     protected boolean down;
+    protected boolean arrowNotched;
+    protected boolean tempArrow;
     
     protected boolean stuck;
     protected boolean inert;
     private int stickCooldown;
+    
+    private boolean filterSwitch;
+    public boolean powerCharge;
     
     public int arrowDamage;
     
@@ -33,6 +39,8 @@ public class Arrow extends Entity
 	public Arrow(Dungeon dungeon, Room room, int tx, int ty, Direction direction) 
 	{
 		super(dungeon, room, tx, ty);
+		
+		this.myFilter = new Color(redFilter, greenFilter, blueFilter, 1f);
 		
 		this.direction = direction;
 		
@@ -67,6 +75,7 @@ public class Arrow extends Entity
 	
 	public void update(int delta)
 	{
+		
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
@@ -95,7 +104,12 @@ public class Arrow extends Entity
 			remove = true;
 		}
 		
-		if(!(this.getMostRecentCollision() == null) && this.getMostRecentCollision().isDead())
+		if(stickCooldown < 2500 && stickCooldown > 0 && this.powerCharge)
+		{
+			remove = true;
+		}
+		
+		if(!(this.getMostRecentCollision() == null) && this.getMostRecentCollision().isDead() && !this.powerCharge)
 		{
 			remove = true;
 		}
@@ -115,7 +129,7 @@ public class Arrow extends Entity
 			inert = true;
 		}
 		
-		if(stuck && this.getMostRecentCollision() instanceof Enemy)
+		if(stuck && this.getMostRecentCollision() instanceof Enemy && !this.powerCharge)
 		{
 			this.x = this.getMostRecentCollision().getX();
 			this.y = this.getMostRecentCollision().getY();
@@ -126,13 +140,67 @@ public class Arrow extends Entity
 				stickCooldown = 2500;
 				Game.assets.playSoundEffectWithoutRepeat("arrowInEnemy");
 			}
+			
+			inert = true;
+		}
+		
+		myFilter = new Color(redFilter, greenFilter, blueFilter, this.filterAlpha);
+		
+		if(this.powerCharge)
+		{
+			
+			if(this.direction == Direction.SOUTH)
+			{
+				this.dy += 1f;
+			}
+			if(this.direction == Direction.NORTH)
+			{
+				this.dy -= 1f;
+			}
+			if(this.direction == Direction.EAST)
+			{
+				this.dx += 1f;
+			}
+			if(this.direction == Direction.WEST)
+			{
+				this.dx -= 1f;
+			}
+			
+			this.arrowDamage = 6;
 		}
 
 	}
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		super.render(graphics, camera);
+		if(this.powerCharge)
+		{
+			this.setPowerUp();
+		}
+		
+		myFilter = new Color(redFilter, greenFilter, blueFilter, this.filterAlpha);
+		
+		int x = (int)this.getX() - this.getHalfWidth() - camera.getX();
+		int y = (int)this.getY() - this.getHalfHeight() - camera.getY();
+		
+		this.image.draw(x, y, myFilter);
+		
+		if(this.tempArrow)
+		{
+			if(this.direction == Direction.WEST)
+			{
+				this.image.draw(this.dungeon.gamedata.hero.getX() - this.dungeon.gamedata.hero.getHalfWidth() - camera.getX() + 5, this.dungeon.gamedata.hero.getY() - this.dungeon.gamedata.hero.getHalfHeight() - camera.getY() + 5, myFilter);
+			}
+			else if(this.direction == Direction.EAST)
+			{
+				this.image.draw(this.dungeon.gamedata.hero.getX() - this.dungeon.gamedata.hero.getHalfWidth() - camera.getX() + 8, this.dungeon.gamedata.hero.getY() - this.dungeon.gamedata.hero.getHalfHeight() - camera.getY() + 5, myFilter);
+
+			}	
+			else if(this.direction == Direction.SOUTH)
+			{
+				this.image.draw(this.dungeon.gamedata.hero.getX() - this.dungeon.gamedata.hero.getHalfWidth() - camera.getX() + 12, this.dungeon.gamedata.hero.getY() - this.dungeon.gamedata.hero.getHalfHeight() - camera.getY() + 20, myFilter);
+			}
+		}
 	}
 	
 	public void setHit() 
@@ -193,5 +261,45 @@ public class Arrow extends Entity
 	{
 		remove = true;
 	}
-
+	
+	public void setArrowNotched()
+	{
+		arrowNotched = true;
+	}
+	
+	public void setPowerCharge()
+	{
+		powerCharge = true;
+	}
+	
+	public void setPowerUp()
+	{
+		if(!filterSwitch)
+		{
+			this.greenFilter -= .1f;
+			this.blueFilter -= .1f;
+			
+			if(greenFilter < .2f || blueFilter < .2f)
+			{
+				filterSwitch = true;
+			}
+		}
+		
+		if(filterSwitch)
+		{
+			this.greenFilter += .1f;
+			this.blueFilter += .1f;
+			
+			if(this.greenFilter > .9f || this.blueFilter > .9f)
+			{
+				filterSwitch = false;
+			}
+		}
+	}
+	
+	public void setTempArrow()
+	{
+		tempArrow = true;
+	}
+	
 }

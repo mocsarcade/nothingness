@@ -44,10 +44,13 @@ public class MainGameState extends BasicGameState
 	public RoomFollowingCamera camera;
 	
 	private int gravityCoolDown; //chain
+
+	
 	
 	public MainGameState(GameData gamedata)
 	{
 		this.gamedata = gamedata;
+	
 	}
 	
 	private Animation textBox;
@@ -121,7 +124,7 @@ public class MainGameState extends BasicGameState
 		}
 		
 		// sets the camera to peek into adjacent rooms
-		if(this.gamedata.hero.getPeekTimer() > 1000)
+		if(this.gamedata.hero.getPeekTimer() > 850)
 		{
 			this.camera.setPeeking(this.gamedata.hero.getDirection());
 		}
@@ -153,12 +156,22 @@ public class MainGameState extends BasicGameState
 		this.menu.render(graphics, camera);
 		this.gamedata.hero.render(graphics, this.camera);
 		
-		if(input.isKeyDown(Input.KEY_SPACE) && this.gamedata.hero.getArrowCooldown() <= 0)
+		
+		if(this.gamedata.hero.getArrowPowerUp() > 2000 && this.gamedata.hero.arrowCount != 0)
 		{
-			Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
-			
-			 tempArrow.getImage().draw(this.gamedata.hero.getX() - this.gamedata.hero.getHalfWidth() - this.camera.getX() + 5, this.gamedata.hero.getY() - this.gamedata.hero.getHalfHeight() - this.camera.getY() + 15);
+			if(this.gamedata.hero.getArrowCooldown() <= 0)
+			{
+				if(this.gamedata.hero.getArrowPowerUp() < 2100)
+				{
+				Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
+				this.gamedata.hero.tempArrow = tempArrow;
+				}
+				this.gamedata.hero.tempArrow.setPowerCharge();
+				this.gamedata.hero.tempArrow.setTempArrow();
+				this.gamedata.hero.tempArrow.render(graphics, camera);
+			}
 		}
+
 	}
 	
 	@Override
@@ -186,13 +199,6 @@ public class MainGameState extends BasicGameState
 				Vec2 force = mousePosition.sub(playerPosition);
 				this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
 			}
-		}
-		
-		if(k == Input.KEY_SPACE)
-		{
-			Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
-			
-			 tempArrow.getImage().draw(200, 200);
 		}
 	}
 	
@@ -233,7 +239,7 @@ public class MainGameState extends BasicGameState
 			{
 				Arrow arrow;
 				
-				if(this.gamedata.hero.getArrowCooldown() <= 0)
+				if(this.gamedata.hero.getArrowCooldown() <= 0 && this.gamedata.hero.getFiringArrowFrame() == 2)
 				{
 					arrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
 					arrow.setPosition(this.gamedata.hero.getX(), this.gamedata.hero.getY());
@@ -241,8 +247,17 @@ public class MainGameState extends BasicGameState
 					Game.assets.playSoundEffectWithoutRepeat("arrowFire");
 					this.gamedata.hero.arrows.add(arrow);
 					this.gamedata.hero.startArrowCooldown();
+					
+					if(this.gamedata.hero.getArrowPowerUp() > 2000)
+					{
+						arrow.setPowerCharge();
+					}
 				}
-				
+				else
+				{
+					this.gamedata.hero.restartFiringArrow();
+				}
+				this.gamedata.hero.resetArrowPowerUp();
 			}
 		}
 		

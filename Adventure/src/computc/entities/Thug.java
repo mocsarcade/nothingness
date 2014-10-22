@@ -18,16 +18,18 @@ import computc.worlds.tiles.Tile;
 
 public class Thug extends Enemy	
 {
+
 	public static boolean hit = false;
 	
 	private int angryCooldown;
+	private int shiftCooldown;
 	
 	private Image spriteSheet = Game.assets.getImage("res/Droggon.png");
 	private Image walkDown = spriteSheet.getSubImage(1, 1, 64, 128);
 	private Image walkUp = spriteSheet.getSubImage(65, 1, 64, 128);
 	private Image walkLeft = spriteSheet.getSubImage(129, 1, 64, 128);
 	private Image walkRight = spriteSheet.getSubImage(192, 1, 64, 128);
-	
+
 	Animation sprite, walkingDown, walkingUp, walkingLeft, walkingRight;
 	
 	public Thug(Dungeon dungeon, Room room, int tx, int ty)
@@ -75,6 +77,7 @@ public class Thug extends Enemy
 		
 		if(up && dy == 0)
 		{
+			shiftCooldown = 500;
 			up = false;
 			down = true;
 		}
@@ -105,11 +108,30 @@ public class Thug extends Enemy
 			angryCooldown -= delta;
 		}
 		
+		if(shiftCooldown > 0)
+		{
+			shiftCooldown -= delta;
+		}
+		
 		if(this.maximumVelocity > .03f && angryCooldown <= 0)
 		{
 			angryCooldown = 5000;
 		}
-
+		
+		if(angryCooldown > 0 && angryCooldown < 100)
+		{
+			this.maximumVelocity = .03f;
+		}
+		
+		if(angryCooldown > 0)
+		{
+			angryCooldown -= delta;
+		}
+		
+		if(this.maximumVelocity > .03f && angryCooldown <= 0)
+		{
+			angryCooldown = 5000;
+		}
 	}
 	
 	private void getNextPosition(int delta) 
@@ -174,21 +196,13 @@ public class Thug extends Enemy
 		}
 //		super.render(graphics, camera);
 		
-		if(this.direction == Direction.NORTH)
+		if(this.direction == Direction.NORTH && shiftCooldown <= 0)
 		{
 			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
 		}
-		else if (this.direction == Direction.SOUTH)
+		else if (this.direction == Direction.SOUTH || shiftCooldown > 0)
 		{
 			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
-		}
-		else if (this.direction == Direction.EAST)
-		{
-			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
-		}
-		else if (this.direction == Direction.WEST)
-		{
-			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
 		}
 	}
 	

@@ -70,6 +70,11 @@ public abstract class Entity
 	
 	protected LinkedList<Key> keys = new LinkedList<Key>();
 	
+	// graphics filter variables for color & transparency effects. can be used when drawing Animations
+	protected Color myFilter;
+	protected float redFilter = 1f, greenFilter = 1f, blueFilter = 1f;
+	protected float filterAlpha = 1f;
+	
 	public Entity(Dungeon dungeon, float x, float y)
 	{
 		this.dungeon = dungeon;
