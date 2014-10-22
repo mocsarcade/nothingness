@@ -49,6 +49,7 @@ public class DoorTile extends Tile
 	{
 		TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("door");
 		this.image = tilesubset.getRandomImage();
+		this.color = tilesubset.getColor();
 		this.collideable = true;
 		super.lock();
 	}
