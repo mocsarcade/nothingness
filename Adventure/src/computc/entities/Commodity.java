@@ -16,8 +16,10 @@ public class Commodity extends Entity
 {
 	private Image arrowSheet = Game.assets.getImage("res/arrowSpriteSheet.png");
 	private Image arrows = arrowSheet.getSubImage(192, 0, 64, 64);
+	private Image heartSheet = Game.assets.getImage("res/collectibleHeartSheet.png");
+	private Image groundedHeart = heartSheet.getSubImage(1, 188, 256, 64);
 	
-	private Animation key, coin, arrow;
+	private Animation key, coin, arrow, heart, heartSpin;
 	private int type;
 	
 	public HashMap<Integer, String> collectibles = new HashMap<Integer, String>();
@@ -28,10 +30,13 @@ public class Commodity extends Entity
 		this.type = type;
 		
 		arrow = new Animation(new SpriteSheet(arrows, 32, 32), 200);
+		heart = new Animation(new SpriteSheet(heartSheet, 64, 64), 200);
+		heartSpin = new Animation(new SpriteSheet(groundedHeart, 64 ,64), 200);
 		
 		collectibles.put(0, "res/key.png");
 		collectibles.put(1, "res/coin.png");
 		collectibles.put(2, "res/singleArrow.png");
+		collectibles.put(3, "res/heart.png");
 		
 		this.image = Game.assets.getImage(collectibles.get(type));
 		
@@ -55,6 +60,18 @@ public class Commodity extends Entity
 		if(this.type == 2)
 		{
 			arrow.draw(this.x - this.getHalfWidth() - camera.getX(), this.y - this.getHalfHeight() - camera.getY());
+		}
+		else if(this.type == 3)
+		{
+			if(!heart.isStopped())
+			{
+				heart.setLooping(false);
+				heart.draw(this.x - this.getHalfWidth() - camera.getX(), this.y - this.getHalfHeight() - camera.getY());
+			}
+			else
+			{
+				heartSpin.draw(this.x - this.getHalfWidth() - camera.getX(), this.y - this.getHalfHeight() - camera.getY());
+			}
 		}
 		
 		else super.render(graphics, camera);

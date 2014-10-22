@@ -89,6 +89,7 @@ public abstract class Enemy extends Entity
 			}
 		}
 		super.render(graphics, camera);
+		
 	}
 	
 	public double getDistanceToHero()
