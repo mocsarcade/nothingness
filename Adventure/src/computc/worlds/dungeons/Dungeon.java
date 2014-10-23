@@ -73,14 +73,12 @@ public abstract class Dungeon
 	private Random random;
 
 
-	public Dungeon(GameData gamedata) 
+	public Dungeon(GameData gamedata, String tileset)
 	{
 		this.explosion = Game.assets.getImage("res/explosion.png");
 		this.gamedata = gamedata;
 		
-		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/dirty.tileset.xml"));
-		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/snowy.tileset.xml"));
-		this.tilesets.add(Game.assets.getTileSet("./res/tilesets/dirty.tileset.xml"));
+		this.tilesets.add(Game.assets.getTileSet(tileset));
 		
 		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/arena.room.tmx"));
 		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/blob.room.tmx"));

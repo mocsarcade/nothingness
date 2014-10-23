@@ -26,9 +26,9 @@ public class RandomDungeon extends Dungeon
 	
 	ArrayList<DungeonSegment> segments = new ArrayList<DungeonSegment>();
 	
-	public RandomDungeon(GameData gamedata)
+	public RandomDungeon(GameData gamedata, String tileset)
 	{
-		super(gamedata);
+		super(gamedata, tileset);
 		
 		int tilesetid = 0;
 		

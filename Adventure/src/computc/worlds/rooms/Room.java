@@ -101,10 +101,10 @@ public class Room
 			
 			this.tiles[tx][ty] = doortile;
 			
-			if(door.lock && this.critdir == door.critdir)
+			/*if(door.lock && this.critdir == door.critdir)
 			{
 				doortile.lock();
-			}
+			}*/
 		}
 		
 		for(Point point : this.roomlayout.thugs)
