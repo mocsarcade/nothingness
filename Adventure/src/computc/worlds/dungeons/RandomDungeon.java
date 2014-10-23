@@ -47,7 +47,6 @@ public class RandomDungeon extends Dungeon
 				
 				if(direction != Direction.NONE)
 				{
-					//previousRoom.addArrowTile(direction);
 					previousRoom.setMajorDirection(direction);
 					Room nextRoom = previousRoom.makeRoom(direction);
 					nextRoom.setTileSet(this.getTileSet(tilesetid));
@@ -72,7 +71,6 @@ public class RandomDungeon extends Dungeon
 			
 			if(direction != Direction.NONE)
 			{
-				//previousRoom.addArrowTile(direction);
 				previousRoom.setMajorDirection(direction);
 				this.lastRoom = previousRoom.makeRoom(direction);
 				this.lastRoom.setTileSet(this.getTileSet(tilesetid));
@@ -104,11 +102,8 @@ public class RandomDungeon extends Dungeon
 				}
 			}
 			
-			segment.getLastMajorRoom().getCritDoor();
+			segment.getLastMajorRoom().getCritDoor().lock();
 			segment.getRandomMinorRoom().addKey();
 		}
-		
-		firstRoom.addKey();
-		firstRoom.getCritDoor().lock();
 	}
 }
