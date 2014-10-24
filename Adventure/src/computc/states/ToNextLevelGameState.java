@@ -52,5 +52,5 @@ public class ToNextLevelGameState extends BasicGameState
 		return ToNextLevelGameState.ID;
 	}
 	
-	public static final int ID = 3;
+	public static final int ID = 4;
 }

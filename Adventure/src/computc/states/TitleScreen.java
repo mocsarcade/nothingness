@@ -47,7 +47,7 @@ public class TitleScreen extends BasicGameState
 			maingame.camera.setToTargetX();
 			maingame.camera.setToTargetY();
 			
-			game.enterState(1, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+			game.enterState(TutorialState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
 		}
 	}
 	

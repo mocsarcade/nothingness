@@ -157,6 +157,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.hero.render(graphics, this.camera);
 		
 		
+		
 		if(this.gamedata.hero.getArrowPowerUp() > 2000 && this.gamedata.hero.arrowCount != 0)
 		{
 			if(this.gamedata.hero.getArrowCooldown() <= 0)
@@ -289,6 +290,6 @@ public class MainGameState extends BasicGameState
 		return MainGameState.ID;
 	}
 	
-	public static final int ID = 1;
+	public static final int ID = 2;
 
 }

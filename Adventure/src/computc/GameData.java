@@ -14,7 +14,7 @@ public class GameData
 	public Hero hero;
 	public Dungeon dungeon;
 	
-	public int level = 0;
+	public int level = -1;
 	
 	public void instantiate() throws SlickException
 	{
@@ -24,7 +24,15 @@ public class GameData
 		{
 			try
 			{
-				this.dungeon = new RandomDungeon(this);
+				if(level < 0)
+				{
+					this.dungeon = new OneRoomDungeon(this);
+				}
+				else
+				{
+					System.out.println("this shouldn't be happening");
+					this.dungeon = new RandomDungeon(this);
+				}
 			}
 			catch(DungeonException exception)
 			{

@@ -11,6 +11,12 @@ public class OneRoomDungeon extends Dungeon
 	{
 		super(gamedata);
 		
+		int tilesetid = 0;
+		
 		this.firstRoom = new Room(this, 2, 2);
+		this.firstRoom.setTileSet(this.getTileSet(tilesetid));
+		this.firstRoom.setRoomLayout(this.getSpecialRoomLayout("first room"));
+		
+		this.lastRoom = new Room(this, 2, 3);
 	}
 }
