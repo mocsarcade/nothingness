@@ -13,6 +13,6 @@
 	</tile>
 	<tile type="door">
 		<color red="240" green="238" blue="34"/>
-		<image source="./res/tiles/stoney.door.tiles.png"/>
+		<image source="./res/tiles/techy.door.tiles.png"/>
 	</tile>
 </tileset>
