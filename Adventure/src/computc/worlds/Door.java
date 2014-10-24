@@ -9,9 +9,11 @@ public class Door
 {
 	private float tx, ty;
 	public Direction critdir = Direction.NONE;
+	public Room critroom;
 	
 	public Door(Room alphaRoom, Room omegaRoom, Direction critdir)
 	{
+		this.critroom = alphaRoom;
 		this.critdir = critdir;
 		
 		int drx = Math.abs(alphaRoom.getRoomyX() - omegaRoom.getRoomyX());
