@@ -22,6 +22,8 @@ public class Commodity extends Entity
 	private Animation key, coin, arrow, heart, heartSpin;
 	private int type;
 	
+	private boolean pickedup;
+	
 	public HashMap<Integer, String> collectibles = new HashMap<Integer, String>();
 	
 	public Commodity(Dungeon dungeon, float x, float y, int type)
@@ -80,7 +82,11 @@ public class Commodity extends Entity
 	@Override
 	public void update(int delta)
 	{
-		System.out.println("this is happening");
+		if(pickedup)
+		{
+			this.setX(this.dungeon.gamedata.hero.getX());
+			this.setY(this.dungeon.gamedata.hero.getY());
+		}
 	}
 	
 	public HashMap<Integer, String> getCollectibles()

@@ -31,4 +31,9 @@ public class Key extends Entity
 		graphics.setColor(Color.yellow);
 		graphics.fillRoundRect(x, y, w, h, 2);
 	}
+	
+	public void update()
+	{
+		
+	}
 }

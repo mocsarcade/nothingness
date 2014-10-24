@@ -113,7 +113,8 @@ public class Hero extends Entity
 		
 		this.ballDamage = 2;
 		
-		this.currentHealth = this.maximumHealth = 3;
+		this.currentHealth = 3;
+		this.maximumHealth = 4;
 		
 		if(Game.devmode)
 		{
@@ -555,6 +556,11 @@ public class Hero extends Entity
 			}
 		}
 		
+		if(this.currentHealth > this.maximumHealth)
+		{
+			this.currentHealth = this.maximumHealth;
+		}
+		
 		super.update(delta);
 		
 		// the update method for the box2d world
@@ -907,6 +913,11 @@ public class Hero extends Entity
 		return currentHealth;
 	}
 	
+	public int getMaxHealth()
+	{
+		return this.maximumHealth;
+	}
+	
 	public int getArrowCooldown()
 	{
 		return this.arrowCooldown;
@@ -962,33 +973,6 @@ public class Hero extends Entity
 		arrowPowerUp = 0;
 	}
 	
-	public void checkPickup(LinkedList<Commodity> commodities)
-	{
-		/*for(Key key : keys)
-		{
-			if(this.intersects(key) && key.pickedup == false)
-			{
-				key.target = this;
-				this.keys.add(key);
-				key.pickedup = true;
-			}
-		}*/
-		
-		for(Commodity commodity: commodities)
-		{
-			if(this.intersects(commodity) && commodity.getType() == 2)
-			{
-				this.arrowCount += 5;
-				commodities.remove(commodity);
-			}
-			
-			if(this.intersects(commodity) && commodity.getType() == 3)
-			{
-				this.currentHealth += 1;
-				commodities.remove(commodity);
-			}
-		}
-	}
 	
 	public void checkGetCoin()
 	{
@@ -1051,7 +1035,10 @@ public class Hero extends Entity
 			
 			if(this.intersects(commodity) && commodity.getType() == 3)
 			{
+				if(this.currentHealth < this.maximumHealth)
+				{
 				this.currentHealth += 1;
+				}
 				commodities.remove(commodity);
 			}
 			
@@ -1061,6 +1048,7 @@ public class Hero extends Entity
 				commodities.remove(commodity);
 			}
 		}
+		
 	}
 	
 	private float speed = 0.25f;

@@ -70,6 +70,7 @@ public abstract class Dungeon
 	private float explodeX;
 	private float explodeY;
 	private float enemyHalfWidth = 24;
+	private int keyDropCooldown;
 	private Random random;
 
 
@@ -138,11 +139,32 @@ public abstract class Dungeon
 					double a = Math.random();					
 					if(a > 0.2)
 					{
-						commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(4)));
+						if(this.gamedata.hero.getHealth() == this.gamedata.hero.getMaxHealth())
+						{
+							commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(3)));
+						}
+						else commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(4)));
 					}
 					
 					i--;		
 				}
+		}
+		
+		for(int i=0; i < commodities.size(); i++)
+		{
+			Commodity c = commodities.get(i);
+			c.update(delta);
+			if(commodities.get(i).getType() == 0 && !(keyDropCooldown == 0))	
+			{
+				commodities.get(i).getRoom().addKey();
+				keyDropCooldown = 200;
+				commodities.remove(i);
+			}
+		}
+		
+		if(keyDropCooldown > 0)
+		{
+			keyDropCooldown -= delta;
 		}
 		
 	}
