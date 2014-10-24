@@ -567,7 +567,7 @@ public class Hero extends Entity
 	private void getNextPosition(Input input, int delta)
 	{
 	
-		if(input.isKeyDown(Input.KEY_UP)) 
+		if(input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
 		{
 			dy -= acceleration * delta;
 			if(dy < -maximumVelocity)
@@ -580,7 +580,7 @@ public class Hero extends Entity
 				dy = 0;
 			}
 		}
-		else if(input.isKeyDown(Input.KEY_DOWN))
+		else if(input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))
 		{
 			dy += acceleration * delta;
 			
@@ -615,7 +615,7 @@ public class Hero extends Entity
 			}
 		}
 
-		 if(input.isKeyDown(Input.KEY_RIGHT))
+		 if(input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))
 		{
 			dx += acceleration * delta;
 			if(dx > maximumVelocity) 
@@ -629,7 +629,7 @@ public class Hero extends Entity
 			}
 			
 		}
-		 else if(input.isKeyDown(Input.KEY_LEFT)) 
+		 else if(input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A)) 
 		{
 			dx -= acceleration * delta;
 			if(dx < -maximumVelocity)
@@ -664,7 +664,7 @@ public class Hero extends Entity
 		
 //		float step = this.moveSpeed * delta;
 		
-			if(input.isKeyDown(Input.KEY_UP))
+			if(input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
 				{
 				sprite = walkingUp;
 				this.direction = Direction.NORTH;
@@ -680,7 +680,7 @@ public class Hero extends Entity
 					else peekTimer = 0;
 //				this.y -= step;
 				}
-			else if(input.isKeyDown(Input.KEY_DOWN))
+			else if(input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))
 				{
 				sprite = walkingDown;
 				this.direction = Direction.SOUTH;
@@ -698,7 +698,7 @@ public class Hero extends Entity
 				}
 			
 		
-			if(input.isKeyDown(Input.KEY_LEFT))
+			if(input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A))
 				{
 				sprite = walkingLeft;
 				this.direction = Direction.WEST;
@@ -714,7 +714,7 @@ public class Hero extends Entity
 					}
 					else peekTimer = 0;
 				}
-			else if(input.isKeyDown(Input.KEY_RIGHT))
+			else if(input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))
 				{
 				sprite = walkingRight;
 				this.direction = Direction.EAST;
@@ -732,7 +732,8 @@ public class Hero extends Entity
 
 				}
 			
-			if(!(input.isKeyDown(Input.KEY_UP)) && !(input.isKeyDown(Input.KEY_DOWN))  && !(input.isKeyDown(Input.KEY_RIGHT)) && !(input.isKeyDown(Input.KEY_LEFT)))
+			if(!(input.isKeyDown(Input.KEY_UP)) && !(input.isKeyDown(Input.KEY_DOWN))  && !(input.isKeyDown(Input.KEY_RIGHT)) && !(input.isKeyDown(Input.KEY_LEFT))
+			&& !(input.isKeyDown(Input.KEY_W)) && !(input.isKeyDown(Input.KEY_S)) && !(input.isKeyDown(Input.KEY_A)) && !(input.isKeyDown(Input.KEY_D)))
 			{
 				sprite = idle;
 			}
@@ -746,16 +747,11 @@ public class Hero extends Entity
 			
 			else firing = false;
 			
-			if(!(input.isKeyDown(Input.KEY_UP)) && !(input.isKeyDown(Input.KEY_DOWN))  && !(input.isKeyDown(Input.KEY_RIGHT)) && !(input.isKeyDown(Input.KEY_LEFT)))
+			if(!(input.isKeyDown(Input.KEY_UP)) && !(input.isKeyDown(Input.KEY_DOWN))  && !(input.isKeyDown(Input.KEY_RIGHT)) && !(input.isKeyDown(Input.KEY_LEFT))
+			&& !(input.isKeyDown(Input.KEY_W)) && !(input.isKeyDown(Input.KEY_S)) && !(input.isKeyDown(Input.KEY_A)) && !(input.isKeyDown(Input.KEY_D)))
 			{
 				sprite = idle;
 			}
-			
-			
-			if(input.isKeyDown(Input.KEY_D))
-			{
-				this.dungeon.toggleDebugDraw(this.graphics);
-			}	
 	}
 	
 	private void hit(int damage)
