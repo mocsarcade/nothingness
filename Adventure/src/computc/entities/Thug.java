@@ -218,7 +218,7 @@ public class Thug extends Enemy
 		   
 		   if(dy < 0) 
 		   {
-			   if((!topLeft.canMoveHere() || !topRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 1.5 || this.getRoomPositionY() < Tile.SIZE * 1.5 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 1.5)) 
+			   if((!topLeft.canMoveHere() || !topRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 2 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 2 || this.getRoomPositionY() < Tile.SIZE * 2 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2)) 
 			   {
 				   dy = 0;
 			   }
@@ -229,7 +229,7 @@ public class Thug extends Enemy
 			   
 			if(dy > 0) 
 			{
-				if((!bottomLeft.canMoveHere() || !bottomRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 1.5 || this.getRoomPositionY() < Tile.SIZE * 1.5 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 1.5))
+				if((!bottomLeft.canMoveHere() || !bottomRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 2 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 2 || this.getRoomPositionY() < Tile.SIZE * 2 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2))
 				{
 					dy = 0;
 				}
@@ -242,7 +242,7 @@ public class Thug extends Enemy
 			calculateCorners(xdest, y);
 			
 			if(dx < 0) {
-				if((!topLeft.canMoveHere() || !bottomLeft.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 1.5 || this.getRoomPositionY() < Tile.SIZE * 1.5 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 1.5)) 
+				if((!topLeft.canMoveHere() || !bottomLeft.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 2 || this.getRoomPositionY() < Tile.SIZE * 2 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2)) 
 				{
 					dx = 0;
 				}
@@ -253,7 +253,7 @@ public class Thug extends Enemy
 			}
 				
 			if(dx > 0) {
-				if((!topRight.canMoveHere() || !bottomRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 1.5 || this.getRoomPositionY() < Tile.SIZE * 1.5 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 1.5 )) 
+				if((!topRight.canMoveHere() || !bottomRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 2 || this.getRoomPositionY() < Tile.SIZE * 2 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2 )) 
 				{
 					dx = 0;
 				}
