@@ -89,13 +89,26 @@ public class TitleScreen extends BasicGameState
 		{
 			graphics.setColor(Color.white);
 			
-			if(cursor_time % 1000 < 500)
+			if(cursor_time % 1000 < 750)
 			{
 				graphics.fillOval(75, 335+(65*cursor), 10, 10);
 			}
 			else
 			{
 				graphics.drawOval(75, 335+(65*cursor), 10, 10);
+			}
+			
+			if(this.cursor == 0)
+			{
+				graphics.drawString("Play the game with savepoints to start each level.", 100, 355+(65*cursor));
+			}
+			else if(this.cursor == 1)
+			{
+				graphics.drawString("Play the game with permadeath; you die, you start over!", 100, 355+(65*cursor));
+			}
+			else if(this.cursor == 2)
+			{
+				graphics.drawString("Exit the game. :(", 100, 355+(65*cursor));
 			}
 		}
 	}
