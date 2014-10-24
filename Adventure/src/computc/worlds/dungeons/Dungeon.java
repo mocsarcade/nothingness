@@ -156,7 +156,7 @@ public abstract class Dungeon
 		{
 			Commodity c = commodities.get(i);
 			c.update(delta);
-			if(commodities.get(i).getType() == 0 && !(keyDropCooldown == 0))	
+			if(commodities.get(i).getType() == 0 && keyDropCooldown == 0)	
 			{
 				commodities.get(i).getRoom().addKey();
 				keyDropCooldown = 200;
