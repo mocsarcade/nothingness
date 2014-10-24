@@ -20,7 +20,9 @@ public class TitleScreen extends BasicGameState
 	private GameData gamedata;
 	
 	Animation titleScreen;
-	int[] titleScreenDuration = {100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 10000};
+	int titleScreenDuration = 200;
+	public int cursor = 0;
+	public int cursor_time = 0;
 
 	public TitleScreen(GameData gamedata)
 	{
@@ -34,21 +36,58 @@ public class TitleScreen extends BasicGameState
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		this.gamedata.instantiate();
+		//code goes here.
+	}
+	
+	public void enter(GameContainer container, StateBasedGame game)
+	{
+		this.cursor = 0;
+		
+		if(this.gamedata.level > 0)
+		{
+			this.gamedata.level = 0;
+		}
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
 		Input input = container.getInput();
-	
-		if(input.isKeyDown(Input.KEY_ENTER))
+		
+		if(this.titleScreen.isStopped())
 		{
-			MainGameState maingame = (MainGameState) game.getState(MainGameState.ID);
-			maingame.camera.setToTargetX();
-			maingame.camera.setToTargetY();
-			
-			game.enterState(TutorialState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+			if(input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE))
+			{
+				if(this.cursor == 2)
+				{
+					System.exit(0);
+				}
+				else
+				{
+					this.gamedata.instantiate();
+					
+					if(this.cursor == 1)
+					{
+						Game.difficulty = "HARD";
+					}
+					else if(this.cursor == 0)
+					{
+						Game.difficulty = "EASY";
+					}
+					
+					if(this.gamedata.level < 0)
+					{
+						game.enterState(TutorialState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+					}
+					else
+					{
+						game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+					}
+				}
+			}
 		}
+		
+		titleScreen.update(delta);
+		cursor_time += delta;
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
@@ -56,11 +95,60 @@ public class TitleScreen extends BasicGameState
 		graphics.setColor(Color.white);
 		
 		titleScreen.draw(0, 0);
+		
+		if(titleScreen.isStopped())
+		{
+			graphics.setColor(Color.white);
+			
+			if(cursor_time % 1000 < 750)
+			{
+				graphics.fillOval(75, 335+(65*cursor), 10, 10);
+			}
+			else
+			{
+				graphics.drawOval(75, 335+(65*cursor), 10, 10);
+			}
+			
+			if(this.cursor == 0)
+			{
+				graphics.drawString("Play the game with savepoints to start each level.", 100, 355+(65*cursor));
+			}
+			else if(this.cursor == 1)
+			{
+				graphics.drawString("Play the game with permadeath; you die, you start over!", 100, 355+(65*cursor));
+			}
+			else if(this.cursor == 2)
+			{
+				graphics.drawString("Exit the game. :(", 100, 355+(65*cursor));
+			}
+		}
+	}
+	
+	public void keyPressed(int keycode, char character)
+	{
+		if(keycode == Input.KEY_W || keycode == Input.KEY_UP)
+		{
+			this.cursor -= 1;
+			if(this.cursor < 0)
+				this.cursor = 0;
+		}
+		
+		if(keycode == Input.KEY_S || keycode == Input.KEY_DOWN)
+		{
+			this.cursor += 1;
+			if(this.cursor > 2)
+				this.cursor = 2;
+		}
+		
+		if(keycode == Input.KEY_ESCAPE)
+		{
+			System.exit(0);
+		}
 	}
 	
 	public int getID()
 	{
-		return ToNextLevelGameState.ID;
+		return TitleScreen.ID;
 	}
 	
 	public static final int ID = 0;

@@ -154,7 +154,7 @@ public class Room
 		{
 			for(int ty = 0; ty < this.getTileyHeight(); ty++)
 			{
-				//if(this.hasVisited)
+				if(this.hasVisited || Game.devmode)
 				{
 					this.getTile(tx, ty).renderOnMap(graphics, camera);
 				}

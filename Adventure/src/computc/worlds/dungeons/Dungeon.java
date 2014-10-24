@@ -141,7 +141,9 @@ public abstract class Dungeon
 						commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(4)));
 					}
 					
-					i--;		
+					i--;
+					
+					this.gamedata.hero.monsters_killed++;
 				}
 		}
 		
@@ -196,9 +198,12 @@ public abstract class Dungeon
 			room.renderOnMap(graphics, camera);
 		}
 		
-		for(Key key : this.keys)
+		if(Game.devmode)
 		{
-			key.renderOnMap(graphics, camera);
+			for(Key key : this.keys)
+			{
+				key.renderOnMap(graphics, camera);
+			}
 		}
 	}
 	
