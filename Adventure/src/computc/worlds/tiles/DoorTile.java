@@ -47,9 +47,37 @@ public class DoorTile extends Tile
 	
 	public void lock()
 	{
-		TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("door");
-		this.image = tilesubset.getRandomImage();
-		this.color = tilesubset.getColor();
+		if(critdir == Direction.NORTH)
+		{
+			TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("door");
+			this.image = tilesubset.getImage(0);
+			this.color = tilesubset.getColor();
+		}
+		else if(critdir == Direction.SOUTH)
+		{
+			TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("door");
+			this.image = tilesubset.getImage(1);
+			this.color = tilesubset.getColor();
+		}
+		else if(critdir == Direction.EAST)
+		{
+			TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("door");
+			this.image = tilesubset.getImage(2);
+			this.color = tilesubset.getColor();
+		}
+		else if(critdir == Direction.WEST)
+		{
+			TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("door");
+			this.image = tilesubset.getImage(3);
+			this.color = tilesubset.getColor();
+		}
+		else
+		{
+			TileSubSet tilesubset = this.getRoom().getTileSet().getTileSubSet("floor");
+			this.image = tilesubset.getRandomImage();
+			this.color = tilesubset.getColor();
+		}
+		
 		this.collideable = true;
 		super.lock();
 	}

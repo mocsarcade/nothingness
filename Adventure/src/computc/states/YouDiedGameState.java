@@ -14,15 +14,17 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import computc.Game;
 import computc.GameData;
 
-public class ToNextLevelGameState extends BasicGameState
+public class YouDiedGameState extends BasicGameState
 {
 	private GameData gamedata;
 
-	public ToNextLevelGameState(GameData gamedata)
+	public YouDiedGameState(GameData gamedata)
 	{
 		this.gamedata = gamedata;
 	}
-	public Image screen = Game.assets.getImage("./res/textScreens/Floor-Cleared.png");
+	
+	public Image screen = Game.assets.getImage("./res/textScreens/You-Lose.png");
+	private int cursor = 0;
 	private int cursor_time = 0;
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
@@ -36,8 +38,15 @@ public class ToNextLevelGameState extends BasicGameState
 		
 		if(input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE))
 		{
-			this.gamedata.instantiate();
-			game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+			if(this.cursor == 0)
+			{
+				this.gamedata.instantiate();
+				game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+			}
+			else if(this.cursor == 1)
+			{
+				game.enterState(TitleScreen.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
+			}
 		}
 		else if(input.isKeyDown(Input.KEY_ESCAPE))
 		{
@@ -47,28 +56,46 @@ public class ToNextLevelGameState extends BasicGameState
 		cursor_time += delta;
 	}
 	
+	public void keyPressed(int keycode, char character)
+	{
+		if(keycode == Input.KEY_W || keycode == Input.KEY_UP)
+		{
+			this.cursor  -= 1;
+			if(this.cursor < 0)
+				this.cursor = 0;
+		}
+		
+		if(keycode == Input.KEY_S || keycode == Input.KEY_DOWN)
+		{
+			this.cursor += 1;
+			if(this.cursor > 1)
+				this.cursor = 1;
+		}
+	}
+	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
 		this.screen.draw(0, 0);
 
 		graphics.setColor(Color.white);
-		graphics.drawString(this.gamedata.hero.monsters_killed + "", 280, 200);
-		graphics.drawString(this.gamedata.hero.coinage + "", 280, 250);
+		graphics.drawString(this.gamedata.level + "", 280, 200);
+		graphics.drawString(this.gamedata.hero.monsters_killed + "", 280, 260);
+		graphics.drawString(this.gamedata.hero.coinage + "", 280, 310);
 		
 		if(cursor_time % 1000 < 750)
 		{
-			graphics.fillOval(175, 500, 10, 10);
+			graphics.fillOval(215, 420+(75*cursor), 10, 10);
 		}
 		else
 		{
-			graphics.drawOval(175, 500, 10, 10);
+			graphics.drawOval(215, 420+(75*cursor), 10, 10);
 		}
 	}
 	
 	public int getID()
 	{
-		return ToNextLevelGameState.ID;
+		return YouDiedGameState.ID;
 	}
 	
-	public static final int ID = 4;
+	public static final int ID = 5;
 }

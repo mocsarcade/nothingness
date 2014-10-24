@@ -31,6 +31,8 @@ public class Hero extends Entity
 	protected int chainAttackCooldown;
 	protected int bounceCooldown;
 	
+	public int monsters_killed = 0;
+	
 	Image ironBall = new Image("res/ironball.png");
 	
 	
@@ -118,7 +120,7 @@ public class Hero extends Entity
 		
 		if(Game.devmode)
 		{
-			this.currentHealth = this.maximumHealth = 50;
+			this.currentHealth = this.maximumHealth = 30;
 		}
 		
 		meleeDamage = 3;
