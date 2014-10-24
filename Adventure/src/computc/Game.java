@@ -29,7 +29,7 @@ public class Game extends StateBasedGame
 	{
 		GameData gamedata = new GameData();
 		
-		if(!Game.devmode)
+		//if(!Game.devmode)
 		{
 			this.addState(new TitleScreen(gamedata));
 		}
