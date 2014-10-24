@@ -12,6 +12,7 @@ import computc.states.MainGameState;
 import computc.states.DungeonMapGameState;
 import computc.states.TitleScreen;
 import computc.states.ToNextLevelGameState;
+import computc.states.YouDiedGameState;
 import computc.states.YouWonGameState;
 
 public class Game extends StateBasedGame
@@ -37,6 +38,7 @@ public class Game extends StateBasedGame
         this.addState(new DungeonMapGameState(gamedata));
         this.addState(new ToNextLevelGameState(gamedata));
         this.addState(new YouWonGameState());
+        this.addState(new YouDiedGameState(gamedata));
 	}
 	
 	public static void main(String[] args) throws SlickException
