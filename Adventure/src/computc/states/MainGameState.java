@@ -129,13 +129,13 @@ public class MainGameState extends BasicGameState
 		if(this.gamedata.hero.collidesWith(this.gamedata.dungeon.ladder))
 		{
 			this.gamedata.level++;
-			System.out.println(this.gamedata.level);
 			
 			if(this.gamedata.level < 4)
 			{
 				Game.assets.fadeMusicOut();
 				Game.assets.playSoundEffectWithoutRepeat("levelComplete");
 				game.enterState(ToNextLevelGameState.ID, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 1000));
+				
 				Game.assets.fadeMusicIn();
 			}
 			else

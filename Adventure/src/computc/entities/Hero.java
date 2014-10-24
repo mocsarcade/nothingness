@@ -115,6 +115,11 @@ public class Hero extends Entity
 		
 		this.currentHealth = this.maximumHealth = 3;
 		
+		if(Game.devmode)
+		{
+			this.currentHealth = this.maximumHealth = 50;
+		}
+		
 		meleeDamage = 3;
 		meleeRange = 96;
 		

@@ -123,7 +123,8 @@ public class AssetManager
 		{
 			e.printStackTrace();
 		}
-            backgroundMusic.play(1.0f, volume);
+
+        backgroundMusic.play(1.0f, volume);
 	}
 	
 	public void playMusicWithRepeat(String id)

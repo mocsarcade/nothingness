@@ -104,6 +104,7 @@ public class Room
 			if(door.lock && this.critdir == door.critdir)
 			{
 				doortile.lock();
+				door.lock = false;
 			}
 		}
 		
