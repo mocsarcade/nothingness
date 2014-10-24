@@ -119,7 +119,7 @@ public class Hero extends Entity
 		
 		if(Game.devmode)
 		{
-			this.currentHealth = this.maximumHealth = 1;//30;
+			this.currentHealth = this.maximumHealth = 30;
 		}
 		
 		meleeDamage = 3;
