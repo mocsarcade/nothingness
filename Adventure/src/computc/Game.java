@@ -31,13 +31,13 @@ public class Game extends StateBasedGame
 	{
 		GameData gamedata = new GameData();
 
+		this.addState(new TitleScreen(gamedata));
         this.addState(new MainGameState(gamedata));
-		//this.addState(new TitleScreen(gamedata));
 		this.addState(new TutorialState(gamedata));
         this.addState(new DungeonMapGameState(gamedata));
         this.addState(new ToNextLevelGameState(gamedata));
         this.addState(new YouDiedGameState(gamedata));
-        //this.addState(new YouWonGameState());
+        this.addState(new YouWonGameState());
         
         if(Game.devmode)
         {

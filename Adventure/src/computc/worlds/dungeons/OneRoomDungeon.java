@@ -30,4 +30,29 @@ public class OneRoomDungeon extends Dungeon
 		
 		this.ladder = new Ladder(this, this.lastRoom, 5, 4);
 	}
+	
+	public void initiate()
+	{
+		super.initiate();
+		
+		Room last_room = this.firstRoom;
+		Direction last_room_critdir = last_room.critdir;
+		
+		if(last_room_critdir == Direction.NORTH)
+		{
+			last_room.northDoorTile.lock();
+		}
+		else if(last_room_critdir == Direction.SOUTH)
+		{
+			last_room.southDoorTile.lock();
+		}
+		else if(last_room_critdir == Direction.EAST)
+		{
+			last_room.eastDoorTile.lock();
+		}
+		else if(last_room_critdir == Direction.WEST)
+		{
+			last_room.westDoorTile.lock();
+		}
+	}
 }

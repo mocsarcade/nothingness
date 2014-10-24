@@ -295,22 +295,22 @@ public class Hero extends Entity
 		if(sprite == walkingUp)
 		{
 			walkingUp.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
-			playFootstepSound();
+			//playFootstepSound();
 		}
 		else if(sprite == walkingDown)
 		{
 			walkingDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-			playFootstepSound();
+			//playFootstepSound();
 		}
 		else if(sprite == walkingRight)
 		{
 			walkingRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-			playFootstepSound();
+			//playFootstepSound();
 		}
 		else if(sprite == walkingLeft)
 		{
 			walkingLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
-			playFootstepSound();
+			//playFootstepSound();
 		}
 		else if(sprite == idle && (this.direction == Direction.SOUTH || this.direction == Direction.NONE))
 		{
