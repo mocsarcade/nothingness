@@ -106,4 +106,32 @@ public class RandomDungeon extends Dungeon
 			segment.getRandomMinorRoom().addKey();
 		}
 	}
+	
+	public void initiate()
+	{
+		super.initiate();
+		
+		for(DungeonSegment segment : this.segments)
+		{
+			Room last_room = segment.getLastMajorRoom();
+			Direction last_room_critdir = last_room.critdir;
+			
+			if(last_room_critdir == Direction.NORTH)
+			{
+				last_room.northDoorTile.lock();
+			}
+			else if(last_room_critdir == Direction.SOUTH)
+			{
+				last_room.southDoorTile.lock();
+			}
+			else if(last_room_critdir == Direction.EAST)
+			{
+				last_room.eastDoorTile.lock();
+			}
+			else if(last_room_critdir == Direction.WEST)
+			{
+				last_room.westDoorTile.lock();
+			}
+		}
+	}
 }

@@ -25,6 +25,11 @@ public class GameData
 	
 	public void instantiate() throws SlickException
 	{
+		this.instantiateDungeon();
+		this.instantiateHero();
+	}
+	public void instantiateDungeon() throws SlickException
+	{
 		this.dungeon = null;
 		
 		while(this.dungeon == null)
@@ -47,7 +52,10 @@ public class GameData
 		}
 		
 		this.dungeon.initiate();
-		
+	}
+	
+	public void instantiateHero() throws SlickException
+	{
 		this.hero = new Hero(this.dungeon, 5, 4);
 	}
 	

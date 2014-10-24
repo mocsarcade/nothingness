@@ -97,5 +97,5 @@ public class YouDiedGameState extends BasicGameState
 		return YouDiedGameState.ID;
 	}
 	
-	public static final int ID = 5;
+	public static final int ID = 55;
 }
