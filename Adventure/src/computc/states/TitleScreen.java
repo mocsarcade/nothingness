@@ -21,6 +21,9 @@ public class TitleScreen extends BasicGameState
 	
 	Animation titleScreen;
 	int titleScreenDuration = 200;
+	
+	public int cursor = 0;
+	public int cursor_time = 0;
 
 	public TitleScreen(GameData gamedata)
 	{
@@ -37,6 +40,11 @@ public class TitleScreen extends BasicGameState
 		
 	}
 	
+	public void enter(GameContainer container, StateBasedGame game)
+	{
+		this.cursor = 0;
+	}
+	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
 		Input input = container.getInput();
@@ -45,11 +53,15 @@ public class TitleScreen extends BasicGameState
 		if(input.isKeyDown(Input.KEY_ENTER))
 		{
 			MainGameState maingame = (MainGameState) game.getState(MainGameState.ID);
+			
 			maingame.camera.setToTargetX();
 			maingame.camera.setToTargetY();
 			
 			game.enterState(1, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
 		}
+		
+		titleScreen.update(delta);
+		cursor_time += delta;
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
@@ -57,6 +69,37 @@ public class TitleScreen extends BasicGameState
 		graphics.setColor(Color.white);
 		
 		titleScreen.draw(0, 0);
+		
+		if(titleScreen.isStopped())
+		{
+			graphics.setColor(Color.white);
+			
+			if(cursor_time % 1000 < 500)
+			{
+				graphics.fillOval(75, 335+(65*cursor), 10, 10);
+			}
+			else
+			{
+				graphics.drawOval(75, 335+(65*cursor), 10, 10);
+			}
+		}
+	}
+	
+	public void keyPressed(int keycode, char character)
+	{
+		if(keycode == Input.KEY_W || keycode == Input.KEY_UP)
+		{
+			this.cursor -= 1;
+			if(this.cursor < 0)
+				this.cursor = 0;
+		}
+		
+		if(keycode == Input.KEY_S || keycode == Input.KEY_DOWN)
+		{
+			this.cursor += 1;
+			if(this.cursor > 2)
+				this.cursor = 2;
+		}
 	}
 	
 	public int getID()

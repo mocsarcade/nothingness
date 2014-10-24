@@ -53,7 +53,6 @@ public class RandomDungeon extends Dungeon
 					nextRoom.setRoomLayout(this.getRandomRoomLayout());
 					previousRoom.makeDoor(direction, true);
 					previousRoom.critdir = direction;
-					System.out.println(previousRoom.critdir);
 					
 					segment.addMajorRoom(nextRoom);
 					previousRoom = nextRoom;
@@ -78,7 +77,6 @@ public class RandomDungeon extends Dungeon
 				this.lastRoom.setRoomLayout(this.getSpecialRoomLayout("last room"));
 				previousRoom.makeDoor(direction, true);
 				previousRoom.critdir = direction;
-				System.out.println(previousRoom.critdir);
 				
 				this.ladder = new Ladder(this, this.lastRoom, 5, 4);
 			}
