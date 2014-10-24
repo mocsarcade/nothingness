@@ -141,7 +141,9 @@ public abstract class Dungeon
 						commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(4)));
 					}
 					
-					i--;		
+					i--;
+					
+					this.gamedata.hero.monsters_killed++;
 				}
 		}
 		

@@ -103,7 +103,7 @@ public class MainGameState extends BasicGameState
 				this.gamedata.level = 0;
 			}
 			
-			game.enterState(YouWonGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
+			game.enterState(YouDiedGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
 		}
 		
 		//  makes the chain movement less floaty
