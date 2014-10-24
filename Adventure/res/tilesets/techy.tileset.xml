@@ -1,0 +1,18 @@
+<tileset>
+	<tile type="wall">
+		<color red="170" green="170" blue="170"/>
+		<image source="./res/tiles/techy.wall.tiles.png"/>
+	</tile>
+	<tile type="floor">
+		<color red="132" green="132" blue="132"/>
+		<image source="./res/tiles/stoney.floor.tiles.png"/>
+	</tile>
+	<tile type="arrow">
+		<color red="132" green="132" blue="132"/>
+		<image source="./res/tiles/stoney.arrow.tiles.png"/>
+	</tile>
+	<tile type="door">
+		<color red="240" green="238" blue="34"/>
+		<image source="./res/tiles/stoney.door.tiles.png"/>
+	</tile>
+</tileset>

@@ -146,7 +146,7 @@ public class MainGameState extends BasicGameState
 		{
 			this.gamedata.level++;
 			
-			if(this.gamedata.level < 4)
+			if(this.gamedata.level < 3)
 			{
 				Game.assets.fadeMusicOut();
 				Game.assets.playSoundEffectWithoutRepeat("levelComplete");
