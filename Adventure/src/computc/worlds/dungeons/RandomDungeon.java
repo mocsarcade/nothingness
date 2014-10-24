@@ -37,6 +37,7 @@ public class RandomDungeon extends Dungeon
 		this.firstRoom.setRoomLayout(this.getSpecialRoomLayout("first room"));
 		
 		Room previousRoom = this.firstRoom;
+		
 		for(int i = 0; i < SEGMENTS_PER_DUNGEON; i++)
 		{
 			DungeonSegment segment = new DungeonSegment();
@@ -103,7 +104,6 @@ public class RandomDungeon extends Dungeon
 					segment.addMinorRoom(nextRoom);
 				}
 			}
-			
 			segment.getLastMajorRoom().getCritDoor().lock();
 			segment.getRandomMinorRoom().addKey();
 		}

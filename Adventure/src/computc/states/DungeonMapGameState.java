@@ -68,5 +68,5 @@ public class DungeonMapGameState extends BasicGameState
 		return DungeonMapGameState.ID;
 	}
 	
-	public static final int ID = 2;
+	public static final int ID = 3;
 }
