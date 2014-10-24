@@ -14,10 +14,11 @@ import computc.worlds.rooms.Room;
 
 public class Commodity extends Entity
 {
-	private Image arrowSheet = Game.assets.getImage("res/arrowSpriteSheet.png");
-	private Image arrows = arrowSheet.getSubImage(192, 0, 64, 64);
+	private Image arrowSheet = Game.assets.getImage("res/arrowAnimationSpriteSheet.png");
 	private Image heartSheet = Game.assets.getImage("res/collectibleHeartSheet.png");
 	private Image groundedHeart = heartSheet.getSubImage(1, 188, 256, 64);
+	private Image coinSheet = Game.assets.getImage("res/coinSpriteSheet.png");
+	
 	
 	private Animation key, coin, arrow, heart, heartSpin;
 	private int type;
@@ -31,9 +32,10 @@ public class Commodity extends Entity
 		super(dungeon, x, y);
 		this.type = type;
 		
-		arrow = new Animation(new SpriteSheet(arrows, 32, 32), 200);
+		arrow = new Animation(new SpriteSheet(arrowSheet, 64, 64), 100);
 		heart = new Animation(new SpriteSheet(heartSheet, 64, 64), 200);
 		heartSpin = new Animation(new SpriteSheet(groundedHeart, 64 ,64), 200);
+		coin = new Animation(new SpriteSheet(coinSheet, 64, 64), 200);
 		
 		collectibles.put(0, "res/key.png");
 		collectibles.put(1, "res/coin.png");
@@ -74,6 +76,10 @@ public class Commodity extends Entity
 			{
 				heartSpin.draw(this.x - this.getHalfWidth() - camera.getX(), this.y - this.getHalfHeight() - camera.getY());
 			}
+		}
+		else if(this.type == 1)
+		{
+			coin.draw(this.x - this.getHalfWidth() - camera.getX(), this.y - this.getHalfHeight() - camera.getY() - 20);
 		}
 		
 		else super.render(graphics, camera);
