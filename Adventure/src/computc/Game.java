@@ -13,12 +13,14 @@ import computc.states.DungeonMapGameState;
 import computc.states.TitleScreen;
 import computc.states.ToNextLevelGameState;
 import computc.states.YouDiedGameState;
+import computc.states.TutorialState;
 import computc.states.YouWonGameState;
 
 public class Game extends StateBasedGame
 {
 	public static boolean reset;
 	public static boolean devmode = false;
+
 	
 	public Game()
 	{
@@ -31,9 +33,10 @@ public class Game extends StateBasedGame
 		
 		if(!Game.devmode)
 		{
-			//this.addState(new TitleScreen(gamedata));
+			this.addState(new TitleScreen(gamedata));
 		}
-
+		
+		this.addState(new TutorialState(gamedata));
         this.addState(new MainGameState(gamedata));
         this.addState(new DungeonMapGameState(gamedata));
         this.addState(new ToNextLevelGameState(gamedata));
@@ -42,7 +45,7 @@ public class Game extends StateBasedGame
         
 		if(Game.devmode)
 		{
-			//this.addState(new TitleScreen(gamedata));
+			this.addState(new TitleScreen(gamedata));
 		}
 	}
 	

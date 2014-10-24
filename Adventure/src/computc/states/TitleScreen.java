@@ -21,7 +21,6 @@ public class TitleScreen extends BasicGameState
 	
 	Animation titleScreen;
 	int titleScreenDuration = 200;
-	
 	public int cursor = 0;
 	public int cursor_time = 0;
 
@@ -71,6 +70,14 @@ public class TitleScreen extends BasicGameState
 					}
 					
 					game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+					
+					/*if(input.isKeyDown(Input.KEY_ENTER))
+					{
+						MainGameState maingame = (MainGameState) game.getState(MainGameState.ID);
+						maingame.camera.setToTargetX();
+						maingame.camera.setToTargetY();
+						game.enterState(TutorialState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+					}*/
 				}
 			}
 		}

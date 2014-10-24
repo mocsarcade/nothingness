@@ -14,7 +14,9 @@ public class GameData
 	public Hero hero;
 	public Dungeon dungeon;
 	
-	public int level = 0;
+
+	public int level = -1;
+
 	public String[] tilesets = {
 		"./res/tilesets/dirty.tileset.xml",
 		"./res/tilesets/stoney.tileset.xml",
@@ -29,7 +31,14 @@ public class GameData
 		{
 			try
 			{
-				this.dungeon = new RandomDungeon(this, this.getTileset());
+				if(level < 0)
+				{
+					this.dungeon = new OneRoomDungeon(this, "./res/tilesets/dirty.tileset.xml");
+				}
+				else
+				{
+					this.dungeon = new RandomDungeon(this, this.getTileset());
+				}
 			}
 			catch(DungeonException exception)
 			{
