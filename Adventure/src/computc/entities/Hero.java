@@ -160,36 +160,6 @@ public class Hero extends Entity
 			this.chain.playerBody.setTransform(box2dPlayerPosition, 0);
 			this.ball = new ChainEnd(this.dungeon, this.getTileyX(), this.getTileyY(), this.direction, this.chain, this);
 		}
-
-		this.walkingLeft = new Animation(new SpriteSheet(walkLeft, 39, 62), 200);
-		this.walkingUp = new Animation(new SpriteSheet(walkUp, 39, 62), 200);
-		this.walkingDown = new Animation(new SpriteSheet(walkDown, 39, 62), 200);
-		
-		this.meleeRight = new Animation(new SpriteSheet(swingRight, 96, 48), 300);
-		this.meleeLeft = new Animation(new SpriteSheet(swingLeft, 96, 48), 300);
-		this.meleeDown = new Animation(new SpriteSheet(swingDown, 48, 96), 300);
-		this.meleeUp = new Animation(new SpriteSheet(swingUp, 48, 96), 300);
-		
-		this.idleDown = new Animation(new SpriteSheet(heroIdleDown, 39, 62), 10000);
-		this.idleUp = new Animation(new SpriteSheet(heroIdleUp, 39, 62), 10000);
-		this.idleRight = new Animation(new SpriteSheet(heroIdleRight, 39, 62), 10000);
-		this.idleLeft = new Animation(new SpriteSheet(heroIdleLeft, 39, 62), 10000);
-		
-		this.direction = Direction.SOUTH;
-		idle = idleDown;
-		
-		// box2d stuff (chain)
-		this.world = new World(gravity);
-				
-		// converts box2d position to hero's position on screen
-		box2dPlayerPosition = new Vec2(this.getRoomPositionX()/30, this.getRoomPositionY()/30);
-				
-		if(this.dungeon.chainEnabled)
-		{
-			this.chain = new Chain(this.world, this);
-			this.chain.playerBody.setTransform(box2dPlayerPosition, 0);
-			this.ball = new ChainEnd(this.dungeon, this.getTileyX(), this.getTileyY(), this.direction, this.chain, this);
-		}
 		
 	}
 	
@@ -451,13 +421,13 @@ public class Hero extends Entity
 		{
 			firingArrow.setLooping(false);
 			
-			if(firingArrow.getFrame() >= 2 && input.isKeyDown(Input.KEY_SPACE))
+			if(firingArrow.getFrame() >= 2 && input.isKeyDown(Input.KEY_N))
 			{
 				firingArrow.stopAt(2);
 				freezePosition = true;
 			}
 			
-			if(!(input.isKeyDown(Input.KEY_SPACE)))
+			if(!(input.isKeyDown(Input.KEY_N)))
 			{
 				firingArrow.setCurrentFrame(3);
 			}
@@ -760,7 +730,7 @@ public class Hero extends Entity
 				sprite = idle;
 			}
 			
-			if(input.isKeyDown(Input.KEY_SPACE) || this.arrowCooldown > 500)
+			if(input.isKeyDown(Input.KEY_N) || this.arrowCooldown > 500)
 			{
 				firing = true;
 				
@@ -768,11 +738,6 @@ public class Hero extends Entity
 			}
 			
 			else firing = false;
-			
-			if(input.isKeyDown(Input.KEY_D))
-			{
-				this.dungeon.toggleDebugDraw(this.graphics);
-				}
 			
 			if(!(input.isKeyDown(Input.KEY_UP)) && !(input.isKeyDown(Input.KEY_DOWN))  && !(input.isKeyDown(Input.KEY_RIGHT)) && !(input.isKeyDown(Input.KEY_LEFT)))
 			{

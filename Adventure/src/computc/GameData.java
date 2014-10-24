@@ -30,7 +30,6 @@ public class GameData
 				}
 				else
 				{
-					System.out.println("this shouldn't be happening");
 					this.dungeon = new RandomDungeon(this);
 				}
 			}

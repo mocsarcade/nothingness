@@ -39,10 +39,10 @@ public class TutorialState extends BasicGameState
 	private String greeting = "Try your sword attack with B";
 	private String greeting2 = "Try N to show off your archery skills";
 	private String greeting3 = "nice Shot! Now hold your Arrow for a power shot!";
-	private String greeting4 = "One more trick, if you lean up against the wall, you can eavesdrop on the next room";
-
+	private String greeting4 = "One more trick, lean up against the wall... ";
+	private String greeting5 = "you can eavesdrop on the next room";
 	
-	private float counter, counter2, counter3, counter4;
+	private float counter, counter2, counter3, counter4, counter5;
 
 	public TutorialState(GameData gamedata)
 	{
@@ -99,6 +99,11 @@ public class TutorialState extends BasicGameState
 					{
 						counter4 += delta * 0.025;
 					}
+					
+					if(counter4 > 125)
+					{
+						counter5 += delta * 0.025;
+					}
 				}
 		
 		if(this.gamedata.hero.getPeekTimer() > 850)
@@ -108,9 +113,10 @@ public class TutorialState extends BasicGameState
 		
 		if(this.gamedata.hero.getPeekTimer() > 800)
 		{
-			if(swordAttack && arrowAttack && arrowPowerAttack)
+			if(swordAttack && arrowAttack && arrowPowerAttack && !peeker)
 			{
 			this.gamedata.dungeon.firstRoom.addKey();
+			peeker = true;
 			}
 		}
 		
@@ -162,13 +168,27 @@ public class TutorialState extends BasicGameState
 					
 					String greeting4temp = greeting4;
 					if(arrowAttack)
-					{
+					{ 
 						graphics.drawString(greeting3.substring(0, (int)(Math.min(counter3, greeting3.length()))), xCoord, yCoord);
 						graphics.drawString(greeting4temp.substring(0, (int)(Math.min(counter4, greeting4temp.length()))), xCoord2, yCoord2);
+						graphics.drawString(greeting5.substring(0, (int)(Math.min(counter5, greeting5.length()))), xCoord2, yCoord2 + 20);
 					}
 				}
-		System.out.println("arrowAttack is: " + arrowAttack);
-		System.out.println("arrowPowerAttack is:" + arrowPowerAttack);
+		
+		if(this.gamedata.hero.getArrowPowerUp() > 2000 && this.gamedata.hero.arrowCount != 0)
+		{
+			if(this.gamedata.hero.getArrowCooldown() <= 0)
+			{
+				if(this.gamedata.hero.getArrowPowerUp() < 2100)
+				{
+				Arrow tempArrow = new Arrow(this.gamedata.dungeon, this.gamedata.hero.getRoom(), this.gamedata.hero.getTileyX(), this.gamedata.hero.getTileyY(), this.gamedata.hero.getDirection());
+				this.gamedata.hero.tempArrow = tempArrow;
+				}
+				this.gamedata.hero.tempArrow.setPowerCharge();
+				this.gamedata.hero.tempArrow.setTempArrow();
+				this.gamedata.hero.tempArrow.render(graphics, camera);
+			}
+		}
 	}
 	
 	public void keyPressed(int k, char c)
@@ -210,7 +230,7 @@ public class TutorialState extends BasicGameState
 			this.camera.setShaking(this.gamedata.hero.getDirection(), 50);
 		}
 		
-		if(k == Input.KEY_SPACE)
+		if(k == Input.KEY_N)
 		{
 			if(this.gamedata.hero.arrowCount != 0)
 			{
@@ -239,28 +259,6 @@ public class TutorialState extends BasicGameState
 				this.gamedata.hero.resetArrowPowerUp();
 			}
 		}
-		
-		// swinging chain attack
-		if(k == Input.KEY_W)
-		{
-			this.gamedata.hero.setChainAttack();
-			
-			if(Mouse.getX() > this.gamedata.hero.getRoomPositionX())
-			{
-			  Vec2 mousePosition = new Vec2(Mouse.getX() - 1000000, Mouse.getY()).mul(0.5f).mul(1/30f);
-			  Vec2 playerPosition = new Vec2(this.gamedata.hero.chain.playerBody.getPosition());
-			  Vec2 force = mousePosition.sub(playerPosition);
-			  this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
-			}
-			else
-			{
-				Vec2 mousePosition = new Vec2(Mouse.getX() + 1000000, Mouse.getY()).mul(0.5f).mul(1/30f);
-				Vec2 playerPosition = new Vec2(this.gamedata.hero.chain.playerBody.getPosition());
-				Vec2 force = mousePosition.sub(playerPosition);
-				this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
-			}
-		}
-		
 	}
 	
 	public int getID()

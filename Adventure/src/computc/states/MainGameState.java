@@ -44,13 +44,10 @@ public class MainGameState extends BasicGameState
 	public RoomFollowingCamera camera;
 	
 	private int gravityCoolDown; //chain
-
-	
 	
 	public MainGameState(GameData gamedata)
 	{
 		this.gamedata = gamedata;
-	
 	}
 	
 	private Animation textBox;
@@ -234,7 +231,7 @@ public class MainGameState extends BasicGameState
 			this.camera.setShaking(this.gamedata.hero.getDirection(), 50);
 		}
 		
-		if(k == Input.KEY_SPACE)
+		if(k == Input.KEY_N)
 		{
 			if(this.gamedata.hero.arrowCount != 0)
 			{
@@ -259,27 +256,6 @@ public class MainGameState extends BasicGameState
 					this.gamedata.hero.restartFiringArrow();
 				}
 				this.gamedata.hero.resetArrowPowerUp();
-			}
-		}
-		
-		// swinging chain attack
-		if(k == Input.KEY_W)
-		{
-			this.gamedata.hero.setChainAttack();
-			
-			if(Mouse.getX() > this.gamedata.hero.getRoomPositionX())
-			{
-			  Vec2 mousePosition = new Vec2(Mouse.getX() - 1000000, Mouse.getY()).mul(0.5f).mul(1/30f);
-			  Vec2 playerPosition = new Vec2(this.gamedata.hero.chain.playerBody.getPosition());
-			  Vec2 force = mousePosition.sub(playerPosition);
-			  this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
-			}
-			else
-			{
-				Vec2 mousePosition = new Vec2(Mouse.getX() + 1000000, Mouse.getY()).mul(0.5f).mul(1/30f);
-				Vec2 playerPosition = new Vec2(this.gamedata.hero.chain.playerBody.getPosition());
-				Vec2 force = mousePosition.sub(playerPosition);
-				this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
 			}
 		}
 		
