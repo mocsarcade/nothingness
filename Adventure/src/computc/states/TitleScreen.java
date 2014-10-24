@@ -42,6 +42,11 @@ public class TitleScreen extends BasicGameState
 	public void enter(GameContainer container, StateBasedGame game)
 	{
 		this.cursor = 0;
+		
+		if(this.gamedata.level > 0)
+		{
+			this.gamedata.level = 0;
+		}
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
@@ -69,15 +74,14 @@ public class TitleScreen extends BasicGameState
 						Game.difficulty = "EASY";
 					}
 					
-					game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
-					
-					/*if(input.isKeyDown(Input.KEY_ENTER))
+					if(this.gamedata.level < 0)
 					{
-						MainGameState maingame = (MainGameState) game.getState(MainGameState.ID);
-						maingame.camera.setToTargetX();
-						maingame.camera.setToTargetY();
 						game.enterState(TutorialState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
-					}*/
+					}
+					else
+					{
+						game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+					}
 				}
 			}
 		}
