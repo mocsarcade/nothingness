@@ -91,6 +91,11 @@ public class MainGameState extends BasicGameState
 			Game.assets.playSoundEffectWithoutRepeat("openMap");
 		}
 		
+		if(input.isKeyDown(Input.KEY_ESCAPE))
+		{
+			game.enterState(TitleScreen.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
+		}
+		
 		if(this.gamedata.hero.isDead())
 		{
 			if(Game.difficulty.equals("HARD"))

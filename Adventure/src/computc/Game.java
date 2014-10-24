@@ -29,7 +29,7 @@ public class Game extends StateBasedGame
 	{
 		GameData gamedata = new GameData();
 		
-		//if(!Game.devmode)
+		if(!Game.devmode)
 		{
 			this.addState(new TitleScreen(gamedata));
 		}
@@ -39,6 +39,11 @@ public class Game extends StateBasedGame
         this.addState(new ToNextLevelGameState(gamedata));
         this.addState(new YouWonGameState());
         this.addState(new YouDiedGameState(gamedata));
+        
+		if(Game.devmode)
+		{
+			this.addState(new TitleScreen(gamedata));
+		}
 	}
 	
 	public static void main(String[] args) throws SlickException

@@ -128,6 +128,11 @@ public class TitleScreen extends BasicGameState
 			if(this.cursor > 2)
 				this.cursor = 2;
 		}
+		
+		if(keycode == Input.KEY_ESCAPE)
+		{
+			System.exit(0);
+		}
 	}
 	
 	public int getID()
