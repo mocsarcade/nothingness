@@ -54,7 +54,7 @@ public abstract class Entity
 	
 	// status
 	protected int damage = 1;
-	protected int currentHealth;
+	public int currentHealth;
 	protected int maximumHealth;
 	protected int justHit = 0;
 	

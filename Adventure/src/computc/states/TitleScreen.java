@@ -111,15 +111,15 @@ public class TitleScreen extends BasicGameState
 			
 			if(this.cursor == 0)
 			{
-				graphics.drawString("Play the game with savepoints to start each level.", 100, 355+(65*cursor));
+				graphics.drawString("Play the game with savepoints to start each level.", 110, 360+(65*cursor));
 			}
 			else if(this.cursor == 1)
 			{
-				graphics.drawString("Play the game with permadeath; you die, you start over!", 100, 355+(65*cursor));
+				graphics.drawString("Play the game with permadeath; you die, you start over!", 110, 360+(65*cursor));
 			}
 			else if(this.cursor == 2)
 			{
-				graphics.drawString("Exit the game. :(", 100, 355+(65*cursor));
+				graphics.drawString("Exit the game. :(", 110, 365+(65*cursor));
 			}
 		}
 	}

@@ -30,7 +30,7 @@ public class Game extends StateBasedGame
 	public void initStatesList(GameContainer container) throws SlickException
 	{
 		GameData gamedata = new GameData();
-		
+
 		this.addState(new TitleScreen(gamedata));
         this.addState(new MainGameState(gamedata));
 		this.addState(new TutorialState(gamedata));
@@ -39,10 +39,10 @@ public class Game extends StateBasedGame
         this.addState(new YouDiedGameState(gamedata));
         this.addState(new YouWonGameState());
         
-		/*if(Game.devmode)
-		{
-			gamedata.level = 0;
-		}*/
+        if(Game.devmode)
+        {
+        	gamedata.level = 0;
+        }
 	}
 	
 	public static void main(String[] args) throws SlickException

@@ -20,7 +20,6 @@ public class Menu
 	private Image arrow = new Image("res/arrowSpriteSheet.png");
 	private Image arrowGuiPic = new Image("res/arrowGuiPic.png");
 	
-	
 	public Menu(GameData gamedata) throws SlickException
 	{
 		this.gamedata = gamedata;
@@ -83,6 +82,10 @@ public class Menu
 			}
 		}
 		
+		graphics.setColor(Color.white);
+		graphics.drawString("Hit M to", UNIT * 3, UNIT * 9);
+		graphics.drawString("open Map", UNIT * 3, UNIT * 10);
+		
 		for(int h = 0; h < this.gamedata.hero.getHealth(); h++)
 		{
 			heart.draw(400 + (70 * h), 1);
@@ -90,8 +93,11 @@ public class Menu
 		
 		// draw arrow count HUD
 		
+
 			arrowGuiPic.draw(-25, 425);
-		
+
+		graphics.setColor(Color.white);
+
 		graphics.drawString(String.valueOf(this.gamedata.hero.arrowCount), 30, 540);
 		
 		graphics.setColor(Color.yellow);

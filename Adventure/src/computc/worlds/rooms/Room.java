@@ -41,9 +41,9 @@ public class Room
 	private Direction majorDirection = Direction.NONE;
 
 	public DoorTile northDoorTile;
-	private DoorTile southDoorTile;
-	private DoorTile eastDoorTile;
-	private DoorTile westDoorTile;
+	public DoorTile southDoorTile;
+	public DoorTile eastDoorTile;
+	public DoorTile westDoorTile;
 	
 	public Room(Dungeon dungeon, int rx, int ry)
 	{
@@ -100,12 +100,6 @@ public class Room
 			}
 			
 			this.tiles[tx][ty] = doortile;
-			
-			if(door.lock && this.critdir == door.critdir)
-			{
-				doortile.lock();
-				door.lock = false;
-			}
 		}
 		
 		for(Point point : this.roomlayout.thugs)

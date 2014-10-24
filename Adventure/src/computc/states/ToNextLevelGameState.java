@@ -36,7 +36,18 @@ public class ToNextLevelGameState extends BasicGameState
 		
 		if(input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE))
 		{
+			int coinage = this.gamedata.hero.coinage;
+			int currentHealth = this.gamedata.hero.currentHealth;
+			int arrowCount = this.gamedata.hero.arrowCount;
+			
 			this.gamedata.instantiate();
+			
+			this.gamedata.hero.coinage = coinage;
+			this.gamedata.hero.currentHealth = currentHealth;
+			this.gamedata.hero.arrowCount = arrowCount;
+			
+			//will someone just think of the children?
+			
 			game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
 		}
 		else if(input.isKeyDown(Input.KEY_ESCAPE))
