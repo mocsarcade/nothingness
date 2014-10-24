@@ -25,6 +25,10 @@ public class YouWonGameState extends BasicGameState
 		{
 			game.enterState(TitleScreen.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
 		}
+		else if(input.isKeyDown(Input.KEY_ESCAPE))
+		{
+			game.enterState(TitleScreen.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
+		}
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException

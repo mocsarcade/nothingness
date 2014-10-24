@@ -24,6 +24,7 @@ public class DungeonMapGameState extends BasicGameState
 {
 	public GameData gamedata;
 	public InputPollingCamera camera;
+	public StateBasedGame game;
 	
 	public DungeonMapGameState(GameData gamedata)
 	{
@@ -33,7 +34,7 @@ public class DungeonMapGameState extends BasicGameState
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		//code goes here
+		this.game = game;
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
@@ -42,18 +43,21 @@ public class DungeonMapGameState extends BasicGameState
 		
 		this.camera.update(input, delta);
 
-		if(input.isKeyDown(Input.KEY_ESCAPE))
-		{
-			Game.assets.playSoundEffectWithoutRepeat("closeMap");
-			game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
-		}
-
 		if(Game.devmode)
 		{
 			if(input.isKeyDown(Input.KEY_R))
 			{
 				this.gamedata.instantiate();
 			}
+		}
+	}
+	
+	public void keyPressed(int keycode, char character)
+	{
+		if(keycode == Input.KEY_M || keycode == Input.KEY_ESCAPE)
+		{
+			Game.assets.playSoundEffectWithoutRepeat("closeMap");
+			game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
 		}
 	}
 	
