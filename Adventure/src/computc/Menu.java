@@ -88,7 +88,7 @@ public class Menu
 		
 		for(int h = 0; h < this.gamedata.hero.getHealth(); h++)
 		{
-			heart.draw(400 + (70 * h), 1);
+			heart.draw(400 + (45 * h), 1);
 		}
 		
 		// draw arrow count HUD
