@@ -196,9 +196,12 @@ public abstract class Dungeon
 			room.renderOnMap(graphics, camera);
 		}
 		
-		for(Key key : this.keys)
+		if(Game.devmode)
 		{
-			key.renderOnMap(graphics, camera);
+			for(Key key : this.keys)
+			{
+				key.renderOnMap(graphics, camera);
+			}
 		}
 	}
 	

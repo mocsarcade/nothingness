@@ -29,15 +29,11 @@ public class ToNextLevelGameState extends BasicGameState
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
 		Input input = container.getInput();
-		this.gamedata.instantiate();
 		
-		if(input.isKeyDown(Input.KEY_SPACE))
+		if(input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE))
 		{
-			MainGameState maingame = (MainGameState) game.getState(MainGameState.ID);
-			maingame.camera.setToTargetX();
-			maingame.camera.setToTargetY();
-			
-			game.enterState(1, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+			this.gamedata.instantiate();
+			game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
 		}
 	}
 	

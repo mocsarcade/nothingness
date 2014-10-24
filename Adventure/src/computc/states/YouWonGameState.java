@@ -19,7 +19,12 @@ public class YouWonGameState extends BasicGameState
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
-		//code goes here!
+		Input input = container.getInput();
+		
+		if(input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE))
+		{
+			game.enterState(TitleScreen.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+		}
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException

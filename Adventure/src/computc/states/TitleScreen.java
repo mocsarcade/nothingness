@@ -37,7 +37,7 @@ public class TitleScreen extends BasicGameState
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
-		
+		//code goes here.
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game)
@@ -132,7 +132,7 @@ public class TitleScreen extends BasicGameState
 	
 	public int getID()
 	{
-		return ToNextLevelGameState.ID;
+		return TitleScreen.ID;
 	}
 	
 	public static final int ID = 0;
