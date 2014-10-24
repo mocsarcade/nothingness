@@ -82,6 +82,12 @@ public class Hero extends Entity
 	private Image fireUp = arrowShotSpriteSheet.getSubImage(1, 222, 248, 74);
 	private Image heroIdleDown, heroIdleRight, heroIdleLeft, heroIdleUp;
 	
+	private Image swordSwingSpriteSheet = Game.assets.getImage("res/heroSwordSwingSpriteSheet.png");
+	private Image swordSwingRight = swordSwingSpriteSheet.getSubImage(1, 1, 288, 104);
+	private Image swordSwingLeft = swordSwingSpriteSheet.getSubImage(1, 105, 288, 104);
+	private Image swordSwingDown = swordSwingSpriteSheet.getSubImage(1, 209, 288, 104);
+	private Image swordSwingUp = swordSwingSpriteSheet.getSubImage(1, 312, 288, 104);
+	
 	// actions 
 	private Animation sprite, firingArrow, firingArrowRight, firingArrowLeft, firingArrowUp, firingArrowDown, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle, idleDown, idleUp, idleRight, idleLeft, walkingLeft, walkingDown, walkingUp, walkingRight;
 
@@ -138,10 +144,10 @@ public class Hero extends Entity
 		this.walkingUp = new Animation(new SpriteSheet(walkUp, 39, 62), 200);
 		this.walkingDown = new Animation(new SpriteSheet(walkDown, 39, 62), 200);
 		
-		this.meleeRight = new Animation(new SpriteSheet(swingRight, 96, 48), 300);
-		this.meleeLeft = new Animation(new SpriteSheet(swingLeft, 96, 48), 300);
-		this.meleeDown = new Animation(new SpriteSheet(swingDown, 48, 96), 300);
-		this.meleeUp = new Animation(new SpriteSheet(swingUp, 48, 96), 300);
+		this.meleeRight = new Animation(new SpriteSheet(swordSwingRight, 72, 104), 100);
+		this.meleeLeft = new Animation(new SpriteSheet(swordSwingLeft, 72, 104), 100);
+		this.meleeDown = new Animation(new SpriteSheet(swordSwingDown, 72, 104), 100);
+		this.meleeUp = new Animation(new SpriteSheet(swordSwingUp, 72, 104), 100);
 		
 		this.firingArrowRight = new Animation(new SpriteSheet(fireRight, 62, 74), 150);
 		this.firingArrowLeft = new Animation(new SpriteSheet(fireLeft, 62, 74), 150);
@@ -334,11 +340,15 @@ public class Hero extends Entity
 		{
 			if(meleeSwing == meleeLeft)
 			{
-				meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX() - 48, this.getY() - this.getHalfHeight() - camera.getY());	
+				meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX() - 48, this.getY() - this.getHalfHeight() - camera.getY() - 20);	
 			}
 			else if(meleeSwing == meleeUp)
 			{
 				meleeSwing.draw((this.getX() - this.getHalfWidth() - camera.getX()), (this.getY() - this.getHalfHeight() - camera.getY()) - 48);	
+			}
+			else if(meleeSwing == meleeRight)
+			{
+				meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX() - 10, this.getY() - this.getHalfHeight() - camera.getY() - 20);	
 			}
 			else
 			{

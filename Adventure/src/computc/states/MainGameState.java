@@ -166,8 +166,8 @@ public class MainGameState extends BasicGameState
 		Input input = container.getInput();
 		
 		this.gamedata.dungeon.render(graphics, this.camera);
-		this.menu.render(graphics, camera);
 		this.gamedata.hero.render(graphics, this.camera);
+		this.menu.render(graphics, camera);
 		
 		
 		
