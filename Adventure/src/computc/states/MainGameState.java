@@ -55,6 +55,12 @@ public class MainGameState extends BasicGameState
 	
 	private Animation textBox;
 	
+	public void enter(GameContainer container, StateBasedGame game)
+	{
+		this.camera.setToTargetX();
+		this.camera.setToTargetY();
+	}
+	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
 	{
 		Coin.IMAGE = new Image("./res/coin.png");
@@ -87,6 +93,11 @@ public class MainGameState extends BasicGameState
 		
 		if(this.gamedata.hero.isDead())
 		{
+			if(Game.difficulty.equals("HARD"))
+			{
+				this.gamedata.level = 0;
+			}
+			
 			game.enterState(YouDiedGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
 		}
 		

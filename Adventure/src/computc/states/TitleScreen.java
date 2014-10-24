@@ -48,16 +48,31 @@ public class TitleScreen extends BasicGameState
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
 		Input input = container.getInput();
-		this.gamedata.instantiate();
 		
-		if(input.isKeyDown(Input.KEY_ENTER))
+		if(this.titleScreen.isStopped())
 		{
-			MainGameState maingame = (MainGameState) game.getState(MainGameState.ID);
-			
-			maingame.camera.setToTargetX();
-			maingame.camera.setToTargetY();
-			
-			game.enterState(1, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+			if(input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE))
+			{
+				if(this.cursor == 2)
+				{
+					System.exit(0);
+				}
+				else
+				{
+					this.gamedata.instantiate();
+					
+					if(this.cursor == 1)
+					{
+						Game.difficulty = "HARD";
+					}
+					else if(this.cursor == 0)
+					{
+						Game.difficulty = "EASY";
+					}
+					
+					game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
+				}
+			}
 		}
 		
 		titleScreen.update(delta);
