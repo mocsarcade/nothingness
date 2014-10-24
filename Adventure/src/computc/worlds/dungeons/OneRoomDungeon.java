@@ -7,9 +7,9 @@ import computc.worlds.rooms.Room;
 
 public class OneRoomDungeon extends Dungeon
 {
-	public OneRoomDungeon(GameData gamedata)
+	public OneRoomDungeon(GameData gamedata, String tileset)
 	{
-		super(gamedata);
+		super(gamedata, tileset);
 		
 		this.firstRoom = new Room(this, 2, 2);
 	}

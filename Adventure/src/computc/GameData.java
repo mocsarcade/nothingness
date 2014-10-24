@@ -15,6 +15,11 @@ public class GameData
 	public Dungeon dungeon;
 	
 	public int level = 0;
+	public String[] tilesets = {
+		"./res/tilesets/dirty.tileset.xml",
+		"./res/tilesets/stoney.tileset.xml",
+		"./res/tilesets/snowy.tileset.xml",
+	};
 	
 	public void instantiate() throws SlickException
 	{
@@ -24,7 +29,7 @@ public class GameData
 		{
 			try
 			{
-				this.dungeon = new RandomDungeon(this);
+				this.dungeon = new RandomDungeon(this, this.getTileset());
 			}
 			catch(DungeonException exception)
 			{
@@ -35,5 +40,10 @@ public class GameData
 		this.dungeon.initiate();
 		
 		this.hero = new Hero(this.dungeon, 5, 4);
+	}
+	
+	public String getTileset()
+	{
+		return this.tilesets[this.level % this.tilesets.length];
 	}
 }
