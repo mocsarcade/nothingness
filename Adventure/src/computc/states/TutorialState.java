@@ -26,14 +26,23 @@ public class TutorialState extends BasicGameState
 {
 	public GameData gamedata;
 	
+	public boolean swordAttack = false;
+	public boolean arrowAttack = false;
+	public boolean arrowPowerAttack = false;
+	public boolean peeker = false;
+	
 	public Menu menu;
 	public RoomFollowingCamera camera;
 	
 	private Animation textBox;
 	
-	private String greeting = "You know... instead of just standing there, you could show us your combat skills.";
-	private String greeting2 = " Try B for a sword attack";
-	private float counter, counter2;
+	private String greeting = "Try your sword attack with B";
+	private String greeting2 = "Try N to show off your archery skills";
+	private String greeting3 = "nice Shot! Now hold your Arrow for a power shot!";
+	private String greeting4 = "One more trick, if you lean up against the wall, you can eavesdrop on the next room";
+
+	
+	private float counter, counter2, counter3, counter4;
 
 	public TutorialState(GameData gamedata)
 	{
@@ -62,7 +71,7 @@ public class TutorialState extends BasicGameState
 		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies(), delta);
 		this.gamedata.hero.checkPickup(this.gamedata.dungeon.commodities, this.gamedata.dungeon.keys);
 		
-		if(input.isKeyDown(Input.KEY_ENTER))
+		if(input.isKeyDown(Input.KEY_ENTER) && swordAttack && arrowAttack && arrowPowerAttack && peeker)
 		{
 			MainGameState maingame = (MainGameState) game.getState(MainGameState.ID);
 			maingame.camera.setToTargetX();
@@ -71,22 +80,38 @@ public class TutorialState extends BasicGameState
 			game.enterState(2, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
 		}
 		
-		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.firstRoom.getRoomyX()
-				&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.firstRoom.getRoomyY())
+		if(this.gamedata.hero.getRoom() == this.gamedata.dungeon.firstRoom && this.gamedata.hero.getRoomPositionY() > Room.HEIGHT/2)
 				{
 					if((int)(counter) < greeting.length())
 					{
 						counter += delta * 0.025;
 					}
-					else
+					else if(swordAttack)
 					{
 						counter2 += delta * 0.025;
+					}
+					
+					if(arrowAttack && !arrowPowerAttack)
+					{
+						counter3 += delta * 0.025;
+					}
+					else if(arrowPowerAttack)
+					{
+						counter4 += delta * 0.025;
 					}
 				}
 		
 		if(this.gamedata.hero.getPeekTimer() > 850)
 		{
 			this.camera.setPeeking(this.gamedata.hero.getDirection());
+		}
+		
+		if(this.gamedata.hero.getPeekTimer() > 800)
+		{
+			if(swordAttack && arrowAttack && arrowPowerAttack)
+			{
+			this.gamedata.dungeon.firstRoom.addKey();
+			}
 		}
 		
 		if(this.gamedata.hero.collidesWith(this.gamedata.dungeon.ladder))
@@ -129,9 +154,30 @@ public class TutorialState extends BasicGameState
 					
 					String greeting2temp = greeting2;
 					graphics.setColor(Color.white);
+					if(!arrowAttack)
+					{
 					graphics.drawString(greeting.substring(0, (int)(Math.min(counter, greeting.length()))), xCoord, yCoord);
 					graphics.drawString(greeting2temp.substring(0, (int)(Math.min(counter2, greeting2temp.length()))), xCoord2, yCoord2);
+					}
+					
+					String greeting4temp = greeting4;
+					if(arrowAttack)
+					{
+						graphics.drawString(greeting3.substring(0, (int)(Math.min(counter3, greeting3.length()))), xCoord, yCoord);
+						graphics.drawString(greeting4temp.substring(0, (int)(Math.min(counter4, greeting4temp.length()))), xCoord2, yCoord2);
+					}
 				}
+		System.out.println("arrowAttack is: " + arrowAttack);
+		System.out.println("arrowPowerAttack is:" + arrowPowerAttack);
+	}
+	
+	public void keyPressed(int k, char c)
+	{
+		if(k == Input.KEY_B)
+		{
+			swordAttack = true;
+			this.gamedata.hero.setSwinging();
+		}
 	}
 	
 	@Override
@@ -178,10 +224,12 @@ public class TutorialState extends BasicGameState
 					Game.assets.playSoundEffectWithoutRepeat("arrowFire");
 					this.gamedata.hero.arrows.add(arrow);
 					this.gamedata.hero.startArrowCooldown();
+					arrowAttack = true;
 					
 					if(this.gamedata.hero.getArrowPowerUp() > 2000)
 					{
 						arrow.setPowerCharge();
+						arrowPowerAttack = true;
 					}
 				}
 				else

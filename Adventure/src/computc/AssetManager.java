@@ -25,6 +25,7 @@ public class AssetManager
 	private HashMap<String, RoomLayout> loadedRoomLayouts = new HashMap<String, RoomLayout>();
 	private HashMap<String, Audio> loadedSounds = new HashMap<String, Audio>();
 	private Music backgroundMusic;
+	
 	public float volume = 1.0f;
 	
 	public AssetManager()
