@@ -25,6 +25,7 @@ public class AssetManager
 	private HashMap<String, RoomLayout> loadedRoomLayouts = new HashMap<String, RoomLayout>();
 	private HashMap<String, Audio> loadedSounds = new HashMap<String, Audio>();
 	private Music backgroundMusic;
+	private Audio lowHealth;
 	
 	public float volume = 1.0f;
 	
@@ -106,6 +107,9 @@ public class AssetManager
 		sounds.put("res/audio/chirps/keyDrop.wav","keyDrop");
 		sounds.put("res/audio/chimes/enemyDying.wav","enemyDying");
 		sounds.put("res/audio/chimes/levelComplete.wav","levelComplete");
+		sounds.put("res/audio/chirps/menuNavigate.wav", "menuNavigate");
+		sounds.put("res/audio/chirps/menuSelect.wav", "menuSelect");
+
 		//sounds.put("res/audio/chimes/coinDrop.wav","coinDrop");
 		//sounds.put("res/audio/chimes/arrowDrop.wav","arrowDrop");
 
@@ -118,6 +122,7 @@ public class AssetManager
 				loadedSounds.put(sound.getValue(), audio);
 			}
 			backgroundMusic = new Music("res/audio/wack.wav");
+			lowHealth = AudioLoader.getAudio("WAV",ResourceLoader.getResourceAsStream("res/chimes/lowHealth.wav"));
 		}
 		catch(IOException | SlickException e)
 		{
