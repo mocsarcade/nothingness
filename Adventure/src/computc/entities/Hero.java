@@ -1061,12 +1061,14 @@ public class Hero extends Entity
 				{
 				this.currentHealth += 1;
 				}
+				Game.assets.playSoundEffectWithoutRepeat("heartPickup");
 				commodities.remove(commodity);
 			}
 			
 			if(this.intersects(commodity) && commodity.getType() == 1)
 			{
 				this.coinage += 1;
+				Game.assets.playSoundEffectWithoutRepeat("coinPickup");
 				commodities.remove(commodity);
 			}
 		}

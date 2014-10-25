@@ -109,6 +109,8 @@ public class AssetManager
 		sounds.put("res/audio/chimes/levelComplete.wav","levelComplete");
 		sounds.put("res/audio/chirps/menuNavigate.wav", "menuNavigate");
 		sounds.put("res/audio/chirps/menuSelect.wav", "menuSelect");
+		sounds.put("res/audio/chirps/coinPickup.wav", "coinPickup");
+		sounds.put("res/audio/chirps/heartPickup.wav", "heartPickup");
 		//sounds.put("res/audio/chimes/coinDrop.wav","coinDrop");
 		//sounds.put("res/audio/chimes/arrowDrop.wav","arrowDrop");
 
