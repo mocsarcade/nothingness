@@ -63,6 +63,7 @@ public class Hero extends Entity
 	private int meleeDamage;
 	private int meleeRange;
 	
+	public boolean hasLowHealth;
 	
 	private double actualEnemySeparation;
 	
@@ -174,6 +175,8 @@ public class Hero extends Entity
 			this.chain.playerBody.setTransform(box2dPlayerPosition, 0);
 			this.ball = new ChainEnd(this.dungeon, this.getTileyX(), this.getTileyY(), this.direction, this.chain, this);
 		}
+		
+		hasLowHealth = false;
 		
 	}
 	
@@ -571,6 +574,17 @@ public class Hero extends Entity
 		if(this.currentHealth > this.maximumHealth)
 		{
 			this.currentHealth = this.maximumHealth;
+		}
+		
+		if(this.currentHealth < 2 && !hasLowHealth)
+		{
+			hasLowHealth = true;
+			Game.assets.lowHealth.playAsSoundEffect(1.0f, 1.0f, true);
+		}
+		else if(this.currentHealth >=2 && hasLowHealth)
+		{
+			hasLowHealth = false;
+			Game.assets.lowHealth.stop();
 		}
 		
 		super.update(delta);
