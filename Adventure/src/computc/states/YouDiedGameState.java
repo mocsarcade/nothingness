@@ -54,6 +54,10 @@ public class YouDiedGameState extends BasicGameState
 		}
 		
 		cursor_time += delta;
+		if(Game.assets.lowHealth.isPlaying())
+		{
+			Game.assets.lowHealth.stop();
+		}
 	}
 	
 	public void keyPressed(int keycode, char character)

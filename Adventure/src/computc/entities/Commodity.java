@@ -50,11 +50,11 @@ public class Commodity extends Entity
 		}
 		else if(type==1)
 		{
-			//Game.assets.playSoundEffectWithoutRepeat("coinPickup");
+			//Game.assets.playSoundEffectWithoutRepeat("coinDrop");
 		}
 		else if(type==2)
 		{
-			//Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
+			//Game.assets.playSoundEffectWithoutRepeat("arrowDrop");
 		}
 		System.out.println("item dropped");
 	}
