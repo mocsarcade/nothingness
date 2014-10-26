@@ -5,32 +5,26 @@
 
 html
 {
-	color: #EEE;
-	background-color: #222;
-	
+	color: #EEE;	
 	font-size: 18px;
 	font-family: open-sans, arial, sans-serif;
+	
+	background-color: #222;
+	background-image: url("/images/background.png");
 }
 
 body
 {
-	width: 640px;
+	padding: 2rem 1rem;
+	max-width: 640px;
 	text-align: center;
-}
-
-h1
-{
-	font-size: 6rem;
-	font-weight: normal;
-	font-family: blockstepped;
-	
-	margin-bottom: 1rem;
 }
 
 a
 {
 	font: inherit;
 	color: inherit;
+	line-height: 1rem;
 	text-decoration: none;
 }
 
@@ -42,8 +36,8 @@ img
 
 p
 {
-	text-align: left;
 	text-indent: 2rem;
+	text-align: justify;
 	
 	margin-bottom: 1rem;
 }
@@ -66,4 +60,4 @@ button
 }
 
 @font-face {font-family: open-sans; src: url("/fonts/open-sans.ttf") format("truetype");}
-@font-face {font-family: blockstepped; src: url("/fonts/blockstepped3d.ttf") format("truetype");}
+@font-face {font-family: blockstepped; src: url("/fonts/blockstepped.ttf") format("truetype");}
