@@ -80,6 +80,21 @@ public class TutorialState extends BasicGameState
 			game.enterState(2, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
 		}
 		
+		else if(input.isKeyDown(Input.KEY_ESCAPE))
+		{
+			this.gamedata.level++;
+			System.out.println(this.gamedata.level);
+			
+			if(this.gamedata.level < 4)
+			{
+				Game.assets.fadeMusicOut();
+				Game.assets.playSoundEffectWithoutRepeat("levelComplete");
+				game.enterState(ToNextLevelGameState.ID, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 1000));
+				Game.assets.fadeMusicIn();
+			}
+
+		}
+		
 		if(this.gamedata.hero.getRoom() == this.gamedata.dungeon.firstRoom && this.gamedata.hero.getRoomPositionY() >= Room.HEIGHT/2)
 				{
 					if((int)(counter) < greeting.length())
