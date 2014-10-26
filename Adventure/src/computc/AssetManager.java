@@ -25,6 +25,7 @@ public class AssetManager
 	private HashMap<String, RoomLayout> loadedRoomLayouts = new HashMap<String, RoomLayout>();
 	private HashMap<String, Audio> loadedSounds = new HashMap<String, Audio>();
 	private Music backgroundMusic;
+	public Audio lowHealth;
 	
 	public float volume = 1.0f;
 	
@@ -106,6 +107,10 @@ public class AssetManager
 		sounds.put("res/audio/chirps/keyDrop.wav","keyDrop");
 		sounds.put("res/audio/chimes/enemyDying.wav","enemyDying");
 		sounds.put("res/audio/chimes/levelComplete.wav","levelComplete");
+		sounds.put("res/audio/chirps/menuNavigate.wav", "menuNavigate");
+		sounds.put("res/audio/chirps/menuSelect.wav", "menuSelect");
+		sounds.put("res/audio/chirps/coinPickup.wav", "coinPickup");
+		//sounds.put("res/audio/chirps/heartPickup.wav", "heartPickup");
 		//sounds.put("res/audio/chimes/coinDrop.wav","coinDrop");
 		//sounds.put("res/audio/chimes/arrowDrop.wav","arrowDrop");
 
@@ -118,6 +123,8 @@ public class AssetManager
 				loadedSounds.put(sound.getValue(), audio);
 			}
 			backgroundMusic = new Music("res/audio/wack.wav");
+			lowHealth = AudioLoader.getAudio("WAV", ResourceLoader.getResourceAsStream("res/audio/chimes/lowHealth.wav"));
+
 		}
 		catch(IOException | SlickException e)
 		{
@@ -138,6 +145,10 @@ public class AssetManager
 	public void playSoundEffectWithoutRepeat(String id)
 	{
 		loadedSounds.get(id).playAsSoundEffect(1.0f, 1.0f, false);
+	}
+	public void stopSoundEffect(String id)
+	{
+		loadedSounds.get(id).stop();
 	}
 	
 	// Fades music to prevent jarring stop

@@ -195,8 +195,6 @@ public class MainGameState extends BasicGameState
 		{
 			this.gamedata.hero.setSwinging();
 		}
-		
-		// prepare swinging chain attack
 	}
 	
 	

@@ -36,11 +36,11 @@ public class TutorialState extends BasicGameState
 	
 	private Animation textBox;
 	
-	private String greeting = "Try your sword attack with B";
-	private String greeting2 = "Try N to show off your archery skills";
-	private String greeting3 = "nice Shot! Now hold your Arrow for a power shot!";
-	private String greeting4 = "One more trick, lean up against the wall... ";
-	private String greeting5 = "you can eavesdrop on the next room";
+	private String greeting = "Tutorial(esc to quit): Swing your sword with B!";
+	private String greeting2 = "Press N to show off your archery skills!";
+	private String greeting3 = "Nice shot! Now hold N for a power shot!";
+	private String greeting4 = "One more trick: Try leaning into the wall. ";
+	private String greeting5 = "You can peek into the next room while staying safe!";
 	
 	private float counter, counter2, counter3, counter4, counter5;
 
@@ -80,7 +80,7 @@ public class TutorialState extends BasicGameState
 			game.enterState(2, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
 		}
 		
-		if(this.gamedata.hero.getRoom() == this.gamedata.dungeon.firstRoom && this.gamedata.hero.getRoomPositionY() > Room.HEIGHT/2)
+		if(this.gamedata.hero.getRoom() == this.gamedata.dungeon.firstRoom && this.gamedata.hero.getRoomPositionY() >= Room.HEIGHT/2)
 				{
 					if((int)(counter) < greeting.length())
 					{
