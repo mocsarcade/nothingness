@@ -18,7 +18,6 @@ public class GameData
 	public int level = -1;
 
 	public String[] tilesets = {
-			"./res/tilesets/techy.tileset.xml",
 		"./res/tilesets/dirty.tileset.xml",
 		"./res/tilesets/stoney.tileset.xml",
 		"./res/tilesets/snowy.tileset.xml",
