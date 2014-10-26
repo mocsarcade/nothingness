@@ -2,3 +2,22 @@
 {
 	margin: auto;
 }
+
+html
+{
+	color: #EEE;
+	background-color: #222;
+	
+	font-size: 18px;
+	font-family: open-sans, arial, sans-serif;
+}
+
+h1
+{
+	font-size: 3rem;
+	font-weight: normal;
+	font-family: blockstepped;
+}
+
+@font-face {font-family: open-sans; src: url("/fonts/open-sans.ttf") format("truetype");}
+@font-face {font-family: blockstepped; src: url("/fonts/blockstepped3d.ttf") format("truetype");}
