@@ -334,7 +334,7 @@ public abstract class Entity
 		   topRight = dungeon.getTile(rightColumn, topRow);
 		   bottomLeft = dungeon.getTile(leftColumn, bottomRow);
 		   bottomRight = dungeon.getTile(rightColumn, bottomRow);
-	  }
+	   }
 	
 	public void checkTileMapCollision() 
 	{	   
