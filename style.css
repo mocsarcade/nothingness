@@ -12,11 +12,43 @@ html
 	font-family: open-sans, arial, sans-serif;
 }
 
+body
+{
+	width: 640px;
+	text-align: center;
+}
+
 h1
 {
-	font-size: 3rem;
+	font-size: 6rem;
 	font-weight: normal;
 	font-family: blockstepped;
+	
+	margin-bottom: 1rem;
+}
+
+a
+{
+	font: inherit;
+	color: inherit;
+	text-decoration: none;
+}
+
+button
+{
+	font: inherit;
+	
+	padding: 0.75rem;
+	margin-bottom: 1rem;
+	
+	border: none;
+	border-radius: 0.75rem;
+	border-bottom: 7px solid #CCC;
+	
+	color: #222;
+	background-color: #EEE;
+	
+	cursor: pointer;
 }
 
 @font-face {font-family: open-sans; src: url("/fonts/open-sans.ttf") format("truetype");}
