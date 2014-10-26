@@ -197,23 +197,6 @@ public class MainGameState extends BasicGameState
 		}
 		
 		// prepare swinging chain attack
-		if(k == Input.KEY_W)
-		{
-			if(Mouse.getX() > this.gamedata.hero.getRoomPositionX())
-			{
-			  Vec2 mousePosition = new Vec2(Mouse.getX() + 10000, Mouse.getY()).mul(0.5f).mul(1/30f);
-			  Vec2 playerPosition = new Vec2(this.gamedata.hero.chain.playerBody.getPosition());
-			  Vec2 force = mousePosition.sub(playerPosition);
-			  this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
-			}
-			else
-			{
-				Vec2 mousePosition = new Vec2(Mouse.getX() - 10000, Mouse.getY()).mul(0.5f).mul(1/30f);
-				Vec2 playerPosition = new Vec2(this.gamedata.hero.chain.playerBody.getPosition());
-				Vec2 force = mousePosition.sub(playerPosition);
-				this.gamedata.hero.chain.lastLinkBody.applyForce(force,  this.gamedata.hero.chain.lastLinkBody.getPosition());
-			}
-		}
 	}
 	
 	

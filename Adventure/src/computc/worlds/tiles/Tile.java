@@ -155,6 +155,16 @@ public class Tile
 		return this.room;
 	}
 	
+	public int getRoomPositionX()
+	{
+		return this.getX() - this.room.getX();
+	}
+	
+	public int getRoomPositionY()
+	{
+		return this.getY() - this.room.getY();
+	}
+	
 	public final static int SIZE = 64;
 
 	public void lock()
