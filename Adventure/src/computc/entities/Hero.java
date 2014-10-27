@@ -347,7 +347,7 @@ public class Hero extends Entity
 			}
 			else if(meleeSwing == meleeUp)
 			{
-				meleeSwing.draw((this.getX() - this.getHalfWidth() - camera.getX()), (this.getY() - this.getHalfHeight() - camera.getY()) - 48);	
+				meleeSwing.draw((this.getX() - this.getHalfWidth() - camera.getX()), (this.getY() - this.getHalfHeight() - camera.getY()) - 20);	
 			}
 			else if(meleeSwing == meleeRight)
 			{
