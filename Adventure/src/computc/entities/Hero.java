@@ -426,6 +426,9 @@ public class Hero extends Entity
 		// Check if the melee attack has stopped
 		if(swinging) 
 		{
+			firing = false;
+			this.arrowPowerUp = 0;
+			
 			meleeSwing.setLooping(false);
 			if(meleeSwing.isStopped())
 			{
