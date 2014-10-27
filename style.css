@@ -2,3 +2,62 @@
 {
 	margin: auto;
 }
+
+html
+{
+	color: #EEE;	
+	font-size: 18px;
+	font-family: open-sans, arial, sans-serif;
+	
+	background-color: #222;
+	background-image: url("/images/background.png");
+}
+
+body
+{
+	padding: 2rem 1rem;
+	max-width: 640px;
+	text-align: center;
+}
+
+a
+{
+	font: inherit;
+	color: inherit;
+	line-height: 1rem;
+	text-decoration: none;
+}
+
+img
+{
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+p
+{
+	text-indent: 2rem;
+	text-align: justify;
+	
+	margin-bottom: 1rem;
+}
+
+button
+{
+	font: inherit;
+	
+	padding: 0.75rem;
+	margin-bottom: 1rem;
+	
+	border: none;
+	border-radius: 0.75rem;
+	border-bottom: 7px solid #CCC;
+	
+	color: #222;
+	background-color: #EEE;
+	
+	cursor: pointer;
+}
+
+@font-face {font-family: open-sans; src: url("fonts/open-sans.ttf") format("truetype");}
+@font-face {font-family: blockstepped; src: url("fonts/blockstepped.ttf") format("truetype");}
