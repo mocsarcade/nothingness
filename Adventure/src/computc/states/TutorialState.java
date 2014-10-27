@@ -159,7 +159,6 @@ public class TutorialState extends BasicGameState
 		graphics.setColor(Color.white);
 		
 		this.gamedata.dungeon.render(graphics, this.camera);
-		this.menu.render(graphics, camera);
 		this.gamedata.hero.render(graphics, this.camera);
 
 		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.firstRoom.getRoomyX()
@@ -204,6 +203,7 @@ public class TutorialState extends BasicGameState
 				this.gamedata.hero.tempArrow.render(graphics, camera);
 			}
 		}
+		this.menu.render(graphics, camera);
 	}
 	
 	public void keyPressed(int k, char c)

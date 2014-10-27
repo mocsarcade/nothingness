@@ -19,6 +19,7 @@ public class Menu
 	private Image heart;
 	private Image arrow = new Image("res/arrowSpriteSheet.png");
 	private Image arrowGuiPic = new Image("res/arrowGuiPic.png");
+	private Image bagodosh = new Image("res/bagodosh.png");
 	
 	public Menu(GameData gamedata) throws SlickException
 	{
@@ -100,6 +101,7 @@ public class Menu
 
 		graphics.drawString(String.valueOf(this.gamedata.hero.arrowCount), 30, 540);
 		
+		this.bagodosh.draw(655-16, 540-64);
 		graphics.setColor(Color.yellow);
 		graphics.drawString(String.valueOf(this.gamedata.hero.coinage), 665, 540);
 	}
