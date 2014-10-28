@@ -347,7 +347,7 @@ public class Hero extends Entity
 			}
 			else if(meleeSwing == meleeUp)
 			{
-				meleeSwing.draw((this.getX() - this.getHalfWidth() - camera.getX()), (this.getY() - this.getHalfHeight() - camera.getY()) - 48);	
+				meleeSwing.draw((this.getX() - this.getHalfWidth() - camera.getX()), (this.getY() - this.getHalfHeight() - camera.getY()) - 20);	
 			}
 			else if(meleeSwing == meleeRight)
 			{
@@ -426,6 +426,9 @@ public class Hero extends Entity
 		// Check if the melee attack has stopped
 		if(swinging) 
 		{
+			firing = false;
+			this.arrowPowerUp = 0;
+			
 			meleeSwing.setLooping(false);
 			if(meleeSwing.isStopped())
 			{
