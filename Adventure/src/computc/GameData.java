@@ -21,6 +21,7 @@ public class GameData
 		"./res/tilesets/dirty.tileset.xml",
 		"./res/tilesets/stoney.tileset.xml",
 		"./res/tilesets/snowy.tileset.xml",
+		"./res/tilesets/techy.tileset.xml"
 	};
 	
 	public void instantiate() throws SlickException

@@ -70,6 +70,7 @@ public class TitleScreen extends BasicGameState
 		{
 			if(input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE))
 			{
+				Game.assets.playSoundEffectWithoutRepeat("menuSelect");
 				if(this.cursor == 2)
 				{
 					System.exit(0);
@@ -153,6 +154,7 @@ public class TitleScreen extends BasicGameState
 	{
 		if(keycode == Input.KEY_W || keycode == Input.KEY_UP)
 		{
+			Game.assets.playSoundEffectWithoutRepeat("menuNavigate");
 			this.cursor -= 1;
 			if(this.cursor < 0)
 				this.cursor = 0;
@@ -160,6 +162,7 @@ public class TitleScreen extends BasicGameState
 		
 		if(keycode == Input.KEY_S || keycode == Input.KEY_DOWN)
 		{
+			Game.assets.playSoundEffectWithoutRepeat("menuNavigate");
 			this.cursor += 1;
 			if(this.cursor > 2)
 				this.cursor = 2;

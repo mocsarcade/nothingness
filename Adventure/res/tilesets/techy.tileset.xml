@@ -1,7 +1,7 @@
 <tileset>
 	<tile type="wall">
-		<color red="144" green="113" blue="27"/>
-		<image source="./res/tiles/dirty.wall.tiles.png"/>
+		<color red="170" green="170" blue="170"/>
+		<image source="./res/tiles/techy.wall.tiles.png"/>
 	</tile>
 	<tile type="floor">
 		<color red="132" green="132" blue="132"/>
@@ -13,6 +13,6 @@
 	</tile>
 	<tile type="door">
 		<color red="240" green="238" blue="34"/>
-		<image source="./res/tiles/dirty.door.tiles.png"/>
+		<image source="./res/tiles/techy.door.tiles.png"/>
 	</tile>
 </tileset>

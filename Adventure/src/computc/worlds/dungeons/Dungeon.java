@@ -72,6 +72,7 @@ public abstract class Dungeon
 	private float enemyHalfWidth = 24;
 	private int keyDropCooldown;
 	private Random random;
+	private int count_to_next_collectible;
 
 
 	public Dungeon(GameData gamedata, String tileset)
@@ -136,14 +137,22 @@ public abstract class Dungeon
 					this.explodeY = e.getY();
 					explosions.add(new Animation(new SpriteSheet(explosion, 30, 30), 200));
 					
-					double a = Math.random();					
-					if(a > 0.2)
+					if(this.count_to_next_collectible <= 0)
 					{
-						if(this.gamedata.hero.getHealth() == this.gamedata.hero.getMaxHealth())
+						this.count_to_next_collectible = Game.random.nextInt(3)+2; //every 2 to 5 will drop
+						
+						if(Game.difficulty.equals("easy") && this.gamedata.hero.getHealth() == 1) //if on last heart and in easy mode, always drop a heart.
 						{
-							commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(3)));
+							commodities.add(new Commodity(this, e.getX(), e.getY(), 3));
 						}
-						else commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(4)));
+						else
+						{
+							commodities.add(new Commodity(this, e.getX(), e.getY(), random.nextInt(4)));
+						}
+					}
+					else
+					{
+						this.count_to_next_collectible--;
 					}
 					
 					i--;

@@ -215,22 +215,23 @@ public class Thug extends Enemy
 		   ytemp = y;
 		   
 		   calculateCorners(x, ydest);
+		 
 		   
 		   if(dy < 0) 
 		   {
-			   if((!topLeft.canMoveHere() || !topRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 2 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 2 || this.getRoomPositionY() < Tile.SIZE * 2 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2)) 
+			   if((topLeft.getRoomPositionY() == 0 || topRight.getRoomPositionY() == 0)) 
 			   {
 				   dy = 0;
 			   }
-			   else {
+			   else 
+			   {
 				   ytemp += dy;
 			   }
 		   }
 			   
 			if(dy > 0) 
 			{
-				if((!bottomLeft.canMoveHere() || !bottomRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 2 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 2 || this.getRoomPositionY() < Tile.SIZE * 2 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2))
-				{
+				if((bottomLeft.getRoomPositionY() == Room.HEIGHT - Tile.SIZE || bottomRight.getRoomPositionY() == Room.HEIGHT - Tile.SIZE))				{
 					dy = 0;
 				}
 				else 
@@ -242,7 +243,7 @@ public class Thug extends Enemy
 			calculateCorners(xdest, y);
 			
 			if(dx < 0) {
-				if((!topLeft.canMoveHere() || !bottomLeft.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 2 || this.getRoomPositionY() < Tile.SIZE * 2 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2)) 
+				if((topLeft.getRoomPositionX() == 0 || bottomLeft.getRoomPositionX() == 0))
 				{
 					dx = 0;
 				}
@@ -252,8 +253,9 @@ public class Thug extends Enemy
 				}
 			}
 				
-			if(dx > 0) {
-				if((!topRight.canMoveHere() || !bottomRight.canMoveHere()) && (this.getRoomPositionX() < Tile.SIZE * 1.5 || this.getRoomPositionX() > Room.WIDTH - Tile.SIZE * 2 || this.getRoomPositionY() < Tile.SIZE * 2 || this.getRoomPositionY() > Room.HEIGHT - Tile.SIZE * 2 )) 
+			if(dx > 0)
+			{
+				if((topRight.getRoomPositionX() == Room.WIDTH - Tile.SIZE ||  bottomRight.getRoomPositionX() == Room.WIDTH - Tile.SIZE)) 
 				{
 					dx = 0;
 				}
