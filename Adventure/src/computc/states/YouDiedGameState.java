@@ -35,6 +35,8 @@ public class YouDiedGameState extends BasicGameState
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
 	{
 		Input input = container.getInput();
+		if(Game.assets.lowHealth.isPlaying())
+			Game.assets.lowHealth.stop();
 		
 		if(input.isKeyDown(Input.KEY_ENTER) || input.isKeyDown(Input.KEY_SPACE))
 		{

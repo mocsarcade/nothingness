@@ -144,8 +144,9 @@ public class MainGameState extends BasicGameState
 		
 		if(this.gamedata.hero.collidesWith(this.gamedata.dungeon.ladder))
 		{
+			if(Game.assets.lowHealth.isPlaying())
+				Game.assets.lowHealth.stop();
 			this.gamedata.level++;
-			
 			if(this.gamedata.level <= 3)
 			{
 				Game.assets.fadeMusicOut();
