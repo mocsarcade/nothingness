@@ -159,8 +159,8 @@ public class TutorialState extends BasicGameState
 		graphics.setColor(Color.white);
 		
 		this.gamedata.dungeon.render(graphics, this.camera);
-		this.menu.render(graphics, camera);
 		this.gamedata.hero.render(graphics, this.camera);
+		this.menu.render(graphics, camera);
 
 		if(this.gamedata.hero.getRoomyX() == this.gamedata.dungeon.firstRoom.getRoomyX()
 				&& this.gamedata.hero.getRoomyY() == this.gamedata.dungeon.firstRoom.getRoomyY())
@@ -202,6 +202,11 @@ public class TutorialState extends BasicGameState
 				this.gamedata.hero.tempArrow.setPowerCharge();
 				this.gamedata.hero.tempArrow.setTempArrow();
 				this.gamedata.hero.tempArrow.render(graphics, camera);
+				
+				if(this.gamedata.hero.tempArrow.getDirection() != this.gamedata.hero.getDirection())
+				{
+					this.gamedata.hero.resetArrowPowerUp();
+				}
 			}
 		}
 	}

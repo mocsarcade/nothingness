@@ -56,6 +56,7 @@ public class Game extends StateBasedGame
 		AppGameContainer container = new AppGameContainer(new Game());
 		container.setDisplayMode(Game.WIDTH, Game.HEIGHT, false);
 		container.setTargetFrameRate(60);
+		container.setShowFPS(false);
 		container.start();
 	}
 	

@@ -25,16 +25,16 @@ public class Loafer extends Enemy
 	
 	private int pursuitCooldown;
 	private Image spriteSheet = Game.assets.getImage("res/WolfLoafer.png");
-	private Image walkDown = spriteSheet.getSubImage(1, 1, 57, 128);
-	private Image walkUp = spriteSheet.getSubImage(57, 1, 57, 128);
-	private Image walkLeft = spriteSheet.getSubImage(116, 1, 57, 128);
-	private Image walkRight = spriteSheet.getSubImage(171, 1, 57, 128);
+	private Image walkDown = spriteSheet.getSubImage(1, 1, 57, 140);
+	private Image walkUp = spriteSheet.getSubImage(57, 1, 57, 140);
+	private Image walkLeft = spriteSheet.getSubImage(116, 1, 57, 140);
+	private Image walkRight = spriteSheet.getSubImage(171, 1, 57, 140);
 	
 	private Image spriteSheetAngry = Game.assets.getImage("res/WolfLoaferAngry.png");
-	private Image walkDownAngry = spriteSheetAngry.getSubImage(1, 1, 57, 128);
-	private Image walkUpAngry = spriteSheetAngry.getSubImage(57, 1, 57, 128);
-	private Image walkLeftAngry = spriteSheetAngry.getSubImage(116, 1, 57, 128);
-	private Image walkRightAngry = spriteSheetAngry.getSubImage(171, 1, 57, 128);
+	private Image walkDownAngry = spriteSheetAngry.getSubImage(1, 1, 57, 140);
+	private Image walkUpAngry = spriteSheetAngry.getSubImage(57, 1, 57, 140);
+	private Image walkLeftAngry = spriteSheetAngry.getSubImage(116, 1, 57, 140);
+	private Image walkRightAngry = spriteSheetAngry.getSubImage(171, 1, 57, 140);
 	
 	Animation sprite, walkingDown, walkingUp, walkingLeft, walkingRight, angryDown, angryUp, angryLeft, angryRight;
 	
@@ -47,15 +47,15 @@ public class Loafer extends Enemy
 		this.image = Game.assets.getImage("res/WolfLoafer.png").getSubImage(1, 1, 55, 61);
 		
 		
-		walkingDown = new Animation(new SpriteSheet(walkDown, 57, 64), 200);
-		walkingUp = new Animation(new SpriteSheet(walkUp, 57, 64), 200);
-		walkingLeft = new Animation(new SpriteSheet(walkLeft, 57, 64), 200);
-		walkingRight = new Animation(new SpriteSheet(walkRight, 57, 64), 200);
+		walkingDown = new Animation(new SpriteSheet(walkDown, 57, 70), 200);
+		walkingUp = new Animation(new SpriteSheet(walkUp, 57, 70), 200);
+		walkingLeft = new Animation(new SpriteSheet(walkLeft, 57, 70), 200);
+		walkingRight = new Animation(new SpriteSheet(walkRight, 57, 70), 200);
 		
-		angryDown = new Animation(new SpriteSheet(walkDownAngry, 57, 64), 175);
-		angryUp = new Animation(new SpriteSheet(walkUpAngry, 57, 64), 175);
-		angryLeft = new Animation(new SpriteSheet(walkLeftAngry, 57, 64), 175);
-		angryRight = new Animation(new SpriteSheet(walkRightAngry, 57, 64), 175);
+		angryDown = new Animation(new SpriteSheet(walkDownAngry, 57, 70), 175);
+		angryUp = new Animation(new SpriteSheet(walkUpAngry, 57, 70), 175);
+		angryLeft = new Animation(new SpriteSheet(walkLeftAngry, 57, 70), 175);
+		angryRight = new Animation(new SpriteSheet(walkRightAngry, 57, 70), 175);
 		
 		this.damage = 1;
 		this.acceleration = 0.03f;

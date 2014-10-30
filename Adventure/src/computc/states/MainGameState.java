@@ -183,6 +183,11 @@ public class MainGameState extends BasicGameState
 				this.gamedata.hero.tempArrow.setPowerCharge();
 				this.gamedata.hero.tempArrow.setTempArrow();
 				this.gamedata.hero.tempArrow.render(graphics, camera);
+				
+				if(this.gamedata.hero.tempArrow.getDirection() != this.gamedata.hero.getDirection())
+				{
+					this.gamedata.hero.resetArrowPowerUp();
+				}
 			}
 		}
 
