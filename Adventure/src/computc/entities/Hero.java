@@ -31,6 +31,7 @@ public class Hero extends Entity
 	protected int chainAttackCooldown;
 	protected int bounceCooldown;
 	
+	private boolean filterSwitch;
 	public int monsters_killed = 0;
 	
 	Image ironBall = new Image("res/ironball.png");
@@ -176,6 +177,7 @@ public class Hero extends Entity
 			this.ball = new ChainEnd(this.dungeon, this.getTileyX(), this.getTileyY(), this.direction, this.chain, this);
 		}
 		
+		this.myFilter = new Color(redFilter, greenFilter, blueFilter, 1f);
 		hasLowHealth = false;
 		
 	}
@@ -269,6 +271,8 @@ public class Hero extends Entity
 		
 //		super.render(graphics, camera);
 		
+		myFilter = new Color(redFilter, greenFilter, blueFilter, this.filterAlpha);
+		
 		// draw chain
 		if(this.dungeon.chainEnabled)
 		{
@@ -280,25 +284,6 @@ public class Hero extends Entity
 		for(int i = 0; i < arrows.size(); i++)
 		{
 			arrows.get(i).render(graphics, camera);
-		}
-				
-		
-		// Setting sprite animation
-		if(this.direction == Direction.NORTH)
-		{
-			meleeSwing = meleeUp;
-		}
-		if(this.direction == Direction.SOUTH)
-		{
-			meleeSwing = meleeDown;
-		}
-		if(this.direction == Direction.EAST)
-		{
-			meleeSwing = meleeRight;
-		}
-		if(this.direction == Direction.WEST)
-		{
-			meleeSwing = meleeLeft;
 		}
 		
 		// Drawing animations
@@ -324,26 +309,26 @@ public class Hero extends Entity
 		}
 		else if(sprite == idle && (this.direction == Direction.SOUTH || this.direction == Direction.NONE))
 		{
-			idleDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			idleDown.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY(), myFilter);
 		}
 		else if(sprite == idle && this.direction == Direction.NORTH)
 		{
-			idleUp.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			idleUp.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY(), myFilter);
 		}
 		else if(sprite == idle && this.direction == Direction.EAST)
 		{
-			idleRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			idleRight.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY(), myFilter);
 		}
 		else if(sprite == idle && this.direction == Direction.WEST)
 		{
-			idleLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY());
+			idleLeft.draw(this.getX() - this.getHalfWidth() - camera.getX() , this.getY() - this.getHalfHeight() - camera.getY(), myFilter);
 		}
 		
 		if(swinging)
 		{
 			if(meleeSwing == meleeLeft)
 			{
-				meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX() - 48, this.getY() - this.getHalfHeight() - camera.getY() - 20);	
+				meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX() - 30, this.getY() - this.getHalfHeight() - camera.getY() - 20);	
 			}
 			else if(meleeSwing == meleeUp)
 			{
@@ -355,7 +340,7 @@ public class Hero extends Entity
 			}
 			else
 			{
-			meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX(), this.getY() - this.getHalfHeight() - camera.getY());
+			meleeSwing.draw(this.getX() - this.getHalfWidth() - camera.getX() - 5, this.getY() - this.getHalfHeight() - camera.getY());
 			}
 		}
 		
@@ -1078,14 +1063,48 @@ public class Hero extends Entity
 		
 	}
 	
+	public void setFlashing()
+	{
+		if(!filterSwitch)
+		{
+			this.greenFilter -= .1f;
+			this.blueFilter -= .1f;
+			
+			if(greenFilter < .2f || blueFilter < .2f)
+			{
+				filterSwitch = true;
+			}
+		}
+		
+		if(filterSwitch)
+		{
+			this.greenFilter += .1f;
+			this.blueFilter += .1f;
+			
+			if(this.greenFilter > .9f || this.blueFilter > .9f)
+			{
+				filterSwitch = false;
+			}
+		}
+		
+		freezePosition = true;
+		
+		if(filterSwitch)
+		{
+			sprite = idle;
+			this.direction = Direction.EAST;
+		}
+		else this.direction = Direction.WEST;
+	}
+	
 	public int getHitboxWidth()
 	{
-		return this.getWidth() - 15;
+		return this.getWidth() - 10;
 	}
 	
 	public int getHitboxHeight()
 	{
-		return this.getHeight() - 15;
+		return this.getHeight() - 10;
 	}
 	
 	private float speed = 0.25f;

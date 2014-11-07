@@ -44,6 +44,7 @@ public class MainGameState extends BasicGameState
 	public RoomFollowingCamera camera;
 	
 	private int gravityCoolDown; //chain
+	private int deathTimer;
 	
 	public MainGameState(GameData gamedata)
 	{
@@ -51,6 +52,7 @@ public class MainGameState extends BasicGameState
 	}
 	
 	private Animation textBox;
+	private Graphics graphics;
 	
 	public void enter(GameContainer container, StateBasedGame game)
 	{
@@ -95,12 +97,28 @@ public class MainGameState extends BasicGameState
 		
 		if(this.gamedata.hero.isDead())
 		{
+			if(deathTimer <= 0)
+			{		
+			deathTimer = 2000;
+			}
+			
+			this.gamedata.hero.setFlashing();
+			
 			if(Game.difficulty.equals("HARD"))
 			{
 				this.gamedata.level = 0;
 			}
 			
+			if(deathTimer <= 1000 )
+			{
+				this.gamedata.dungeon.setDebugDraw(this.graphics);
+			}
+			
+			if(deathTimer <= 100)
+			{
 			game.enterState(YouDiedGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
+			this.gamedata.dungeon.setNormalDraw(this.graphics);
+			}
 		}
 		
 		//  makes the chain movement less floaty
@@ -136,6 +154,11 @@ public class MainGameState extends BasicGameState
 			gravityCoolDown--;
 		}
 		
+		if(deathTimer > 0)
+		{
+			deathTimer -= delta;
+		}
+		
 		// sets the camera to peek into adjacent rooms
 		if(this.gamedata.hero.getPeekTimer() > 850)
 		{
@@ -165,12 +188,11 @@ public class MainGameState extends BasicGameState
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
 		Input input = container.getInput();
+		this.graphics = graphics;
 		
 		this.gamedata.dungeon.render(graphics, this.camera);
 		this.gamedata.hero.render(graphics, this.camera);
 		this.menu.render(graphics, camera);
-		
-		
 		
 		if(this.gamedata.hero.getArrowPowerUp() > 2000 && this.gamedata.hero.arrowCount != 0)
 		{
@@ -191,7 +213,6 @@ public class MainGameState extends BasicGameState
 				}
 			}
 		}
-
 	}
 	
 	@Override
