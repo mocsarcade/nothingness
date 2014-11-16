@@ -174,6 +174,20 @@ public class MainGameState extends BasicGameState
 			{
 				Game.assets.fadeMusicOut();
 				Game.assets.playSoundEffectWithoutRepeat("levelComplete");
+				ToNextLevelGameState.transitionRoom = true;
+				
+				int coinage = this.gamedata.hero.coinage;
+				int currentHealth = this.gamedata.hero.currentHealth;
+				int arrowCount = this.gamedata.hero.arrowCount;
+				int monsters_killed = this.gamedata.hero.monsters_killed;
+				
+				this.gamedata.instantiate();
+				
+				this.gamedata.hero.coinage = coinage;
+				this.gamedata.hero.currentHealth = currentHealth;
+				this.gamedata.hero.arrowCount = arrowCount;
+				this.gamedata.hero.monsters_killed = monsters_killed;
+				
 				game.enterState(ToNextLevelGameState.ID, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 1000));
 				
 				Game.assets.fadeMusicIn();

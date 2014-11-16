@@ -579,6 +579,7 @@ public class Hero extends Entity
 		
 		// the update method for the box2d world
 		world.step(1/60f, 8, 3);
+
 	}
 	
 	// movement method
@@ -1099,12 +1100,12 @@ public class Hero extends Entity
 	
 	public int getHitboxWidth()
 	{
-		return this.getWidth() - 10;
+		return this.getWidth() - 5;
 	}
 	
 	public int getHitboxHeight()
 	{
-		return this.getHeight() - 10;
+		return this.getHeight() - 5;
 	}
 	
 	private float speed = 0.25f;

@@ -5,6 +5,7 @@ import org.newdawn.slick.SlickException;
 import computc.Direction;
 import computc.GameData;
 import computc.entities.Ladder;
+import computc.states.ToNextLevelGameState;
 import computc.worlds.rooms.Room;
 
 public class OneRoomDungeon extends Dungeon
@@ -24,6 +25,11 @@ public class OneRoomDungeon extends Dungeon
 		this.lastRoom.setTileSet(this.getTileSet(tilesetid));
 		this.lastRoom.setRoomLayout(this.getSpecialRoomLayout("last room"));
 		
+		if(ToNextLevelGameState.transitionRoom)
+		{
+			this.lastRoom.setRoomLayout(this.getSpecialRoomLayout("transition room"));
+		}
+		
 		
 		this.firstRoom.makeDoor(Direction.SOUTH, true);
 		this.firstRoom.getCritDoor().lock();
@@ -38,21 +44,24 @@ public class OneRoomDungeon extends Dungeon
 		Room last_room = this.firstRoom;
 		Direction last_room_critdir = last_room.critdir;
 		
-		if(last_room_critdir == Direction.NORTH)
+		if(!ToNextLevelGameState.transitionRoom)
 		{
-			last_room.northDoorTile.lock();
-		}
-		else if(last_room_critdir == Direction.SOUTH)
-		{
-			last_room.southDoorTile.lock();
-		}
-		else if(last_room_critdir == Direction.EAST)
-		{
-			last_room.eastDoorTile.lock();
-		}
-		else if(last_room_critdir == Direction.WEST)
-		{
-			last_room.westDoorTile.lock();
+			if(last_room_critdir == Direction.NORTH)
+			{
+				last_room.northDoorTile.lock();
+			}
+			else if(last_room_critdir == Direction.SOUTH)
+			{
+				last_room.southDoorTile.lock();
+			}
+			else if(last_room_critdir == Direction.EAST)
+			{
+				last_room.eastDoorTile.lock();
+			}
+			else if(last_room_critdir == Direction.WEST)
+			{
+				last_room.westDoorTile.lock();
+			}
 		}
 	}
 }

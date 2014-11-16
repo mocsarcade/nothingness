@@ -103,6 +103,7 @@ public abstract class Dungeon
 		this.randomRoomLayouts.add(Game.assets.getRoomLayout("./res/rooms/twolines.room.tmx"));
 		this.specialRoomLayouts.put("first room", Game.assets.getRoomLayout("./res/rooms/empty.room.tmx"));
 		this.specialRoomLayouts.put("last room", Game.assets.getRoomLayout("./res/rooms/clamp.room.tmx"));
+		this.specialRoomLayouts.put("transition room", Game.assets.getRoomLayout("./res/rooms/bucket.room.tmx"));
 		
 		Collections.shuffle(this.randomRoomLayouts);
 		
@@ -281,6 +282,11 @@ public abstract class Dungeon
 	public void setFirstRoom(Room firstRoom)
 	{
 		this.firstRoom = firstRoom;
+	}
+	
+	public void setLastRoom(Room lastRoom)
+	{
+		this.lastRoom = lastRoom;
 	}
 	
 	public Tile getTile(float x, float y)
