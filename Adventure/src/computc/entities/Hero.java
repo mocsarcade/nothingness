@@ -1100,12 +1100,12 @@ public class Hero extends Entity
 	
 	public int getHitboxWidth()
 	{
-		return this.getWidth() - 5;
+		return this.getWidth() - 10;
 	}
 	
 	public int getHitboxHeight()
 	{
-		return this.getHeight() - 5;
+		return this.getHeight() - 7;
 	}
 	
 	private float speed = 0.25f;
