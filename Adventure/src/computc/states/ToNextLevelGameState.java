@@ -17,6 +17,7 @@ import computc.Game;
 import computc.GameData;
 import computc.Menu;
 import computc.cameras.RoomFollowingCamera;
+import computc.entities.Murk;
 
 public class ToNextLevelGameState extends BasicGameState
 {
@@ -26,6 +27,7 @@ public class ToNextLevelGameState extends BasicGameState
 	public RoomFollowingCamera camera;
 	
 	public Animation textBox;
+	public Murk murk;
 	
 	public boolean scoreScreen = true;
 	
@@ -49,6 +51,7 @@ public class ToNextLevelGameState extends BasicGameState
 		
 		this.camera = new RoomFollowingCamera(this.gamedata);
 		this.menu = new Menu(gamedata);
+		this.murk = new Murk(this.gamedata.dungeon, 5, 3);
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException
@@ -63,6 +66,8 @@ public class ToNextLevelGameState extends BasicGameState
 			int monsters_killed = this.gamedata.hero.monsters_killed;
 			
 			this.gamedata.instantiate();
+			
+			Game.assets.lowHealth.stop();
 			
 			this.gamedata.hero.coinage = coinage;
 			this.gamedata.hero.currentHealth = currentHealth;
@@ -87,6 +92,7 @@ public class ToNextLevelGameState extends BasicGameState
 		this.camera.update(input, delta);
 		
 		this.gamedata.dungeon.update(delta, input);
+		this.murk.update(delta);
 		
 		if(this.gamedata.hero.collidesWith(this.gamedata.dungeon.ladder))
 		{
@@ -104,6 +110,8 @@ public class ToNextLevelGameState extends BasicGameState
 				int monsters_killed = this.gamedata.hero.monsters_killed;
 				
 				this.gamedata.instantiate();
+				
+				Game.assets.lowHealth.stop();
 				
 				this.gamedata.hero.coinage = coinage;
 				this.gamedata.hero.currentHealth = currentHealth;
@@ -148,6 +156,7 @@ public class ToNextLevelGameState extends BasicGameState
 		{
 			this.gamedata.dungeon.render(graphics, this.camera);
 			this.gamedata.hero.render(graphics, this.camera);
+			this.murk.render(graphics, this.camera);
 			this.menu.render(graphics, camera);
 		}
 		
