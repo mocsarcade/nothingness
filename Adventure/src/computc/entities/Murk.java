@@ -17,6 +17,8 @@ public class Murk extends Entity
 	
 	protected boolean left;
     protected boolean right;
+    
+    protected boolean freezePosition;
 	
 	public Murk(Dungeon dungeon, int x, int y)
 	{
@@ -49,6 +51,12 @@ public class Murk extends Entity
 			right = true;
 			left = false;
 		}
+		
+		if(this.collidesWith(this.dungeon.gamedata.hero))
+		{
+			freezePosition = true;
+		}
+		else freezePosition = false;
 					
 	}
 	
@@ -65,6 +73,11 @@ public class Murk extends Entity
 				dx = -maximumVelocity;
 			}
 			dx *= delta;
+			
+			if(freezePosition)
+			{
+				dx = 0;
+			}
 		}
 		
 		else if(right) 
@@ -79,15 +92,25 @@ public class Murk extends Entity
 			}
 			
 			dx *= delta;
+			
+			if(freezePosition)
+			{
+				dx = 0;
+			}
 		}
 	}
 	
 	public void render(Graphics graphics, Camera camera)
 	{
-		int x = (int)(this.getX()) - camera.getX();
-		int y = (int)(this.getY()) - camera.getY();
+		int x = (int)(this.getX()) - this.getHalfWidth() - camera.getX();
+		int y = (int)(this.getY()) - this.getHalfHeight() - camera.getY();
 		
 		this.animation.draw(x, y);
+	}
+	
+	public boolean collidesWith(Entity entity)
+	{
+		return this.intersects(entity);
 	}
 	
 }

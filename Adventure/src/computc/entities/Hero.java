@@ -118,7 +118,7 @@ public class Hero extends Entity
 		facingRight = true; 
 		facingDown = true;
 		
-		this.arrowCount = this.maxArrows = 30;
+		this.arrowCount = this.maxArrows = 20;
 		arrows = new ArrayList<Arrow>();
 		
 		this.ballDamage = 2;
