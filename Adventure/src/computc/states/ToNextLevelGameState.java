@@ -37,7 +37,7 @@ public class ToNextLevelGameState extends BasicGameState
 	
 	public static boolean transitionRoom;
 	
-	public static boolean speedBoost, powerArrow, moreArrow, oneHeart;
+	public static boolean speedBoostEnabled, powerArrowEnabled, moreArrow, oneHeart;
 	
 	public LinkedList<Animation> upgrades = new LinkedList<Animation>();
 	
@@ -45,26 +45,36 @@ public class ToNextLevelGameState extends BasicGameState
 	private Image speedBoostIcon = Game.assets.getImage("res/speedBoostSheet.png");
 	private Image powerArrowIcon = Game.assets.getImage("res/powerArrowSheet.png");
 	public Image heartSheet = Game.assets.getImage("res/collectibleHeartSheet.png");
+	private Image coinSheet = Game.assets.getImage("res/coinSpriteSheet.png");
 	private Image groundedHeart = heartSheet.getSubImage(1, 188, 256, 64);
 	
-	private String greeting = "Gimmee Gimmee, something SHINY";
-	private String greeting2 = "I will make it worth your while";
-	private String greeting3 = "speed boost discovered! hold z to use it";
-	private String greeting4 = "power shot discovered!";
+	private String greeting = "Gimmee Gimmee, something SHINY.";
+	private String greeting2 = "It will be worth your while";
+	private String greeting3 = "speed boost discovered! hold z to move swiftly";
+	private String greeting4 = "power shot discovered! hold n to charge a power shot";
 	private String greeting5 = "quiver size upgraded!";
 	private String greeting6 = "health increased!";
 	
 	public Image screen = Game.assets.getImage("./res/textScreens/Floor-Cleared.png");
 	public Image blackScreen = Game.assets.getImage("./res/textScreens/Main-Menu-1.png");
 	
-	private Animation speedy, arrowPower, heartSpin, arrows;
+	private Animation speedy, arrowPower, heartSpin, arrows, coin;
+	
+	// filters for the flashing charge animation
+	private Color myFilter;
+	private float redFilter = 1f, greenFilter = 1f, blueFilter = 1f;
+	private boolean filterSwitch;
 	
 	private int cursor = 0;
 	private int cursor_time = 0;
 	private int screenTimer = 0;
 	private int talkTimer = 0;
 	
+	private boolean purchaseMade;
+	private boolean coinTransfer = false;
+	
 	private float counter, counter2, counter3, counter4, counter5;
+	private float coinPositionX, coinPositionY;
 
 	public ToNextLevelGameState(GameData gamedata)
 	{
@@ -83,6 +93,7 @@ public class ToNextLevelGameState extends BasicGameState
 		speedy = new Animation(new SpriteSheet(speedBoostIcon, 64, 64), 100);
 		arrowPower = new Animation(new SpriteSheet(powerArrowIcon, 64, 64), 100);
 		heartSpin = new Animation(new SpriteSheet(groundedHeart, 64 ,64), 100);
+		coin = new Animation(new SpriteSheet(coinSheet, 64, 64), 200);
 		
 		this.menu = new Menu(gamedata);
 		this.murk = new Murk(this.gamedata.dungeon, 5, 3);
@@ -99,6 +110,8 @@ public class ToNextLevelGameState extends BasicGameState
 			int arrowCount = this.gamedata.hero.arrowCount;
 			int monsters_killed = this.gamedata.hero.monsters_killed;
 			
+			transitionRoom = true;
+			
 			this.gamedata.instantiate();
 			
 			Game.assets.lowHealth.stop();
@@ -109,10 +122,8 @@ public class ToNextLevelGameState extends BasicGameState
 			this.gamedata.hero.monsters_killed = monsters_killed;
 			
 			//will someone just think of the children?
-			
-			transitionRoom = true;
+		
 		 	scoreScreen = false;
-			
 			
 //			game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 1000));
 		}
@@ -133,6 +144,8 @@ public class ToNextLevelGameState extends BasicGameState
 		if(this.gamedata.hero.collidesWith(this.gamedata.dungeon.ladder))
 		{
 			transitionRoom = false;
+			purchaseMade = false;
+			coinTransfer = false;
 			
 			System.out.println(this.gamedata.level);
 			
@@ -157,20 +170,102 @@ public class ToNextLevelGameState extends BasicGameState
 		
 		if(this.gamedata.hero.collidesWith(this.murk))
 		{
-			talkTimer = 3000;
+			talkTimer = 2000;
 		}
 		
 		if(talkTimer > 0)
 		{
-			if((int)(counter) < greeting.length() || talkTimer > 1000)
+			if((int)(counter) < greeting.length())
 			{
-				counter += delta * 0.025;
+				counter += delta * 0.015;
 			}
-			else 
+			else if(counter > greeting.length() + 1500)
 			{
-				counter2 += delta * 0.025;
+				counter2 += delta * 0.015;
+			}
+			
+			if(purchaseMade && speedBoostEnabled)
+			{
+				counter3 += delta * 0.025;
+			}
+			
+			if(purchaseMade && powerArrowEnabled)
+			{
+				counter4 += delta * 0.025;
 			}
 		}
+		
+		for(int i = 0; i < upgrades.size(); i++)
+		{
+			if((input.isKeyDown(Input.KEY_SPACE) || input.isKeyDown(Input.KEY_ENTER)) && this.gamedata.hero.coinage > 0 && !upgrades.get(i).isStopped() && !purchaseMade && talkTimer > 0)
+			{
+				if(cursor == i && upgrades.get(i) == speedy)
+				{
+					System.out.println("the hero's speed has been upgraded! Yay!");
+					speedBoostEnabled = true;
+				}
+				else if(cursor == i && upgrades.get(i) == arrowPower)
+				{
+					System.out.println("the hero's powerArrow should be available");
+					powerArrowEnabled = true;
+				}
+				else if(cursor == i && upgrades.get(i) == arrows)
+				{
+					System.out.println("the hero's quiver count has been upgraded! Yay!");
+					moreArrow = true;
+					this.gamedata.hero.incrementArrows();
+				}
+				else if(cursor == i && upgrades.get(i) == heartSpin)
+				{
+					System.out.println("the hero's health should increase by a heart");
+					oneHeart = true;
+					this.gamedata.hero.incrementHealth();
+				}
+				purchaseMade = true;
+				upgrades.remove(i);
+				this.gamedata.hero.coinage -= 1;
+			}
+			
+			if(cursor == i && upgrades.get(i) == arrowPower)
+			{
+				setFlashing();
+			}
+			
+			// moving the coins to the NPC's position
+			if(purchaseMade)
+			{
+				if(coinPositionX > this.murk.getX())
+				{
+					coinPositionX -= delta * .01;
+				}
+				else if(coinPositionX < this.murk.getX())
+				{
+					coinPositionX += delta * .01;
+				}
+				
+				if(coinPositionY > this.murk.getY())
+				{
+					coinPositionY -= delta * .01;
+				}
+				else if(coinPositionY < this.murk.getY())
+				{
+					coinPositionY += delta * .01;
+				}
+			}
+			else
+			{
+				coinPositionX = this.gamedata.hero.getX();
+				coinPositionY = this.gamedata.hero.getY();
+			}
+			
+			if((int)coinPositionX == (int) this.murk.getX() && (int)coinPositionY == (int) this.murk.getY() && !coinTransfer && purchaseMade)
+			{
+				coinTransfer = true;
+				Game.assets.playSoundEffectWithoutRepeat("coinPickup");
+			}
+		}
+		
+		myFilter = new Color(redFilter, greenFilter, blueFilter);
 		
 		if(screenTimer > 0)
 		{
@@ -181,7 +276,9 @@ public class ToNextLevelGameState extends BasicGameState
 		{
 			talkTimer -= delta;
 		}
-
+		
+		if(counter >= greeting.length())
+			counter += delta;
 	}
 	
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
@@ -225,24 +322,32 @@ public class ToNextLevelGameState extends BasicGameState
 			
 			int xCoord = (int) (Room.WIDTH/11 + 12);
 			int yCoord = (int) (Room.HEIGHT/11 + 12);
-			int xCoord2 = (int) (Room.WIDTH/11 + 12);
-			int yCoord2 = (int) (Room.HEIGHT/11 + 32);
+			int xCoord2 = (int) (Room.WIDTH/11 + 312);
+			int yCoord2 = (int) (Room.HEIGHT/11 + 12);
 			
 			String greeting2temp = greeting2;
 			graphics.setColor(Color.white);
 			
+			if(!purchaseMade)
+			{
 			graphics.drawString(greeting.substring(0, (int)(Math.min(counter, greeting.length()))), xCoord, yCoord);
 			graphics.drawString(greeting2temp.substring(0, (int)(Math.min(counter2, greeting2temp.length()))), xCoord2, yCoord2);
-			
-			
-//			String greeting4temp = greeting4; 
-//				graphics.drawString(greeting3.substring(0, (int)(Math.min(counter3, greeting3.length()))), xCoord, yCoord);
-//				graphics.drawString(greeting4temp.substring(0, (int)(Math.min(counter4, greeting4temp.length()))), xCoord2, yCoord2);
-//				graphics.drawString(greeting5.substring(0, (int)(Math.min(counter5, greeting5.length()))), xCoord2, yCoord2 + 20);
-			
+			}
+			else if(purchaseMade)
+			{
+				if(speedBoostEnabled)
+				{
+				graphics.drawString(greeting3.substring(0, (int)(Math.min(counter3, greeting3.length()))), xCoord, yCoord);
+				}
+				
+				if(powerArrowEnabled)
+				{
+				graphics.drawString(greeting4.substring(0, (int)(Math.min(counter4, greeting4.length()))), xCoord2 - 300, yCoord2 + 20);
+				}	
+			}			
 		}
 		
-		if(this.gamedata.hero.getArrowPowerUp() > 2000 && this.gamedata.hero.arrowCount != 0)
+		if(this.gamedata.hero.getArrowPowerUp() > 2000 && this.gamedata.hero.arrowCount != 0 && powerArrowEnabled)
 		{
 			if(this.gamedata.hero.getArrowCooldown() <= 0)
 			{
@@ -262,11 +367,16 @@ public class ToNextLevelGameState extends BasicGameState
 			}
 		}
 		
-		if(talkTimer > 0)
+		if(talkTimer > 0 && this.gamedata.hero.coinage > 0 && !purchaseMade)
 		{
 			for(int i = 0; i < upgrades.size(); i++)
 			{
-				upgrades.get(i).draw( 100 +(i * 150), 80);
+				
+				if(upgrades.get(i) == arrowPower)
+				{
+					upgrades.get(i).draw( 100 +(i * 150), 80, myFilter);
+				}
+				else upgrades.get(i).draw( 100 +(i * 150), 80);
 				
 				if(cursor != i)
 				{
@@ -291,18 +401,23 @@ public class ToNextLevelGameState extends BasicGameState
 			}
 		}
 		
+		// draw the coin being transferred
+		if(purchaseMade && !coinTransfer)
+		{
+		coin.draw(coinPositionX - camera.getX() - this.gamedata.hero.getWidth(), coinPositionY - camera.getY() - this.gamedata.hero.getHeight());
+		}
 	}
 	
 	public void enter(GameContainer container, StateBasedGame game)
 	{
 		upgrades.clear();
 		
-		if(!speedBoost)
+		if(!speedBoostEnabled)
 		{
 			upgrades.add(speedy);
 		}
 		
-		if(!powerArrow)
+		if(!powerArrowEnabled)
 		{
 			upgrades.add(arrowPower);
 		}
@@ -314,7 +429,33 @@ public class ToNextLevelGameState extends BasicGameState
 		
 		upgrades.add(heartSpin);
 		
-
+		coinPositionX = this.gamedata.hero.getX();
+		coinPositionY = this.gamedata.hero.getY();
+	}
+	
+	public void setFlashing()
+	{
+		if(!filterSwitch)
+		{
+			this.greenFilter -= .1f;
+			this.blueFilter -= .1f;
+			
+			if(greenFilter < .2f || blueFilter < .2f)
+			{
+				filterSwitch = true;
+			}
+		}
+		
+		if(filterSwitch)
+		{
+			this.greenFilter += .1f;
+			this.blueFilter += .1f;
+			
+			if(this.greenFilter > .9f || this.blueFilter > .9f)
+			{
+				filterSwitch = false;
+			}
+		}
 	}
 	
 	public int getID()
@@ -329,15 +470,17 @@ public class ToNextLevelGameState extends BasicGameState
 			this.gamedata.hero.setSwinging();
 		}
 		
-		if(k == Input.KEY_A || k == Input.KEY_LEFT)
+		if(k == Input.KEY_A || k == Input.KEY_LEFT && this.gamedata.hero.coinage > 0 && talkTimer > 0)
 			{
+			Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
 				this.cursor  -= 1;
 				if(this.cursor < 0)
 					this.cursor = 0;
 			}
 			
-			if(k == Input.KEY_D || k == Input.KEY_RIGHT)
+			if(k == Input.KEY_D || k == Input.KEY_RIGHT && this.gamedata.hero.coinage > 0 && talkTimer > 0)
 			{
+				Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
 				this.cursor += 1;
 				if(this.cursor > 3)
 					this.cursor = 3;
@@ -362,7 +505,7 @@ public class ToNextLevelGameState extends BasicGameState
 					this.gamedata.hero.arrows.add(arrow);
 					this.gamedata.hero.startArrowCooldown();
 					
-					if(this.gamedata.hero.getArrowPowerUp() > 2000)
+					if(this.gamedata.hero.getArrowPowerUp() > 2000 && powerArrowEnabled)
 					{
 						arrow.setPowerCharge();
 					}

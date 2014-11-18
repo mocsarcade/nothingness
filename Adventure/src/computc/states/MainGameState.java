@@ -208,7 +208,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.hero.render(graphics, this.camera);
 		this.menu.render(graphics, camera);
 		
-		if(this.gamedata.hero.getArrowPowerUp() > 2000 && this.gamedata.hero.arrowCount != 0)
+		if(this.gamedata.hero.getArrowPowerUp() > 2000 && this.gamedata.hero.arrowCount != 0 && ToNextLevelGameState.powerArrowEnabled)
 		{
 			if(this.gamedata.hero.getArrowCooldown() <= 0)
 			{
@@ -284,7 +284,7 @@ public class MainGameState extends BasicGameState
 					this.gamedata.hero.arrows.add(arrow);
 					this.gamedata.hero.startArrowCooldown();
 					
-					if(this.gamedata.hero.getArrowPowerUp() > 2000)
+					if(this.gamedata.hero.getArrowPowerUp() > 2000 && ToNextLevelGameState.powerArrowEnabled)
 					{
 						arrow.setPowerCharge();
 					}

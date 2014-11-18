@@ -18,6 +18,7 @@ import org.newdawn.slick.geom.Vector2f;
 import computc.cameras.Camera;
 import computc.Direction;
 import computc.Game;
+import computc.states.ToNextLevelGameState;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.rooms.Room;
 import computc.worlds.tiles.Tile;
@@ -119,6 +120,12 @@ public class Hero extends Entity
 		facingDown = true;
 		
 		this.arrowCount = this.maxArrows = 20;
+		
+		if(ToNextLevelGameState.moreArrow)
+		{
+			this.maxArrows = 30;
+		}
+		
 		arrows = new ArrayList<Arrow>();
 		
 		this.ballDamage = 2;
@@ -399,13 +406,13 @@ public class Hero extends Entity
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
-		if(input.isKeyDown(Input.KEY_Z))
+		if(input.isKeyDown(Input.KEY_Z) && ToNextLevelGameState.speedBoostEnabled)
 		{
 			maximumVelocity = 4f;
 		}
 		else
 		{
-			maximumVelocity = 2f;
+			maximumVelocity = 2.3f;
 		}
 		
 		// Check if the melee attack has stopped
@@ -494,17 +501,11 @@ public class Hero extends Entity
 					{
 					arrows.get(i).setRemove();
 					this.arrowCount += 1;
+					Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
 					}
 				}
 				
 				arrows.get(i).update(delta);
-				
-				if(this.intersects(arrows.get(i)) && arrows.get(i).getArrowCooldown() > 0)
-				{
-					arrows.get(i).setRemove();
-					this.arrowCount += 1;
-					Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
-				}
 				
 				if(arrows.get(i).shouldRemove()) 
 				{
@@ -1096,6 +1097,17 @@ public class Hero extends Entity
 			this.direction = Direction.EAST;
 		}
 		else this.direction = Direction.WEST;
+	}
+	
+	public void incrementHealth()
+	{
+		this.currentHealth += 1;
+	}
+	
+	public void incrementArrows()
+	{
+		this.maxArrows += 10;
+		this.arrowCount += 10;
 	}
 	
 	public int getHitboxWidth()
