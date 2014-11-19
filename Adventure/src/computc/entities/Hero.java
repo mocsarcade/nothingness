@@ -94,7 +94,7 @@ public class Hero extends Entity
 	// actions 
 	private Animation sprite, firingArrow, firingArrowRight, firingArrowLeft, firingArrowUp, firingArrowDown, meleeSwing, meleeRight, meleeLeft, meleeUp, meleeDown, idle, idleDown, idleUp, idleRight, idleLeft, walkingLeft, walkingDown, walkingUp, walkingRight;
 
-	public int coinage;
+	public int coinage = 1;
 
 	private boolean hasKey;
 	

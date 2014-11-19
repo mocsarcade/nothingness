@@ -96,7 +96,7 @@ public class ToNextLevelGameState extends BasicGameState
 		coin = new Animation(new SpriteSheet(coinSheet, 64, 64), 200);
 		
 		this.menu = new Menu(gamedata);
-		this.murk = new Murk(this.gamedata.dungeon, 5, 3);
+		this.murk = new Murk(this.gamedata.dungeon, 5, 6);
 	}
 	
 	public void update(GameContainer container, StateBasedGame game, int delta) throws SlickException

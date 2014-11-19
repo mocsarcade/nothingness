@@ -2,6 +2,7 @@ package computc.entities;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SpriteSheet;
 
 import computc.Direction;
@@ -13,12 +14,17 @@ import computc.worlds.rooms.Room;
 public class Murk extends Entity
 {
 
-	private Animation animation, sprite, walkingRight, walkingLeft;
+	private Animation  sprite, walkingRight, walkingLeft, idleDown;
 	
 	protected boolean left;
     protected boolean right;
     
     protected boolean freezePosition;
+    
+    private Image spriteSheet = Game.assets.getImage("res/Murk.png");
+    private Image walkRight = spriteSheet.getSubImage(1, 1, 390, 90);
+    private Image walkLeft = spriteSheet.getSubImage(65, 91, 390, 90);
+    private Image idle	= spriteSheet.getSubImage(1, 181, 65, 90);
 	
 	public Murk(Dungeon dungeon, int x, int y)
 	{
@@ -26,10 +32,13 @@ public class Murk extends Entity
 		
 		this.acceleration = 0.03f;
 		this.deacceleration = 0.001f;
-		this.maximumVelocity = 0.03f;
+		this.maximumVelocity = 0.04f;
 		
-		this.image = Game.assets.getImage("res/ancient.png").getSubImage(1, 1, 240, 104);
-		this.animation =  new Animation(new SpriteSheet(this.image, 60, 104), 300);
+		this.image = idle;
+
+		this.walkingRight =  new Animation(new SpriteSheet(walkRight, 65, 90), 250);
+		this.walkingLeft = new Animation(new SpriteSheet(walkLeft, 65, 90), 250);
+		this.idleDown = new Animation(new SpriteSheet(idle, 65, 90), 1000);
 		
 		right = true;
 	}
@@ -57,6 +66,11 @@ public class Murk extends Entity
 			freezePosition = true;
 		}
 		else freezePosition = false;
+		
+		if(freezePosition)
+		{
+			this.direction = Direction.SOUTH;
+		}
 					
 	}
 	
@@ -105,7 +119,15 @@ public class Murk extends Entity
 		int x = (int)(this.getX()) - this.getHalfWidth() - camera.getX();
 		int y = (int)(this.getY()) - this.getHalfHeight() - camera.getY();
 		
-		this.animation.draw(x, y);
+		if(this.direction == Direction.EAST)
+		{
+			walkingRight.draw(x, y);
+		}
+		else if (this.direction == Direction.WEST)
+		{
+			walkingLeft.draw(x, y);
+		}
+		else idle.draw(x, y);
 	}
 	
 	public boolean collidesWith(Entity entity)
