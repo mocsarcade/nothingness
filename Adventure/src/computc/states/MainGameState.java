@@ -106,6 +106,9 @@ public class MainGameState extends BasicGameState
 			
 			if(Game.difficulty.equals("HARD"))
 			{
+				ToNextLevelGameState.speedBoostEnabled = false;
+				ToNextLevelGameState.powerArrowEnabled = false;
+				ToNextLevelGameState.moreArrow = false;
 				this.gamedata.level = 0;
 			}
 			

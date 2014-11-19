@@ -203,11 +203,13 @@ public class ToNextLevelGameState extends BasicGameState
 				{
 					System.out.println("the hero's speed has been upgraded! Yay!");
 					speedBoostEnabled = true;
+					upgrades.remove(i);
 				}
 				else if(cursor == i && upgrades.get(i) == arrowPower)
 				{
 					System.out.println("the hero's powerArrow should be available");
 					powerArrowEnabled = true;
+					upgrades.remove(i);
 				}
 				else if(cursor == i && upgrades.get(i) == arrows)
 				{
@@ -222,7 +224,6 @@ public class ToNextLevelGameState extends BasicGameState
 					this.gamedata.hero.incrementHealth();
 				}
 				purchaseMade = true;
-				upgrades.remove(i);
 				this.gamedata.hero.coinage -= 1;
 			}
 			
