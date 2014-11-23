@@ -27,7 +27,7 @@ public class TitleScreen extends BasicGameState
 	public int cursor = 0;
 	public int cursor_time = 0;
 	public int logoTimer;
-	public int logoStop = 5000;
+	public int logoStop = 4500;
 	
 	private Image splashScreen = Game.assets.getImage("res/textScreens/splashScreen.png");
 

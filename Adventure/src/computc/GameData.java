@@ -3,6 +3,7 @@ package computc;
 import org.newdawn.slick.SlickException;
 
 import computc.entities.Hero;
+import computc.states.ToNextLevelGameState;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.dungeons.DungeonException;
 import computc.worlds.dungeons.FiveRoomDungeon;
@@ -37,9 +38,9 @@ public class GameData
 		{
 			try
 			{
-				if(level < 0)
+				if(level < 0 || ToNextLevelGameState.transitionRoom)
 				{
-					this.dungeon = new OneRoomDungeon(this, "./res/tilesets/dirty.tileset.xml");
+					this.dungeon = new OneRoomDungeon(this, this.getTileset());
 				}
 				else
 				{
@@ -62,6 +63,6 @@ public class GameData
 	
 	public String getTileset()
 	{
-		return this.tilesets[this.level % this.tilesets.length];
+		return this.tilesets[Math.abs(this.level % this.tilesets.length)];
 	}
 }

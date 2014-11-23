@@ -44,6 +44,7 @@ public class MainGameState extends BasicGameState
 	public RoomFollowingCamera camera;
 	
 	private int gravityCoolDown; //chain
+	private int deathTimer;
 	
 	public MainGameState(GameData gamedata)
 	{
@@ -51,6 +52,7 @@ public class MainGameState extends BasicGameState
 	}
 	
 	private Animation textBox;
+	private Graphics graphics;
 	
 	public void enter(GameContainer container, StateBasedGame game)
 	{
@@ -95,12 +97,31 @@ public class MainGameState extends BasicGameState
 		
 		if(this.gamedata.hero.isDead())
 		{
+			if(deathTimer <= 0)
+			{		
+			deathTimer = 2000;
+			}
+			
+			this.gamedata.hero.setFlashing();
+			
 			if(Game.difficulty.equals("HARD"))
 			{
+				ToNextLevelGameState.speedBoostEnabled = false;
+				ToNextLevelGameState.powerArrowEnabled = false;
+				ToNextLevelGameState.moreArrow = false;
 				this.gamedata.level = 0;
 			}
 			
+			if(deathTimer <= 1000 )
+			{
+				this.gamedata.dungeon.setDebugDraw(this.graphics);
+			}
+			
+			if(deathTimer <= 100)
+			{
 			game.enterState(YouDiedGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
+			this.gamedata.dungeon.setNormalDraw(this.graphics);
+			}
 		}
 		
 		//  makes the chain movement less floaty
@@ -136,6 +157,11 @@ public class MainGameState extends BasicGameState
 			gravityCoolDown--;
 		}
 		
+		if(deathTimer > 0)
+		{
+			deathTimer -= delta;
+		}
+		
 		// sets the camera to peek into adjacent rooms
 		if(this.gamedata.hero.getPeekTimer() > 850)
 		{
@@ -151,6 +177,20 @@ public class MainGameState extends BasicGameState
 			{
 				Game.assets.fadeMusicOut();
 				Game.assets.playSoundEffectWithoutRepeat("levelComplete");
+				ToNextLevelGameState.transitionRoom = true;
+				
+				int coinage = this.gamedata.hero.coinage;
+				int currentHealth = this.gamedata.hero.currentHealth;
+				int arrowCount = this.gamedata.hero.arrowCount;
+				int monsters_killed = this.gamedata.hero.monsters_killed;
+				
+				this.gamedata.instantiate();
+				
+				this.gamedata.hero.coinage = coinage;
+				this.gamedata.hero.currentHealth = currentHealth;
+				this.gamedata.hero.arrowCount = arrowCount;
+				this.gamedata.hero.monsters_killed = monsters_killed;
+				
 				game.enterState(ToNextLevelGameState.ID, new FadeOutTransition(Color.black, 250), new FadeInTransition(Color.black, 1000));
 				
 				Game.assets.fadeMusicIn();
@@ -165,14 +205,13 @@ public class MainGameState extends BasicGameState
 	public void render(GameContainer container, StateBasedGame game, Graphics graphics) throws SlickException
 	{
 		Input input = container.getInput();
+		this.graphics = graphics;
 		
 		this.gamedata.dungeon.render(graphics, this.camera);
 		this.gamedata.hero.render(graphics, this.camera);
 		this.menu.render(graphics, camera);
 		
-		
-		
-		if(this.gamedata.hero.getArrowPowerUp() > 2000 && this.gamedata.hero.arrowCount != 0)
+		if(this.gamedata.hero.getArrowPowerUp() > 2000 && this.gamedata.hero.arrowCount != 0 && ToNextLevelGameState.powerArrowEnabled)
 		{
 			if(this.gamedata.hero.getArrowCooldown() <= 0)
 			{
@@ -191,7 +230,6 @@ public class MainGameState extends BasicGameState
 				}
 			}
 		}
-
 	}
 	
 	@Override
@@ -249,7 +287,7 @@ public class MainGameState extends BasicGameState
 					this.gamedata.hero.arrows.add(arrow);
 					this.gamedata.hero.startArrowCooldown();
 					
-					if(this.gamedata.hero.getArrowPowerUp() > 2000)
+					if(this.gamedata.hero.getArrowPowerUp() > 2000 && ToNextLevelGameState.powerArrowEnabled)
 					{
 						arrow.setPowerCharge();
 					}
