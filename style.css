@@ -10,7 +10,7 @@ html
 	font-family: open-sans, arial, sans-serif;
 	
 	background-color: #222;
-	background-image: url("/images/background.png");
+	background-image: url("images/background.png");
 }
 
 body
