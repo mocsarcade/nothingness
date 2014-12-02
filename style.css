@@ -20,6 +20,30 @@ body
 	text-align: center;
 }
 
+div
+{
+	margin-bottom: 1rem;
+}
+
+#download h3
+{
+    margin-top: 1rem;
+    
+    font-size: 1.25rem;
+    font-weight: normal;
+}
+
+#title img
+{
+    width: 100%;
+}
+
+#screenshots img
+{
+    float: left;
+	width: 33.32%;
+}
+
 a
 {
 	font: inherit;
@@ -28,18 +52,10 @@ a
 	text-decoration: none;
 }
 
-img
-{
-	width: 100%;
-	margin-bottom: 1rem;
-}
-
 p
 {
 	text-indent: 2rem;
 	text-align: justify;
-	
-	margin-bottom: 1rem;
 }
 
 button
@@ -47,7 +63,6 @@ button
 	font: inherit;
 	
 	padding: 0.75rem;
-	margin-bottom: 1rem;
 	
 	border: none;
 	border-radius: 0.75rem;
