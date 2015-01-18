@@ -1,37 +1,37 @@
 {
-    name: "Nothingness",
-    version: "v0.4.5",
-    developers: [
+    "name": "Nothingness",
+    "version": "v0.4.5",
+    "developers": [
         {
-            name: "Andrew McPherson",
-            github: "arcym",
-            utcid: "psn719"
+            "name": "Andrew McPherson",
+            "github": "arcym",
+            "utcid": "psn719"
         },
         {
-            name: "Joey Shiraef",
-            github: "jshiraef",
-            utcid: "psx385"
+            "name": "Joey Shiraef",
+            "github": "jshiraef",
+            "utcid": "psx385"
         },
         {
-            name: "Ericka Roberts",
-            github: "eroberts13",
-            utcid: "pvg639"
+            "name": "Ericka Roberts",
+            "github": "eroberts13",
+            "utcid": "pvg639"
         },
         {
-            name: "Caleb Moore",
-            utcid: "bkm845"
+            "name": "Caleb Moore",
+            "utcid": "bkm845"
         },
         {
-            name: "Forrest Pruitt",
-            github: "fpruitt",
-            utcid: "vkb332"
+            "name": "Forrest Pruitt",
+            "github": "fpruitt",
+            "utcid": "vkb332"
         }
     ],
-    tools: [
+    "tools": [
         "java",
         "slick",
         "lwjgl",
         "tiled"
     ],
-    blurb: "A top-down dungeon-crawling adventure game inspired by the Legend of Zelda from the NES. It features five procedurally generated dungeons with randomly distributed treasure and enemies. The game was developed by a team of six students in the course of eight weeks. Fight monsters, manage your resources, and escape from the nothingness!",
+    "blurb": "A top-down dungeon-crawling adventure game inspired by the Legend of Zelda from the NES. It features five procedurally generated dungeons with randomly distributed treasure and enemies. The game was developed by a team of six students in the course of eight weeks. Fight monsters, manage your resources, and escape from the nothingness!",
 }
