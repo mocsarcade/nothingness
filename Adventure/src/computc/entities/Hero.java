@@ -1,8 +1,10 @@
 
 package computc.entities;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Properties;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.World;
@@ -18,6 +20,7 @@ import org.newdawn.slick.geom.Vector2f;
 import computc.cameras.Camera;
 import computc.Direction;
 import computc.Game;
+import computc.Utility;
 import computc.states.ToNextLevelGameState;
 import computc.worlds.dungeons.Dungeon;
 import computc.worlds.rooms.Room;
@@ -42,7 +45,6 @@ public class Hero extends Entity
 	 
 	private final Vec2 gravity = new Vec2(0, .5f);
 	private Vec2 box2dPlayerPosition;
-	 
 	 
 	public Chain chain;
 	private ChainEnd ball;
@@ -406,7 +408,7 @@ public class Hero extends Entity
 		checkTileMapCollision();
 		setPosition(xtemp, ytemp);
 		
-		if(input.isKeyDown(Input.KEY_Z) && ToNextLevelGameState.speedBoostEnabled)
+		if(input.isKeyDown(computc.Utility.getKey("run")) && ToNextLevelGameState.speedBoostEnabled)
 		{
 			maximumVelocity = 4f;
 		}
@@ -437,13 +439,13 @@ public class Hero extends Entity
 		{
 			firingArrow.setLooping(false);
 			
-			if(firingArrow.getFrame() >= 2 && input.isKeyDown(Input.KEY_N))
+			if(firingArrow.getFrame() >= 2 && input.isKeyDown(computc.Utility.getKey("arrow")))
 			{
 				firingArrow.stopAt(2);
 				freezePosition = true;
 			}
 			
-			if(!(input.isKeyDown(Input.KEY_N)))
+			if(!(input.isKeyDown(computc.Utility.getKey("arrow"))))
 			{
 				firingArrow.setCurrentFrame(3);
 			}
@@ -587,7 +589,7 @@ public class Hero extends Entity
 	private void getNextPosition(Input input, int delta)
 	{
 	
-		if(input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
+		if(input.isKeyDown(computc.Utility.getKey("up")))
 		{
 			dy -= acceleration * delta;
 			if(dy < -maximumVelocity)
@@ -600,7 +602,7 @@ public class Hero extends Entity
 				dy = 0;
 			}
 		}
-		else if(input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))
+		else if(input.isKeyDown(computc.Utility.getKey("down")))
 		{
 			dy += acceleration * delta;
 			
@@ -635,7 +637,7 @@ public class Hero extends Entity
 			}
 		}
 
-		 if(input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))
+		 if(input.isKeyDown(computc.Utility.getKey("right")))
 		{
 			dx += acceleration * delta;
 			if(dx > maximumVelocity) 
@@ -649,7 +651,7 @@ public class Hero extends Entity
 			}
 			
 		}
-		 else if(input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A)) 
+		 else if(input.isKeyDown(computc.Utility.getKey("left"))) 
 		{
 			dx -= acceleration * delta;
 			if(dx < -maximumVelocity)
@@ -684,7 +686,7 @@ public class Hero extends Entity
 		
 //		float step = this.moveSpeed * delta;
 		
-			if(input.isKeyDown(Input.KEY_UP) || input.isKeyDown(Input.KEY_W))
+			if(input.isKeyDown(computc.Utility.getKey("up")))
 				{
 				sprite = walkingUp;
 				this.direction = Direction.NORTH;
@@ -700,7 +702,7 @@ public class Hero extends Entity
 					else peekTimer = 0;
 //				this.y -= step;
 				}
-			else if(input.isKeyDown(Input.KEY_DOWN) || input.isKeyDown(Input.KEY_S))
+			else if(input.isKeyDown(computc.Utility.getKey("down")))
 				{
 				sprite = walkingDown;
 				this.direction = Direction.SOUTH;
@@ -718,7 +720,7 @@ public class Hero extends Entity
 				}
 			
 		
-			if(input.isKeyDown(Input.KEY_LEFT) || input.isKeyDown(Input.KEY_A))
+			if(input.isKeyDown(computc.Utility.getKey("left")))
 				{
 				sprite = walkingLeft;
 				this.direction = Direction.WEST;
@@ -734,7 +736,7 @@ public class Hero extends Entity
 					}
 					else peekTimer = 0;
 				}
-			else if(input.isKeyDown(Input.KEY_RIGHT) || input.isKeyDown(Input.KEY_D))
+			else if(input.isKeyDown(computc.Utility.getKey("right")))
 				{
 				sprite = walkingRight;
 				this.direction = Direction.EAST;
@@ -752,13 +754,12 @@ public class Hero extends Entity
 
 				}
 			
-			if(!(input.isKeyDown(Input.KEY_UP)) && !(input.isKeyDown(Input.KEY_DOWN))  && !(input.isKeyDown(Input.KEY_RIGHT)) && !(input.isKeyDown(Input.KEY_LEFT))
-			&& !(input.isKeyDown(Input.KEY_W)) && !(input.isKeyDown(Input.KEY_S)) && !(input.isKeyDown(Input.KEY_A)) && !(input.isKeyDown(Input.KEY_D)))
+			if(!(input.isKeyDown(computc.Utility.getKey("up"))) && !(input.isKeyDown(computc.Utility.getKey("down")))  && !(input.isKeyDown(computc.Utility.getKey("right"))) && !(input.isKeyDown(computc.Utility.getKey("west"))))
 			{
 				sprite = idle;
 			}
 			
-			if(input.isKeyDown(Input.KEY_N) || this.arrowCooldown > 500)
+			if(input.isKeyDown(computc.Utility.getKey("arrow")) || this.arrowCooldown > 500)
 			{
 				firing = true;
 				
@@ -767,8 +768,7 @@ public class Hero extends Entity
 			
 			else firing = false;
 			
-			if(!(input.isKeyDown(Input.KEY_UP)) && !(input.isKeyDown(Input.KEY_DOWN))  && !(input.isKeyDown(Input.KEY_RIGHT)) && !(input.isKeyDown(Input.KEY_LEFT))
-			&& !(input.isKeyDown(Input.KEY_W)) && !(input.isKeyDown(Input.KEY_S)) && !(input.isKeyDown(Input.KEY_A)) && !(input.isKeyDown(Input.KEY_D)))
+			if(!(input.isKeyDown(computc.Utility.getKey("up"))) && !(input.isKeyDown(computc.Utility.getKey("down")))  && !(input.isKeyDown(computc.Utility.getKey("right"))) && !(input.isKeyDown(computc.Utility.getKey("left"))))
 			{
 				sprite = idle;
 			}

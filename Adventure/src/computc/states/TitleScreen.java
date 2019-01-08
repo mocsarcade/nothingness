@@ -153,7 +153,7 @@ public class TitleScreen extends BasicGameState
 	
 	public void keyPressed(int keycode, char character)
 	{
-		if(keycode == Input.KEY_W || keycode == Input.KEY_UP)
+		if(keycode == computc.Utility.getKey("up"))
 		{
 			Game.assets.playSoundEffectWithoutRepeat("menuNavigate");
 			this.cursor -= 1;
@@ -161,7 +161,7 @@ public class TitleScreen extends BasicGameState
 				this.cursor = 0;
 		}
 		
-		if(keycode == Input.KEY_S || keycode == Input.KEY_DOWN)
+		if(keycode == computc.Utility.getKey("down"))
 		{
 			Game.assets.playSoundEffectWithoutRepeat("menuNavigate");
 			this.cursor += 1;

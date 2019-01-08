@@ -1,12 +1,11 @@
 
 package computc.states;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.io.FileInputStream;
+import java.util.Properties;
 
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
-import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -19,22 +18,14 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 import org.newdawn.slick.state.transition.FadeInTransition;
 import org.newdawn.slick.state.transition.FadeOutTransition;
-import org.newdawn.slick.state.transition.RotateTransition;
 
 import computc.Game;
 import computc.GameData;
 import computc.Menu;
-import computc.cameras.Camera;
 import computc.cameras.RoomFollowingCamera;
 import computc.entities.Arrow;
-import computc.entities.Chain;
 import computc.entities.Coin;
-import computc.entities.Hero;
-import computc.entities.Key;
-import computc.entities.OldMan;
-import computc.worlds.dungeons.Dungeon;
-import computc.worlds.rooms.Room;
-import computc.worlds.tiles.Tile;
+import computc.Utility;
 
 public class MainGameState extends BasicGameState
 {
@@ -84,7 +75,7 @@ public class MainGameState extends BasicGameState
 		this.gamedata.hero.checkAttack(this.gamedata.dungeon.getAllEnemies(), delta);
 		this.gamedata.hero.checkPickup(this.gamedata.dungeon.commodities, this.gamedata.dungeon.keys);
 		
-		if(input.isKeyDown(Input.KEY_M))
+		if(input.isKeyDown(computc.Utility.getKey("map")))
 		{
 			game.enterState(DungeonMapGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));
 			Game.assets.playSoundEffectWithoutRepeat("openMap");
@@ -125,21 +116,21 @@ public class MainGameState extends BasicGameState
 		}
 		
 		//  makes the chain movement less floaty
-		if(input.isKeyDown(Input.KEY_UP))
+		if(input.isKeyDown(computc.Utility.getKey("up")))
 		{
 			this.gamedata.hero.getWorld().setGravity(new Vec2(0, 1f));
 			
 		}
-		else if(input.isKeyDown(Input.KEY_DOWN))
+		else if(input.isKeyDown(computc.Utility.getKey("down")))
 		{
 			this.gamedata.hero.getWorld().setGravity(new Vec2(0, -1f));
 		}
 
-		if(input.isKeyDown(Input.KEY_LEFT))
+		if(input.isKeyDown(computc.Utility.getKey("left")))
 		{
 			this.gamedata.hero.getWorld().setGravity(new Vec2(1f, 0));
 		}
-		else if(input.isKeyDown(Input.KEY_RIGHT))
+		else if(input.isKeyDown(computc.Utility.getKey("right")))
 		{
 			this.gamedata.hero.getWorld().setGravity(new Vec2(-1f, 0));
 		}
@@ -235,7 +226,7 @@ public class MainGameState extends BasicGameState
 	@Override
 	public void keyPressed(int k, char c)
 	{
-		if(k == Input.KEY_B)
+		if(k == computc.Utility.getKey("slash"))
 		{
 			this.gamedata.hero.setSwinging();
 		}
@@ -246,22 +237,22 @@ public class MainGameState extends BasicGameState
 	public void keyReleased(int k, char c)
 	{
 		
-		if(k == Input.KEY_UP)
+		if(k == computc.Utility.getKey("up"))
 		{
 			this.camera.resetPeeking();
 			this.gamedata.hero.resetPeekTimer();
 		}
-		if(k == Input.KEY_DOWN)
+		if(k == computc.Utility.getKey("down"))
 		{
 			this.camera.resetPeeking();
 			this.gamedata.hero.resetPeekTimer();
 		}
-		if(k == Input.KEY_LEFT)
+		if(k == computc.Utility.getKey("left"))
 		{
 			this.camera.resetPeeking();
 			this.gamedata.hero.resetPeekTimer();
 		}
-		if(k == Input.KEY_RIGHT)
+		if(k == computc.Utility.getKey("right"))
 		{
 			this.camera.resetPeeking();
 			this.gamedata.hero.resetPeekTimer();
@@ -272,7 +263,7 @@ public class MainGameState extends BasicGameState
 			this.camera.setShaking(this.gamedata.hero.getDirection(), 50);
 		}
 		
-		if(k == Input.KEY_N)
+		if(k == computc.Utility.getKey("arrow"))
 		{
 			if(this.gamedata.hero.arrowCount != 0)
 			{

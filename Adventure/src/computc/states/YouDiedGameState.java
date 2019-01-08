@@ -64,14 +64,14 @@ public class YouDiedGameState extends BasicGameState
 	
 	public void keyPressed(int keycode, char character)
 	{
-		if(keycode == Input.KEY_W || keycode == Input.KEY_UP)
+		if(keycode == computc.Utility.getKey("up"))
 		{
 			this.cursor  -= 1;
 			if(this.cursor < 0)
 				this.cursor = 0;
 		}
 		
-		if(keycode == Input.KEY_S || keycode == Input.KEY_DOWN)
+		if(keycode == computc.Utility.getKey("down"))
 		{
 			this.cursor += 1;
 			if(this.cursor > 1)

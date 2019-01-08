@@ -1,6 +1,8 @@
 package computc.states;
 
+import java.io.FileInputStream;
 import java.util.LinkedList;
+import java.util.Properties;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
@@ -18,6 +20,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import computc.Game;
 import computc.GameData;
 import computc.Menu;
+import computc.Utility;
 import computc.cameras.RoomFollowingCamera;
 import computc.entities.Arrow;
 import computc.entities.Murk;
@@ -466,12 +469,12 @@ public class ToNextLevelGameState extends BasicGameState
 	
 	public void keyPressed(int k, char c)
 	{
-		if(k == Input.KEY_B)
+		if(k == computc.Utility.getKey("slash"))
 		{
 			this.gamedata.hero.setSwinging();
 		}
 		
-		if(k == Input.KEY_A || k == Input.KEY_LEFT && this.gamedata.hero.coinage > 0 && talkTimer > 0)
+		if(k == computc.Utility.getKey("left") && this.gamedata.hero.coinage > 0 && talkTimer > 0)
 			{
 			Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
 				this.cursor  -= 1;
@@ -479,7 +482,7 @@ public class ToNextLevelGameState extends BasicGameState
 					this.cursor = 0;
 			}
 			
-			if(k == Input.KEY_D || k == Input.KEY_RIGHT && this.gamedata.hero.coinage > 0 && talkTimer > 0)
+			if(k == computc.Utility.getKey("right") && this.gamedata.hero.coinage > 0 && talkTimer > 0)
 			{
 				Game.assets.playSoundEffectWithoutRepeat("arrowPickup");
 				this.cursor += 1;
@@ -491,7 +494,7 @@ public class ToNextLevelGameState extends BasicGameState
 	
 	public void keyReleased(int k, char c)
 	{
-		if(k == Input.KEY_N)
+		if(k == computc.Utility.getKey("arrow"))
 		{
 			if(this.gamedata.hero.arrowCount != 0)
 			{

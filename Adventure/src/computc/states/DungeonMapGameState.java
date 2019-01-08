@@ -54,7 +54,7 @@ public class DungeonMapGameState extends BasicGameState
 	
 	public void keyPressed(int keycode, char character)
 	{
-		if(keycode == Input.KEY_M || keycode == Input.KEY_ESCAPE)
+		if(keycode == computc.Utility.getKey("map") || keycode == Input.KEY_ESCAPE)
 		{
 			Game.assets.playSoundEffectWithoutRepeat("closeMap");
 			game.enterState(MainGameState.ID, new FadeOutTransition(Color.black, 100), new FadeInTransition(Color.black, 100));

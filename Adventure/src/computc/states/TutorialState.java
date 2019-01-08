@@ -1,5 +1,8 @@
 package computc.states;
 
+import java.io.FileInputStream;
+import java.util.Properties;
+
 import org.jbox2d.common.Vec2;
 import org.lwjgl.input.Mouse;
 import org.newdawn.slick.Animation;
@@ -18,6 +21,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 import computc.Game;
 import computc.GameData;
 import computc.Menu;
+import computc.Utility;
 import computc.cameras.RoomFollowingCamera;
 import computc.entities.Arrow;
 import computc.worlds.rooms.Room;
@@ -36,9 +40,9 @@ public class TutorialState extends BasicGameState
 	
 	private Animation textBox;
 	
-	private String greeting = "Tutorial(esc to quit): Swing your sword with B!";
-	private String greeting2 = "Press N to show off your archery skills!";
-	private String greeting3 = "Nice shot! Now hold N for a power shot!";
+	private String greeting = "Tutorial(esc to quit): Swing your sword with A!";
+	private String greeting2 = "Press B to show off your archery skills!";
+	private String greeting3 = "Nice shot! Now hold B for a power shot!";
 	private String greeting4 = "One more trick: Try leaning into the wall. ";
 	private String greeting5 = "You can peek into the next room while staying safe!";
 	
@@ -46,7 +50,7 @@ public class TutorialState extends BasicGameState
 
 	public TutorialState(GameData gamedata)
 	{
-		this.gamedata = gamedata;		
+		this.gamedata = gamedata;
 	}
 	
 	public void init(GameContainer container, StateBasedGame game) throws SlickException
@@ -213,7 +217,7 @@ public class TutorialState extends BasicGameState
 	
 	public void keyPressed(int k, char c)
 	{
-		if(k == Input.KEY_B)
+		if(k == computc.Utility.getKey("slash"))
 		{
 			swordAttack = true;
 			this.gamedata.hero.setSwinging();
@@ -224,22 +228,22 @@ public class TutorialState extends BasicGameState
 	public void keyReleased(int k, char c)
 	{
 		
-		if(k == Input.KEY_UP)
+		if(k == computc.Utility.getKey("up"))
 		{
 			this.camera.resetPeeking();
 			this.gamedata.hero.resetPeekTimer();
 		}
-		if(k == Input.KEY_DOWN)
+		if(k == computc.Utility.getKey("down"))
 		{
 			this.camera.resetPeeking();
 			this.gamedata.hero.resetPeekTimer();
 		}
-		if(k == Input.KEY_LEFT)
+		if(k == computc.Utility.getKey("left"))
 		{
 			this.camera.resetPeeking();
 			this.gamedata.hero.resetPeekTimer();
 		}
-		if(k == Input.KEY_RIGHT)
+		if(k == computc.Utility.getKey("right"))
 		{
 			this.camera.resetPeeking();
 			this.gamedata.hero.resetPeekTimer();
@@ -250,7 +254,7 @@ public class TutorialState extends BasicGameState
 			this.camera.setShaking(this.gamedata.hero.getDirection(), 50);
 		}
 		
-		if(k == Input.KEY_N)
+		if(k == computc.Utility.getKey("arrow"))
 		{
 			if(this.gamedata.hero.arrowCount != 0)
 			{
